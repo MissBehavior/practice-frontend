@@ -12,7 +12,6 @@ import Gallery from "./components/pages/gallery.tsx";
 import Home from "./components/pages/home.tsx";
 import Solutions from "./components/pages/solutions.tsx";
 import People from "./components/pages/people/people.tsx";
-import { Route } from "lucide-react";
 
 const router = createBrowserRouter([
   {
