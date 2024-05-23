@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./i18n/config.ts";
 import PostExternal from "./components/pages/posts-external";
