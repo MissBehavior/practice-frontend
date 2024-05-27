@@ -20,13 +20,13 @@ function MyEditor() {
 
     return (
         <>
-            LITHUANIAN SUKA BLYAJD
+            LITHUANIAN chirp
             <ReactQuill
                 theme="snow"
                 value={valueLT}
                 onChange={handleChangeLT}
             />
-            ENGLISH BLYAJD
+            ENGLISH pusik
             <ReactQuill
                 theme="snow"
                 value={valueEN}

@@ -1,3 +1,5 @@
+import MyEditor from '../editor'
+
 export default function PostExternal() {
-  return <div>PostExternal</div>;
+    return <MyEditor />
 }

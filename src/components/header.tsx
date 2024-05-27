@@ -4,7 +4,7 @@ import { ModeToggle } from './mode-toggle'
 import { Button } from './ui/button'
 import { useTranslation } from 'react-i18next'
 import i18n from '@/i18n/config'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
     Dialog,
     DialogContent,
@@ -25,17 +25,21 @@ export default function Header() {
     const setLanguage = (lang: string) => () => {
         i18n.changeLanguage(lang)
     }
+    const navigate = useNavigate()
+    const navToLogin = () => {
+        navigate('/login')
+    }
 
     return (
         <header className="shadow-md bg-white dark:bg-gray-800 font-sans tracking-wide relative z-50">
             <section className="flex items-center lg:justify-center flex-wrap gap-5 relative py-3 px-10 border-gray-200 border-b dark:border-gray-700 lg:min-h-[80px] max-lg:min-h-[60px]">
-                <a href="javascript:void(0)">
+                <Link to="/">
                     <img
                         src={companyLogo}
                         alt="logo"
                         className="md:w-[170px] w-36"
                     />
-                </a>
+                </Link>
                 <div className="space-x-6 md:absolute md:right-10 flex items-center max-md:ml-auto">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -55,8 +59,8 @@ export default function Header() {
                         <a onClick={setLanguage('lt')}>LT</a>
                     </div>
                     <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-6 cursor-pointer">
-                        {/* <Button onClick={handleClick}>{t('login')}</Button> */}
-                        <Login />
+                        <Button onClick={navToLogin}>{t('login')}</Button>
+                        {/* <Login /> */}
                     </div>
                 </div>
             </section>
@@ -90,13 +94,13 @@ export default function Header() {
 
                     <ul className="lg:flex lg:justify-center lg:gap-x-10 max-lg:space-y-3 max-lg:fixed max-lg:bg-white dark:max-lg:bg-gray-800 max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
                         <li className="mb-6 hidden max-lg:block">
-                            <a href="javascript:void(0)">
+                            <Link to="/">
                                 <img
                                     src={companyLogo}
                                     alt="logo"
                                     className="w-36"
                                 />
-                            </a>
+                            </Link>
                         </li>
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
                             <Link
