@@ -17,7 +17,7 @@ import { toast } from '../ui/use-toast'
 import { useForm } from 'react-hook-form'
 import { UserTokens } from '@/types'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Login() {
     const navigate = useNavigate()
@@ -90,12 +90,16 @@ export default function Login() {
         <Tabs defaultValue="signin" className="text-center">
             {/* Login TAB @@@@@@@@@@@@@@@@@@@@@@@@@ */}
             <TabsList className="w-full">
-                <TabsTrigger value="signin" className="w-full">
-                    Signin
-                </TabsTrigger>
-                <TabsTrigger value="signup" className="w-full">
-                    Password
-                </TabsTrigger>
+                <Link to="/login">
+                    <TabsTrigger value="signin" className="w-full">
+                        Signin
+                    </TabsTrigger>
+                </Link>
+                <Link to="/register">
+                    <TabsTrigger value="signup" className="w-full">
+                        Signup
+                    </TabsTrigger>
+                </Link>
             </TabsList>
             {status === 'error' && (
                 <div

@@ -14,6 +14,7 @@ import Home from './components/pages/home.tsx'
 import Solutions from './components/pages/solutions.tsx'
 import People from './components/pages/people/people.tsx'
 import Login from './components/pages/login.tsx'
+import Register from './components/pages/register.tsx'
 
 const router = createBrowserRouter([
     {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login />,
+            },
+            {
+                path: '/register',
+                element: <Register />,
             },
         ],
         errorElement: <div>404</div>,
