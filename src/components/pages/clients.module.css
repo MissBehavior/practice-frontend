@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: rgb(243 244 246);
+    gap: 1rem;
+    align-content: flex-start;
+    align-items: center;
+
+}
