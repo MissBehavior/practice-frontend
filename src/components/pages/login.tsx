@@ -1,30 +1,22 @@
 import React, { useEffect, useRef } from 'react'
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog'
 import { Button } from '../ui/button'
 import { useTranslation } from 'react-i18next'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { toast } from '../ui/use-toast'
-import { useForm } from 'react-hook-form'
-import { UserTokens } from '@/types'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { TSignInSchema, UserTokens, signInSchema } from '@/types'
+import { useAuth } from '@/services/auth-service'
 
 export default function Login() {
+    const { loginFunc, isLoggedIn } = useAuth()
+
     const navigate = useNavigate()
     const userRef = useRef<HTMLInputElement>(null)
-    const [name = '', setName] = React.useState<string>()
-    const [email = '', setEmail] = React.useState<string>()
-    const [password = '', setPassword] = React.useState<string>()
+    // const [name = '', setName] = React.useState<string>()
+    // const [email = '', setEmail] = React.useState<string>()
+    // const [password = '', setPassword] = React.useState<string>()
     const [status, setStatus] = React.useState<string>('idle')
     const [userToken, setUserToken] = React.useState<UserTokens>()
     const [error, setError] = React.useState<string>()
@@ -33,6 +25,14 @@ export default function Login() {
         if (userRef.current === null) return
         userRef.current.focus()
     }, [])
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+        reset,
+    } = useForm<TSignInSchema>({
+        resolver: zodResolver(signInSchema),
+    })
 
     const loginRequest = async (email: string, password: string) => {
         console.log('---- logging in Request -----')
@@ -46,29 +46,6 @@ export default function Login() {
         return res.data
     }
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        console.log('submitting ----------------------------')
-        e.preventDefault()
-        console.log('email', email)
-        console.log('password', password)
-        setStatus('pending')
-        try {
-            let userToken = await loginRequest(email, password)
-            setUserToken(userToken)
-            setStatus('success')
-        } catch (e: any) {
-            console.log('error', e)
-            if (e.response?.status === 404) {
-                setError('Incorrect username or password')
-            } else if (e.response?.status === 403) {
-                setError('Incorrect username or password')
-            } else {
-                setError(e.message)
-            }
-            setStatus('error')
-        }
-    }
-
     if (status === 'pending') {
         return <div className="text-center">Loading...</div>
     }
@@ -76,7 +53,6 @@ export default function Login() {
     if (status === 'success') {
         console.log('-------success data---------')
         console.log(userToken)
-        localStorage.setItem('user', JSON.stringify(userToken))
         toast({
             variant: 'default',
             title: 'Login Success',
@@ -85,22 +61,36 @@ export default function Login() {
         navigate('/')
     }
 
-    // INPUT FIELDS WITH TABS
+    const onSubmitE = async (data: TSignInSchema) => {
+        // ...
+        console.log('submitting login----------------------------')
+        console.log(data)
+        try {
+            let userToken = await loginRequest(data.email, data.password)
+            loginFunc(userToken)
+            setStatus('success')
+            reset()
+        } catch (e: any) {
+            console.log('error', e)
+            console.log('error', typeof e)
+            if (e.code === 'ERR_NETWORK') {
+                console.log('network error')
+                setError('Network Error')
+            }
+            if (e.response?.status === 404) {
+                setError('Incorrect username or password')
+            } else if (e.response?.status === 403) {
+                setError('Incorrect username or password')
+            } else if (e.response?.status === 401) {
+                setError('Incorrect username or password')
+            } else {
+                setError(e.message)
+            }
+            setStatus('error')
+        }
+    }
     return (
-        <Tabs defaultValue="signin" className="text-center">
-            {/* Login TAB @@@@@@@@@@@@@@@@@@@@@@@@@ */}
-            <TabsList className="w-full">
-                <Link to="/login">
-                    <TabsTrigger value="signin" className="w-full">
-                        Signin
-                    </TabsTrigger>
-                </Link>
-                <Link to="/register">
-                    <TabsTrigger value="signup" className="w-full">
-                        Signup
-                    </TabsTrigger>
-                </Link>
-            </TabsList>
+        <>
             {status === 'error' && (
                 <div
                     style={{
@@ -113,130 +103,41 @@ export default function Login() {
                     {error}
                 </div>
             )}
-            <TabsContent value="signin">
-                <form onSubmit={handleSubmit}>
-                    <DialogHeader>
-                        <Label>Login</Label>
-                        Use your email and password to login.
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="email" className="text-right">
-                                E-Mail
-                            </Label>
-                            <Input
-                                id="email"
-                                // defaultValue="example@examplemail.com"
-                                placeholder="example@gmail.com"
-                                className="col-span-3"
-                                type="email"
-                                ref={userRef}
-                                value={email}
-                                onChange={(e) => {
-                                    setError('')
-                                    setEmail(e.target.value)
-                                }}
-                                required
-                            />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="password" className="text-right">
-                                Password
-                            </Label>
-                            <Input
-                                id="password"
-                                // defaultValue="********"
-                                placeholder="*********"
-                                className="col-span-3"
-                                type="password"
-                                autoComplete="off"
-                                onChange={(e) => {
-                                    setError('')
+            <form
+                onSubmit={handleSubmit(onSubmitE)}
+                className="flex flex-col gap-y-2"
+            >
+                <input
+                    {...register('email')}
+                    type="email"
+                    placeholder="Email"
+                    className="px-4 py-2 rounded"
+                />
+                {errors.email && (
+                    <p className="text-red-500">{`${errors.email.message}`}</p>
+                )}
+                <input
+                    {...register('password')}
+                    type="password"
+                    placeholder="Password"
+                    className="px-4 py-2 rounded"
+                />
+                {errors.password && (
+                    <p className="text-red-500">{`${errors.password.message}`}</p>
+                )}
 
-                                    setPassword(e.target.value)
-                                }}
-                                value={password}
-                                required
-                            />
-                        </div>
-                    </div>
-                    <Button type="submit" onClick={() => handleSubmit}>
-                        {t('login')} TT
-                    </Button>
-                </form>
-            </TabsContent>
-
-            {/* REGISTER TAB @@@@@@@@@@@@@@@@@@@@@@@@@ */}
-            <TabsContent value="signup">
-                <DialogHeader>
-                    <Label>Register</Label>
-                    Provide the details for your account
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="name" className="text-right">
-                            Name
-                        </Label>
-                        <Input
-                            id="name"
-                            // defaultValue="Stefan Peterson"
-                            placeholder="Stefan Peterson"
-                            className="col-span-3"
-                            type="text"
-                            value={name}
-                            onChange={(e) => {
-                                setName(e.target.value)
-                            }}
-                        />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="email" className="text-right">
-                            E-Mail*
-                        </Label>
-                        <Input
-                            id="email"
-                            // defaultValue="example@examplemail.com"
-                            placeholder="example@gmail.com"
-                            className="col-span-3"
-                            type="email"
-                            value={email}
-                            onChange={(e) => {
-                                setEmail(e.target.value)
-                            }}
-                            required
-                        />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="password" className="text-right">
-                            Password*
-                        </Label>
-                        <Input
-                            id="password"
-                            // defaultValue="********"
-                            placeholder="*********"
-                            className="col-span-3"
-                            type="password"
-                            onChange={(e) => {
-                                setPassword(e.target.value)
-                            }}
-                            value={password}
-                            required
-                        />
-                    </div>
-                </div>
                 <Button
+                    disabled={isSubmitting}
                     type="submit"
-                    onClick={() =>
-                        toast({
-                            variant: 'destructive',
-                            title: 'Scheduled: Register up',
-                            description: 'Friday, February 10, 2023 at 5:57 PM',
-                        })
-                    }
+                    className="disabled:bg-red-500 py-2 rounded"
+                    onClick={() => {
+                        console.log('EBATZJ PRESSESD')
+                        handleSubmit(onSubmitE)
+                    }}
                 >
-                    {t('register')}
+                    {t('login')}
                 </Button>
-            </TabsContent>
-        </Tabs>
+            </form>
+        </>
     )
 }

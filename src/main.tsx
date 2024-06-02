@@ -15,6 +15,8 @@ import Solutions from './components/pages/solutions.tsx'
 import People from './components/pages/people/people.tsx'
 import Login from './components/pages/login.tsx'
 import Register from './components/pages/register.tsx'
+import ProtectedRoutes from './services/protected-routes.tsx'
+import { AuthProvider } from './services/auth-service.tsx'
 
 const router = createBrowserRouter([
     {
@@ -45,13 +47,22 @@ const router = createBrowserRouter([
                 path: '/gallery',
                 element: <Gallery />,
             },
-            {
-                path: '/people',
-                element: <People />,
-            },
+            // {
+            //     path: '/people',
+            //     element: <People />,
+            // },
             {
                 path: '/solutions',
                 element: <Solutions />,
+            },
+            {
+                element: <ProtectedRoutes />,
+                children: [
+                    {
+                        path: '/people',
+                        element: <People />,
+                    },
+                ],
             },
             {
                 path: '/login',
@@ -74,7 +85,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         {/* <BrowserRouter> */}
         {/* <Header /> */}
-        <RouterProvider router={router} />
+        <AuthProvider>
+            <RouterProvider router={router} />
+        </AuthProvider>
         {/* <App /> */}
         {/* </BrowserRouter> */}
         {/* <Footer /> */}

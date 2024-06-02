@@ -14,7 +14,9 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog'
 import Login from './pages/login'
+import { useAuth } from '@/services/auth-service'
 export default function Header() {
+    const { isLoggedIn, logoutFunc } = useAuth()
     const { t } = useTranslation()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -28,6 +30,9 @@ export default function Header() {
     const navigate = useNavigate()
     const navToLogin = () => {
         navigate('/login')
+    }
+    const navToRegister = () => {
+        navigate('/register')
     }
 
     return (
@@ -58,10 +63,31 @@ export default function Header() {
                         <a onClick={setLanguage('en')}>EN</a>|
                         <a onClick={setLanguage('lt')}>LT</a>
                     </div>
-                    <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-6 cursor-pointer">
-                        <Button onClick={navToLogin}>{t('login')}</Button>
-                        {/* <Login /> */}
-                    </div>
+                    {!isLoggedIn && (
+                        <>
+                            <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-6 cursor-pointer">
+                                <Button onClick={navToLogin}>
+                                    {t('login')}
+                                </Button>
+                                {/* <Login /> */}
+                            </div>
+                            <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-6 cursor-pointer">
+                                <Button onClick={navToRegister}>
+                                    {t('register')}
+                                </Button>
+                                {/* <Login /> */}
+                            </div>
+                        </>
+                    )}
+                    {isLoggedIn && (
+                        <>
+                            <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-6 cursor-pointer">
+                                <Button onClick={logoutFunc}>
+                                    {t('logout')}
+                                </Button>
+                            </div>
+                        </>
+                    )}
                 </div>
             </section>
 
