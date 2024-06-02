@@ -10,7 +10,7 @@ import { TSignUpSchema, signUpSchema, UserTokens } from '@/types'
 import { useAuth } from '@/services/auth-service'
 
 export default function Register() {
-    const { loginFunc } = useAuth()
+    const { loginFunc, setUserFunc } = useAuth()
     const navigate = useNavigate()
     const userRef = useRef<HTMLInputElement>(null)
     const [status, setStatus] = React.useState<string>('idle')
@@ -74,6 +74,7 @@ export default function Register() {
             console.log(userToken)
             setUserToken(userToken)
             loginFunc(userToken)
+            setUserFunc(userToken)
             setStatus('success')
             reset()
         } catch (e: any) {

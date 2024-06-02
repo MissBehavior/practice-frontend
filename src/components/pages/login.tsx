@@ -10,7 +10,7 @@ import { TSignInSchema, UserTokens, signInSchema } from '@/types'
 import { useAuth } from '@/services/auth-service'
 
 export default function Login() {
-    const { loginFunc, isLoggedIn } = useAuth()
+    const { loginFunc, isLoggedIn, setUserFunc } = useAuth()
 
     const navigate = useNavigate()
     const userRef = useRef<HTMLInputElement>(null)
@@ -68,6 +68,7 @@ export default function Login() {
         try {
             let userToken = await loginRequest(data.email, data.password)
             loginFunc(userToken)
+            setUserFunc(userToken)
             setStatus('success')
             reset()
         } catch (e: any) {
