@@ -1,4 +1,10 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react'
+import React, {
+    createContext,
+    useState,
+    useContext,
+    ReactNode,
+    useEffect,
+} from 'react'
 
 interface AuthContextType {
     isLoggedIn: boolean
@@ -12,6 +18,17 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [userToken, setUserToken] = useState<any>(null)
+
+    useEffect(() => {
+        // Check if there's a token in localStorage
+        // TODO: HERE WE NEED TO IMPLEMENT A CHECK IF THE TOKEN IS VALID OR NOT (EXPIRED) AND IF IT IS NOT VALID, WE NEED TO LOGOUT THE USER AUTOMATICALLY AND REDIRECT TO LOGIN PAGE.
+        // TODO 2: WE NEED TO IMPLEMENT A REFRESH TOKEN FUNCTIONALITY
+        const token = localStorage.getItem('user')
+        if (token) {
+            setIsLoggedIn(true)
+            setUserToken(JSON.parse(token))
+        }
+    }, [])
 
     const loginFunc = (token: any) => {
         setIsLoggedIn(true)
