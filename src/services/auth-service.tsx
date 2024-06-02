@@ -44,6 +44,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setIsLoggedIn(true)
             setUserToken(JSON.parse(token))
         }
+        const user = localStorage.getItem('user')
+        if (user) {
+            setUser(JSON.parse(user))
+        }
     }, [])
 
     const loginFunc = (token: any) => {
