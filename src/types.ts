@@ -2,6 +2,13 @@ export type UserTokens = {
     accessToken: string
     refreshToken: string
 }
+export interface SolutionsData {
+    _id: string
+    cardImgUrl: string
+    titleCard: string
+    contentCard: string
+    contentMain?: string
+}
 import { z } from 'zod'
 
 export const signUpSchema = z.object({

@@ -22,6 +22,8 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
     const { userToken } = useAuth()
     const [image, setImage] = React.useState<File | null>(null)
     const [open, setOpen] = React.useState(false)
+    const [contentCard, setContentCard] = React.useState('')
+    const [titleCard, setTitleCard] = React.useState('')
 
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log('Image selected')
@@ -45,8 +47,8 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
 
         const formData = new FormData()
         formData.append('image', image)
-        formData.append('title', 'Title')
-        formData.append('description', 'Description')
+        formData.append('titleCard', titleCard)
+        formData.append('contentCard', contentCard)
         try {
             const response = await axios.post(
                 'http://localhost:3000/solutions/api/upload/',
@@ -107,6 +109,9 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                                     id="title"
                                     placeholder="Solution title"
                                     className="col-span-3"
+                                    onChange={(e) => {
+                                        setTitleCard(e.target.value)
+                                    }}
                                 />
                             </div>
                             <div className="grid grid-cols-4 items-center gap-4">
@@ -120,6 +125,9 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                                     id="description"
                                     placeholder="Solution description"
                                     className="col-span-3"
+                                    onChange={(e) => {
+                                        setContentCard(e.target.value)
+                                    }}
                                 />
                             </div>
                         </form>

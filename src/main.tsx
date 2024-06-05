@@ -17,6 +17,7 @@ import Login from './components/pages/login.tsx'
 import Register from './components/pages/register.tsx'
 import ProtectedRoutes from './services/protected-routes.tsx'
 import { AuthProvider } from './services/auth-service.tsx'
+import SolutionsDetail from './components/pages/solutions/solutions-detail.tsx'
 
 const router = createBrowserRouter([
     {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
             {
                 path: '/solutions',
                 element: <Solutions />,
+            },
+            {
+                path: '/solutions/:id',
+                element: <SolutionsDetail />,
             },
             {
                 element: <ProtectedRoutes />,

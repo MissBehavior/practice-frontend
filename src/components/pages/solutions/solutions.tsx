@@ -21,16 +21,11 @@ import { MdEdit } from 'react-icons/md'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import { MdDeleteForever } from 'react-icons/md'
 import SolutionsDelete from './solutions-delete-confirm'
+import SolutionsEditDialog from './solutions-edit-dialog'
+import { SolutionsData } from '@/types'
 
-interface Data {
-    _id: string
-    cardImgUrl: string
-    titleCard: string
-    contentCard: string
-    contentMain?: string
-}
 export default function Solutions() {
-    const [data, setData] = useState<Data[]>([])
+    const [data, setData] = useState<SolutionsData[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [hoveredItem, setHoveredItem] = useState<number | undefined>()
 
@@ -41,7 +36,6 @@ export default function Solutions() {
             console.log('response:', response)
             console.log('-----------------')
             setData(response.data.solutions)
-            console.log(data)
             setLoading(false)
             console.log(data)
         } catch (error) {
@@ -85,7 +79,13 @@ export default function Solutions() {
                     >
                         {user.isAdmin && (
                             <div className="flex flex-row ml-auto mb-[-20px] z-10 gap-2">
-                                <MdEdit className="relative top-0 right-0 w-[40px] p-1 h-[40px] rounded-md bg-teal-600 shadow-xl transition-all transform duration-150 hover:scale-105 cursor-pointer" />
+                                <SolutionsEditDialog
+                                    _id={item._id}
+                                    cardImgUrl={item.cardImgUrl}
+                                    titleCard={item.titleCard}
+                                    contentCard={item.contentCard}
+                                    fetchData={fetchData}
+                                />
                                 <SolutionsDelete
                                     fetchData={fetchData}
                                     index={item._id}
