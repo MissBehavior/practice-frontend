@@ -60,10 +60,11 @@ export default function PostExternal() {
         // fetchData(currentPage)
     }, [currentPage])
     if (loading) {
+        //md:w-1/2 lg:w-1/3
         return (
             <section className="flex flex-row flex-wrap mx-auto justify-center ">
                 {Array.from({ length: 10 }).map((_, index) => (
-                    <div className="flex w-full px-4 py-6 md:w-1/2 lg:w-1/3 justify-center">
+                    <div className="flex w-full px-4 py-6 justify-center">
                         <div className="space-y-3">
                             <Skeleton className="h-36 w-full" />
                             <Skeleton className="h-8 w-1/2 flex flex-wrap items-center flex-1 px-4 py-1 text-center mx-auto" />
@@ -92,7 +93,7 @@ export default function PostExternal() {
 
             <section className="flex flex-row flex-wrap mx-auto justify-center ">
                 {data.map((item) => (
-                    <div className="transition-all duration-150 flex w-full px-4 py-6 md:w-1/2 lg:w-1/3 justify-center">
+                    <div className="transition-all duration-150 flex w-full px-4 py-6 justify-center mr-20 ml-20">
                         <div className="flex flex-col items-stretch min-h-full min-w-full pb-4 mb-6 transition-all duration-150 bg-white rounded-lg shadow-lg hover:shadow-2xl">
                             <div className="md:flex-shrink-0">
                                 <img

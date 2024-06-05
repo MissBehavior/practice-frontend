@@ -61,6 +61,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUserToken(null)
         localStorage.removeItem('token')
         localStorage.removeItem('user')
+        window.location.reload()
     }
     const setUserFunc = (token: any) => {
         if (token) {

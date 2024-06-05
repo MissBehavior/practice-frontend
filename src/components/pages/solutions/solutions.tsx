@@ -13,136 +13,115 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import SolutionsAddNewSolution from './solutions-newsolution-dialog'
+import { MdEdit } from 'react-icons/md'
+import { IoMdAddCircleOutline } from 'react-icons/io'
+import { MdDeleteForever } from 'react-icons/md'
+import SolutionsDelete from './solutions-delete-confirm'
 
+interface Data {
+    _id: string
+    cardImgUrl: string
+    titleCard: string
+    contentCard: string
+    contentMain?: string
+}
 export default function Solutions() {
-    const handleClick = () => {
-        console.log('clicked')
+    const [data, setData] = useState<Data[]>([])
+    const [loading, setLoading] = useState<boolean>(true)
+    const [hoveredItem, setHoveredItem] = useState<number | undefined>()
+
+    const fetchData = async () => {
+        setLoading(true)
+        try {
+            const response = await axios.get('http://localhost:3000/solutions')
+            console.log('response:', response)
+            console.log('-----------------')
+            setData(response.data.solutions)
+            console.log(data)
+            setLoading(false)
+            console.log(data)
+        } catch (error) {
+            console.error('Error fetching data:', error)
+            setLoading(false)
+        }
     }
+
+    useEffect(() => {
+        // setTimeout(() => {
+        fetchData()
+        // }, 10000)
+        // fetchData(currentPage)
+    }, [])
+    if (loading) {
+        return (
+            <section className="flex flex-row flex-wrap mx-auto justify-center ">
+                {Array.from({ length: 5 }).map((_) => (
+                    <div className="flex w-full px-4 py-6 md:w-1/2 lg:w-1/3 justify-center">
+                        <div className="space-y-3">
+                            <Skeleton className="h-36 w-full" />
+                            <Skeleton className="h-8 w-1/2 flex flex-wrap items-center flex-1 px-4 py-1 text-center mx-auto" />
+                            <Skeleton className="h-32 w-[450px]" />
+                            <Skeleton className="h-16 w-[350px] mb-20" />
+                        </div>
+                    </div>
+                ))}
+            </section>
+        )
+    }
+
     const { user } = useAuth()
+
     return (
         <>
             <div className={classNamees.container}>
-                {Array(3)
-                    .fill(0)
-                    .map((_, index) => (
-                        <Link to={`/solutions/` + index} key={index}>
-                            <div className="mt-16 mb-12 min-h-64 bg-gray-100 flex justify-center items-center ">
-                                <div className="p-6 bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center">
-                                    <img
-                                        className="w-64 object-cover rounded-t-md hover:scale-110 rounded transition-all duration-300 ease-in-out"
-                                        src="/solutions/colibri-image-126.png"
-                                        alt=""
-                                    />
-                                    <div className="mt-4">
-                                        <h1 className="text-2xl font-bold text-gray-700">
-                                            test
-                                        </h1>
-                                        <p className="text-base mt-2 text-cyan-600">
-                                            test
-                                        </p>
-                                        <p className="text-sm mt-2 text-gray-700 max-w-64">
-                                            test
-                                        </p>
-                                    </div>
+                {data.map((item, index) => (
+                    <div
+                        key={index}
+                        className="mt-16 mb-12 min-h-64 bg-gray-100 flex justify-center items-center flex-col"
+                    >
+                        {user.isAdmin && (
+                            <div className="flex flex-row ml-auto mb-[-20px] z-10 gap-2">
+                                <MdEdit className="relative top-0 right-0 w-[40px] p-1 h-[40px] rounded-md bg-teal-600 shadow-xl transition-all transform duration-150 hover:scale-105 cursor-pointer" />
+                                <SolutionsDelete
+                                    fetchData={fetchData}
+                                    index={item._id}
+                                />
+                            </div>
+                        )}
+                        <Link to={`/solutions/` + item._id}>
+                            <div
+                                className={`p-6 bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
+                                onMouseEnter={() => setHoveredItem(index)}
+                                onMouseLeave={() => setHoveredItem(undefined)}
+                            >
+                                <img
+                                    className="w-64 object-cover rounded-t-md hover:scale-110 rounded transition-all duration-300 ease-in-out"
+                                    src={item.cardImgUrl}
+                                    alt=""
+                                />
+                                <div className="mt-4">
+                                    <h1 className="text-2xl font-bold text-gray-700">
+                                        {item.titleCard}
+                                    </h1>
+                                    <p className="text-base mt-2 text-cyan-600">
+                                        TEST STUFF
+                                    </p>
+                                    <p className="text-sm mt-2 text-gray-700 max-w-64">
+                                        {item.contentCard}
+                                    </p>
                                 </div>
                             </div>
                         </Link>
-                    ))}
-                {user.isAdmin && (
-                    <div
-                        className="mt-16 mb-12 min-h-64 bg-gray-100 flex justify-center items-center select-none"
-                        onClick={handleClick}
-                    >
-                        <div className="p-6 bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center cursor-pointer">
-                            <Dialog>
-                                <DialogTrigger asChild>
-                                    <div className="mt-4">
-                                        Add new solution
-                                        <h1 className="text-2xl font-bold text-gray-700">
-                                            ✏
-                                        </h1>
-                                    </div>
-                                </DialogTrigger>
-                                <DialogContent className="sm:max-w-[425px]">
-                                    <DialogHeader>
-                                        <DialogTitle>New Category</DialogTitle>
-                                        <DialogDescription>
-                                            Add image, title and description
-                                        </DialogDescription>
-                                    </DialogHeader>
-                                    <div className="grid gap-4 py-4">
-                                        <div className="grid grid-cols-4 items-center gap-4">
-                                            <Label
-                                                htmlFor="file"
-                                                className="text-right"
-                                            >
-                                                Image
-                                            </Label>
-                                            <Input
-                                                id="file"
-                                                className="col-span-3"
-                                                type="file"
-                                            />
-                                        </div>
-                                        <div className="grid grid-cols-4 items-center gap-4">
-                                            <Label
-                                                htmlFor="title"
-                                                className="text-right"
-                                            >
-                                                Title
-                                            </Label>
-                                            <Input
-                                                id="title"
-                                                placeholder="Solution title"
-                                                className="col-span-3"
-                                            />
-                                        </div>
-                                        <div className="grid grid-cols-4 items-center gap-4">
-                                            <Label
-                                                htmlFor="description"
-                                                className="text-right"
-                                            >
-                                                Description
-                                            </Label>
-                                            <Input
-                                                id="description"
-                                                placeholder="Solution description"
-                                                className="col-span-3"
-                                            />
-                                        </div>
-                                    </div>
-                                    <DialogFooter>
-                                        <Button type="submit">Submit</Button>
-                                    </DialogFooter>
-                                </DialogContent>
-                            </Dialog>
-                        </div>
                     </div>
+                ))}
+                {user.isAdmin && (
+                    <SolutionsAddNewSolution fetchData={fetchData} />
                 )}
             </div>
-
-            {/* <Link to={`/solutions/` + 1} key={1}>
-                <div className="mt-16 mb-12 min-h-64 bg-gray-100 flex justify-center items-center">
-                    <div
-                        className={`p-6 bg-white rounded-xl shadow-xl hover:border-2 hover:border-solid hover:border-pink-600 hover:shadow-2xl hover:scale-105 transition-all transform duration-500 text-center items-center justify-center`}
-                    >
-                        <img
-                            className="w-64 object-cover rounded-t-md"
-                            src="/solutions/colibri-image-126.png"
-                            alt=""
-                        />
-                        <div className="mt-4">
-                            <h1 className="text-2xl font-bold text-gray-700">
-                                test
-                            </h1>
-                            <p className="text-base mt-2 text-cyan-600">test</p>
-                            <p className="text-sm mt-2 text-gray-700 max-w-64">
-                                test
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </Link> */}
         </>
     )
 }
