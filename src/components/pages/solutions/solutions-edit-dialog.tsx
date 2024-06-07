@@ -11,7 +11,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuth } from '@/services/auth-service'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { MdEdit } from 'react-icons/md'
 import Solutions from './solutions'
 import { SolutionsData } from '@/types'
@@ -61,7 +61,6 @@ function SolutionsEditDialog({
         setOpen(false)
         fetchData()
     }
-
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log('Image selected')
         console.log(e.target.files?.[0])
@@ -72,6 +71,10 @@ function SolutionsEditDialog({
             setImage(null)
         }
     }
+    useEffect(() => {
+        setTitleCard(titleCard)
+        setContentCard(contentCard)
+    }, [])
     return (
         <div>
             <Dialog open={open} onOpenChange={setOpen}>
