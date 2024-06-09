@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useAuth } from '@/services/auth-service'
+import { useAuth, useAxios } from '@/services/auth-service'
 import axios from 'axios'
 import React from 'react'
 import { IoMdAddCircleOutline } from 'react-icons/io'
@@ -20,6 +20,7 @@ interface SolutionsAddNewSolutionProps {
 }
 function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
     const { userToken } = useAuth()
+    const api = useAxios()
     const [image, setImage] = React.useState<File | null>(null)
     const [open, setOpen] = React.useState(false)
     const [contentCard, setContentCard] = React.useState('')
@@ -50,8 +51,8 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
         formData.append('titleCard', titleCard)
         formData.append('contentCard', contentCard)
         try {
-            const response = await axios.post(
-                'http://localhost:3000/solutions/api/upload/',
+            const response = await api.post(
+                '/solutions/api/upload/',
                 formData,
                 {
                     headers: {

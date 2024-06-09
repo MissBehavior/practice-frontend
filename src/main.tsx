@@ -2,13 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './i18n/config.ts'
 import PostExternal from './components/pages/posts-external/posts-external.tsx'
 import About from './components/pages/about/about.tsx'
-import Career from './components/pages/career.tsx'
-import Clients from './components/pages/clients.tsx'
+import Career from './components/pages/career/career.tsx'
+import Clients from './components/pages/clients/clients.tsx'
 import Gallery from './components/pages/gallery/gallery.tsx'
 import Home from './components/pages/home.tsx'
 import Solutions from './components/pages/solutions/solutions.tsx'
@@ -48,10 +47,10 @@ const router = createBrowserRouter([
                 path: '/gallery',
                 element: <Gallery />,
             },
-            // {
-            //     path: '/people',
-            //     element: <People />,
-            // },
+            {
+                path: '/people',
+                element: <People />,
+            },
             {
                 path: '/solutions',
                 element: <Solutions />,
@@ -62,12 +61,12 @@ const router = createBrowserRouter([
             },
             {
                 element: <ProtectedRoutes />,
-                children: [
-                    {
-                        path: '/people',
-                        element: <People />,
-                    },
-                ],
+                // children: [
+                //     {
+                //         path: '/people',
+                //         element: <People />,
+                //     },
+                // ],
             },
             {
                 path: '/login',

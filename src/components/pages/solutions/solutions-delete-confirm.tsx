@@ -9,7 +9,7 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
-import { useAuth } from '@/services/auth-service'
+import { useAuth, useAxios } from '@/services/auth-service'
 import axios from 'axios'
 import React from 'react'
 import { set } from 'react-hook-form'
@@ -19,6 +19,7 @@ interface SolutionsDeleteProps {
 }
 function SolutionsDelete({ fetchData, index }: any) {
     const { userToken } = useAuth()
+    const api = useAxios()
     const [open, setOpen] = React.useState(false)
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -26,14 +27,11 @@ function SolutionsDelete({ fetchData, index }: any) {
         console.log('HANDLE SUBMIT')
         console.log(index)
         try {
-            const response = await axios.delete(
-                'http://localhost:3000/solutions/' + index,
-                {
-                    headers: {
-                        Authorization: `Bearer ${userToken!.accessToken}`,
-                    },
-                }
-            )
+            const response = await api.delete('/solutions/' + index, {
+                headers: {
+                    Authorization: `Bearer ${userToken!.accessToken}`,
+                },
+            })
             console.log(response.data)
         } catch (error) {
             console.error('Error deleting :', error)

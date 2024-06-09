@@ -1,25 +1,9 @@
-import { Link } from 'react-router-dom'
 import classNamees from './gallery.module.css'
 import { useAuth } from '@/services/auth-service'
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import GalleryNewDialog from './gallery-new-dialog'
-import { MdEdit } from 'react-icons/md'
-import { IoMdAddCircleOutline } from 'react-icons/io'
-import { MdDeleteForever } from 'react-icons/md'
 import { GalleryData } from '@/types'
 import GalleryDelete from './gallery-delete'
 

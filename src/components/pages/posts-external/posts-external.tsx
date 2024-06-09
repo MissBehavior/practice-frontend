@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
-import MyEditor from '../../editor'
 import axios from 'axios'
 import { Skeleton } from '../../ui/skeleton'
 import { Button } from '../../ui/button'
 import { useAuth } from '@/services/auth-service'
-import SolutionsEditDialog from '../solutions/solutions-edit-dialog'
 import PostDelete from './post-delete'
 import PostNew from './post-new'
 import parse from 'html-react-parser'
+import classNamees from './post.module.css'
+
 interface Data {
     _id: string
     title: string
@@ -111,15 +111,16 @@ export default function PostExternal() {
                     >
                         {user.isAdmin && (
                             <div className="flex flex-row ml-auto mb-[-20px] z-10 gap-2">
-                                <SolutionsEditDialog
+                                {/* <SolutionsEditDialog
                                     _id={item._id}
                                     cardImgUrl={'item.cardImgUrl'}
                                     titleCard={'item.titleCard'}
                                     contentCard={'item.contentCard'}
                                     fetchData={fetchData}
-                                />
+                                /> */}
                                 <PostDelete
                                     fetchData={fetchData}
+                                    currentPage={currentPage}
                                     index={item._id}
                                 />
                             </div>
@@ -205,9 +206,9 @@ export default function PostExternal() {
                                 </a>
                             </div>
                             <hr className="border-gray-300" />
-                            <p className="flex flex-row flex-wrap w-full px-4 py-2 overflow-hidden text-sm text-justify text-gray-700">
+                            <div className="flex flex-row flex-wrap w-full px-4 py-2 overflow-hidden text-sm text-justify text-gray-700">
                                 {parse(item.content)}
-                            </p>
+                            </div>
                             <hr className="border-gray-300" />
                             <section className="px-4 py-2 mt-2">
                                 <div className="flex items-center justify-between">

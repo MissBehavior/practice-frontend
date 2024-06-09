@@ -8,15 +8,17 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog'
-import { useAuth } from '@/services/auth-service'
+import { useAuth, useAxios } from '@/services/auth-service'
 import axios from 'axios'
 import React from 'react'
 import { MdDeleteForever } from 'react-icons/md'
 interface GalleryDeleteProps {
     fetchData: () => void
+    index: string
 }
-function GalleryDelete({ fetchData, index }: any) {
+function GalleryDelete({ fetchData, index }: GalleryDeleteProps) {
     const { userToken } = useAuth()
+    const api = useAxios()
     const [open, setOpen] = React.useState(false)
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -24,14 +26,11 @@ function GalleryDelete({ fetchData, index }: any) {
         console.log('HANDLE SUBMIT')
         console.log(index)
         try {
-            const response = await axios.delete(
-                'http://localhost:3000/gallery/' + index,
-                {
-                    headers: {
-                        Authorization: `Bearer ${userToken!.accessToken}`,
-                    },
-                }
-            )
+            const response = await api.delete('/gallery/' + index, {
+                headers: {
+                    Authorization: `Bearer ${userToken!.accessToken}`,
+                },
+            })
             console.log(response.data)
         } catch (error) {
             console.error('Error deleting :', error)

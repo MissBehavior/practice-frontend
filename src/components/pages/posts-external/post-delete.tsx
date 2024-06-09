@@ -8,17 +8,18 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog'
-import { Label } from '@/components/ui/label'
-import { useAuth } from '@/services/auth-service'
+import { useAuth, useAxios } from '@/services/auth-service'
 import axios from 'axios'
 import React from 'react'
-import { set } from 'react-hook-form'
 import { MdDeleteForever } from 'react-icons/md'
 interface PostDeleteProps {
-    fetchData: () => void
+    fetchData: (currentPage: number) => void
+    currentPage: number
+    index: string
 }
-function PostDelete({ fetchData, index }: any) {
+function PostDelete({ fetchData, currentPage, index }: PostDeleteProps) {
     const { userToken } = useAuth()
+    const api = useAxios()
     const [open, setOpen] = React.useState(false)
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -26,20 +27,17 @@ function PostDelete({ fetchData, index }: any) {
         console.log('HANDLE SUBMIT')
         console.log(index)
         try {
-            const response = await axios.delete(
-                'http://localhost:3000/post/' + index,
-                {
-                    headers: {
-                        Authorization: `Bearer ${userToken!.accessToken}`,
-                    },
-                }
-            )
+            const response = await api.delete('/post/' + index, {
+                headers: {
+                    Authorization: `Bearer ${userToken!.accessToken}`,
+                },
+            })
             console.log(response.data)
         } catch (error) {
             console.error('Error deleting :', error)
         }
         setOpen(false)
-        fetchData()
+        fetchData(currentPage)
     }
 
     return (

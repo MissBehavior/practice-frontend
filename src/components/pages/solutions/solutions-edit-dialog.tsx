@@ -10,14 +10,16 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useAuth } from '@/services/auth-service'
+import { useAuth, useAxios } from '@/services/auth-service'
 import React, { useEffect } from 'react'
 import { MdEdit } from 'react-icons/md'
-import Solutions from './solutions'
-import { SolutionsData } from '@/types'
 import axios from 'axios'
 interface SolutionsEditDialogProps {
     fetchData: () => void
+    _id: string
+    cardImgUrl: string
+    titleCard: string
+    contentCard: string
 }
 
 function SolutionsEditDialog({
@@ -26,8 +28,9 @@ function SolutionsEditDialog({
     titleCard,
     contentCard,
     fetchData,
-}: any) {
+}: SolutionsEditDialogProps) {
     const { userToken } = useAuth()
+    const api = useAxios()
     const [open, setOpen] = React.useState(false)
     const [image, setImage] = React.useState<File | null>(null)
     const [contentCardEdit, setContentCard] = React.useState('')
@@ -44,16 +47,12 @@ function SolutionsEditDialog({
         formData.append('titleCard', titleCardEdit)
         formData.append('contentCard', contentCardEdit)
         try {
-            const response = await axios.patch(
-                'http://localhost:3000/solutions/' + _id,
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${userToken!.accessToken}`,
-                    },
-                }
-            )
+            const response = await api.patch('/solutions/' + _id, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${userToken!.accessToken}`,
+                },
+            })
             console.log(response.data)
         } catch (error) {
             console.error('Error Updating :', error)

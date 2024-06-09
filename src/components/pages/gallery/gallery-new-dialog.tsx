@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useAuth } from '@/services/auth-service'
+import { useAuth, useAxios } from '@/services/auth-service'
 import axios from 'axios'
 import React from 'react'
 import { IoMdAddCircleOutline } from 'react-icons/io'
@@ -20,6 +20,7 @@ interface GalleryNewDialogProps {
 }
 function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
     const { userToken } = useAuth()
+    const api = useAxios()
     const [image, setImage] = React.useState<File | null>(null)
     const [open, setOpen] = React.useState(false)
     const [title, setTitle] = React.useState('')
@@ -48,16 +49,12 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
         formData.append('image', image)
         formData.append('title', title)
         try {
-            const response = await axios.post(
-                'http://localhost:3000/gallery/',
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${userToken!.accessToken}`,
-                    },
-                }
-            )
+            const response = await api.post('/gallery/', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${userToken!.accessToken}`,
+                },
+            })
             console.log(response.data)
         } catch (error) {
             console.error('Error uploading image:', error)

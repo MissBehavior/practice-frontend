@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useAuth } from '@/services/auth-service'
+import { useAuth, useAxios } from '@/services/auth-service'
 import axios from 'axios'
 import React, { useState } from 'react'
 import { IoMdAddCircleOutline } from 'react-icons/io'
@@ -22,11 +22,11 @@ interface PostNewProps {
 }
 function PostNew({ fetchData, currentPage }: PostNewProps) {
     const { user, userToken } = useAuth()
+    const api = useAxios()
     const [image, setImage] = useState<File | null>(null)
     const [open, setOpen] = useState(false)
     const [valueEn, setValueEn] = useState<string>('')
     const [titlePost, setTitlePost] = useState<string>('')
-
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log('Image selected')
         console.log(e.target.files?.[0])
@@ -60,16 +60,12 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
         formData.append('userId', user.id)
         formData.append('userName', user.name)
         try {
-            const response = await axios.post(
-                'http://localhost:3000/post/',
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${userToken!.accessToken}`,
-                    },
-                }
-            )
+            const response = await api.post('/post/', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${userToken!.accessToken}`,
+                },
+            })
             console.log(response.data)
         } catch (error) {
             console.error('Error uploading image:', error)
