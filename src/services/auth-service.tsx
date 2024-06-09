@@ -21,8 +21,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         // Check if there's a token in localStorage
-        // TODO: HERE WE NEED TO IMPLEMENT A CHECK IF THE TOKEN IS VALID OR NOT (EXPIRED) AND IF IT IS NOT VALID, WE NEED TO LOGOUT THE USER AUTOMATICALLY AND REDIRECT TO LOGIN PAGE.
-        // TODO 2: WE NEED TO IMPLEMENT A REFRESH TOKEN FUNCTIONALITY
         const token = localStorage.getItem('token')
         if (token) {
             const parsedToken = JSON.parse(token) as AuthToken

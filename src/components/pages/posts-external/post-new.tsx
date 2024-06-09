@@ -12,9 +12,9 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuth, useAxios } from '@/services/auth-service'
-import axios from 'axios'
 import React, { useState } from 'react'
 import { IoMdAddCircleOutline } from 'react-icons/io'
+import DOMPurify from 'dompurify'
 
 interface PostNewProps {
     fetchData: (page: number) => void
@@ -52,11 +52,11 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
             alert('Please select an image to upload.')
             return
         }
-
+        const cleanHTML = DOMPurify.sanitize(valueEn)
         const formData = new FormData()
         formData.append('image', image)
         formData.append('title', titlePost)
-        formData.append('content', valueEn)
+        formData.append('content', cleanHTML)
         formData.append('userId', user.id)
         formData.append('userName', user.name)
         try {

@@ -52,6 +52,7 @@ export default function PostExternal() {
             setCurrentPage(response.data.currentPage)
             setLoading(false)
             console.log(data)
+            console.log('-----------------')
         } catch (error) {
             console.error('Error fetching data:', error)
             setLoading(false)
@@ -206,7 +207,7 @@ export default function PostExternal() {
                                 </a>
                             </div>
                             <hr className="border-gray-300" />
-                            <div className="flex flex-row flex-wrap w-full px-4 py-2 overflow-hidden text-sm text-justify text-gray-700">
+                            <div className="flex flex-row flex-wrap w-full px-4 py-2 overflow-hidden text-justify text-gray-700">
                                 {parse(item.content)}
                             </div>
                             <hr className="border-gray-300" />
