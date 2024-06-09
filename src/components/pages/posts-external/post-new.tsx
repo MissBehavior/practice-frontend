@@ -1,3 +1,4 @@
+import MyEditor from '@/components/editor'
 import { Button } from '@/components/ui/button'
 import {
     Dialog,
@@ -12,18 +13,19 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuth } from '@/services/auth-service'
 import axios from 'axios'
-import React from 'react'
+import React, { useState } from 'react'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 
-interface SolutionsAddNewSolutionProps {
-    fetchData: () => void
+interface PostNewProps {
+    fetchData: (page: number) => void
+    currentPage: number
 }
-function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
-    const { userToken } = useAuth()
-    const [image, setImage] = React.useState<File | null>(null)
-    const [open, setOpen] = React.useState(false)
-    const [contentCard, setContentCard] = React.useState('')
-    const [titleCard, setTitleCard] = React.useState('')
+function PostNew({ fetchData, currentPage }: PostNewProps) {
+    const { user, userToken } = useAuth()
+    const [image, setImage] = useState<File | null>(null)
+    const [open, setOpen] = useState(false)
+    const [valueEn, setValueEn] = useState<string>('')
+    const [titlePost, setTitlePost] = useState<string>('')
 
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log('Image selected')
@@ -40,6 +42,12 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
         e.preventDefault()
         console.log('HANDLE SUBMIT')
         console.log(image)
+        console.log('--------------')
+        console.log(valueEn)
+        console.log(titlePost)
+        console.log(user.id)
+        console.log(user.name)
+
         if (!image) {
             alert('Please select an image to upload.')
             return
@@ -47,11 +55,13 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
 
         const formData = new FormData()
         formData.append('image', image)
-        formData.append('titleCard', titleCard)
-        formData.append('contentCard', contentCard)
+        formData.append('title', titlePost)
+        formData.append('content', valueEn)
+        formData.append('userId', user.id)
+        formData.append('userName', user.name)
         try {
             const response = await axios.post(
-                'http://localhost:3000/solutions/api/upload/',
+                'http://localhost:3000/post/',
                 formData,
                 {
                     headers: {
@@ -65,23 +75,23 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
             console.error('Error uploading image:', error)
         }
         setOpen(false)
-        fetchData()
+        fetchData(currentPage)
     }
     return (
-        <div className="mt-16 mb-12 min-h-64 bg-gray-100 flex justify-center items-center select-none">
+        <div className="mt-16 mb-12 min-h-72 bg-gray-100 flex justify-center items-center select-none">
             <div className="p-6 bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center cursor-pointer">
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
                         <div className="mt-4">
-                            Add new solution
+                            Add new new Post
                             <h1 className="text-2xl font-bold text-gray-700 flex center justify-center">
                                 <IoMdAddCircleOutline />
                             </h1>
                         </div>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
+                    <DialogContent className="sm:max-w-[700px]">
                         <DialogHeader>
-                            <DialogTitle>New Category</DialogTitle>
+                            <DialogTitle>New post</DialogTitle>
                             <DialogDescription>
                                 Add image, title and description
                             </DialogDescription>
@@ -107,27 +117,18 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                                 </Label>
                                 <Input
                                     id="title"
-                                    placeholder="Solution title"
+                                    placeholder="Post title"
                                     className="col-span-3"
                                     onChange={(e) => {
-                                        setTitleCard(e.target.value)
+                                        setTitlePost(e.target.value)
                                     }}
                                 />
                             </div>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label
-                                    htmlFor="description"
-                                    className="text-right"
-                                >
-                                    Description
-                                </Label>
-                                <Input
-                                    id="description"
-                                    placeholder="Solution description"
-                                    className="col-span-3"
-                                    onChange={(e) => {
-                                        setContentCard(e.target.value)
-                                    }}
+                            <div className="grid grid-cols-1 items-center gap-4">
+                                <Label className="text-left">Description</Label>
+                                <MyEditor
+                                    valueEn={valueEn}
+                                    setValueEn={setValueEn}
                                 />
                             </div>
                         </form>
@@ -143,4 +144,4 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
     )
 }
 
-export default SolutionsAddNewSolution
+export default PostNew

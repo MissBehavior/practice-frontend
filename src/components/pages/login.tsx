@@ -6,7 +6,7 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { TSignInSchema, UserTokens, signInSchema } from '@/types'
+import { AuthToken, TSignInSchema, signInSchema } from '@/types'
 import { useAuth } from '@/services/auth-service'
 
 export default function Login() {
@@ -18,7 +18,7 @@ export default function Login() {
     // const [email = '', setEmail] = React.useState<string>()
     // const [password = '', setPassword] = React.useState<string>()
     const [status, setStatus] = React.useState<string>('idle')
-    const [userToken, setUserToken] = React.useState<UserTokens>()
+    const [userToken, setUserToken] = React.useState<AuthToken>()
     const [error, setError] = React.useState<string>()
     const { t } = useTranslation()
     useEffect(() => {

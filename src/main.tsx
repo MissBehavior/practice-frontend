@@ -5,11 +5,11 @@ import './index.css'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './i18n/config.ts'
-import PostExternal from './components/pages/posts-external'
+import PostExternal from './components/pages/posts-external/posts-external.tsx'
 import About from './components/pages/about/about.tsx'
 import Career from './components/pages/career.tsx'
 import Clients from './components/pages/clients.tsx'
-import Gallery from './components/pages/gallery.tsx'
+import Gallery from './components/pages/gallery/gallery.tsx'
 import Home from './components/pages/home.tsx'
 import Solutions from './components/pages/solutions/solutions.tsx'
 import People from './components/pages/people/people.tsx'
@@ -87,14 +87,7 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-        {/* <BrowserRouter> */}
-        {/* <Header /> */}
-        <AuthProvider>
-            <RouterProvider router={router} />
-        </AuthProvider>
-        {/* <App /> */}
-        {/* </BrowserRouter> */}
-        {/* <Footer /> */}
-    </React.StrictMode>
+    <AuthProvider>
+        <RouterProvider router={router} />
+    </AuthProvider>
 )

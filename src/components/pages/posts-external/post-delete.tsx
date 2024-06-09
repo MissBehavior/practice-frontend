@@ -14,10 +14,10 @@ import axios from 'axios'
 import React from 'react'
 import { set } from 'react-hook-form'
 import { MdDeleteForever } from 'react-icons/md'
-interface SolutionsDeleteProps {
+interface PostDeleteProps {
     fetchData: () => void
 }
-function SolutionsDelete({ fetchData, index }: any) {
+function PostDelete({ fetchData, index }: any) {
     const { userToken } = useAuth()
     const [open, setOpen] = React.useState(false)
 
@@ -27,7 +27,7 @@ function SolutionsDelete({ fetchData, index }: any) {
         console.log(index)
         try {
             const response = await axios.delete(
-                'http://localhost:3000/solutions/' + index,
+                'http://localhost:3000/post/' + index,
                 {
                     headers: {
                         Authorization: `Bearer ${userToken!.accessToken}`,
@@ -54,7 +54,7 @@ function SolutionsDelete({ fetchData, index }: any) {
                     <DialogHeader>
                         <DialogTitle>Are you sure?</DialogTitle>
                         <DialogDescription>
-                            Are you sure you want to delete this Solution?
+                            Are you sure you want to delete this Post?
                         </DialogDescription>
                     </DialogHeader>
                     <form
@@ -85,4 +85,4 @@ function SolutionsDelete({ fetchData, index }: any) {
     )
 }
 
-export default SolutionsDelete
+export default PostDelete

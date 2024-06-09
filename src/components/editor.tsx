@@ -1,38 +1,37 @@
 import React, { useState } from 'react'
 import ReactQuill from 'react-quill'
-import { Button } from './ui/button'
 
-function MyEditor() {
+interface EditorProps {
+    valueEn?: string
+    setValueEn: React.Dispatch<React.SetStateAction<string>>
+}
+
+function MyEditor({ valueEn, setValueEn }: EditorProps) {
     const [valueLT, setValueLT] = useState('')
-    const [valueEN, setValueEN] = useState('')
 
     function handleChangeLT(valueLT: string) {
         console.log(valueLT)
         setValueLT(valueLT)
     }
-    function handleChangeEN(valueEN: string) {
-        console.log(valueEN)
-        setValueEN(valueEN)
-    }
-    function handleSubmit() {
-        console.log('clicggked')
+    function handleChangeEN(valueEn: string) {
+        console.log(valueEn)
+        setValueEn(valueEn)
     }
 
     return (
         <>
-            LITHUANIAN chirp
+            {/* LITHUANIAN chirp
             <ReactQuill
                 theme="snow"
                 value={valueLT}
                 onChange={handleChangeLT}
-            />
-            ENGLISH pusik
+            /> */}
             <ReactQuill
                 theme="snow"
-                value={valueEN}
+                value={valueEn ? valueEn : ''}
                 onChange={handleChangeEN}
+                className="w-full"
             />
-            ;<Button onClick={handleSubmit}>Submit</Button>
         </>
     )
 }

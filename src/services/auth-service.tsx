@@ -6,34 +6,18 @@ import React, {
     useEffect,
 } from 'react'
 import { jwtDecode } from 'jwt-decode'
+import axios from 'axios'
+import dayjs from 'dayjs'
+import { AuthContextType, AuthToken, JwtPayload, User } from '@/types'
 
-interface AuthContextType {
-    isLoggedIn: boolean
-    loginFunc: (token: any) => void
-    logoutFunc: () => void
-    setUserFunc: (token: any) => void
-    userToken: any
-    user: User
-}
-interface JwtPayload {
-    isAdmin: boolean
-    name: string
-    iat: number
-    exp: number
-    aud: string
-    iss: string
-}
-interface User {
-    name: string
-    isAdmin: boolean
-    mail?: string
-}
+const baseURL = 'http://localhost:3000'
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [userToken, setUserToken] = useState<any>(null)
-    const [user, setUser] = useState<User>({ name: '', isAdmin: false })
+    const [user, setUser] = useState<User>({ id: '', name: '', isAdmin: false })
 
     useEffect(() => {
         // Check if there's a token in localStorage
@@ -41,15 +25,43 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         // TODO 2: WE NEED TO IMPLEMENT A REFRESH TOKEN FUNCTIONALITY
         const token = localStorage.getItem('token')
         if (token) {
-            setIsLoggedIn(true)
-            setUserToken(JSON.parse(token))
-        }
-        const user = localStorage.getItem('user')
-        if (user) {
-            setUser(JSON.parse(user))
+            const parsedToken = JSON.parse(token) as AuthToken
+            const decodedToken = jwtDecode<JwtPayload>(parsedToken.accessToken)
+            if (dayjs.unix(decodedToken.exp).isBefore(dayjs())) {
+                // Attempt to refresh the token
+                refreshAccessToken(parsedToken)
+            } else {
+                setIsLoggedIn(true)
+                setUserToken(parsedToken)
+                setUserFunc(parsedToken)
+            }
         }
     }, [])
-
+    const decodeToken = (token: any) => {
+        try {
+            const decodedToken = jwtDecode<JwtPayload>(token.accessToken)
+            console.log('decodedToken:', decodedToken)
+            return decodedToken
+        } catch (error) {
+            console.error('Invalid token:', error)
+        }
+    }
+    const refreshAccessToken = async (token: AuthToken) => {
+        console.log('Refreshing token-------------------------')
+        try {
+            const response = await axios.post(`${baseURL}/auth/refresh_token`, {
+                refreshToken: token.refreshToken,
+            })
+            const newToken: AuthToken = response.data
+            setIsLoggedIn(true)
+            setUserToken(newToken)
+            setUserFunc(newToken)
+            localStorage.setItem('token', JSON.stringify(newToken))
+        } catch (error) {
+            console.error('Refresh token failed', error)
+            logoutFunc()
+        }
+    }
     const loginFunc = (token: any) => {
         setIsLoggedIn(true)
         setUserToken(token)
@@ -67,13 +79,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (token) {
             try {
                 const decodedToken = jwtDecode<JwtPayload>(token.accessToken)
+                console.log('decodedToken:', decodedToken)
                 setUser({
+                    id: decodedToken.aud,
                     name: decodedToken.name,
                     isAdmin: decodedToken.isAdmin,
                 })
                 localStorage.setItem(
                     'user',
                     JSON.stringify({
+                        id: decodedToken.aud,
                         name: decodedToken.name,
                         isAdmin: decodedToken.isAdmin,
                     })
@@ -91,6 +106,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 loginFunc,
                 logoutFunc,
                 userToken,
+                setUserToken,
                 setUserFunc,
                 user,
             }}
@@ -105,5 +121,54 @@ export const useAuth = () => {
     if (!context) {
         throw new Error('useAuth must be used within an AuthProvider')
     }
+
     return context
+}
+export const useAxios = () => {
+    const { userToken, setUserToken, setUserFunc, logoutFunc } = useAuth()
+
+    const axiosInstance = axios.create({
+        baseURL,
+        headers: {
+            Authorization: `Bearer ${userToken?.accessToken}`,
+        },
+    })
+
+    axiosInstance.interceptors.request.use(
+        async (req) => {
+            if (!userToken) return req
+
+            const decodedToken = jwtDecode<JwtPayload>(userToken.accessToken)
+            const isExpired = dayjs.unix(decodedToken.exp).isBefore(dayjs())
+
+            if (!isExpired) return req
+
+            try {
+                console.log('Refreshing token-------------------------2')
+                const response = await axios.post(
+                    `${baseURL}/auth/refresh_token`,
+                    {
+                        refreshToken: userToken.refreshToken,
+                    }
+                )
+
+                const newToken: AuthToken = response.data
+                localStorage.setItem('token', JSON.stringify(newToken))
+                setUserToken(newToken)
+                setUserFunc(newToken)
+
+                req.headers.Authorization = `Bearer ${newToken.accessToken}`
+                return req
+            } catch (error) {
+                console.error('Refresh token failed', error)
+                logoutFunc()
+                return Promise.reject(error)
+            }
+        },
+        (error) => {
+            return Promise.reject(error)
+        }
+    )
+
+    return axiosInstance
 }

@@ -50,7 +50,7 @@ function SolutionsEditDialog({
                 {
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${userToken.accessToken}`,
+                        Authorization: `Bearer ${userToken!.accessToken}`,
                     },
                 }
             )

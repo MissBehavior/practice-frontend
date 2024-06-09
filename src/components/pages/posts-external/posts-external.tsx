@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react'
-import MyEditor from '../editor'
+import MyEditor from '../../editor'
 import axios from 'axios'
-import { Skeleton } from '../ui/skeleton'
-import { Button } from '../ui/button'
+import { Skeleton } from '../../ui/skeleton'
+import { Button } from '../../ui/button'
+import { useAuth } from '@/services/auth-service'
+import SolutionsEditDialog from '../solutions/solutions-edit-dialog'
+import PostDelete from './post-delete'
+import PostNew from './post-new'
+import parse from 'html-react-parser'
 interface Data {
     _id: string
     title: string
@@ -64,7 +69,10 @@ export default function PostExternal() {
         return (
             <section className="flex flex-row flex-wrap mx-auto justify-center ">
                 {Array.from({ length: 10 }).map((_, index) => (
-                    <div className="flex w-full px-4 py-6 justify-center">
+                    <div
+                        key={index}
+                        className="flex w-full px-4 py-6 justify-center"
+                    >
                         <div className="space-y-3">
                             <Skeleton className="h-36 w-full" />
                             <Skeleton className="h-8 w-1/2 flex flex-wrap items-center flex-1 px-4 py-1 text-center mx-auto" />
@@ -76,6 +84,8 @@ export default function PostExternal() {
             </section>
         )
     }
+    const { user } = useAuth()
+
     return (
         <>
             {/* {data.map((item) => (
@@ -90,10 +100,30 @@ export default function PostExternal() {
                     <p>By User:{item.userId}</p>
                 </div>
             ))} */}
-
+            {user.isAdmin && (
+                <PostNew fetchData={fetchData} currentPage={currentPage} />
+            )}
             <section className="flex flex-row flex-wrap mx-auto justify-center ">
                 {data.map((item) => (
-                    <div className="transition-all duration-150 flex w-full px-4 py-6 justify-center mr-20 ml-20">
+                    <div
+                        key={item._id}
+                        className="transition-all duration-150 flex lg:w-1/3 sm:w-full  xl:w-1/3 px-4 py-6 justify-center mr-20 ml-20"
+                    >
+                        {user.isAdmin && (
+                            <div className="flex flex-row ml-auto mb-[-20px] z-10 gap-2">
+                                <SolutionsEditDialog
+                                    _id={item._id}
+                                    cardImgUrl={'item.cardImgUrl'}
+                                    titleCard={'item.titleCard'}
+                                    contentCard={'item.contentCard'}
+                                    fetchData={fetchData}
+                                />
+                                <PostDelete
+                                    fetchData={fetchData}
+                                    index={item._id}
+                                />
+                            </div>
+                        )}
                         <div className="flex flex-col items-stretch min-h-full min-w-full pb-4 mb-6 transition-all duration-150 bg-white rounded-lg shadow-lg hover:shadow-2xl">
                             <div className="md:flex-shrink-0">
                                 <img
@@ -176,7 +206,7 @@ export default function PostExternal() {
                             </div>
                             <hr className="border-gray-300" />
                             <p className="flex flex-row flex-wrap w-full px-4 py-2 overflow-hidden text-sm text-justify text-gray-700">
-                                {item.content}
+                                {parse(item.content)}
                             </p>
                             <hr className="border-gray-300" />
                             <section className="px-4 py-2 mt-2">
@@ -219,7 +249,6 @@ export default function PostExternal() {
                     Next
                 </Button>
             </div>
-            <MyEditor />
         </>
     )
 }

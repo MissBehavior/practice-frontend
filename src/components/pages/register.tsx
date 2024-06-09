@@ -6,7 +6,7 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { TSignUpSchema, signUpSchema, UserTokens } from '@/types'
+import { TSignUpSchema, signUpSchema, AuthToken } from '@/types'
 import { useAuth } from '@/services/auth-service'
 
 export default function Register() {
@@ -14,7 +14,7 @@ export default function Register() {
     const navigate = useNavigate()
     const userRef = useRef<HTMLInputElement>(null)
     const [status, setStatus] = React.useState<string>('idle')
-    const [userToken, setUserToken] = React.useState<UserTokens>()
+    const [userToken, setUserToken] = React.useState<AuthToken>()
     const [error, setError] = React.useState<string>()
     const { t } = useTranslation()
     useEffect(() => {

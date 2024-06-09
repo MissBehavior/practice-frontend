@@ -15,15 +15,14 @@ import axios from 'axios'
 import React from 'react'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 
-interface SolutionsAddNewSolutionProps {
+interface GalleryNewDialogProps {
     fetchData: () => void
 }
-function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
+function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
     const { userToken } = useAuth()
     const [image, setImage] = React.useState<File | null>(null)
     const [open, setOpen] = React.useState(false)
-    const [contentCard, setContentCard] = React.useState('')
-    const [titleCard, setTitleCard] = React.useState('')
+    const [title, setTitle] = React.useState('')
 
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log('Image selected')
@@ -47,11 +46,10 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
 
         const formData = new FormData()
         formData.append('image', image)
-        formData.append('titleCard', titleCard)
-        formData.append('contentCard', contentCard)
+        formData.append('title', title)
         try {
             const response = await axios.post(
-                'http://localhost:3000/solutions/api/upload/',
+                'http://localhost:3000/gallery/',
                 formData,
                 {
                     headers: {
@@ -73,7 +71,7 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
                         <div className="mt-4">
-                            Add new solution
+                            Add new Gallery
                             <h1 className="text-2xl font-bold text-gray-700 flex center justify-center">
                                 <IoMdAddCircleOutline />
                             </h1>
@@ -81,9 +79,9 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
-                            <DialogTitle>New Category</DialogTitle>
+                            <DialogTitle>New Gallery</DialogTitle>
                             <DialogDescription>
-                                Add image, title and description
+                                Add image and title
                             </DialogDescription>
                         </DialogHeader>
                         <form
@@ -107,26 +105,10 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                                 </Label>
                                 <Input
                                     id="title"
-                                    placeholder="Solution title"
+                                    placeholder="Gallery title"
                                     className="col-span-3"
                                     onChange={(e) => {
-                                        setTitleCard(e.target.value)
-                                    }}
-                                />
-                            </div>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label
-                                    htmlFor="description"
-                                    className="text-right"
-                                >
-                                    Description
-                                </Label>
-                                <Input
-                                    id="description"
-                                    placeholder="Solution description"
-                                    className="col-span-3"
-                                    onChange={(e) => {
-                                        setContentCard(e.target.value)
+                                        setTitle(e.target.value)
                                     }}
                                 />
                             </div>
@@ -143,4 +125,4 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
     )
 }
 
-export default SolutionsAddNewSolution
+export default GalleryNewDialog

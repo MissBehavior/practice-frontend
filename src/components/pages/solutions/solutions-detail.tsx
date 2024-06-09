@@ -36,8 +36,11 @@ function SolutionsDetail() {
     if (loading) {
         return (
             <section className="flex flex-col flex-wrap mx-auto justify-center align-middle text-center mr-auto ml-auto">
-                {Array.from({ length: 5 }).map((_) => (
-                    <div className="flex w-full px-4 py-6 md:w-1/2 lg:w-1/3 justify-center">
+                {Array.from({ length: 5 }).map((_, index) => (
+                    <div
+                        key={index}
+                        className="flex w-full px-4 py-6 md:w-1/2 lg:w-1/3 justify-center"
+                    >
                         <div className="space-y-3">
                             <Skeleton className="h-36 w-full" />
                             <Skeleton className="h-8 w-1/2 flex flex-wrap items-center flex-1 px-4 py-1 text-center mx-auto" />
