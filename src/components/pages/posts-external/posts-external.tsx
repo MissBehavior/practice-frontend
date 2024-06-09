@@ -130,7 +130,7 @@ export default function PostExternal() {
                                 <img
                                     src={item.postPicture}
                                     alt={`Post image for ${item.title}`}
-                                    className="object-fill w-full rounded-lg rounded-b-none md:h-56"
+                                    className="w-full rounded-lg rounded-b-none md:h-56 object-contain"
                                 />
                             </div>
                             {/* <div className="flex items-center justify-between px-4 py-2 overflow-hidden">
