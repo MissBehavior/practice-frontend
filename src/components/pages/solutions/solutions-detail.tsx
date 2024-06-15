@@ -4,12 +4,15 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import classNamees from './solutions.module.css'
+import MyEditor from '@/components/editor'
+import { Input } from '@/components/ui/input'
 
 function SolutionsDetail() {
     const params = useParams()
     const [loading, setLoading] = useState<boolean>(true)
     const [data, setData] = useState<SolutionsData>()
-
+    const [image, setImage] = React.useState<File | null>(null)
+    const [valueEn, setValueEn] = useState('')
     console.log(params)
     const fetchSolutionDetail = async () => {
         setLoading(true)
@@ -27,7 +30,16 @@ function SolutionsDetail() {
             setLoading(false)
         }
     }
-
+    const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log('Image selected')
+        console.log(e.target.files?.[0])
+        const file = e.target.files?.[0]
+        if (file) {
+            setImage(file)
+        } else {
+            setImage(null)
+        }
+    }
     useEffect(() => {
         // setTimeout(() => {
         fetchSolutionDetail()
@@ -65,9 +77,19 @@ function SolutionsDetail() {
                             alt=""
                         />
                         <div className="mt-4">
+                            <MyEditor
+                                valueEn={valueEn}
+                                setValueEn={setValueEn}
+                            />
                             <h1 className="text-2xl font-bold text-gray-700">
                                 {data!.titleCard}
                             </h1>
+                            <Input
+                                id="file"
+                                className="col-span-3"
+                                type="file"
+                                onChange={handleImage}
+                            />
                             <p className="text-base mt-2 text-cyan-600">
                                 TEST STUFF
                             </p>

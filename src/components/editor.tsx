@@ -47,7 +47,7 @@ function MyEditor({ valueEn, setValueEn }: EditorProps) {
             ['bold', 'italic', 'underline', 'strike', 'blockquote'],
             [{ align: ['right', 'center', 'justify'] }],
             [{ list: 'ordered' }, { list: 'bullet' }],
-            ['link', 'image'],
+            ['link'],
             [{ color: myColors }],
             [{ background: myColors }],
         ],
@@ -63,7 +63,6 @@ function MyEditor({ valueEn, setValueEn }: EditorProps) {
         'bullet',
         'link',
         'color',
-        'image',
         'background',
         'align',
     ]

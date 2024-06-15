@@ -4,7 +4,7 @@ import { ModeToggle } from './mode-toggle'
 import { Button } from './ui/button'
 import { useTranslation } from 'react-i18next'
 import i18n from '@/i18n/config'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import {
     Dialog,
     DialogContent,
@@ -129,68 +129,165 @@ export default function Header() {
                             </Link>
                         </li>
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                            <Link
+                            <NavLink
+                                to="/"
+                                className={({ isActive, isPending }) =>
+                                    isPending
+                                        ? 'pending'
+                                        : isActive
+                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block'
+                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block'
+                                }
+                            >
+                                {t('home')}
+                            </NavLink>
+                            {/* <Link
                                 to="/"
                                 className="hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block"
                             >
                                 {t('home')}
-                            </Link>
+                            </Link> */}
                         </li>
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                            <Link
+                            <NavLink
+                                to="/about"
+                                className={({ isActive, isPending }) =>
+                                    isPending
+                                        ? 'pending'
+                                        : isActive
+                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block'
+                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block'
+                                }
+                            >
+                                {t('about_us')}
+                            </NavLink>
+                            {/* <Link
                                 to="/about"
                                 className="hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block"
                             >
                                 {t('about_us')}
-                            </Link>
+                            </Link> */}
                         </li>
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                            <Link
+                            <NavLink
+                                to="/solutions"
+                                className={({ isActive, isPending }) =>
+                                    isPending
+                                        ? 'pending'
+                                        : isActive
+                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block'
+                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block'
+                                }
+                            >
+                                {t('solutions')}
+                            </NavLink>
+
+                            {/* <Link
                                 to="/solutions"
                                 className="hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block"
                             >
                                 {t('solutions')}
-                            </Link>
+                            </Link> */}
                         </li>
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                            <Link
+                            <NavLink
+                                to="/people"
+                                className={({ isActive, isPending }) =>
+                                    isPending
+                                        ? 'pending'
+                                        : isActive
+                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block'
+                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block'
+                                }
+                            >
+                                {t('people')}
+                            </NavLink>
+                            {/* <Link
                                 to="/people"
                                 className="hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block"
                             >
                                 {t('people')}
-                            </Link>
+                            </Link> */}
                         </li>
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                            <Link
+                            <NavLink
+                                to="/gallery"
+                                className={({ isActive, isPending }) =>
+                                    isPending
+                                        ? 'pending'
+                                        : isActive
+                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block'
+                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block'
+                                }
+                            >
+                                {t('gallery')}
+                            </NavLink>
+                            {/* <Link
                                 to="/gallery"
                                 className="hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block"
                             >
                                 {t('gallery')}
-                            </Link>
+                            </Link> */}
                         </li>
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                            <Link
+                            <NavLink
+                                to="/career"
+                                className={({ isActive, isPending }) =>
+                                    isPending
+                                        ? 'pending'
+                                        : isActive
+                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block'
+                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block'
+                                }
+                            >
+                                {t('career')}
+                            </NavLink>
+                            {/* <Link
                                 to="/career"
                                 className="hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block"
                             >
                                 {t('career')}
-                            </Link>
+                            </Link> */}
                         </li>
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                            <Link
+                            <NavLink
+                                to="/clients"
+                                className={({ isActive, isPending }) =>
+                                    isPending
+                                        ? 'pending'
+                                        : isActive
+                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block'
+                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block'
+                                }
+                            >
+                                {t('clients')}
+                            </NavLink>
+                            {/* <Link
                                 to="/clients"
                                 className="hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block"
                             >
                                 {t('clients')}
-                            </Link>
+                            </Link> */}
                         </li>
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                            <Link
+                            <NavLink
+                                to="/post-external"
+                                className={({ isActive, isPending }) =>
+                                    isPending
+                                        ? 'pending'
+                                        : isActive
+                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block'
+                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block'
+                                }
+                            >
+                                {t('post_external')}
+                            </NavLink>
+                            {/* <Link
                                 to="/post-external"
                                 className="hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block"
                             >
                                 {t('post_external')}
-                            </Link>
+                            </Link> */}
                         </li>
                     </ul>
                 </div>
