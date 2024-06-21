@@ -36,12 +36,27 @@ export interface SolutionsData {
     titleCard: string
     contentCard: string
     contentMain?: string
+    contentMainImg?: string
 }
 export interface GalleryData {
     _id: string
     cardImgUrl: string
     cardImgPath: string
     title: string
+    galleryImages?: galleryImages[]
+}
+export interface galleryImages {
+    imgPath: string
+    imgUrl: string
+}
+export interface PostData {
+    _id: string
+    title: string
+    content: string
+    userId: string
+    createdAt: string
+    userName: string
+    postPicture: string
 }
 import { z } from 'zod'
 

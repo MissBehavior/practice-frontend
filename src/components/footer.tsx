@@ -1,17 +1,13 @@
 import footerimg from '/footer-img.png'
+import classNames from './footer.module.css'
 
 export default function Footer() {
+    // bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900
     return (
-        <footer className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 py-10 px-10 font-sans tracking-wide mt-auto">
-            <div className="max-w-2xl mx-auto text-center">
-                {/* <a href="javascript:void(0)" className="inline-block"> */}
-                <img src={footerimg} alt="logo" className="w-65" />
-                {/* </a> */}
-            </div>
-
-            <ul className="grid max-sm:grid-cols-1 max-lg:grid-cols-2 lg:grid-cols-3 gap-12 mt-10 justify-items-center">
+        <footer className={classNames.ebat + ' bg-slate-700'}>
+            <ul className="grid max-sm:grid-cols-1 max-lg:grid-cols-2 lg:grid-cols-3 gap-12 mt-10 justify-items-center py-3 px-10 border-gray-200 border-b">
                 <li className="flex items-center">
-                    <div className="bg-gray-900 h-10 w-10 rounded-full flex items-center justify-center shrink-0">
+                    <div className="bg-slate-200 h-10 w-10 rounded-full flex items-center justify-center shrink-0">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="20px"
@@ -27,15 +23,17 @@ export default function Footer() {
                     </div>
                     <a
                         href="tel:037052051212"
-                        className="text-blue-500 text-sm ml-3"
+                        className="text-blue-500 text-[20px] ml-3"
                     >
-                        <small className="block">Tel</small>
-                        <strong>+370 52051212</strong>
+                        <p className="block text-gray-500 dark:text-gray-300 ">
+                            Tel
+                        </p>
+                        <strong className="text-[18px]">+370 52051212</strong>
                     </a>
                 </li>
 
                 <li className="flex items-center">
-                    <div className="bg-gray-900 h-10 w-10 rounded-full flex items-center justify-center shrink-0">
+                    <div className="bg-slate-200  h-10 w-10 rounded-full flex items-center justify-center shrink-0">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="20px"
@@ -51,15 +49,17 @@ export default function Footer() {
                     </div>
                     <a
                         href="mailto:info@winbas.eu"
-                        className="text-blue-500 text-sm ml-3"
+                        className="text-blue-500 text-[20px] ml-3"
                     >
-                        <small className="block">Mail</small>
-                        <strong>info@winbas.eu</strong>
+                        <p className="block text-gray-500 dark:text-gray-300 ">
+                            Mail
+                        </p>
+                        <strong className="text-[18px]">info@winbas.eu</strong>
                     </a>
                 </li>
 
                 <li className="flex items-center">
-                    <div className="bg-gray-900 h-10 w-10 rounded-full flex items-center justify-center shrink-0">
+                    <div className="bg-slate-200 h-10 w-10 rounded-full flex items-center justify-center shrink-0">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="20px"
@@ -79,36 +79,26 @@ export default function Footer() {
                     </div>
                     <a
                         href="https://maps.app.goo.gl/NKMz5hhASWKzasDz9"
-                        className="text-blue-500 text-sm ml-3"
+                        className="text-blue-500 text-[20px] ml-3"
                         target="_blank"
                     >
-                        <small className="block">Address</small>
-                        <strong>Žalgirio g. 90c, LT-09303 Vilnius</strong>
+                        <p className="block text-gray-500 dark:text-gray-300 ">
+                            Address
+                        </p>
+                        <strong className="text-[18px]">
+                            Žalgirio g. 90c, LT-09303 Vilnius
+                        </strong>
                     </a>
                 </li>
             </ul>
 
-            <hr className="my-10 border-gray-500" />
-
-            <div className="flex max-md:flex-col gap-4">
-                <ul className="flex flex-wrap gap-4">
-                    <li className="text-sm">
-                        {/* <a href="javascript:void(0)" className="text-blue-500 font-semibold hover:underline"> */}
-                        Terms of Service
-                        {/* </a> */}
-                    </li>
-                    <li className="text-sm">
-                        {/* <a href="javascript:void(0)" className="text-blue-500 font-semibold hover:underline"> */}
-                        Privacy Policy
-                        {/* </a> */}
-                    </li>
-                    <li className="text-sm">
-                        {/* <a href="javascript:void(0)" className="text-blue-500 font-semibold hover:underline"> */}
-                        Security
-                        {/* </a> */}
-                    </li>
-                </ul>
-                <p className="text-sm text-gray-200 md:ml-auto">
+            <div className="flex max-md:flex-col gap-4 align-middle mt-5">
+                <div className="max-w-2xl mx-auto text-center">
+                    {/* <a href="javascript:void(0)" className="inline-block"> */}
+                    <img src={footerimg} alt="logo" className="w-65" />
+                    {/* </a> */}
+                </div>
+                <p className="text-sm md:ml-auto">
                     © 2022, UAB "WinBas" Žalgirio g. 90c, LT-09303 Vilnius
                     info@winbas.eu +370 52051212
                 </p>

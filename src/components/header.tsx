@@ -36,13 +36,13 @@ export default function Header() {
     }
 
     return (
-        <header className="shadow-md bg-white dark:bg-gray-800 font-sans tracking-wide relative z-50">
+        <header className="shadow-md bg-white dark:bg-slate-700 font-sans tracking-wide relative z-50">
             <section className="flex items-center lg:justify-center flex-wrap gap-5 relative py-3 px-10 border-gray-200 border-b dark:border-gray-700 lg:min-h-[80px] max-lg:min-h-[60px]">
                 <Link to="/">
                     <img
                         src={companyLogo}
                         alt="logo"
-                        className="md:w-[170px] w-36"
+                        className="md:w-[170px] w-36 p-3 bg-white rounded-lg select-none"
                     />
                 </Link>
                 <div className="space-x-6 md:absolute md:right-10 flex items-center max-md:ml-auto">
@@ -59,9 +59,28 @@ export default function Header() {
                         />
                     </svg>
                     <ModeToggle />
-                    <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-5 cursor-pointer h-[40px] flex flex-row items-center justify-center gap-2">
-                        <a onClick={setLanguage('en')}>EN</a>|
-                        <a onClick={setLanguage('lt')}>LT</a>
+                    <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-5 h-[40px] flex flex-row items-center justify-center gap-2 select-none">
+                        <a
+                            onClick={setLanguage('en')}
+                            className={
+                                i18n.language === 'en'
+                                    ? 'p-2 bg-slate-300 dark:bg-slate-800 rounded cursor-pointer'
+                                    : 'p-2 cursor-pointer'
+                            }
+                        >
+                            EN
+                        </a>
+                        |
+                        <a
+                            onClick={setLanguage('lt')}
+                            className={
+                                i18n.language === 'lt'
+                                    ? 'p-2 bg-slate-300 dark:bg-slate-800 rounded cursor-pointer'
+                                    : 'p-2 cursor-pointer'
+                            }
+                        >
+                            LT
+                        </a>
                     </div>
                     {!isLoggedIn && (
                         <>
@@ -91,7 +110,7 @@ export default function Header() {
                 </div>
             </section>
 
-            <div className="flex flex-wrap py-3.5 px-10 overflow-x-auto">
+            <div className="flex flex-wrap pt-3.5 px-10 overflow-x-auto">
                 <div
                     id="collapseMenu"
                     style={{ display: isMenuOpen ? 'block' : 'none' }}
@@ -118,13 +137,13 @@ export default function Header() {
                         </svg>
                     </button>
 
-                    <ul className="lg:flex lg:justify-center lg:gap-x-10 max-lg:space-y-3 max-lg:fixed max-lg:bg-white dark:max-lg:bg-gray-800 max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
+                    <ul className="lg:flex lg:justify-center max-lg:space-y-3 max-lg:fixed max-lg:bg-white dark:max-lg:bg-gray-800 max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
                         <li className="mb-6 hidden max-lg:block">
                             <Link to="/">
                                 <img
                                     src={companyLogo}
                                     alt="logo"
-                                    className="w-36"
+                                    className="md:w-[170px] w-36 p-3 bg-white rounded-lg select-none"
                                 />
                             </Link>
                         </li>
@@ -135,8 +154,8 @@ export default function Header() {
                                     isPending
                                         ? 'pending'
                                         : isActive
-                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block'
-                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block'
+                                        ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
+                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
                                 }
                             >
                                 {t('home')}
@@ -155,8 +174,8 @@ export default function Header() {
                                     isPending
                                         ? 'pending'
                                         : isActive
-                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block'
-                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block'
+                                        ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
+                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
                                 }
                             >
                                 {t('about_us')}
@@ -175,8 +194,8 @@ export default function Header() {
                                     isPending
                                         ? 'pending'
                                         : isActive
-                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block'
-                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block'
+                                        ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
+                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
                                 }
                             >
                                 {t('solutions')}
@@ -196,8 +215,8 @@ export default function Header() {
                                     isPending
                                         ? 'pending'
                                         : isActive
-                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block'
-                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block'
+                                        ? 'hover:text-[#007bff]  text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
+                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
                                 }
                             >
                                 {t('people')}
@@ -216,8 +235,8 @@ export default function Header() {
                                     isPending
                                         ? 'pending'
                                         : isActive
-                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block'
-                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block'
+                                        ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
+                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
                                 }
                             >
                                 {t('gallery')}
@@ -229,26 +248,26 @@ export default function Header() {
                                 {t('gallery')}
                             </Link> */}
                         </li>
-                        <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
+                        {/* <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
                             <NavLink
                                 to="/career"
                                 className={({ isActive, isPending }) =>
                                     isPending
                                         ? 'pending'
                                         : isActive
-                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block'
-                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block'
+                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[20px] block'
+                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[20px] block'
                                 }
                             >
                                 {t('career')}
-                            </NavLink>
-                            {/* <Link
+                            </NavLink> */}
+                        {/* <Link
                                 to="/career"
                                 className="hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block"
                             >
                                 {t('career')}
                             </Link> */}
-                        </li>
+                        {/* </li> */}
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
                             <NavLink
                                 to="/clients"
@@ -256,8 +275,8 @@ export default function Header() {
                                     isPending
                                         ? 'pending'
                                         : isActive
-                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block'
-                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block'
+                                        ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
+                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
                                 }
                             >
                                 {t('clients')}
@@ -276,8 +295,8 @@ export default function Header() {
                                     isPending
                                         ? 'pending'
                                         : isActive
-                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block'
-                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block'
+                                        ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
+                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
                                 }
                             >
                                 {t('post_external')}
@@ -295,7 +314,7 @@ export default function Header() {
                 <div className="flex ml-auto lg:hidden">
                     <button id="toggleOpen" onClick={handleClick}>
                         <svg
-                            className="w-7 h-7"
+                            className="w-8 h-8 dark:fill-white "
                             fill="#000"
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"

@@ -71,14 +71,17 @@ export default function Solutions() {
     }
 
     const { user } = useAuth()
-
     return (
         <>
-            <div className={classNamees.container}>
+            <div
+                className={
+                    ' flex flex-wrap justify-center gap-4 items-start bg-white dark:bg-background'
+                }
+            >
                 {data.map((item, index) => (
                     <div
                         key={item._id}
-                        className="mt-16 mb-12 min-h-64 bg-gray-100 flex justify-center items-center flex-col"
+                        className="mt-16 mb-12 min-h-64 bg-gray-100 dark:bg-background flex justify-center items-center flex-col"
                     >
                         {user.isAdmin && (
                             <div className="flex flex-row ml-auto mb-[-20px] z-10 gap-2">
@@ -97,7 +100,7 @@ export default function Solutions() {
                         )}
                         <Link to={`/solutions/` + item._id}>
                             <div
-                                className={`p-6 bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
+                                className={`p-6 bg-white dark:bg-slate-700 shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
                                 onMouseEnter={() => setHoveredItem(index)}
                                 onMouseLeave={() => setHoveredItem(undefined)}
                             >
@@ -107,13 +110,11 @@ export default function Solutions() {
                                     alt=""
                                 />
                                 <div className="mt-4">
-                                    <h1 className="text-2xl font-bold text-gray-700">
+                                    <h1 className="text-2xl font-bold text-gray-700 dark:text-white">
                                         {item.titleCard}
                                     </h1>
-                                    <p className="text-base mt-2 text-cyan-600">
-                                        TEST STUFF
-                                    </p>
-                                    <p className="text-sm mt-2 text-gray-700 max-w-64">
+
+                                    <p className="text-sm mt-2 text-gray-700 dark:text-white max-w-64">
                                         {item.contentCard}
                                     </p>
                                 </div>

@@ -11,32 +11,26 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuth, useAxios } from '@/services/auth-service'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MdEdit } from 'react-icons/md'
 import axios from 'axios'
+import { PostData } from '@/types'
+import MyEditor from '@/components/editor'
 import { useTranslation } from 'react-i18next'
-interface SolutionsEditDialogProps {
-    fetchData: () => void
-    _id: string
-    cardImgUrl: string
-    titleCard: string
-    contentCard: string
+interface PostEditDialogProps {
+    fetchData: (currentPage: number) => void
+    item: PostData
+    currentPage: number
 }
 
-function SolutionsEditDialog({
-    _id,
-    cardImgUrl,
-    titleCard,
-    contentCard,
-    fetchData,
-}: SolutionsEditDialogProps) {
+function PostEdit({ fetchData, currentPage, item }: PostEditDialogProps) {
     const { userToken } = useAuth()
     const api = useAxios()
-    const [open, setOpen] = React.useState(false)
-    const [image, setImage] = React.useState<File | null>(null)
-    const [contentCardEdit, setContentCard] = React.useState('')
-    const [titleCardEdit, setTitleCard] = React.useState('')
     const { t } = useTranslation()
+    const [open, setOpen] = useState(false)
+    const [image, setImage] = useState<File | null>(null)
+    const [titlePost, setTitlePost] = useState<string>('')
+    const [valueEn, setValueEn] = useState<string>('')
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         console.log('HANDLE SUBMIT in EDIT')
@@ -46,10 +40,12 @@ function SolutionsEditDialog({
         }
         const formData = new FormData()
         formData.append('image', image)
-        formData.append('titleCard', titleCardEdit)
-        formData.append('contentCard', contentCardEdit)
+        formData.append('title', titlePost)
+        formData.append('content', valueEn)
+        formData.append('userId', item.userId)
+        formData.append('userName', item.userName)
         try {
-            const response = await api.patch('/solutions/' + _id, formData, {
+            const response = await api.patch('/post/' + item._id, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${userToken!.accessToken}`,
@@ -60,7 +56,7 @@ function SolutionsEditDialog({
             console.error('Error Updating :', error)
         }
         setOpen(false)
-        fetchData()
+        fetchData(currentPage)
     }
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log('Image selected')
@@ -73,20 +69,20 @@ function SolutionsEditDialog({
         }
     }
     useEffect(() => {
-        setTitleCard(titleCard)
-        setContentCard(contentCard)
+        setTitlePost(item.title)
+        setValueEn(item.content)
     }, [])
     return (
         <div>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                     <Button className="rounded-md bg-slate-500 hover:bg-orange-300 shadow-lg transition-all transform duration-150 hover:scale-105 cursor-pointer">
-                        <MdEdit className="relative top-0 right-0 w-[40px] p-1 h-[40px] rounded-md shadow-xl transition-all transform duration-150 hover:scale-105 cursor-pointer" />
+                        <MdEdit className="relative top-0 right-0 w-[40px] p-1 h-[40px] rounded-md  shadow-xl transition-all transform duration-150 hover:scale-105 cursor-pointer" />
                     </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[700px]">
                     <DialogHeader>
-                        <DialogTitle>{t('editSolution')} </DialogTitle>
+                        <DialogTitle>{t('editPost')} </DialogTitle>
                         <DialogDescription></DialogDescription>
                     </DialogHeader>
                     <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
@@ -96,7 +92,7 @@ function SolutionsEditDialog({
                             </Label>
                             <Input
                                 id="file"
-                                className="col-span-3"
+                                className="col-span-3 dark:text-white dark:file:text-white"
                                 type="file"
                                 onChange={handleImage}
                             />
@@ -107,24 +103,20 @@ function SolutionsEditDialog({
                             </Label>
                             <Input
                                 id="title"
-                                placeholder={titleCard}
+                                placeholder={item.title}
                                 className="col-span-3"
                                 onChange={(e) => {
-                                    setTitleCard(e.target.value)
+                                    setTitlePost(e.target.value)
                                 }}
                             />
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="description" className="text-right">
-                                {t('description')}
+                        <div className="grid grid-cols-1 items-center gap-4">
+                            <Label className="text-left">
+                                {t('description')}{' '}
                             </Label>
-                            <Input
-                                id="description"
-                                placeholder={contentCard}
-                                className="col-span-3"
-                                onChange={(e) => {
-                                    setContentCard(e.target.value)
-                                }}
+                            <MyEditor
+                                valueEn={valueEn}
+                                setValueEn={setValueEn}
                             />
                         </div>
                     </form>
@@ -139,4 +131,4 @@ function SolutionsEditDialog({
     )
 }
 
-export default SolutionsEditDialog
+export default PostEdit

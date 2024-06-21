@@ -15,21 +15,9 @@ import React, { useEffect } from 'react'
 import { MdEdit } from 'react-icons/md'
 import axios from 'axios'
 import { useTranslation } from 'react-i18next'
-interface SolutionsEditDialogProps {
-    fetchData: () => void
-    _id: string
-    cardImgUrl: string
-    titleCard: string
-    contentCard: string
-}
+interface SolutionsEditDetailProps {}
 
-function SolutionsEditDialog({
-    _id,
-    cardImgUrl,
-    titleCard,
-    contentCard,
-    fetchData,
-}: SolutionsEditDialogProps) {
+function SolutionsEditDetail({}: SolutionsEditDetailProps) {
     const { userToken } = useAuth()
     const api = useAxios()
     const [open, setOpen] = React.useState(false)
@@ -48,19 +36,19 @@ function SolutionsEditDialog({
         formData.append('image', image)
         formData.append('titleCard', titleCardEdit)
         formData.append('contentCard', contentCardEdit)
-        try {
-            const response = await api.patch('/solutions/' + _id, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${userToken!.accessToken}`,
-                },
-            })
-            console.log(response.data)
-        } catch (error) {
-            console.error('Error Updating :', error)
-        }
-        setOpen(false)
-        fetchData()
+        // try {
+        //     const response = await api.patch('/solutions/' + _id, formData, {
+        //         headers: {
+        //             'Content-Type': 'multipart/form-data',
+        //             Authorization: `Bearer ${userToken!.accessToken}`,
+        //         },
+        //     })
+        //     console.log(response.data)
+        // } catch (error) {
+        //     console.error('Error Updating :', error)
+        // }
+        // setOpen(false)
+        // fetchData()
     }
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log('Image selected')
@@ -73,8 +61,8 @@ function SolutionsEditDialog({
         }
     }
     useEffect(() => {
-        setTitleCard(titleCard)
-        setContentCard(contentCard)
+        // setTitleCard(titleCard)
+        // setContentCard(contentCard)
     }, [])
     return (
         <div>
@@ -107,7 +95,7 @@ function SolutionsEditDialog({
                             </Label>
                             <Input
                                 id="title"
-                                placeholder={titleCard}
+                                // placeholder={titleCard}
                                 className="col-span-3"
                                 onChange={(e) => {
                                     setTitleCard(e.target.value)
@@ -120,7 +108,7 @@ function SolutionsEditDialog({
                             </Label>
                             <Input
                                 id="description"
-                                placeholder={contentCard}
+                                placeholder="{contentCard}"
                                 className="col-span-3"
                                 onChange={(e) => {
                                     setContentCard(e.target.value)
@@ -139,4 +127,4 @@ function SolutionsEditDialog({
     )
 }
 
-export default SolutionsEditDialog
+export default SolutionsEditDetail

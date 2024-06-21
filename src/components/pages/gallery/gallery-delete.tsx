@@ -11,6 +11,7 @@ import {
 import { useAuth, useAxios } from '@/services/auth-service'
 import axios from 'axios'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { MdDeleteForever } from 'react-icons/md'
 interface GalleryDeleteProps {
     fetchData: () => void
@@ -18,6 +19,7 @@ interface GalleryDeleteProps {
 }
 function GalleryDelete({ fetchData, index }: GalleryDeleteProps) {
     const { userToken } = useAuth()
+    const { t } = useTranslation()
     const api = useAxios()
     const [open, setOpen] = React.useState(false)
 
@@ -43,16 +45,16 @@ function GalleryDelete({ fetchData, index }: GalleryDeleteProps) {
         <div>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <Button className="rounded-md bg-red-500 shadow-lg transition-all transform duration-150 hover:scale-105 cursor-pointer">
+                    <Button className="rounded-md bg-slate-500 hover:bg-red-400 shadow-lg transition-all transform duration-150 hover:scale-105 cursor-pointer">
                         <MdDeleteForever className="relative top-0 right-0 w-[40px] p-1 h-[40px] " />
                     </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
-                        <DialogTitle>Are you sure?</DialogTitle>
-                        <DialogDescription>
-                            Are you sure you want to delete this Gallery?
-                        </DialogDescription>
+                        <DialogTitle>
+                            {t('deleteGalleryConfirmation')}
+                        </DialogTitle>
+                        <DialogDescription></DialogDescription>
                     </DialogHeader>
                     <form
                         className="flex flex-row text-center justify-between items-center align-middle"
@@ -65,14 +67,14 @@ function GalleryDelete({ fetchData, index }: GalleryDeleteProps) {
                             }}
                             type="submit"
                         >
-                            Cancel
+                            {t('cancel')}
                         </Button>
                         <Button
                             variant={'destructive'}
                             onClick={handleSubmit}
                             type="submit"
                         >
-                            Yes delete
+                            {t('delete')}
                         </Button>
                     </form>
                     <DialogFooter></DialogFooter>

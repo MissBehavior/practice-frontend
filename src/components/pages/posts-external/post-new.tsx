@@ -15,6 +15,7 @@ import { useAuth, useAxios } from '@/services/auth-service'
 import React, { useState } from 'react'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import DOMPurify from 'dompurify'
+import { useTranslation } from 'react-i18next'
 
 interface PostNewProps {
     fetchData: (page: number) => void
@@ -23,6 +24,7 @@ interface PostNewProps {
 function PostNew({ fetchData, currentPage }: PostNewProps) {
     const { user, userToken } = useAuth()
     const api = useAxios()
+    const { t } = useTranslation()
     const [image, setImage] = useState<File | null>(null)
     const [open, setOpen] = useState(false)
     const [valueEn, setValueEn] = useState<string>('')
@@ -74,23 +76,21 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
         fetchData(currentPage)
     }
     return (
-        <div className="mt-16 mb-12 min-h-72 bg-gray-100 flex justify-center items-center select-none">
-            <div className="p-6 bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center cursor-pointer">
+        <div className="mt-16 mb-12 min-h-32 dark:bg-background flex justify-center items-center select-none">
+            <div className="">
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
-                        <div className="mt-4">
-                            Add new new Post
+                        <div className="p-6 bg-white dark:bg-slate-400 rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center cursor-pointer">
+                            {t('addNewPost')}
                             <h1 className="text-2xl font-bold text-gray-700 flex center justify-center">
                                 <IoMdAddCircleOutline />
                             </h1>
                         </div>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[700px]">
+                    <DialogContent className="sm:max-w-[700px] mt-16 mb-12 min-h-32">
                         <DialogHeader>
-                            <DialogTitle>New post</DialogTitle>
-                            <DialogDescription>
-                                Add image, title and description
-                            </DialogDescription>
+                            <DialogTitle> {t('newPost')}</DialogTitle>
+                            <DialogDescription></DialogDescription>
                         </DialogHeader>
                         <form
                             className="grid gap-4 py-4"
@@ -98,22 +98,22 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
                         >
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="file" className="text-right">
-                                    Image
+                                    {t('image')}
                                 </Label>
                                 <Input
                                     id="file"
-                                    className="col-span-3"
+                                    className="col-span-3 dark:text-white dark:file:text-white "
                                     type="file"
                                     onChange={handleImage}
                                 />
                             </div>
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="title" className="text-right">
-                                    Title
+                                    {t('title')}
                                 </Label>
                                 <Input
                                     id="title"
-                                    placeholder="Post title"
+                                    placeholder={t('postTitle')}
                                     className="col-span-3"
                                     onChange={(e) => {
                                         setTitlePost(e.target.value)
@@ -121,7 +121,9 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
                                 />
                             </div>
                             <div className="grid grid-cols-1 items-center gap-4">
-                                <Label className="text-left">Description</Label>
+                                <Label className="text-left">
+                                    {t('description')}
+                                </Label>
                                 <MyEditor
                                     valueEn={valueEn}
                                     setValueEn={setValueEn}
@@ -130,7 +132,7 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
                         </form>
                         <DialogFooter>
                             <Button onClick={handleSubmit} type="submit">
-                                Submit
+                                {t('submit')}
                             </Button>
                         </DialogFooter>
                     </DialogContent>

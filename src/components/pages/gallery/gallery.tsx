@@ -6,6 +6,8 @@ import axios from 'axios'
 import GalleryNewDialog from './gallery-new-dialog'
 import { GalleryData } from '@/types'
 import GalleryDelete from './gallery-delete'
+import { Carousel } from 'react-responsive-carousel'
+import { Link } from 'react-router-dom'
 
 export default function Gallery() {
     const [data, setData] = useState<GalleryData[]>([])
@@ -56,42 +58,41 @@ export default function Gallery() {
 
     return (
         <>
-            <div className={classNamees.container}>
+            <div
+                className={
+                    'flex flex-wrap justify-center gap-4 items-start bg-white dark:bg-background'
+                }
+            >
                 {data.map((item) => (
                     <div
                         key={item._id}
-                        className="mt-16 mb-12 min-h-64 bg-gray-100 flex justify-center items-center flex-col"
+                        className="mt-16 mb-12 min-h-64 bg-white dark:bg-background flex justify-center items-center flex-col cursor-pointer"
                     >
                         {user.isAdmin && (
                             <div className="flex flex-row ml-auto mb-[-20px] z-10 gap-2">
-                                {/* <SolutionsEditDialog
-                                    _id={item._id}
-                                    cardImgUrl={item.cardImgUrl}
-                                    titleCard={item.titleCard}
-                                    contentCard={item.contentCard}
-                                    fetchData={fetchData}
-                        />*/}
                                 <GalleryDelete
                                     fetchData={fetchData}
                                     index={item._id}
                                 />
                             </div>
                         )}
-                        <div
-                            className={`p-6 bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
-                        >
-                            <img
-                                className="w-64 object-cover rounded-t-md hover:scale-110 rounded transition-all duration-300 ease-in-out"
-                                src={item.cardImgUrl}
-                                alt=""
-                            />
-                            <div className="mt-4">
-                                <h1 className="text-2xl font-bold text-gray-700">
-                                    {item.title}
-                                </h1>
-                                <p className="text-base mt-2 text-cyan-600"></p>
+                        <Link to={`/gallery/` + item._id}>
+                            <div
+                                className={`p-6 bg-white dark:bg-slate-700 shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
+                            >
+                                <img
+                                    className="w-64 object-cover rounded-t-md hover:scale-110 rounded transition-all duration-300 ease-in-out"
+                                    src={item.cardImgUrl}
+                                    alt=""
+                                />
+                                <div className="mt-4">
+                                    <h1 className="text-2xl font-bold text-gray-700 dark:text-white">
+                                        {item.title}
+                                    </h1>
+                                    <p className="text-base mt-2 text-cyan-600"></p>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     </div>
                 ))}
                 {user.isAdmin && <GalleryNewDialog fetchData={fetchData} />}
