@@ -179,8 +179,8 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
                                 {...getMainRootProps()}
                                 style={{
                                     border: '2px dashed gray',
-                                    padding: '20px',
-                                    margin: '10px 0',
+                                    //padding: '20px',
+                                    //margin: '10px 0',
                                 }}
                             >
                                 <input {...getMainInputProps()} />
@@ -213,8 +213,8 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
                                 {...getAdditionalRootProps()}
                                 style={{
                                     border: '2px dashed gray',
-                                    padding: '20px',
-                                    margin: '10px 0',
+                                    //padding: '20px',
+                                    //margin: '10px 0',
                                 }}
                                 className="flex flex-row flex-wrap justify-center items-center gap-4"
                             >
