@@ -219,28 +219,32 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
                                 className="flex flex-row flex-wrap justify-center items-center gap-4"
                             >
                                 <input {...getAdditionalInputProps()} />
-                                {galleryImages.length > 0 ? (
-                                    galleryImages.map((file, index) => (
-                                        <img
-                                            key={index}
-                                            src={URL.createObjectURL(file)}
-                                            alt={`Additional Preview ${index}`}
-                                            style={{
-                                                width: '100px',
-                                                height: '100px',
-                                                margin: '5px',
-                                            }}
-                                        />
-                                    ))
-                                ) : (
-                                    <div className="flex flex-col justify-center items-center align-middle cursor-pointer">
-                                        <MdOutlineFileUpload className="w-12 h-12" />
-                                        <p>
-                                            <strong>{t('chooseFile')}</strong>
-                                            {t('chooseFilePt2')}
-                                        </p>
-                                    </div>
-                                )}
+                                <div className="flex flex-row flex-wrap align-middle justify-center items-center items-start h-auto">
+                                    {galleryImages.length > 0 ? (
+                                        galleryImages.map((file, index) => (
+                                            <img
+                                                key={index}
+                                                src={URL.createObjectURL(file)}
+                                                alt={`Additional Preview ${index}`}
+                                                style={{
+                                                    width: '100px',
+                                                    height: '100px',
+                                                    margin: '5px',
+                                                }}
+                                            />
+                                        ))
+                                    ) : (
+                                        <div className="flex flex-col justify-center items-center align-middle cursor-pointer">
+                                            <MdOutlineFileUpload className="w-12 h-12" />
+                                            <p>
+                                                <strong>
+                                                    {t('chooseFile')}
+                                                </strong>
+                                                {t('chooseFilePt2')}
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </form>
                         <DialogFooter>
