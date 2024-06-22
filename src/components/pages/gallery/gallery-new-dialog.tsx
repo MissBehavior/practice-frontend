@@ -18,6 +18,7 @@ import { useDropzone } from 'react-dropzone'
 import DotLoader from 'react-spinners/DotLoader'
 import { useTheme } from '@/components/theme-provider'
 import { MdOutlineFileUpload } from 'react-icons/md'
+import { toast } from '@/components/ui/use-toast'
 
 interface GalleryNewDialogProps {
     fetchData: () => void
@@ -56,7 +57,11 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
         console.log('SUBMIT CALLED AYY')
         e.preventDefault()
         if (!title || !cardImgUrl || !galleryImages) {
-            alert('Please fill all fields and select images')
+            toast({
+                variant: 'destructive',
+                title: t('error'),
+                description: t('fillAllFields'),
+            })
             return
         }
         setLoading(true)
@@ -82,6 +87,11 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
         }
         setOpen(false)
         setLoading(false)
+        toast({
+            variant: 'success',
+            title: t('success'),
+            description: t('changesSaved'),
+        })
         fetchData()
     }
 

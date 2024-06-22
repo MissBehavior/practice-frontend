@@ -25,12 +25,25 @@ module.exports = {
             },
         },
         extend: {
+            backgroundColor: {
+                success: 'hsl(145 67% 86%)',
+                error: 'hsl(0 84.2% 60.2%)',
+                warning: 'hsl(45 100% 65.9%)',
+            },
+            textColor: {
+                success: 'hsl(145 64% 42%)',
+                error: 'hsl(355 100% 65%)',
+                warning: 'hsl(38 76% 48%)',
+            },
             colors: {
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',
                 ring: 'hsl(var(--ring))',
                 background: 'hsl(var(--background))',
                 foreground: 'hsl(var(--foreground))',
+                successc: 'hsl(var(--successc))',
+                errorc: 'hsl(var(--errorc))',
+                warningc: 'hsl(var(--warningc))',
                 primary: {
                     DEFAULT: 'hsl(var(--primary))',
                     foreground: 'hsl(var(--primary-foreground))',
