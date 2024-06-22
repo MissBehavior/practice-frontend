@@ -1,3 +1,4 @@
+import { useTheme } from '@/components/theme-provider'
 import { Button } from '@/components/ui/button'
 import {
     Dialog,
@@ -13,9 +14,10 @@ import { Label } from '@/components/ui/label'
 import { toast } from '@/components/ui/use-toast'
 import { useAuth, useAxios } from '@/services/auth-service'
 import axios from 'axios'
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IoMdAddCircleOutline } from 'react-icons/io'
+import DotLoader from 'react-spinners/DotLoader'
 
 interface SolutionsAddNewSolutionProps {
     fetchData: () => void
@@ -23,11 +25,13 @@ interface SolutionsAddNewSolutionProps {
 function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
     const { userToken } = useAuth()
     const api = useAxios()
-    const [image, setImage] = React.useState<File | null>(null)
-    const [open, setOpen] = React.useState(false)
-    const [contentCard, setContentCard] = React.useState('')
-    const [titleCard, setTitleCard] = React.useState('')
+    const [image, setImage] = useState<File | null>(null)
+    const [open, setOpen] = useState(false)
+    const [contentCard, setContentCard] = useState('')
+    const [titleCard, setTitleCard] = useState('')
     const { t } = useTranslation()
+    const [loading, setLoading] = useState(false)
+    const { theme } = useTheme()
 
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log('Image selected')
@@ -41,6 +45,7 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
+        setLoading(true)
         e.preventDefault()
         console.log('HANDLE SUBMIT')
         console.log(image)
@@ -78,6 +83,7 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
             title: t('success'),
             description: t('changesSaved'),
         })
+        setLoading(false)
         fetchData()
     }
     return (
@@ -151,9 +157,20 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                             </div>
                         </form>
                         <DialogFooter>
-                            <Button onClick={handleSubmit} type="submit">
-                                {t('submit')}
-                            </Button>
+                            {loading && (
+                                <DotLoader
+                                    color={
+                                        theme === 'dark'
+                                            ? '#ffffff'
+                                            : 'rgb(51 65 85)'
+                                    }
+                                />
+                            )}
+                            {!loading && (
+                                <Button onClick={handleSubmit} type="submit">
+                                    {t('submit')}
+                                </Button>
+                            )}
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>
