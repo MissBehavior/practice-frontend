@@ -73,7 +73,15 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
     return (
         <div className="mt-16 mb-12 min-h-64 bg-white dark:bg-background flex justify-center items-center select-none">
             <div className="">
-                <Dialog open={open} onOpenChange={setOpen}>
+                <Dialog
+                    open={open}
+                    onOpenChange={() => {
+                        setImage(null)
+                        setContentCard('')
+                        setTitleCard('')
+                        setOpen(!open)
+                    }}
+                >
                     <DialogTrigger asChild>
                         <div className="p-6 bg-white dark:bg-slate-400 rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center cursor-pointer">
                             {t('newSolution')}
