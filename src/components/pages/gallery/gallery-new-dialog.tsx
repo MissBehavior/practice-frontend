@@ -132,7 +132,7 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
     })
 
     return (
-        <div className="mt-16 mb-12 min-h-64 bg-white dark:bg-background flex justify-center items-center select-none">
+        <div className="mt-16 mb-12  bg-white dark:bg-background flex justify-center items-center select-none">
             <div className="">
                 <Dialog
                     open={open}
@@ -151,7 +151,7 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
                             </h1>
                         </div>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[500px]">
+                    <DialogContent className="sm:max-w-[700px] xs:max-h-[80vh]">
                         <DialogHeader>
                             <DialogTitle>{t('newGallery')}</DialogTitle>
                             <DialogDescription></DialogDescription>
@@ -219,7 +219,7 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
                                 className="flex flex-row flex-wrap justify-center items-center gap-4"
                             >
                                 <input {...getAdditionalInputProps()} />
-                                <div className="flex flex-row flex-wrap align-middle justify-center items-start h-full max-h-[50vh] overflow-y-auto overflow-x-hidden">
+                                <div className="flex flex-row flex-wrap align-middle justify-center items-start h-full max-h-[30vh] overflow-y-auto overflow-x-hidden">
                                     {galleryImages.length > 0 ? (
                                         galleryImages.map((file, index) => (
                                             <img
@@ -227,8 +227,8 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
                                                 src={URL.createObjectURL(file)}
                                                 alt={`Additional Preview ${index}`}
                                                 style={{
-                                                    // width: '100px',
-                                                    // height: '100px',
+                                                    width: '100px',
+                                                    height: '100px',
                                                     margin: '5px',
                                                 }}
                                             />
