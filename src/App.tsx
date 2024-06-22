@@ -16,12 +16,14 @@ function App() {
             <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
                 <Header />
                 <Toaster />
-                <img
-                    className="m-auto h-full max-h-96 object-cover w-full"
-                    src={postExternalImg}
-                    alt=""
-                />
-                <Outlet />
+                <div className="min-h-screen">
+                    <img
+                        className="m-auto h-full max-h-96 object-cover w-full"
+                        src={postExternalImg}
+                        alt=""
+                    />
+                    <Outlet />
+                </div>
                 <Footer />
             </ThemeProvider>
         </>
