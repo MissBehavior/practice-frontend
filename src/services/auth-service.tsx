@@ -17,7 +17,12 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [userToken, setUserToken] = useState<any>(null)
-    const [user, setUser] = useState<User>({ id: '', name: '', isAdmin: false })
+    const [user, setUser] = useState<User>({
+        id: '',
+        name: '',
+        isAdmin: false,
+        isEmployee: false,
+    })
 
     useEffect(() => {
         // Check if there's a token in localStorage
@@ -81,6 +86,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                     id: decodedToken.aud,
                     name: decodedToken.name,
                     isAdmin: decodedToken.isAdmin,
+                    isEmployee: decodedToken.isEmployee,
                 })
                 localStorage.setItem(
                     'user',
@@ -88,6 +94,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                         id: decodedToken.aud,
                         name: decodedToken.name,
                         isAdmin: decodedToken.isAdmin,
+                        isEmployee: decodedToken.isEmployee,
                     })
                 )
             } catch (error) {

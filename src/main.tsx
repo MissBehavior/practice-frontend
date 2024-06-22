@@ -18,6 +18,8 @@ import ProtectedRoutes from './services/protected-routes.tsx'
 import { AuthProvider } from './services/auth-service.tsx'
 import SolutionsDetail from './components/pages/solutions/solutions-detail.tsx'
 import GalleryDetail from './components/pages/gallery/gallery-detail.tsx'
+import EmployeeRoutes from './services/employee-routes.tsx'
+import TeamUpdates from './components/team-updates/team-updates.tsx'
 
 const router = createBrowserRouter([
     {
@@ -65,13 +67,13 @@ const router = createBrowserRouter([
                 element: <SolutionsDetail />,
             },
             {
-                element: <ProtectedRoutes />,
-                // children: [
-                //     {
-                //         path: '/people',
-                //         element: <People />,
-                //     },
-                // ],
+                element: <EmployeeRoutes />,
+                children: [
+                    {
+                        path: '/team-updates',
+                        element: <TeamUpdates />,
+                    },
+                ],
             },
             {
                 path: '/login',

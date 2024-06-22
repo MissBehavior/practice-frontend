@@ -71,7 +71,7 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
         fetchData()
     }
     return (
-        <div className="mt-16 mb-12 min-h-64 bg-gray-100 dark:bg-background flex justify-center items-center select-none">
+        <div className="mt-16 mb-12 min-h-64 bg-white dark:bg-background flex justify-center items-center select-none">
             <div className="">
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>

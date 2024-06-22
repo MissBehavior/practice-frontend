@@ -4,7 +4,7 @@ import classNames from './footer.module.css'
 export default function Footer() {
     // bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900
     return (
-        <footer className={classNames.ebat + ' bg-slate-700'}>
+        <footer className={classNames.containerR + ' dark:bg-slate-700'}>
             <ul className="grid max-sm:grid-cols-1 max-lg:grid-cols-2 lg:grid-cols-3 gap-12 mt-10 justify-items-center py-3 px-10 border-gray-200 border-b">
                 <li className="flex items-center">
                     <div className="bg-slate-200 h-10 w-10 rounded-full flex items-center justify-center shrink-0">

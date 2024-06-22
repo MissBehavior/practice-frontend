@@ -13,6 +13,7 @@ export interface AuthContextType {
 }
 export interface JwtPayload {
     isAdmin: boolean
+    isEmployee: boolean
     name: string
     iat: number
     exp: number
@@ -27,6 +28,7 @@ export interface User {
     id: string
     name: string
     isAdmin: boolean
+    isEmployee: boolean
     mail?: string
 }
 export interface SolutionsData {

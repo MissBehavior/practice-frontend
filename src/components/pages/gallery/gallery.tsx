@@ -1,4 +1,3 @@
-import classNamees from './gallery.module.css'
 import { useAuth } from '@/services/auth-service'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useEffect, useState } from 'react'
@@ -6,7 +5,6 @@ import axios from 'axios'
 import GalleryNewDialog from './gallery-new-dialog'
 import { GalleryData } from '@/types'
 import GalleryDelete from './gallery-delete'
-import { Carousel } from 'react-responsive-carousel'
 import { Link } from 'react-router-dom'
 
 export default function Gallery() {

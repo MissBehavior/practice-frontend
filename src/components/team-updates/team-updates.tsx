@@ -1,21 +1,23 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Skeleton } from '../../ui/skeleton'
-import { Button } from '../../ui/button'
+// import { Skeleton } from '../../ui/skeleton'
+// import { Button } from '../../ui/button'
 import { useAuth } from '@/services/auth-service'
-import PostDelete from './post-delete'
-import PostNew from './post-new'
+// import PostDelete from './post-delete'
+// import PostNew from './post-new'
 import parse from 'html-react-parser'
 import { PostData } from '@/types'
-import PostEdit from './post-edit'
+// import PostEdit from './post-edit'
 import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
+import { Skeleton } from '../ui/skeleton'
+import { Button } from '../ui/button'
 interface PaginatedResponse {
     totalPages: number
     currentPage: number
     posts: PostData[]
 }
-export default function PostExternal() {
+export default function TeamUpdates() {
     const [data, setData] = useState<PostData[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [currentPage, setCurrentPage] = useState<number>(1)
@@ -98,17 +100,18 @@ export default function PostExternal() {
                 </div>
             ))} */}
             {user.isAdmin && (
-                <PostNew fetchData={fetchData} currentPage={currentPage} />
+                <div>Admin</div>
+                // <PostNew fetchData={fetchData} currentPage={currentPage} />
             )}
             <section className="flex flex-row flex-wrap mx-auto justify-center">
                 {data.map((item) => (
                     <div
                         key={item._id}
-                        className="flex flex-col transition-all duration-150 lg:w-1/3 sm:w-full  xl:w-1/3 2xl:w-1/4 px-4 py-6 justify-center mr-10 ml-10"
+                        className="flex flex-col transition-all duration-150  sm:w-full md:w-50% md:p-10 xl:px-64  2xl:px-96 px-4 py-6 justify-center mr-10 ml-10"
                     >
                         {user.isAdmin && (
                             <div className="flex flex-row ml-auto mr-[25px] mb-[-25px] z-10 gap-2">
-                                <PostEdit
+                                {/* <PostEdit
                                     fetchData={fetchData}
                                     currentPage={currentPage}
                                     item={item}
@@ -117,7 +120,7 @@ export default function PostExternal() {
                                     fetchData={fetchData}
                                     currentPage={currentPage}
                                     index={item._id}
-                                />
+                                /> */}
                             </div>
                         )}
                         <div className="flex flex-col items-stretch min-h-full min-w-full pb-4 mb-6 transition-all duration-150 bg-white dark:bg-slate-700 shadow-lg hover:shadow-2xl mb-5 ">

@@ -132,7 +132,6 @@ export default function Login() {
                     type="submit"
                     className="disabled:bg-red-500 py-2 rounded"
                     onClick={() => {
-                        console.log('EBATZJ PRESSESD')
                         handleSubmit(onSubmitE)
                     }}
                 >

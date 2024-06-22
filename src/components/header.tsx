@@ -17,6 +17,7 @@ import Login from './pages/login'
 import { useAuth } from '@/services/auth-service'
 export default function Header() {
     const { isLoggedIn, logoutFunc } = useAuth()
+    const { user } = useAuth()
     const { t } = useTranslation()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -110,7 +111,7 @@ export default function Header() {
                 </div>
             </section>
 
-            <div className="flex flex-wrap pt-3.5 px-10 overflow-x-auto">
+            <div className="flex flex-wrap pt-3.5 xl:px-5 overflow-x-auto">
                 <div
                     id="collapseMenu"
                     style={{ display: isMenuOpen ? 'block' : 'none' }}
@@ -200,13 +201,6 @@ export default function Header() {
                             >
                                 {t('solutions')}
                             </NavLink>
-
-                            {/* <Link
-                                to="/solutions"
-                                className="hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block"
-                            >
-                                {t('solutions')}
-                            </Link> */}
                         </li>
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
                             <NavLink
@@ -221,12 +215,6 @@ export default function Header() {
                             >
                                 {t('people')}
                             </NavLink>
-                            {/* <Link
-                                to="/people"
-                                className="hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block"
-                            >
-                                {t('people')}
-                            </Link> */}
                         </li>
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
                             <NavLink
@@ -241,12 +229,6 @@ export default function Header() {
                             >
                                 {t('gallery')}
                             </NavLink>
-                            {/* <Link
-                                to="/gallery"
-                                className="hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block"
-                            >
-                                {t('gallery')}
-                            </Link> */}
                         </li>
                         {/* <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
                             <NavLink
@@ -260,14 +242,7 @@ export default function Header() {
                                 }
                             >
                                 {t('career')}
-                            </NavLink> */}
-                        {/* <Link
-                                to="/career"
-                                className="hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block"
-                            >
-                                {t('career')}
-                            </Link> */}
-                        {/* </li> */}
+                            </NavLink>  </li> */}
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
                             <NavLink
                                 to="/clients"
@@ -281,12 +256,6 @@ export default function Header() {
                             >
                                 {t('clients')}
                             </NavLink>
-                            {/* <Link
-                                to="/clients"
-                                className="hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block"
-                            >
-                                {t('clients')}
-                            </Link> */}
                         </li>
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
                             <NavLink
@@ -301,17 +270,27 @@ export default function Header() {
                             >
                                 {t('post_external')}
                             </NavLink>
-                            {/* <Link
-                                to="/post-external"
-                                className="hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block"
-                            >
-                                {t('post_external')}
-                            </Link> */}
                         </li>
+                        {user.isEmployee && (
+                            <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
+                                <NavLink
+                                    to="/team-updates"
+                                    className={({ isActive, isPending }) =>
+                                        isPending
+                                            ? 'pending'
+                                            : isActive
+                                            ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
+                                            : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
+                                    }
+                                >
+                                    {t('team_updates')}
+                                </NavLink>
+                            </li>
+                        )}
                     </ul>
                 </div>
 
-                <div className="flex ml-auto lg:hidden">
+                <div className="flex ml-auto lg:hidden pr-4">
                     <button id="toggleOpen" onClick={handleClick}>
                         <svg
                             className="w-8 h-8 dark:fill-white "

@@ -1,14 +1,11 @@
 import { Skeleton } from '@/components/ui/skeleton'
-import { GalleryData, SolutionsData } from '@/types'
+import { GalleryData } from '@/types'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAuth } from '@/services/auth-service'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
 import { useTranslation } from 'react-i18next'
 import { Carousel } from 'react-responsive-carousel'
-import { galleryImages } from '../../../types'
 import { Button } from '@/components/ui/button'
 import { useTheme } from '@/components/theme-provider'
 
@@ -19,7 +16,6 @@ function GalleryDetail() {
     const [loading, setLoading] = useState<boolean>(true)
     const [data, setData] = useState<GalleryData>()
     const [isFullscreen, setIsFullscreen] = useState(false)
-    const { theme } = useTheme()
 
     const openFullscreen = () => {
         setIsFullscreen(true)
@@ -45,16 +41,7 @@ function GalleryDetail() {
             setLoading(false)
         }
     }
-    // const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     console.log('Image selected')
-    //     console.log(e.target.files?.[0])
-    //     const file = e.target.files?.[0]
-    //     if (file) {
-    //         setImage(file)
-    //     } else {
-    //         setImage(null)
-    //     }
-    // }
+
     useEffect(() => {
         // setTimeout(() => {
         fetchSolutionDetail()

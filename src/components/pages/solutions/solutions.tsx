@@ -81,7 +81,7 @@ export default function Solutions() {
                 {data.map((item, index) => (
                     <div
                         key={item._id}
-                        className="mt-16 mb-12 min-h-64 bg-gray-100 dark:bg-background flex justify-center items-center flex-col"
+                        className="mt-16 mb-12 min-h-64 bg-white dark:bg-background flex justify-center items-center flex-col"
                     >
                         {user.isAdmin && (
                             <div className="flex flex-row ml-auto mb-[-20px] z-10 gap-2">
