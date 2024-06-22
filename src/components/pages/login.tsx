@@ -104,40 +104,48 @@ export default function Login() {
                     {error}
                 </div>
             )}
-            <form
-                onSubmit={handleSubmit(onSubmitE)}
-                className="flex flex-col gap-y-2"
+            <div
+                className={
+                    'flex flex-wrap justify-center items-start bg-white dark:bg-background'
+                }
             >
-                <input
-                    {...register('email')}
-                    type="email"
-                    placeholder="Email"
-                    className="px-4 py-2 rounded"
-                />
-                {errors.email && (
-                    <p className="text-red-500">{`${errors.email.message}`}</p>
-                )}
-                <input
-                    {...register('password')}
-                    type="password"
-                    placeholder="Password"
-                    className="px-4 py-2 rounded"
-                />
-                {errors.password && (
-                    <p className="text-red-500">{`${errors.password.message}`}</p>
-                )}
+                <div className="mt-16 mb-12 min-h-64 w-full bg-white dark:bg-background flex justify-center items-center flex-col">
+                    <form
+                        onSubmit={handleSubmit(onSubmitE)}
+                        className={`flex flex-col gap-10 p-16 xs:w-full md:w-11/12 lg:w-9/12 xl:w-7/12 2xl:w-2/6 w-full bg-white dark:bg-slate-700 shadow-xl hover:shadow-2xl transition-all transform duration-300 text-center items-center justify-center`}
+                    >
+                        <input
+                            {...register('email')}
+                            type="email"
+                            placeholder="Email"
+                            className="w-full px-2 py-2 rounded border-solid border-slate-700 dark:border-slate-300 border-2  dark:bg-slate-700"
+                        />
+                        {errors.email && (
+                            <p className="text-red-500">{`${errors.email.message}`}</p>
+                        )}
+                        <input
+                            {...register('password')}
+                            type="password"
+                            placeholder="Password"
+                            className="w-full px-2 py-2 rounded border-solid border-slate-700 dark:border-slate-300 border-2  dark:bg-slate-700"
+                        />
+                        {errors.password && (
+                            <p className="text-red-500">{`${errors.password.message}`}</p>
+                        )}
 
-                <Button
-                    disabled={isSubmitting}
-                    type="submit"
-                    className="disabled:bg-red-500 py-2 rounded"
-                    onClick={() => {
-                        handleSubmit(onSubmitE)
-                    }}
-                >
-                    {t('login')}
-                </Button>
-            </form>
+                        <Button
+                            disabled={isSubmitting}
+                            type="submit"
+                            className="disabled:bg-red-500 py-2 rounded"
+                            onClick={() => {
+                                handleSubmit(onSubmitE)
+                            }}
+                        >
+                            {t('login')}
+                        </Button>
+                    </form>
+                </div>
+            </div>
         </>
     )
 }

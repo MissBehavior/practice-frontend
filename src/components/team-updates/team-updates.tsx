@@ -37,7 +37,7 @@ export default function TeamUpdates() {
         setLoading(true)
         try {
             const response = await axios.get<PaginatedResponse>(
-                'http://localhost:3000/post',
+                'http://localhost:3000/postinternal',
                 {
                     params: { page, limit: 10 },
                 }
