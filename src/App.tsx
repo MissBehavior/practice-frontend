@@ -31,3 +31,5 @@ function App() {
 }
 
 export default App
+// - > Long text problem
+// -> Image additiongalery needs to be sent

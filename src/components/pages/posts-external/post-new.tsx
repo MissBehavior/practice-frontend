@@ -16,6 +16,7 @@ import React, { useState } from 'react'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import DOMPurify from 'dompurify'
 import { useTranslation } from 'react-i18next'
+import { toast } from '@/components/ui/use-toast'
 
 interface PostNewProps {
     fetchData: (page: number) => void
@@ -50,8 +51,12 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
         console.log(user.id)
         console.log(user.name)
 
-        if (!image) {
-            alert('Please select an image to upload.')
+        if (!image || !valueEn || !titlePost) {
+            toast({
+                variant: 'destructive',
+                title: t('error'),
+                description: t('fillAllFields'),
+            })
             return
         }
         const cleanHTML = DOMPurify.sanitize(valueEn)
@@ -73,6 +78,11 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
             console.error('Error uploading image:', error)
         }
         setOpen(false)
+        toast({
+            variant: 'success',
+            title: t('success'),
+            description: t('changesSaved'),
+        })
         fetchData(currentPage)
     }
     return (

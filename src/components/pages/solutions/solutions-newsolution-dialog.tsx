@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { toast } from '@/components/ui/use-toast'
 import { useAuth, useAxios } from '@/services/auth-service'
 import axios from 'axios'
 import React from 'react'
@@ -43,8 +44,12 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
         e.preventDefault()
         console.log('HANDLE SUBMIT')
         console.log(image)
-        if (!image) {
-            alert('Please select an image to upload.')
+        if (!image || !titleCard || !contentCard) {
+            toast({
+                variant: 'destructive',
+                title: t('error'),
+                description: t('fillAllFields'),
+            })
             return
         }
 
@@ -68,6 +73,11 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
             console.error('Error uploading image:', error)
         }
         setOpen(false)
+        toast({
+            variant: 'success',
+            title: t('success'),
+            description: t('changesSaved'),
+        })
         fetchData()
     }
     return (
