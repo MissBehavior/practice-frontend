@@ -16,6 +16,8 @@ import { MdEdit } from 'react-icons/md'
 import { PostData } from '@/types'
 import MyEditor from '@/components/editor'
 import { useTranslation } from 'react-i18next'
+import { useTheme } from '@/components/theme-provider'
+import DotLoader from 'react-spinners/DotLoader'
 interface PostEditDialogProps {
     fetchData: (currentPage: number) => void
     item: PostData
@@ -30,8 +32,11 @@ function PostEdit({ fetchData, currentPage, item }: PostEditDialogProps) {
     const [image, setImage] = useState<File | null>(null)
     const [titlePost, setTitlePost] = useState<string>('')
     const [valueEn, setValueEn] = useState<string>('')
+    const [loading, setLoading] = useState(false)
+    const { theme } = useTheme()
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setLoading(true)
         console.log('HANDLE SUBMIT in EDIT')
         if (!image) {
             alert('Please select an image to upload.')
@@ -55,6 +60,7 @@ function PostEdit({ fetchData, currentPage, item }: PostEditDialogProps) {
             console.error('Error Updating :', error)
         }
         setOpen(false)
+        setLoading(false)
         fetchData(currentPage)
     }
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,9 +126,20 @@ function PostEdit({ fetchData, currentPage, item }: PostEditDialogProps) {
                         </div>
                     </form>
                     <DialogFooter>
-                        <Button onClick={handleSubmit} type="submit">
-                            {t('submit')}
-                        </Button>
+                        {loading && (
+                            <DotLoader
+                                color={
+                                    theme === 'dark'
+                                        ? '#ffffff'
+                                        : 'rgb(51 65 85)'
+                                }
+                            />
+                        )}
+                        {!loading && (
+                            <Button onClick={handleSubmit} type="submit">
+                                {t('submit')}
+                            </Button>
+                        )}
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

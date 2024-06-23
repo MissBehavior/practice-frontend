@@ -17,6 +17,8 @@ import { IoMdAddCircleOutline } from 'react-icons/io'
 import DOMPurify from 'dompurify'
 import { useTranslation } from 'react-i18next'
 import { toast } from '@/components/ui/use-toast'
+import { useTheme } from '@/components/theme-provider'
+import DotLoader from 'react-spinners/DotLoader'
 
 interface PostNewProps {
     fetchData: (page: number) => void
@@ -30,6 +32,8 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
     const [open, setOpen] = useState(false)
     const [valueEn, setValueEn] = useState<string>('')
     const [titlePost, setTitlePost] = useState<string>('')
+    const [loading, setLoading] = useState(false)
+    const { theme } = useTheme()
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log('Image selected')
         console.log(e.target.files?.[0])
@@ -43,6 +47,7 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setLoading(true)
         console.log('HANDLE SUBMIT')
         console.log(image)
         console.log('--------------')
@@ -83,6 +88,7 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
             title: t('success'),
             description: t('changesSaved'),
         })
+        setLoading(false)
         fetchData(currentPage)
     }
     return (
@@ -141,9 +147,20 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
                             </div>
                         </form>
                         <DialogFooter>
-                            <Button onClick={handleSubmit} type="submit">
-                                {t('submit')}
-                            </Button>
+                            {loading && (
+                                <DotLoader
+                                    color={
+                                        theme === 'dark'
+                                            ? '#ffffff'
+                                            : 'rgb(51 65 85)'
+                                    }
+                                />
+                            )}
+                            {!loading && (
+                                <Button onClick={handleSubmit} type="submit">
+                                    {t('submit')}
+                                </Button>
+                            )}
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>

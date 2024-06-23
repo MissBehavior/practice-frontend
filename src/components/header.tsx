@@ -5,15 +5,6 @@ import { Button } from './ui/button'
 import { useTranslation } from 'react-i18next'
 import i18n from '@/i18n/config'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog'
-import Login from './pages/login'
 import { useAuth } from '@/services/auth-service'
 export default function Header() {
     const { isLoggedIn, logoutFunc } = useAuth()
@@ -89,13 +80,11 @@ export default function Header() {
                                 <Button onClick={navToLogin}>
                                     {t('login')}
                                 </Button>
-                                {/* <Login /> */}
                             </div>
                             <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-6 cursor-pointer">
                                 <Button onClick={navToRegister}>
                                     {t('register')}
                                 </Button>
-                                {/* <Login /> */}
                             </div>
                         </>
                     )}
@@ -117,26 +106,31 @@ export default function Header() {
                     style={{ display: isMenuOpen ? 'block' : 'none' }}
                     className="w-full max-lg:hidden lg:!block max-lg:before:fixed max-lg:before:bg-black max-lg:before:opacity-50 max-lg:before:inset-0 max-lg:before:z-50"
                 >
-                    <button
-                        id="toggleClose"
+                    <div
+                        className="w-1/2 h-full fixed lg:hidden z-[100]  right-0 top-0"
                         onClick={handleClick}
-                        className="lg:hidden fixed top-2 right-4 z-[100] rounded-full bg-white dark:bg-gray-700 p-3"
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="w-4 fill-black dark:fill-white"
-                            viewBox="0 0 320.591 320.591"
+                        <button
+                            id="toggleClose"
+                            onClick={handleClick}
+                            className="lg:hidden fixed top-2 right-4 z-[100] rounded-full bg-white dark:bg-gray-700 p-3"
                         >
-                            <path
-                                d="M30.391 318.583a30.37 30.37 0 0 1-21.56-7.288c-11.774-11.844-11.774-30.973 0-42.817L266.643 10.665c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875L51.647 311.295a30.366 30.366 0 0 1-21.256 7.288z"
-                                data-original="#000000"
-                            ></path>
-                            <path
-                                d="M287.9 318.583a30.37 30.37 0 0 1-21.257-8.806L8.83 51.963C-2.078 39.225-.595 20.055 12.143 9.146c11.369-9.736 28.136-9.736 39.504 0l259.331 257.813c12.243 11.462 12.876 30.679 1.414 42.922-.456.487-.927.958-1.414 1.414a30.368 30.368 0 0 1-23.078 7.288z"
-                                data-original="#000000"
-                            ></path>
-                        </svg>
-                    </button>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-4 fill-black dark:fill-white"
+                                viewBox="0 0 320.591 320.591"
+                            >
+                                <path
+                                    d="M30.391 318.583a30.37 30.37 0 0 1-21.56-7.288c-11.774-11.844-11.774-30.973 0-42.817L266.643 10.665c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875L51.647 311.295a30.366 30.366 0 0 1-21.256 7.288z"
+                                    data-original="#000000"
+                                ></path>
+                                <path
+                                    d="M287.9 318.583a30.37 30.37 0 0 1-21.257-8.806L8.83 51.963C-2.078 39.225-.595 20.055 12.143 9.146c11.369-9.736 28.136-9.736 39.504 0l259.331 257.813c12.243 11.462 12.876 30.679 1.414 42.922-.456.487-.927.958-1.414 1.414a30.368 30.368 0 0 1-23.078 7.288z"
+                                    data-original="#000000"
+                                ></path>
+                            </svg>
+                        </button>
+                    </div>
 
                     <ul className="lg:flex lg:justify-center max-lg:space-y-3 max-lg:fixed max-lg:bg-white dark:max-lg:bg-gray-800 max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
                         <li className="mb-6 hidden max-lg:block">
@@ -144,6 +138,7 @@ export default function Header() {
                                 <img
                                     src={companyLogo}
                                     alt="logo"
+                                    onClick={handleClick}
                                     className="md:w-[170px] w-36 p-3 bg-white rounded-lg select-none"
                                 />
                             </Link>
@@ -151,6 +146,7 @@ export default function Header() {
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
                             <NavLink
                                 to="/"
+                                onClick={handleClick}
                                 className={({ isActive, isPending }) =>
                                     isPending
                                         ? 'pending'
@@ -161,16 +157,11 @@ export default function Header() {
                             >
                                 {t('home')}
                             </NavLink>
-                            {/* <Link
-                                to="/"
-                                className="hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[15px] block"
-                            >
-                                {t('home')}
-                            </Link> */}
                         </li>
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
                             <NavLink
                                 to="/about"
+                                onClick={handleClick}
                                 className={({ isActive, isPending }) =>
                                     isPending
                                         ? 'pending'
@@ -181,16 +172,11 @@ export default function Header() {
                             >
                                 {t('about_us')}
                             </NavLink>
-                            {/* <Link
-                                to="/about"
-                                className="hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[15px] block"
-                            >
-                                {t('about_us')}
-                            </Link> */}
                         </li>
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
                             <NavLink
                                 to="/solutions"
+                                onClick={handleClick}
                                 className={({ isActive, isPending }) =>
                                     isPending
                                         ? 'pending'
@@ -205,6 +191,7 @@ export default function Header() {
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
                             <NavLink
                                 to="/people"
+                                onClick={handleClick}
                                 className={({ isActive, isPending }) =>
                                     isPending
                                         ? 'pending'
@@ -219,6 +206,7 @@ export default function Header() {
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
                             <NavLink
                                 to="/gallery"
+                                onClick={handleClick}
                                 className={({ isActive, isPending }) =>
                                     isPending
                                         ? 'pending'
@@ -246,6 +234,7 @@ export default function Header() {
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
                             <NavLink
                                 to="/clients"
+                                onClick={handleClick}
                                 className={({ isActive, isPending }) =>
                                     isPending
                                         ? 'pending'
@@ -260,6 +249,7 @@ export default function Header() {
                         <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
                             <NavLink
                                 to="/post-external"
+                                onClick={handleClick}
                                 className={({ isActive, isPending }) =>
                                     isPending
                                         ? 'pending'
@@ -275,6 +265,7 @@ export default function Header() {
                             <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
                                 <NavLink
                                     to="/team-updates"
+                                    onClick={handleClick}
                                     className={({ isActive, isPending }) =>
                                         isPending
                                             ? 'pending'
