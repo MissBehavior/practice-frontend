@@ -39,7 +39,7 @@ function PostEdit({ fetchData, currentPage, item }: PostEditDialogProps) {
         e.preventDefault()
         setLoading(true)
         console.log('HANDLE SUBMIT in EDIT')
-        if (!image || !valueEn || !titlePost) {
+        if (!valueEn || !titlePost) {
             toast({
                 variant: 'destructive',
                 title: t('error'),
@@ -48,7 +48,9 @@ function PostEdit({ fetchData, currentPage, item }: PostEditDialogProps) {
             return
         }
         const formData = new FormData()
-        formData.append('image', image)
+        if (image) {
+            formData.append('image', image)
+        }
         formData.append('title', titlePost)
         formData.append('content', valueEn)
         formData.append('userId', item.userId)
@@ -81,6 +83,7 @@ function PostEdit({ fetchData, currentPage, item }: PostEditDialogProps) {
     useEffect(() => {
         setTitlePost(item.title)
         setValueEn(item.content)
+        setImage(null)
     }, [])
     return (
         <div>
