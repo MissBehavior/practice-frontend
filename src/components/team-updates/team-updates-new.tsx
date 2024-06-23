@@ -20,11 +20,11 @@ import { toast } from '@/components/ui/use-toast'
 import { useTheme } from '@/components/theme-provider'
 import DotLoader from 'react-spinners/DotLoader'
 
-interface PostNewProps {
+interface TeamUpdateNewProps {
     fetchData: (page: number) => void
     currentPage: number
 }
-function PostNew({ fetchData, currentPage }: PostNewProps) {
+function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
     const { user, userToken } = useAuth()
     const api = useAxios()
     const { t } = useTranslation()
@@ -72,7 +72,7 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
         formData.append('userId', user.id)
         formData.append('userName', user.name)
         try {
-            const response = await api.post('/post/', formData, {
+            const response = await api.post('/postinternal/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${userToken!.accessToken}`,
@@ -80,12 +80,12 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
             })
             console.log(response.data)
         } catch (error) {
-            console.error('Error uploading image:', error)
             toast({
                 variant: 'destructive',
                 title: t('error'),
-                description: t('errorCreatingPost'),
+                description: t('errorUploadingImage'),
             })
+            console.error('Error uploading image:', error)
             return
         }
         setOpen(false)
@@ -175,4 +175,4 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
     )
 }
 
-export default PostNew
+export default TeamUpdateNew

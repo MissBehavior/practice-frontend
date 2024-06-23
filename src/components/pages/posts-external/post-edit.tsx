@@ -65,6 +65,12 @@ function PostEdit({ fetchData, currentPage, item }: PostEditDialogProps) {
             console.log(response.data)
         } catch (error) {
             console.error('Error Updating :', error)
+            toast({
+                variant: 'destructive',
+                title: t('error'),
+                description: t('errorDeleting'),
+            })
+            return
         }
         setOpen(false)
         setLoading(false)

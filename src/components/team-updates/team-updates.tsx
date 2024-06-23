@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 // import { Skeleton } from '../../ui/skeleton'
 // import { Button } from '../../ui/button'
-import { useAuth } from '@/services/auth-service'
+import { useAuth, useAxios } from '@/services/auth-service'
 // import PostDelete from './post-delete'
 // import PostNew from './post-new'
 import parse from 'html-react-parser'
@@ -12,6 +12,9 @@ import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 import { Skeleton } from '../ui/skeleton'
 import { Button } from '../ui/button'
+import TeamUpdateNew from './team-updates-new'
+import TeamUpdateDelete from './team-updates-delete'
+import { toast } from '../ui/use-toast'
 interface PaginatedResponse {
     totalPages: number
     currentPage: number
@@ -23,6 +26,9 @@ export default function TeamUpdates() {
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [totalPages, setTotalPages] = useState<number>(1)
     const { t } = useTranslation()
+    const api = useAxios()
+    const { userToken } = useAuth()
+
     const handleNextPage = () => {
         setCurrentPage((prevPage) => prevPage + 1)
     }
@@ -36,15 +42,16 @@ export default function TeamUpdates() {
     const fetchData = async (page: number) => {
         setLoading(true)
         try {
-            const response = await axios.get<PaginatedResponse>(
+            const response = await api.get<PaginatedResponse>(
                 'http://localhost:3000/postinternal',
                 {
-                    params: { page, limit: 10 },
+                    headers: {
+                        Authorization: `Bearer ${userToken!.accessToken}`,
+                    },
                 }
             )
             console.log('response:', response)
             console.log('-----------------')
-            console.log(data)
             setData(response.data.posts)
             setTotalPages(response.data.totalPages)
             setCurrentPage(response.data.currentPage)
@@ -53,6 +60,12 @@ export default function TeamUpdates() {
             console.log('-----------------')
         } catch (error) {
             console.error('Error fetching data:', error)
+            toast({
+                variant: 'destructive',
+                title: t('error'),
+                description: t('error'),
+            })
+            console.error('Error deleting :', error)
             setLoading(false)
         }
     }
@@ -87,21 +100,11 @@ export default function TeamUpdates() {
 
     return (
         <>
-            {/* {data.map((item) => (
-                <div
-                    key={item._id}
-                    style={{ marginBottom: 20 }}
-                    className="flex items-center space-x-4 justify-center m-5"
-                >
-                    <h1>ID:{item._id}</h1>
-                    <h1>Title:{item.title}</h1>
-                    <p>Content:{item.content}</p>
-                    <p>By User:{item.userId}</p>
-                </div>
-            ))} */}
-            {user.isAdmin && (
-                <div>Admin</div>
-                // <PostNew fetchData={fetchData} currentPage={currentPage} />
+            {user.isEmployee && (
+                <TeamUpdateNew
+                    fetchData={fetchData}
+                    currentPage={currentPage}
+                />
             )}
             <section className="flex flex-row flex-wrap mx-auto justify-center">
                 {data.map((item) => (
@@ -109,20 +112,21 @@ export default function TeamUpdates() {
                         key={item._id}
                         className="flex flex-col transition-all duration-150  sm:w-full md:w-50% md:p-10 xl:px-64  2xl:px-96 px-4 py-6 justify-center mr-10 ml-10"
                     >
-                        {user.isAdmin && (
+                        {(user.isEmployee && item.userName === user.name) ||
+                        user.isAdmin ? (
                             <div className="flex flex-row ml-auto mr-[25px] mb-[-25px] z-10 gap-2">
                                 {/* <PostEdit
                                     fetchData={fetchData}
                                     currentPage={currentPage}
                                     item={item}
-                                />
-                                <PostDelete
+                        />*/}
+                                <TeamUpdateDelete
                                     fetchData={fetchData}
                                     currentPage={currentPage}
                                     index={item._id}
-                                /> */}
+                                />
                             </div>
-                        )}
+                        ) : null}
                         <div className="flex flex-col items-stretch min-h-full min-w-full pb-4 mb-6 transition-all duration-150 bg-white dark:bg-slate-700 shadow-lg hover:shadow-2xl mb-5 ">
                             <div className="flex flex-wrap items-center flex-1 px-4 py-1 text-center mx-auto">
                                 <a href="#" className="hover:underline">
@@ -140,7 +144,11 @@ export default function TeamUpdates() {
                             </div>
                             <div className="flex flex-row flex-wrap w-full px-4 py-2 overflow-hidden text-justify text-gray-700 dark:text-white">
                                 <span className="mx-1 text-xs text-gray-600 dark:text-white">
-                                    {formatDate(item.createdAt)}
+                                    {formatDate(item.createdAt)} {t('postedBy')}
+                                    {': '}
+                                    <span className="text-cyan-400">
+                                        {item.userName}
+                                    </span>
                                 </span>
                             </div>
                             <div className="flex flex-row flex-wrap w-full px-4 py-2 overflow-hidden text-justify text-gray-700 dark:text-white">
@@ -151,17 +159,22 @@ export default function TeamUpdates() {
                     </div>
                 ))}
             </section>
-            <div className="flex items-center space-x-4 justify-center m-5">
-                <Button disabled={currentPage === 1} onClick={handlePrevPage}>
-                    {t('previous')}
-                </Button>
-                <Button
-                    disabled={currentPage === totalPages}
-                    onClick={handleNextPage}
-                >
-                    {t('next')}
-                </Button>
-            </div>
+            {data.length > 10 && (
+                <div className="flex items-center space-x-4 justify-center m-5">
+                    <Button
+                        disabled={currentPage === 1}
+                        onClick={handlePrevPage}
+                    >
+                        {t('previous')}
+                    </Button>
+                    <Button
+                        disabled={currentPage === totalPages}
+                        onClick={handleNextPage}
+                    >
+                        {t('next')}
+                    </Button>
+                </div>
+            )}
         </>
     )
 }

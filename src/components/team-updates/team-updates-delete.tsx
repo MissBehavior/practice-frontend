@@ -14,34 +14,36 @@ import axios from 'axios'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdDeleteForever } from 'react-icons/md'
-interface PostDeleteProps {
+interface TeamUpdateDeleteProps {
     fetchData: (currentPage: number) => void
     currentPage: number
     index: string
 }
-function PostDelete({ fetchData, currentPage, index }: PostDeleteProps) {
+function TeamUpdateDelete({
+    fetchData,
+    currentPage,
+    index,
+}: TeamUpdateDeleteProps) {
     const { userToken } = useAuth()
     const api = useAxios()
     const [open, setOpen] = React.useState(false)
     const { t } = useTranslation()
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        console.log('HANDLE SUBMIT')
-        console.log(index)
         try {
-            const response = await api.delete('/post/' + index, {
+            const response = await api.delete('/postinternal/' + index, {
                 headers: {
                     Authorization: `Bearer ${userToken!.accessToken}`,
                 },
             })
             console.log(response.data)
         } catch (error) {
-            console.error('Error deleting :', error)
             toast({
                 variant: 'destructive',
                 title: t('error'),
                 description: t('errorDeleting'),
             })
+            console.error('Error deleting :', error)
             return
         }
         setOpen(false)
@@ -94,4 +96,4 @@ function PostDelete({ fetchData, currentPage, index }: PostDeleteProps) {
     )
 }
 
-export default PostDelete
+export default TeamUpdateDelete

@@ -80,6 +80,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
     const setUserFunc = (token: any) => {
         if (token) {
+            console.log('Setting user:', token)
             try {
                 const decodedToken = jwtDecode<JwtPayload>(token.accessToken)
                 setUser({
@@ -88,6 +89,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                     isAdmin: decodedToken.isAdmin,
                     isEmployee: decodedToken.isEmployee,
                 })
+                console.log(decodedToken.isEmployee)
+                console.log('----------------------------------')
                 localStorage.setItem(
                     'user',
                     JSON.stringify({
