@@ -52,7 +52,14 @@ export default function TeamUpdates() {
             )
             console.log('response:', response)
             console.log('-----------------')
-            setData(response.data.posts)
+            // SORTING POSTS incase backend sends them unsorted
+            const sortedPosts = response.data.posts.sort(
+                (a, b) =>
+                    new Date(b.createdAt).getTime() -
+                    new Date(a.createdAt).getTime()
+            )
+
+            setData(sortedPosts)
             setTotalPages(response.data.totalPages)
             setCurrentPage(response.data.currentPage)
             setLoading(false)
