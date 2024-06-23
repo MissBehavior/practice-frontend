@@ -16,6 +16,7 @@ interface PaginatedResponse {
     posts: PostData[]
 }
 export default function PostExternal() {
+    const { user } = useAuth()
     const [data, setData] = useState<PostData[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [currentPage, setCurrentPage] = useState<number>(1)
@@ -81,7 +82,6 @@ export default function PostExternal() {
             </section>
         )
     }
-    const { user } = useAuth()
 
     return (
         <>

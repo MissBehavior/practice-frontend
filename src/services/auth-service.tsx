@@ -38,6 +38,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 setUserToken(parsedToken)
                 setUserFunc(parsedToken)
             }
+        } else {
+            // Check for user data in localStorage
+            const storedUser = localStorage.getItem('user')
+            if (storedUser) {
+                setUser(JSON.parse(storedUser))
+            }
         }
     }, [])
     const decodeToken = (token: any) => {
@@ -47,6 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             return decodedToken
         } catch (error) {
             console.error('Invalid token:', error)
+            return null
         }
     }
     const refreshAccessToken = async (token: AuthToken) => {
@@ -68,41 +75,34 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const loginFunc = (token: any) => {
         setIsLoggedIn(true)
         setUserToken(token)
+        setUserFunc(token)
         localStorage.setItem('token', JSON.stringify(token))
     }
 
     const logoutFunc = () => {
         setIsLoggedIn(false)
         setUserToken(null)
+        setUser({
+            id: '',
+            name: '',
+            isAdmin: false,
+            isEmployee: false,
+        })
         localStorage.removeItem('token')
         localStorage.removeItem('user')
         window.location.reload()
     }
     const setUserFunc = (token: any) => {
-        if (token) {
-            console.log('Setting user:', token)
-            try {
-                const decodedToken = jwtDecode<JwtPayload>(token.accessToken)
-                setUser({
-                    id: decodedToken.aud,
-                    name: decodedToken.name,
-                    isAdmin: decodedToken.isAdmin,
-                    isEmployee: decodedToken.isEmployee,
-                })
-                console.log(decodedToken.isEmployee)
-                console.log('----------------------------------')
-                localStorage.setItem(
-                    'user',
-                    JSON.stringify({
-                        id: decodedToken.aud,
-                        name: decodedToken.name,
-                        isAdmin: decodedToken.isAdmin,
-                        isEmployee: decodedToken.isEmployee,
-                    })
-                )
-            } catch (error) {
-                console.error('Invalid token:', error)
+        const decodedToken = decodeToken(token)
+        if (decodedToken) {
+            const newUser = {
+                id: decodedToken.aud,
+                name: decodedToken.name,
+                isAdmin: decodedToken.isAdmin,
+                isEmployee: decodedToken.isEmployee,
             }
+            setUser(newUser)
+            localStorage.setItem('user', JSON.stringify(newUser))
         }
     }
 

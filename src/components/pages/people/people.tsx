@@ -51,8 +51,11 @@ export default function People() {
     return (
         <>
             <div className="flex flex-wrap justify-center gap-4 items-start bg-white dark:bg-background">
-                {mockdata.map((person) => (
-                    <div className="mt-16 mb-12  flex justify-center items-center lg:w-1/3 sm:w-full  xl:w-1/3 2xl:w-1/4">
+                {mockdata.map((person, index) => (
+                    <div
+                        key={index}
+                        className="mt-16 mb-12  flex justify-center items-center lg:w-1/3 sm:w-full  xl:w-1/3 2xl:w-1/4"
+                    >
                         <div className="flex flex-col justify-start min-h-[750px] sm:w-full md:w-96 p-6 bg-white dark:bg-slate-700 shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-500 text-center items-center">
                             <img
                                 className="w-64 object-cover rounded-t-md"

@@ -8,6 +8,7 @@ import GalleryDelete from './gallery-delete'
 import { Link } from 'react-router-dom'
 
 export default function Gallery() {
+    const { user } = useAuth()
     const [data, setData] = useState<GalleryData[]>([])
     const [loading, setLoading] = useState<boolean>(true)
 
@@ -52,8 +53,6 @@ export default function Gallery() {
         )
     }
 
-    const { user } = useAuth()
-
     return (
         <>
             <div
@@ -93,6 +92,18 @@ export default function Gallery() {
                         </Link>
                     </div>
                 ))}
+                {data?.length < 1 && (
+                    <div
+                        className={` mt-10 p-6 bg-white dark:bg-slate-700 rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
+                    >
+                        <div className="p-10">
+                            <h1 className="text-xl mt-2 text-gray-700 dark:text-white max-w-64">
+                                Coming soon !
+                            </h1>
+                        </div>
+                    </div>
+                )}
+
                 {user.isAdmin && <GalleryNewDialog fetchData={fetchData} />}
             </div>
         </>

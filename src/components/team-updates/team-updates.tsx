@@ -21,13 +21,13 @@ interface PaginatedResponse {
     posts: PostData[]
 }
 export default function TeamUpdates() {
+    const { user, userToken } = useAuth()
+    const api = useAxios()
     const [data, setData] = useState<PostData[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [totalPages, setTotalPages] = useState<number>(1)
     const { t } = useTranslation()
-    const api = useAxios()
-    const { userToken } = useAuth()
 
     const handleNextPage = () => {
         setCurrentPage((prevPage) => prevPage + 1)
@@ -47,6 +47,10 @@ export default function TeamUpdates() {
                 {
                     headers: {
                         Authorization: `Bearer ${userToken!.accessToken}`,
+                    },
+                    params: {
+                        page,
+                        limit: 10,
                     },
                 }
             )
@@ -103,7 +107,6 @@ export default function TeamUpdates() {
             </section>
         )
     }
-    const { user } = useAuth()
 
     return (
         <>

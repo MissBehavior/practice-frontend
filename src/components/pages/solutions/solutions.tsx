@@ -25,6 +25,7 @@ import SolutionsEditDialog from './solutions-edit-dialog'
 import { SolutionsData } from '@/types'
 
 export default function Solutions() {
+    const { user } = useAuth()
     const [data, setData] = useState<SolutionsData[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [hoveredItem, setHoveredItem] = useState<number | undefined>()
@@ -70,7 +71,6 @@ export default function Solutions() {
         )
     }
 
-    const { user } = useAuth()
     return (
         <>
             <div

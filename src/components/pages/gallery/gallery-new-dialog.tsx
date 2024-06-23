@@ -25,8 +25,8 @@ interface GalleryNewDialogProps {
 }
 function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
     const { userToken } = useAuth()
-    const { t } = useTranslation()
     const api = useAxios()
+    const { t } = useTranslation()
     const [cardImgUrl, setCardImgUrl] = useState<File | null>(null)
     const [open, setOpen] = useState(false)
     const [title, setTitle] = useState('')
@@ -80,10 +80,14 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
                 },
             })
             console.log(response.data)
-            // Handle success (e.g., show success message, redirect, etc.)
         } catch (error) {
             console.error('Error uploading gallery', error)
-            // Handle error (e.g., show error message)
+            toast({
+                variant: 'destructive',
+                title: t('error'),
+                description: t('error'),
+            })
+            return
         }
         setOpen(false)
         setLoading(false)
@@ -95,32 +99,6 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
         fetchData()
     }
 
-    // const handleSubmit = async (e: React.FormEvent) => {
-    //     e.preventDefault()
-    //     console.log('HANDLE SUBMIT')
-    //     console.log(image)
-    //     if (!image) {
-    //         alert('Please select an image to upload.')
-    //         return
-    //     }
-
-    //     const formData = new FormData()
-    //     formData.append('image', image)
-    //     formData.append('title', title)
-    //     try {
-    //         const response = await api.post('/gallery/', formData, {
-    //             headers: {
-    //                 'Content-Type': 'multipart/form-data',
-    //                 Authorization: `Bearer ${userToken!.accessToken}`,
-    //             },
-    //         })
-    //         console.log(response.data)
-    //     } catch (error) {
-    //         console.error('Error uploading image:', error)
-    //     }
-    //     setOpen(false)
-    //     fetchData()
-    // }
     const { getRootProps: getMainRootProps, getInputProps: getMainInputProps } =
         useDropzone({
             onDrop: onDropMain,

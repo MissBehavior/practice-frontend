@@ -9,7 +9,6 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog'
 import { useAuth, useAxios } from '@/services/auth-service'
-import axios from 'axios'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdDeleteForever } from 'react-icons/md'
@@ -19,8 +18,8 @@ interface GalleryDeleteProps {
 }
 function GalleryDelete({ fetchData, index }: GalleryDeleteProps) {
     const { userToken } = useAuth()
-    const { t } = useTranslation()
     const api = useAxios()
+    const { t } = useTranslation()
     const [open, setOpen] = React.useState(false)
 
     const handleSubmit = async (e: React.FormEvent) => {

@@ -3,15 +3,10 @@ import { GalleryData } from '@/types'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useAuth } from '@/services/auth-service'
-import { useTranslation } from 'react-i18next'
 import { Carousel } from 'react-responsive-carousel'
 import { Button } from '@/components/ui/button'
-import { useTheme } from '@/components/theme-provider'
 
 function GalleryDetail() {
-    const { user } = useAuth()
-    const { t } = useTranslation()
     const params = useParams()
     const [loading, setLoading] = useState<boolean>(true)
     const [data, setData] = useState<GalleryData>()
@@ -124,22 +119,6 @@ function GalleryDetail() {
                         </div>
                     )}
             </div>
-            {/* 
-            {data?.galleryImages && data?.galleryImages.length > 0 && (
-                <Carousel
-                    infiniteLoop={true}
-                    emulateTouch={true}
-                    swipeable={true}
-                    className="select-none"
-                >
-                    {data?.galleryImages.map((item) => (
-                        <div>
-                            <img src={item.imgUrl} />
-                            <p className="legend">Test123</p>
-                        </div>
-                    ))}
-                </Carousel>
-            )} */}
         </>
     )
 }
