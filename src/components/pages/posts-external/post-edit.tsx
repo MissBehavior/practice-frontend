@@ -18,6 +18,7 @@ import MyEditor from '@/components/editor'
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '@/components/theme-provider'
 import DotLoader from 'react-spinners/DotLoader'
+import { toast } from '@/components/ui/use-toast'
 interface PostEditDialogProps {
     fetchData: (currentPage: number) => void
     item: PostData
@@ -38,8 +39,12 @@ function PostEdit({ fetchData, currentPage, item }: PostEditDialogProps) {
         e.preventDefault()
         setLoading(true)
         console.log('HANDLE SUBMIT in EDIT')
-        if (!image) {
-            alert('Please select an image to upload.')
+        if (!image || !valueEn || !titlePost) {
+            toast({
+                variant: 'destructive',
+                title: t('error'),
+                description: t('fillAllFields'),
+            })
             return
         }
         const formData = new FormData()

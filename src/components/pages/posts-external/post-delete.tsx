@@ -8,6 +8,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog'
+import { toast } from '@/components/ui/use-toast'
 import { useAuth, useAxios } from '@/services/auth-service'
 import axios from 'axios'
 import React from 'react'
@@ -38,6 +39,11 @@ function PostDelete({ fetchData, currentPage, index }: PostDeleteProps) {
             console.error('Error deleting :', error)
         }
         setOpen(false)
+        toast({
+            variant: 'success',
+            title: t('success'),
+            description: t('changesSaved'),
+        })
         fetchData(currentPage)
     }
 
