@@ -161,11 +161,11 @@ export default function Header() {
                             text="home"
                             link=""
                         />
-                        <MenuItem
+                        {/* <MenuItem
                             handleClick={handleClick}
                             text="about_us"
                             link="about"
-                        />
+                        /> */}
                         <MenuItem
                             handleClick={handleClick}
                             text="solutions"
