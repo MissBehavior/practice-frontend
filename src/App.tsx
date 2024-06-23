@@ -1,6 +1,6 @@
 import './App.css'
 import 'swiper/css'
-import Header from './components/header'
+import Header from './components/pages/header/header'
 import Footer from './components/footer'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Outlet } from 'react-router-dom'

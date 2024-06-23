@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import companyLogo from '/logo.png'
-import { ModeToggle } from './mode-toggle'
-import { Button } from './ui/button'
+import { ModeToggle } from '../../mode-toggle'
+import { Button } from '../../ui/button'
 import { useTranslation } from 'react-i18next'
 import i18n from '@/i18n/config'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/services/auth-service'
+import { MenuItem } from './menu-item'
 export default function Header() {
     const { isLoggedIn, logoutFunc } = useAuth()
     const { user } = useAuth()
@@ -155,140 +156,48 @@ export default function Header() {
                                 />
                             </Link>
                         </li>
-                        <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                            <NavLink
-                                to="/"
-                                onClick={handleClick}
-                                className={({ isActive, isPending }) =>
-                                    isPending
-                                        ? 'pending'
-                                        : isActive
-                                        ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
-                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
-                                }
-                            >
-                                {t('home')}
-                            </NavLink>
-                        </li>
-                        <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                            <NavLink
-                                to="/about"
-                                onClick={handleClick}
-                                className={({ isActive, isPending }) =>
-                                    isPending
-                                        ? 'pending'
-                                        : isActive
-                                        ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
-                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
-                                }
-                            >
-                                {t('about_us')}
-                            </NavLink>
-                        </li>
-                        <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                            <NavLink
-                                to="/solutions"
-                                onClick={handleClick}
-                                className={({ isActive, isPending }) =>
-                                    isPending
-                                        ? 'pending'
-                                        : isActive
-                                        ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
-                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
-                                }
-                            >
-                                {t('solutions')}
-                            </NavLink>
-                        </li>
-                        <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                            <NavLink
-                                to="/people"
-                                onClick={handleClick}
-                                className={({ isActive, isPending }) =>
-                                    isPending
-                                        ? 'pending'
-                                        : isActive
-                                        ? 'hover:text-[#007bff]  text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
-                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
-                                }
-                            >
-                                {t('people')}
-                            </NavLink>
-                        </li>
-                        <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                            <NavLink
-                                to="/gallery"
-                                onClick={handleClick}
-                                className={({ isActive, isPending }) =>
-                                    isPending
-                                        ? 'pending'
-                                        : isActive
-                                        ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
-                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
-                                }
-                            >
-                                {t('gallery')}
-                            </NavLink>
-                        </li>
-                        {/* <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                            <NavLink
-                                to="/career"
-                                className={({ isActive, isPending }) =>
-                                    isPending
-                                        ? 'pending'
-                                        : isActive
-                                        ? 'hover:text-[#007bff] text-[#007bff] dark:text-[#007bff] font-bold text-[20px] block'
-                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 font-bold text-[20px] block'
-                                }
-                            >
-                                {t('career')}
-                            </NavLink>  </li> */}
-                        <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                            <NavLink
-                                to="/clients"
-                                onClick={handleClick}
-                                className={({ isActive, isPending }) =>
-                                    isPending
-                                        ? 'pending'
-                                        : isActive
-                                        ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
-                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
-                                }
-                            >
-                                {t('clients')}
-                            </NavLink>
-                        </li>
-                        <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                            <NavLink
-                                to="/post-external"
-                                onClick={handleClick}
-                                className={({ isActive, isPending }) =>
-                                    isPending
-                                        ? 'pending'
-                                        : isActive
-                                        ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
-                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
-                                }
-                            >
-                                {t('post_external')}
-                            </NavLink>
-                        </li>
+                        <MenuItem
+                            handleClick={handleClick}
+                            text="home"
+                            link=""
+                        />
+                        <MenuItem
+                            handleClick={handleClick}
+                            text="about_us"
+                            link="about"
+                        />
+                        <MenuItem
+                            handleClick={handleClick}
+                            text="solutions"
+                            link="solutions"
+                        />
+                        <MenuItem
+                            handleClick={handleClick}
+                            text="people"
+                            link="people"
+                        />
+                        <MenuItem
+                            handleClick={handleClick}
+                            text="gallery"
+                            link="gallery"
+                        />
+                        <MenuItem
+                            handleClick={handleClick}
+                            text="clients"
+                            link="clients"
+                        />
+                        <MenuItem
+                            handleClick={handleClick}
+                            text="post_external"
+                            link="post-external"
+                        />
+
                         {user.isEmployee && (
-                            <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
-                                <NavLink
-                                    to="/team-updates"
-                                    onClick={handleClick}
-                                    className={({ isActive, isPending }) =>
-                                        isPending
-                                            ? 'pending'
-                                            : isActive
-                                            ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
-                                            : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
-                                    }
-                                >
-                                    {t('team_updates')}
-                                </NavLink>
-                            </li>
+                            <MenuItem
+                                handleClick={handleClick}
+                                text="team_updates"
+                                link="team-updates"
+                            />
                         )}
                     </ul>
                 </div>
