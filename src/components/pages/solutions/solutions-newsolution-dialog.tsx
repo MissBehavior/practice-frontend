@@ -13,7 +13,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { toast } from '@/components/ui/use-toast'
 import { useAuth, useAxios } from '@/services/auth-service'
-import axios from 'axios'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IoMdAddCircleOutline } from 'react-icons/io'
@@ -76,6 +75,13 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
             console.log(response.data)
         } catch (error) {
             console.error('Error uploading image:', error)
+            toast({
+                variant: 'destructive',
+                title: t('error'),
+                description: t('error'),
+            })
+            setLoading(false)
+            return
         }
         setOpen(false)
         toast({

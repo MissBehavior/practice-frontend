@@ -62,6 +62,7 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
                 title: t('error'),
                 description: t('fillAllFields'),
             })
+            setLoading(false)
             return
         }
         const cleanHTML = DOMPurify.sanitize(valueEn)
@@ -86,6 +87,7 @@ function PostNew({ fetchData, currentPage }: PostNewProps) {
                 title: t('error'),
                 description: t('errorCreatingPost'),
             })
+            setLoading(false)
             return
         }
         setOpen(false)

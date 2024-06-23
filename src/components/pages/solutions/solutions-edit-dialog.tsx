@@ -13,8 +13,8 @@ import { Label } from '@/components/ui/label'
 import { useAuth, useAxios } from '@/services/auth-service'
 import React, { useEffect } from 'react'
 import { MdEdit } from 'react-icons/md'
-import axios from 'axios'
 import { useTranslation } from 'react-i18next'
+import { toast } from '@/components/ui/use-toast'
 interface SolutionsEditDialogProps {
     fetchData: () => void
     _id: string
@@ -58,6 +58,12 @@ function SolutionsEditDialog({
             console.log(response.data)
         } catch (error) {
             console.error('Error Updating :', error)
+            toast({
+                variant: 'destructive',
+                title: t('error'),
+                description: t('errorUpdating'),
+            })
+            return
         }
         setOpen(false)
         fetchData()

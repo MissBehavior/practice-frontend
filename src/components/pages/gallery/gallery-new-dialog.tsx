@@ -62,6 +62,7 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
                 title: t('error'),
                 description: t('fillAllFields'),
             })
+            setLoading(false)
             return
         }
         setLoading(true)
@@ -87,6 +88,7 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
                 title: t('error'),
                 description: t('error'),
             })
+            setLoading(false)
             return
         }
         setOpen(false)

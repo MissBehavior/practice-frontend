@@ -45,6 +45,7 @@ function PostEdit({ fetchData, currentPage, item }: PostEditDialogProps) {
                 title: t('error'),
                 description: t('fillAllFields'),
             })
+            setLoading(false)
             return
         }
         const formData = new FormData()
@@ -70,6 +71,7 @@ function PostEdit({ fetchData, currentPage, item }: PostEditDialogProps) {
                 title: t('error'),
                 description: t('errorDeleting'),
             })
+            setLoading(false)
             return
         }
         setOpen(false)

@@ -12,13 +12,15 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuth, useAxios } from '@/services/auth-service'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import DOMPurify from 'dompurify'
 import { useTranslation } from 'react-i18next'
 import { toast } from '@/components/ui/use-toast'
 import { useTheme } from '@/components/theme-provider'
 import DotLoader from 'react-spinners/DotLoader'
+import { useDropzone } from 'react-dropzone'
+import { MdOutlineFileUpload } from 'react-icons/md'
 
 interface TeamUpdateNewProps {
     fetchData: (page: number) => void
@@ -44,7 +46,11 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
             setImage(null)
         }
     }
-
+    const onDropMain = useCallback((acceptedFiles: File[]) => {
+        if (acceptedFiles.length > 0) {
+            setImage(acceptedFiles[0])
+        }
+    }, [])
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
@@ -86,6 +92,7 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
                 description: t('errorUploadingImage'),
             })
             console.error('Error uploading image:', error)
+            setLoading(false)
             return
         }
         setOpen(false)
@@ -97,10 +104,27 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
         setLoading(false)
         fetchData(currentPage)
     }
+    const { getRootProps: getMainRootProps, getInputProps: getMainInputProps } =
+        useDropzone({
+            onDrop: onDropMain,
+            accept: {
+                'image/*': ['.jpeg', '.png'],
+            },
+            maxFiles: 1,
+        })
+
     return (
         <div className="mt-16 mb-12 min-h-32 dark:bg-background flex justify-center items-center select-none">
             <div className="">
-                <Dialog open={open} onOpenChange={setOpen}>
+                <Dialog
+                    open={open}
+                    onOpenChange={() => {
+                        setTitlePost('')
+                        setValueEn('')
+                        setImage(null)
+                        setOpen(!open)
+                    }}
+                >
                     <DialogTrigger asChild>
                         <div className="p-6 bg-white dark:bg-slate-400 rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center cursor-pointer">
                             {t('addNewPost')}
@@ -115,19 +139,43 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
                             <DialogDescription></DialogDescription>
                         </DialogHeader>
                         <form
-                            className="grid gap-4 py-4"
+                            className="grid gap-4 py-4 "
                             onSubmit={handleSubmit}
                         >
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="file" className="text-right">
                                     {t('image')}
                                 </Label>
-                                <Input
-                                    id="file"
-                                    className="col-span-3 dark:text-white dark:file:text-white "
-                                    type="file"
-                                    onChange={handleImage}
-                                />
+                                <div
+                                    {...getMainRootProps()}
+                                    style={{
+                                        border: '2px dashed gray',
+                                        //padding: '20px',
+                                        //margin: '10px 0',
+                                    }}
+                                >
+                                    <input {...getMainInputProps()} />
+                                    {image ? (
+                                        <img
+                                            src={URL.createObjectURL(image)}
+                                            alt="Main Preview"
+                                            style={{
+                                                width: '100px',
+                                                height: '100px',
+                                            }}
+                                        />
+                                    ) : (
+                                        <div className="flex flex-col justify-center items-center align-middle cursor-pointer">
+                                            <MdOutlineFileUpload className="w-12 h-12" />
+                                            <p>
+                                                <strong>
+                                                    {t('chooseFile')}
+                                                </strong>
+                                                {t('chooseFilePt2')}
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="title" className="text-right">

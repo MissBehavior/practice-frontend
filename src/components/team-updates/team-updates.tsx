@@ -15,6 +15,8 @@ import { Button } from '../ui/button'
 import TeamUpdateNew from './team-updates-new'
 import TeamUpdateDelete from './team-updates-delete'
 import { toast } from '../ui/use-toast'
+import 'react-quill/dist/quill.snow.css' // Import React Quill's Snow theme CSS
+
 interface PaginatedResponse {
     totalPages: number
     currentPage: number
@@ -149,7 +151,7 @@ export default function TeamUpdates() {
                                 <img
                                     src={item.postPicture}
                                     alt={`Post image for ${item.title}`}
-                                    className="w-full h-full rounded-b-none object-contain px-8 mb-16 box-border"
+                                    className="w-full max-h-[450px] rounded-b-none object-contain px-8 mb-16 box-border"
                                 />
                             </div>
                             <div className="flex flex-row flex-wrap w-full px-4 py-2 overflow-hidden text-justify text-gray-700 dark:text-white">
@@ -161,7 +163,7 @@ export default function TeamUpdates() {
                                     </span>
                                 </span>
                             </div>
-                            <div className="flex flex-row flex-wrap w-full px-4 py-2 overflow-hidden text-justify text-gray-700 dark:text-white">
+                            <div className="ql-editor">
                                 {parse(item.content)}
                             </div>
                             <section className="px-4 py-2 mt-2"></section>
