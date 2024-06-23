@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css' // Import React Quill's Snow theme CSS
 
 interface EditorProps {
     valueEn?: string

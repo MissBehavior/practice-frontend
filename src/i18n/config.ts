@@ -66,6 +66,8 @@ i18n.use(initReactI18next).init({
                 errorCreatingPost: 'Error creating post',
                 errorUploadingImage: 'Error uploading image',
                 errorDeleting: 'Error deleting',
+                onlyOneImageAllowed: 'Only one image is allowed',
+                max20Images: 'Maximum 20 images allowed',
             },
         },
         // Lithuanian Language
@@ -121,6 +123,8 @@ i18n.use(initReactI18next).init({
                 errorCreatingPost: 'Klaida kuriant įrašą',
                 errorUploadingImage: 'Klaida įkeliant paveikslėlį',
                 errorDeleting: 'Klaida trinant',
+                onlyOneImageAllowed: 'Leidžiamas tik vienas paveikslėlis',
+                max20Images: 'Maksimaliai leidžiami 20 paveikslėlių',
             },
         },
     },

@@ -108,6 +108,13 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
                 'image/*': ['.jpeg', '.png'],
             },
             maxFiles: 1,
+            onDropRejected: () => {
+                toast({
+                    variant: 'destructive',
+                    title: t('error'),
+                    description: t('onlyOneImageAllowed'),
+                })
+            },
         })
 
     const {
@@ -119,6 +126,14 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
             'image/*': ['.jpeg', '.png'],
         },
         multiple: true,
+        maxFiles: 20,
+        onDropRejected: () => {
+            toast({
+                variant: 'destructive',
+                title: t('error'),
+                description: t('max20Images'),
+            })
+        },
     })
 
     return (

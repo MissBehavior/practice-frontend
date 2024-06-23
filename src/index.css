@@ -67,12 +67,12 @@
 .ql-toolbar {
     @apply dark:bg-slate-100; /* Light mode and dark mode background color */
 }
-.ql-container {
-    @apply min-h-[200px]; /* Light mode and dark mode background color */
+/* .ql-container {
+    @apply min-h-[200px]; 
 }
 .ql-editor {
-    @apply min-h-[200px]; /* Light mode and dark mode background color */
-}
+    @apply min-h-[200px]; 
+} */
 @layer base {
     * {
         @apply border-border;

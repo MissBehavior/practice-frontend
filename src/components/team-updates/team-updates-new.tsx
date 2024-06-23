@@ -112,6 +112,13 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
                 'image/*': ['.jpeg', '.png'],
             },
             maxFiles: 1,
+            onDropRejected: () => {
+                toast({
+                    variant: 'destructive',
+                    title: t('error'),
+                    description: t('onlyOneImageAllowed'),
+                })
+            },
         })
 
     return (
@@ -123,6 +130,7 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
                         setTitlePost('')
                         setValueEn('')
                         setImage(null)
+                        setLoading(false)
                         setOpen(!open)
                     }}
                 >
@@ -134,13 +142,13 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
                             </h1>
                         </div>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[700px] mt-16 mb-12 min-h-32">
+                    <DialogContent className="sm:max-w-[800px] mt-16 mb-12 min-h-32">
                         <DialogHeader>
                             <DialogTitle> {t('newPost')}</DialogTitle>
                             <DialogDescription></DialogDescription>
                         </DialogHeader>
                         <form
-                            className="grid gap-4 py-4 "
+                            className="grid gap-4 py-4 max-h-[50vh] overflow-auto  "
                             onSubmit={handleSubmit}
                         >
                             <div className="grid grid-cols-4 items-center gap-4">
@@ -154,6 +162,7 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
                                         //padding: '20px',
                                         //margin: '10px 0',
                                     }}
+                                    className="col-span-3 flex justify-center items-center align-middle cursor-pointer"
                                 >
                                     <input {...getMainInputProps()} />
                                     {image ? (
