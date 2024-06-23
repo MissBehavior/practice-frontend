@@ -68,6 +68,7 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
                 title: t('error'),
                 description: t('fillAllFields'),
             })
+            setLoading(false)
             return
         }
         const cleanHTML = DOMPurify.sanitize(valueEn)
