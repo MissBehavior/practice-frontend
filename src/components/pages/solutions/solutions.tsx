@@ -81,7 +81,7 @@ export default function Solutions() {
                 {data.map((item, index) => (
                     <div
                         key={item._id}
-                        className="mt-16 mb-12 min-h-64 bg-white dark:bg-background flex justify-center items-center flex-col"
+                        className="mt-16 mb-12 bg-white dark:bg-background flex justify-center items-center flex-col"
                     >
                         {user.isAdmin && (
                             <div className="flex flex-row ml-auto mb-[-20px] z-10 gap-2">
@@ -100,7 +100,7 @@ export default function Solutions() {
                         )}
                         <Link to={`/solutions/` + item._id}>
                             <div
-                                className={`p-6 bg-white dark:bg-slate-700 shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
+                                className={`p-6 h-96 w-96 bg-white dark:bg-slate-700 shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 flex flex-col text-center items-center justify-center`}
                                 onMouseEnter={() => setHoveredItem(index)}
                                 onMouseLeave={() => setHoveredItem(undefined)}
                             >
