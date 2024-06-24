@@ -154,7 +154,7 @@ export default function TeamUpdates() {
                                     className="w-full max-h-[450px] rounded-b-none object-contain px-8 mb-4 box-border"
                                 />
                             </div>
-                            <div className="flex flex-row flex-wrap w-full px-4 py-2 overflow-hidden text-justify text-gray-700 dark:text-white">
+                            <div className="flex flex-row flex-wrap w-full px-4 py-4 overflow-hidden text-justify text-gray-700 dark:text-white">
                                 <span className="mx-1 text-xs text-gray-600 dark:text-white">
                                     {formatDate(item.createdAt)} {t('postedBy')}
                                     {': '}
