@@ -39,6 +39,7 @@ export interface SolutionsData {
     contentCard: string
     contentMain?: string
     contentMainImg?: string
+    contantMainImgPath?: string
 }
 export interface GalleryData {
     _id: string

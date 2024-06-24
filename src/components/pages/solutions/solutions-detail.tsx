@@ -6,20 +6,26 @@ import { useParams } from 'react-router-dom'
 import classNamees from './solutions.module.css'
 import MyEditor from '@/components/editor'
 import { Input } from '@/components/ui/input'
-import { useAuth } from '@/services/auth-service'
+import { useAuth, useAxios } from '@/services/auth-service'
 import SolutionsEditDetail from './solution-edit-detail'
 import { Button } from '@/components/ui/button'
 import { MdEdit } from 'react-icons/md'
 import { IoCloseSharp } from 'react-icons/io5'
+import { useTranslation } from 'react-i18next'
+import { toast } from '@/components/ui/use-toast'
 
 function SolutionsDetail() {
-    const { user } = useAuth()
+    const { user, userToken } = useAuth()
+    const api = useAxios()
+    const [open, setOpen] = useState(false)
     const params = useParams()
     const [loading, setLoading] = useState<boolean>(true)
     const [data, setData] = useState<SolutionsData>()
     const [image, setImage] = React.useState<File | null>(null)
-    const [valueEn, setValueEn] = useState('')
+    const [contentMain, setContentMain] = useState('')
+    const [titleCard, setTitleCard] = useState('')
     const [isEdit, setIsEdit] = useState(false)
+    const { t } = useTranslation()
     console.log(params)
     const fetchSolutionDetail = async () => {
         setLoading(true)
@@ -30,6 +36,8 @@ function SolutionsDetail() {
             console.log('response:', response)
             console.log('-----------------')
             setData(response.data)
+            setTitleCard(response.data.titleCard)
+            setContentMain(response.data.contentMain)
             setLoading(false)
             console.log(response.data)
         } catch (error) {
@@ -79,6 +87,51 @@ function SolutionsDetail() {
     if (data?.contentMain == '' && data?.contentMainImg == '') {
         console.log('No data')
     }
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        console.log('HANDLE SUBMIT in EDIT')
+        if (!image || !contentMain) {
+            toast({
+                variant: 'destructive',
+                title: t('error'),
+                description: t('fillAllFields'),
+            })
+            return
+        }
+        const formData = new FormData()
+        formData.append('image', image)
+        formData.append('titleCard', titleCard)
+        formData.append('contentMain', contentMain)
+        try {
+            const response = await api.patch(
+                '/solutions/detail/' + params.id,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${userToken!.accessToken}`,
+                    },
+                }
+            )
+            console.log(response.data)
+        } catch (error) {
+            console.error('Error uploading image:', error)
+            toast({
+                variant: 'destructive',
+                title: t('error'),
+                description: t('error'),
+            })
+            setLoading(false)
+            return
+        }
+        setOpen(false)
+        toast({
+            variant: 'success',
+            title: t('success'),
+            description: t('changesSaved'),
+        })
+        setLoading(false)
+    }
     return (
         <>
             <div className="mt-16 mb-12 min-h-64 bg-white dark:bg-background flex justify-center items-center flex-col">
@@ -98,37 +151,51 @@ function SolutionsDetail() {
                     </div>
                 )}
                 {isEdit && (
-                    <div
-                        className={
-                            'flex flex-wrap justify-center gap-4 items-start bg-white dark:bg-background'
-                        }
-                    >
+                    <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
                         <div
-                            className={`p-6 bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
+                            className={
+                                'flex flex-wrap justify-center gap-4 items-start bg-white dark:bg-background'
+                            }
                         >
-                            <img
-                                className="w-64 object-cover rounded-t-md hover:scale-110 rounded transition-all duration-300 ease-in-out"
-                                src={data!.contentMainImg}
-                                alt=""
-                            />
-                            <div className="mt-4">
-                                <h1 className="text-2xl font-bold text-gray-700">
-                                    {data!.titleCard}
-                                </h1>
-                                <Input
-                                    id="file"
-                                    className="col-span-3 mb-6"
-                                    type="file"
-                                    onChange={handleImage}
+                            <div
+                                className={`p-6 bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
+                            >
+                                <img
+                                    className="w-64 object-cover rounded-t-md hover:scale-110 rounded transition-all duration-300 ease-in-out"
+                                    src={data!.contentMainImg}
+                                    alt=""
                                 />
+                                <div className="mt-4">
+                                    <h1 className="text-2xl font-bold text-gray-700">
+                                        {data!.titleCard}
+                                    </h1>
+                                    <Input
+                                        id="title"
+                                        className="col-span-3 mb-6"
+                                        type="text"
+                                        value={titleCard}
+                                        onChange={(e) =>
+                                            setTitleCard(e.target.value)
+                                        }
+                                    />
+                                    <Input
+                                        id="file"
+                                        className="col-span-3 mb-6"
+                                        type="file"
+                                        onChange={handleImage}
+                                    />
 
-                                <MyEditor
-                                    valueEn={valueEn}
-                                    setValueEn={setValueEn}
-                                />
+                                    <MyEditor
+                                        valueEn={contentMain}
+                                        setValueEn={setContentMain}
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <Button onClick={handleSubmit} type="submit">
+                            {t('submit')}
+                        </Button>
+                    </form>
                 )}
                 {data?.contentMain == '' &&
                     data?.contentMainImg == '' &&
@@ -143,6 +210,25 @@ function SolutionsDetail() {
                             </div>
                         </div>
                     )}
+                {data?.contentMain && data?.contentMainImg && !isEdit && (
+                    <div
+                        className={`p-6 bg-white dark:bg-slate-700 rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
+                    >
+                        <img
+                            className="w-64 object-cover rounded-t-md hover:scale-110 rounded transition-all duration-300 ease-in-out"
+                            src={data!.contentMainImg}
+                            alt=""
+                        />
+                        <div className="mt-4">
+                            <h1 className="text-2xl font-bold text-gray-700 dark:text-white">
+                                {data!.titleCard}
+                            </h1>
+                            <p className="text-sm mt-2 text-gray-700 dark:text-white max-w-64">
+                                {data!.contentMain}
+                            </p>
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     )
