@@ -139,7 +139,7 @@ export default function TeamUpdates() {
                                 />
                             </div>
                         ) : null}
-                        <div className="flex flex-col items-stretch min-h-full sm:w-full md:w-50% pb-4 mb-6 transition-all duration-150 bg-white dark:bg-slate-700 shadow-lg hover:shadow-2xl mb-5 ">
+                        <div className="flex flex-col items-stretch min-h-full sm:w-full md:w-50% pb-4 transition-all duration-150 bg-white dark:bg-slate-700 shadow-lg hover:shadow-2xl mb-5 ">
                             <div className="flex flex-wrap items-center flex-1 px-4 py-1 text-center mx-auto">
                                 <a href="#" className="hover:underline">
                                     <h2 className="text-2xl font-bold tracking-normal text-gray-800 dark:text-white">

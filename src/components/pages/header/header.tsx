@@ -64,7 +64,7 @@ export default function Header() {
                         />
                     </svg>
                     <ModeToggle />
-                    <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-5 h-[40px] flex flex-row items-center justify-center gap-2 select-none">
+                    <div className=" border-gray-300 border-l-2 dark:border-gray-600 pl-5 h-[40px] flex flex-row items-center justify-center gap-2 select-none">
                         <a
                             onClick={setLanguage('en')}
                             className={

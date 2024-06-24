@@ -7,17 +7,19 @@ import classNamees from './solutions.module.css'
 import MyEditor from '@/components/editor'
 import { Input } from '@/components/ui/input'
 import { useAuth, useAxios } from '@/services/auth-service'
-import SolutionsEditDetail from './solution-edit-detail'
+// import SolutionsEditDetail from './solution-edit-detail'
 import { Button } from '@/components/ui/button'
 import { MdEdit } from 'react-icons/md'
 import { IoCloseSharp } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
 import { toast } from '@/components/ui/use-toast'
+import parse from 'html-react-parser'
+import DotLoader from 'react-spinners/DotLoader'
+import { useTheme } from '@/components/theme-provider'
 
 function SolutionsDetail() {
     const { user, userToken } = useAuth()
     const api = useAxios()
-    const [open, setOpen] = useState(false)
     const params = useParams()
     const [loading, setLoading] = useState<boolean>(true)
     const [data, setData] = useState<SolutionsData>()
@@ -26,7 +28,8 @@ function SolutionsDetail() {
     const [titleCard, setTitleCard] = useState('')
     const [isEdit, setIsEdit] = useState(false)
     const { t } = useTranslation()
-    console.log(params)
+    const { theme } = useTheme()
+
     const fetchSolutionDetail = async () => {
         setLoading(true)
         try {
@@ -46,8 +49,6 @@ function SolutionsDetail() {
         }
     }
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log('Image selected')
-        console.log(e.target.files?.[0])
         const file = e.target.files?.[0]
         if (file) {
             setImage(file)
@@ -58,12 +59,19 @@ function SolutionsDetail() {
     useEffect(() => {
         // setTimeout(() => {
         fetchSolutionDetail()
-        // }, 1000)
+        // }, 100000)
     }, [])
+    useEffect(() => {
+        if (data && data.contentMain) {
+            setContentMain(data.contentMain)
+            setTitleCard(data.titleCard)
+        }
+    }, [isEdit])
+
     if (loading) {
         return (
-            <section className="flex flex-col flex-wrap mx-auto justify-center align-middle text-center mr-auto ml-auto">
-                {Array.from({ length: 5 }).map((_, index) => (
+            <section className="flex flex-col flex-wrap mx-auto justify-center align-middle items-start text-center mr-auto ml-auto">
+                {Array.from({ length: 1 }).map((_, index) => (
                     <div
                         key={index}
                         className="flex w-full px-4 py-6 md:w-1/2 lg:w-1/3 justify-center"
@@ -79,16 +87,10 @@ function SolutionsDetail() {
             </section>
         )
     }
-    console.log('----------- ABC ----')
-    console.log(data?.contentMainImg)
-    console.log(data?.contentMain)
-    console.log(data?.contentMain == '')
-    console.log(data?.contentMainImg == '')
-    if (data?.contentMain == '' && data?.contentMainImg == '') {
-        console.log('No data')
-    }
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setLoading(true)
         console.log('HANDLE SUBMIT in EDIT')
         if (!image || !contentMain) {
             toast({
@@ -124,13 +126,14 @@ function SolutionsDetail() {
             setLoading(false)
             return
         }
-        setOpen(false)
         toast({
             variant: 'success',
             title: t('success'),
             description: t('changesSaved'),
         })
         setLoading(false)
+        setIsEdit(false)
+        fetchSolutionDetail()
     }
     return (
         <>
@@ -139,7 +142,9 @@ function SolutionsDetail() {
                     <div className="flex flex-row mb-[-20px] z-10 gap-2">
                         <Button
                             className="rounded-md bg-slate-500 hover:bg-orange-300 shadow-lg transition-all transform duration-150 hover:scale-105 cursor-pointer"
-                            onClick={() => setIsEdit(!isEdit)}
+                            onClick={() => {
+                                setIsEdit(!isEdit)
+                            }}
                         >
                             {!isEdit && (
                                 <MdEdit className="relative top-0 right-0 w-[40px] p-1 h-[40px] rounded-md shadow-xl transition-all transform duration-150 hover:scale-105 cursor-pointer" />
@@ -158,16 +163,16 @@ function SolutionsDetail() {
                             }
                         >
                             <div
-                                className={`p-6 bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
+                                className={`p-6 min-w-[600px] gap-5 bg-white dark:bg-slate-700 rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
                             >
                                 <img
-                                    className="w-64 object-cover rounded-t-md hover:scale-110 rounded transition-all duration-300 ease-in-out"
+                                    className="w-64 object-cover rounded-t-md hover:scale-110 rounded transition-all duration-300 ease-in-out mx-auto"
                                     src={data!.contentMainImg}
                                     alt=""
                                 />
-                                <div className="mt-4">
+                                <div className="my-4">
                                     <h1 className="text-2xl font-bold text-gray-700">
-                                        {data!.titleCard}
+                                        {data ? data.titleCard : titleCard}
                                     </h1>
                                     <Input
                                         id="title"
@@ -190,11 +195,26 @@ function SolutionsDetail() {
                                         setValueEn={setContentMain}
                                     />
                                 </div>
+                                {loading && (
+                                    <DotLoader
+                                        color={
+                                            theme === 'dark'
+                                                ? '#ffffff'
+                                                : 'rgb(51 65 85)'
+                                        }
+                                    />
+                                )}
+                                {!loading && (
+                                    <Button
+                                        onClick={handleSubmit}
+                                        type="submit"
+                                        className="w-full"
+                                    >
+                                        {t('submit')}
+                                    </Button>
+                                )}
                             </div>
                         </div>
-                        <Button onClick={handleSubmit} type="submit">
-                            {t('submit')}
-                        </Button>
                     </form>
                 )}
                 {data?.contentMain == '' &&
@@ -212,20 +232,21 @@ function SolutionsDetail() {
                     )}
                 {data?.contentMain && data?.contentMainImg && !isEdit && (
                     <div
-                        className={`p-6 bg-white dark:bg-slate-700 rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
+                        className={`p-6 min-w-[600px] min-h-[30vh] flex flex-col bg-white dark:bg-slate-700 rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
                     >
                         <img
                             className="w-64 object-cover rounded-t-md hover:scale-110 rounded transition-all duration-300 ease-in-out"
                             src={data!.contentMainImg}
                             alt=""
                         />
-                        <div className="mt-4">
+                        <div className="mt-4 w-full">
                             <h1 className="text-2xl font-bold text-gray-700 dark:text-white">
                                 {data!.titleCard}
                             </h1>
-                            <p className="text-sm mt-2 text-gray-700 dark:text-white max-w-64">
-                                {data!.contentMain}
-                            </p>
+
+                            <div className="ql-editor">
+                                {parse(data!.contentMain)}
+                            </div>
                         </div>
                     </div>
                 )}

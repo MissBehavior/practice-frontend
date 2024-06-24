@@ -15,39 +15,30 @@ function App() {
     const { pathname } = useLocation()
     const [currentPath, setCurrentPath] = useState<string>('')
     useEffect(() => {
-        console.log('pathname:', pathname)
         // map all paths to their respective components name and set it as variable
         switch (pathname) {
             case '/post-external':
-                console.log('Post External')
                 setCurrentPath('News')
                 break
             case '/post-internal':
-                console.log('Post Internal')
                 setCurrentPath('Team Updates')
                 break
             case '/solutions':
-                console.log('Solutions')
                 setCurrentPath('Solutions')
                 break
             case '/team-updates':
-                console.log('Team Updates')
                 setCurrentPath('Team Updates')
                 break
             case '/' || '/home':
-                console.log('Home')
                 setCurrentPath('Home')
                 break
             case '/clients':
-                console.log('Clients')
                 setCurrentPath('Clients')
                 break
             case '/gallery':
-                console.log('Gallery')
                 setCurrentPath('Gallery')
                 break
             case '/people':
-                console.log('People')
                 setCurrentPath('People')
                 break
             default:
@@ -82,3 +73,4 @@ function App() {
 export default App
 // - > Long text problem
 // -> Image additiongalery needs to be sent
+// TODO: Validate type of file that is uploaded!
