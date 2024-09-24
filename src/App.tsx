@@ -9,6 +9,8 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { Toaster } from './components/ui/toaster'
 import postExternalImg from '/cropped-Featured-picture-1.jpg'
 import { useEffect, useState } from 'react'
+import AdminDashboard from './components/admin/dashboard'
+import AdminSidenav from './components/admin/sidenav'
 
 // ACTS AS ROOT LAYOUT
 function App() {
@@ -41,6 +43,11 @@ function App() {
             case '/people':
                 setCurrentPath('People')
                 break
+            case '/admin':
+            case '/dashboard':
+            case '/users':
+                setCurrentPath('Admin')
+                break
             default:
                 console.log('Default')
                 break
@@ -49,22 +56,27 @@ function App() {
     return (
         <>
             <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-                <Header />
-                <Toaster />
-                <div className="min-h-screen">
-                    <div className="relative">
-                        <img
-                            className="m-auto h-full max-h-96 object-cover w-full"
-                            src={postExternalImg}
-                            alt=""
-                        />
-                        <div className="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 text-xl font-bold">
-                            {currentPath}
+                {currentPath === 'Admin' && <AdminDashboard />}
+                {currentPath !== 'Admin' && (
+                    <>
+                        <Header />
+                        <Toaster />
+                        <div className="min-h-screen">
+                            <div className="relative">
+                                <img
+                                    className="m-auto h-full max-h-96 object-cover w-full"
+                                    src={postExternalImg}
+                                    alt=""
+                                />
+                                <div className="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 text-xl font-bold">
+                                    {currentPath}
+                                </div>
+                            </div>
+                            <Outlet />
                         </div>
-                    </div>
-                    <Outlet />
-                </div>
-                <Footer />
+                        <Footer />
+                    </>
+                )}
             </ThemeProvider>
         </>
     )

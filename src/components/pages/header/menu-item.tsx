@@ -9,7 +9,7 @@ interface MenuItemProps {
 export const MenuItem = ({ link, text, handleClick }: MenuItemProps) => {
     const { t } = useTranslation()
     return (
-        <li className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
+        <div className="max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3">
             <NavLink
                 to={link}
                 onClick={handleClick}
@@ -23,6 +23,6 @@ export const MenuItem = ({ link, text, handleClick }: MenuItemProps) => {
             >
                 {t(text)}
             </NavLink>
-        </li>
+        </div>
     )
 }

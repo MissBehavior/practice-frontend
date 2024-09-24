@@ -31,6 +31,15 @@ export interface User {
     isEmployee: boolean
     mail?: string
 }
+export interface UserAdminData {
+    _id: string
+    name: string
+    email: string
+    isAdmin: boolean
+    isEmployee: boolean
+    createdAt: string
+    updatedAt: string
+}
 export interface SolutionsData {
     _id: string
     cardImgUrl: string
