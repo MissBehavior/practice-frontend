@@ -2,17 +2,11 @@ import { UserAdminData } from '@/types'
 import { ColumnDef } from '@tanstack/react-table'
 import { Button } from '../ui/button'
 import { ArrowUpDown } from 'lucide-react'
+import { MdDeleteForever } from 'react-icons/md'
 
-// // This type is used to define the shape of our data.
-// // You can use a Zod schema here if you want.
-// export type Payment = {
-//     id: string
-//     amount: number
-//     status: 'pending' | 'processing' | 'success' | 'failed'
-//     email: string
-// }
-
-export const columns: ColumnDef<UserAdminData>[] = [
+export const columns = (
+    deleteUser: (id: string) => void
+): ColumnDef<UserAdminData>[] => [
     {
         accessorKey: 'EditRow',
         cell: ({ row }) => {
@@ -25,6 +19,22 @@ export const columns: ColumnDef<UserAdminData>[] = [
                     }}
                 >
                     Edit Row
+                </Button>
+            )
+        },
+    },
+    {
+        accessorKey: 'DeleteUser',
+        cell: ({ row }) => {
+            return (
+                <Button
+                    className="capitalize bg-red-400 hover:bg-red-600"
+                    onClick={() => {
+                        console.log('DeleteUser called')
+                        deleteUser(row.original._id)
+                    }}
+                >
+                    <MdDeleteForever />
                 </Button>
             )
         },

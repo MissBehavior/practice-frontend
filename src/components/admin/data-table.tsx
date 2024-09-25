@@ -119,6 +119,17 @@ export function DataTable<TData, TValue>({
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow key={headerGroup.id}>
                             {headerGroup.headers.map((header) => {
+                                if (
+                                    header.id === 'DeleteUser' ||
+                                    header.id === 'EditRow'
+                                ) {
+                                    return (
+                                        <TableHead key={header.id}>
+                                            {header.isPlaceholder ? null : null}
+                                        </TableHead>
+                                    )
+                                }
+
                                 return (
                                     <TableHead key={header.id}>
                                         {header.isPlaceholder
