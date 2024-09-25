@@ -12,6 +12,11 @@
     --swiper-navigation-color: var(--primary);
     overflow-x: hidden;
 }
+@media (max-width: 400px) {
+    #root {
+        --swiper-navigation-size: 0px;
+    }
+}
 
 .logo {
     height: 6em;

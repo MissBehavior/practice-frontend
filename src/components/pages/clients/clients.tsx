@@ -97,22 +97,26 @@ export default function Clients() {
                 slidesPerView={6}
                 loop={true}
                 scrollbar={{ draggable: true }}
-                onSlideChange={() => console.log('slide change')}
                 onSwiper={(swiper) => console.log(swiper)}
                 navigation={true}
                 autoplay={{
-                    delay: 1500,
+                    delay: 1000,
                     disableOnInteraction: false,
                     pauseOnMouseEnter: true,
                 }}
+                injectStyles={[]}
                 breakpoints={{
-                    200: {
+                    0: {
                         slidesPerView: 2,
-                        spaceBetween: 20,
+                        spaceBetween: 10,
+                    },
+                    400: {
+                        slidesPerView: 2,
+                        spaceBetween: 40,
                     },
                     640: {
                         slidesPerView: 3,
-                        spaceBetween: 20,
+                        spaceBetween: 40,
                     },
                     768: {
                         slidesPerView: 4,
@@ -127,7 +131,7 @@ export default function Clients() {
                         spaceBetween: 50,
                     },
                 }}
-                className="h-56 mt-10 pl-10 pr-16"
+                className="h-56 mt-10 xl:px-10 lg:px-10 md:px-10 sm:px-10 xs:px-10 "
             >
                 {clients.map((client, index) => (
                     <SwiperSlide key={index}>

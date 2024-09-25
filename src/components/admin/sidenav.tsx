@@ -23,35 +23,6 @@ function AdminSidenav() {
         // { title: 'Loyalty Cards', src: <FaChevronLeft />, gap: true to: },
     ]
     return (
-        // <aside className="flex flex-col h-screen items-center align-middle justify-start self-center gap-10 bg-white dark:bg-slate-500">
-        //     <nav className="h-full flex flex-col bg-white border-r shadow-sm">
-        //         <div className="p-4 pb-2 flex justify-between items-center">
-        //             <img src="/logo.png" alt="logo" className="w-16 h-14" />
-        //             <button className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100">
-        //                 <FaChevronLeft className="fill-black" />
-        //             </button>
-        //         </div>
-        //     </nav>
-        //     <NavLink to="/">
-        //         <img src="/logo.png" alt="logo" className="w-16 h-14" />
-        //     </NavLink>
-        //     <MenuItem
-        //         handleClick={() => console.log('clicked')}
-        //         text="Dashboard"
-        //         link="admin"
-        //     />
-        //     <MenuItem
-        //         handleClick={() => console.log('clicked')}
-        //         text="Users"
-        //         link="users"
-        //     />
-        //     <MenuItem
-        //         handleClick={() => console.log('clicked')}
-        //         text="Statistics"
-        //         link="statistics"
-        //     />
-        // </aside>
-
         <>
             <div className="flex">
                 <div
@@ -59,11 +30,15 @@ function AdminSidenav() {
                         open ? 'w-72' : 'w-20 '
                     } bg-black h-full p-5  pt-8 relative duration-300`}
                 >
-                    <FaChevronLeft
-                        className={`absolute cursor-pointer -right-3 top-9 w-8 h-8 border-dark-purple bg-white
-           border-2 rounded-full  ${!open && 'rotate-180'}`}
+                    <div
+                        className={`absolute cursor-pointer -right-3 top-9 w-9 h-9 border-dark-purple bg-white
+                            border-2 rounded-full flex flex-col justify-center items-center ${
+                                !open && 'rotate-180'
+                            } `}
                         onClick={() => setOpen(!open)}
-                    />
+                    >
+                        <FaChevronLeft className="dark:text-slate-700 text-slate-700" />
+                    </div>
                     <div className="flex gap-x-4 items-center">
                         <img
                             src="/logo.png"
