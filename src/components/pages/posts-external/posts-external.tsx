@@ -148,17 +148,22 @@ export default function PostExternal() {
                     </div>
                 ))}
             </section>
-            <div className="flex items-center space-x-4 justify-center m-5">
-                <Button disabled={currentPage === 1} onClick={handlePrevPage}>
-                    {t('previous')}
-                </Button>
-                <Button
-                    disabled={currentPage === totalPages}
-                    onClick={handleNextPage}
-                >
-                    {t('next')}
-                </Button>
-            </div>
+            {data.length > 10 && (
+                <div className="flex items-center space-x-4 justify-center m-5">
+                    <Button
+                        disabled={currentPage === 1}
+                        onClick={handlePrevPage}
+                    >
+                        {t('previous')}
+                    </Button>
+                    <Button
+                        disabled={currentPage === totalPages}
+                        onClick={handleNextPage}
+                    >
+                        {t('next')}
+                    </Button>
+                </div>
+            )}
         </>
     )
 }
