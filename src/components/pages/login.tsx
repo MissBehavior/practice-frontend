@@ -54,7 +54,7 @@ export default function Login() {
         console.log('-------success data---------')
         console.log(userToken)
         toast({
-            variant: 'default',
+            variant: 'success',
             title: 'Login Success',
             description: 'You have successfully logged in',
         })
