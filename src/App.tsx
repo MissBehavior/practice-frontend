@@ -68,7 +68,7 @@ function App() {
                                     src={postExternalImg}
                                     alt=""
                                 />
-                                <div className=" drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] text-slate-400 dark:text-white absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 text-9xl font-bold bg-slate-500/[.15] rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-md border border-white/50 p-10">
+                                <div className=" drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] text-slate-400 dark:text-white absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 text-7xl font-bold bg-slate-500/[.15] rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-md border border-white/50 p-10">
                                     {currentPath}
                                 </div>
                             </div>
