@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MenuItem } from '../pages/header/menu-item'
 import { NavLink } from 'react-router-dom'
 import { FaChevronLeft } from 'react-icons/fa'
@@ -22,9 +22,18 @@ function AdminSidenav() {
         },
         // { title: 'Loyalty Cards', src: <FaChevronLeft />, gap: true to: },
     ]
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(max-width: 1000px)')
+        const handleMediaChange = (e: MediaQueryListEvent) => {
+            setOpen(!e.matches)
+        }
+        setOpen(!mediaQuery.matches)
+        mediaQuery.addEventListener('change', handleMediaChange)
+        return () => mediaQuery.removeEventListener('change', handleMediaChange)
+    }, [])
     return (
         <>
-            <div className="flex h-screen">
+            <div className="flex h-auto">
                 <div
                     className={` ${
                         open ? 'w-72' : 'w-20 '

@@ -16,6 +16,7 @@ import {
     YAxis,
 } from 'recharts'
 import { DataPoint } from '@/types'
+import { FaChevronDown } from 'react-icons/fa'
 
 function RegisterCountChart({
     chartData,
@@ -26,21 +27,33 @@ function RegisterCountChart({
     theme: string
     fetchData: (year: string) => void
 }) {
+    const getYearsArray = (): number[] => {
+        const currentYear = new Date().getFullYear()
+        const startYear = 2022
+
+        return Array.from(
+            { length: currentYear - startYear + 1 },
+            (_, i) => startYear + i
+        )
+    }
     return (
         <div className="dark:bg-slate-700 bg-slate-200 rounded-lg p-4">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="dark:text-slate-200">
-                        Year
+                        Year: {2024}
+                        <FaChevronDown />
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                     align="center"
                     className="flex flex-col gap-2"
                 >
-                    <Button onClick={() => fetchData('2022')}>2022</Button>{' '}
-                    <Button onClick={() => fetchData('2023')}>2023</Button>
-                    <Button onClick={() => fetchData('2024')}>2024</Button>
+                    {getYearsArray().map((year) => (
+                        <Button onClick={() => fetchData(year.toString())}>
+                            {year}
+                        </Button>
+                    ))}
                 </DropdownMenuContent>
             </DropdownMenu>
             <ResponsiveContainer width="100%" height="90%">

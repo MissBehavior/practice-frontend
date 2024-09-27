@@ -12,7 +12,6 @@ import {
     useReactTable,
 } from '@tanstack/react-table'
 import { Input } from '@/components/ui/input'
-
 import {
     Table,
     TableBody,
@@ -28,7 +27,6 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '../ui/button'
-import { ModeToggle } from '../mode-toggle'
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -51,6 +49,7 @@ export function DataTable<TData, TValue>({
         React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
+
     const table = useReactTable({
         data,
         columns,
@@ -66,11 +65,9 @@ export function DataTable<TData, TValue>({
             columnFilters,
         },
     })
-
     return (
         <div className="rounded-md border dark:border-cyan-900">
             <div className="flex flex-row justify-center align-middle gap-3">
-                <ModeToggle />
                 <div className="flex items-center py-2">
                     <Input
                         placeholder="Filter emails..."
@@ -97,102 +94,120 @@ export function DataTable<TData, TValue>({
                         {table
                             .getAllColumns()
                             .filter((column) => column.getCanHide())
-                            .map((column) => {
-                                return (
-                                    <DropdownMenuCheckboxItem
-                                        key={column.id}
-                                        className="capitalize"
-                                        checked={column.getIsVisible()}
-                                        onCheckedChange={(value: any) =>
-                                            column.toggleVisibility(!!value)
-                                        }
-                                    >
-                                        {column.id}
-                                    </DropdownMenuCheckboxItem>
-                                )
-                            })}
+                            .map((column) => (
+                                <DropdownMenuCheckboxItem
+                                    key={column.id}
+                                    className="capitalize"
+                                    checked={column.getIsVisible()}
+                                    onCheckedChange={(value: any) =>
+                                        column.toggleVisibility(!!value)
+                                    }
+                                >
+                                    {column.id}
+                                </DropdownMenuCheckboxItem>
+                            ))}
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <Table>
-                <TableHeader>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => {
-                                if (
-                                    header.id === 'DeleteUser' ||
-                                    header.id === 'EditRow'
-                                ) {
+            <div className="hidden md:block">
+                <Table>
+                    <TableHeader>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <TableRow key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => {
+                                    if (header.isPlaceholder) return null
                                     return (
                                         <TableHead key={header.id}>
-                                            {header.isPlaceholder ? null : null}
+                                            {flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
                                         </TableHead>
                                     )
-                                }
-
+                                })}
+                            </TableRow>
+                        ))}
+                    </TableHeader>
+                    <TableBody>
+                        {table.getRowModel().rows.length ? (
+                            table.getRowModel().rows.map((row) => {
+                                const maxValue = findMaxValueInRow(row)
                                 return (
-                                    <TableHead key={header.id}>
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
-                                                  header.getContext()
-                                              )}
-                                    </TableHead>
+                                    <TableRow
+                                        key={row.id}
+                                        data-state={
+                                            row.getIsSelected() && 'selected'
+                                        }
+                                    >
+                                        {row
+                                            .getVisibleCells()
+                                            .map((cell, index) => (
+                                                <TableCell
+                                                    key={cell.id}
+                                                    style={{
+                                                        backgroundColor:
+                                                            index > 0 &&
+                                                            Number(
+                                                                cell.getValue()
+                                                            ) === maxValue
+                                                                ? 'lightgreen'
+                                                                : '',
+                                                    }}
+                                                >
+                                                    {flexRender(
+                                                        cell.column.columnDef
+                                                            .cell,
+                                                        cell.getContext()
+                                                    )}
+                                                </TableCell>
+                                            ))}
+                                    </TableRow>
                                 )
-                            })}
-                        </TableRow>
-                    ))}
-                </TableHeader>
-                <TableBody>
-                    {table.getRowModel().rows?.length ? (
-                        table.getRowModel().rows.map((row) => {
-                            const maxValue = findMaxValueInRow(row)
-
-                            return (
-                                <TableRow
-                                    key={row.id}
-                                    data-state={
-                                        row.getIsSelected() && 'selected'
-                                    }
+                            })
+                        ) : (
+                            <TableRow>
+                                <TableCell
+                                    colSpan={columns.length}
+                                    className="h-24 text-center"
                                 >
-                                    {row
-                                        .getVisibleCells()
-                                        .map((cell, index) => (
-                                            <TableCell
-                                                key={cell.id}
-                                                style={{
-                                                    backgroundColor:
-                                                        index > 0 &&
-                                                        Number(
-                                                            cell.getValue()
-                                                        ) === maxValue
-                                                            ? 'lightgreen'
-                                                            : '',
-                                                }}
-                                            >
-                                                {flexRender(
-                                                    cell.column.columnDef.cell,
-                                                    cell.getContext()
-                                                )}
-                                            </TableCell>
-                                        ))}
-                                </TableRow>
-                            )
-                        })
-                    ) : (
-                        <TableRow>
-                            <TableCell
-                                colSpan={columns.length}
-                                className="h-24 text-center"
-                            >
-                                No results.
-                            </TableCell>
-                        </TableRow>
-                    )}
-                </TableBody>
-            </Table>
+                                    No results.
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </div>
+            <div className="md:hidden">
+                {table.getRowModel().rows.length ? (
+                    table.getRowModel().rows.map((row) => (
+                        <div key={row.id} className="border-b-8 p-10">
+                            {row.getVisibleCells().map((cell, index) => (
+                                <div
+                                    key={cell.id}
+                                    className="flex justify-between p-1"
+                                >
+                                    <span className="font-bold">
+                                        {
+                                            table.getHeaderGroups()[0].headers[
+                                                index
+                                            ].id
+                                        }
+                                        {cell.column.columnDef.header as string}
+                                    </span>
+                                    <span>
+                                        {flexRender(
+                                            cell.column.columnDef.cell,
+                                            cell.getContext()
+                                        )}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    ))
+                ) : (
+                    <div className="h-24 text-center">No results.</div>
+                )}
+            </div>
         </div>
     )
 }

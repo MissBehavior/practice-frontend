@@ -9,7 +9,7 @@ function Admin() {
         <>
             {/* <div className="w-full p-6 h-2 bg-slate-500"> HEADER</div> */}
             <Header />
-            <div className="w-full flex flex-row">
+            <div className="w-full h-full flex flex-row">
                 <AdminSidenav />
                 <Outlet />
             </div>

@@ -46,11 +46,9 @@ function UsersTable() {
         fetchData()
     }, [])
     return (
-        <section className="py-24">
-            <div className="container">
-                <h1 className="text-3x1 font-bold">Users</h1>
-                <DataTable columns={columns(deleteUser)} data={users} />
-            </div>
+        <section className="py-24 px-4 flex flex-col h-full w-full ">
+            <h1 className="text-3x1 font-bold">Users</h1>
+            <DataTable columns={columns(deleteUser)} data={users} />
         </section>
     )
 }
