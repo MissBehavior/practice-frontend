@@ -11,6 +11,7 @@ import postExternalImg from '/cropped-Featured-picture-1.jpg'
 import { useEffect, useState } from 'react'
 import AdminDashboard from './components/admin/dashboard'
 import AdminSidenav from './components/admin/sidenav'
+import Admin from './components/admin/admin'
 
 // ACTS AS ROOT LAYOUT
 function App() {
@@ -56,7 +57,7 @@ function App() {
     return (
         <>
             <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-                {currentPath === 'Admin' && <AdminDashboard />}
+                {currentPath === 'Admin' && <Admin />}
                 {currentPath !== 'Admin' && (
                     <>
                         <Header />

@@ -21,6 +21,7 @@ import EmployeeRoutes from './services/employee-routes.tsx'
 import TeamUpdates from './components/team-updates/team-updates.tsx'
 import AdminDashboard from './components/admin/dashboard.tsx'
 import UsersTable from './components/admin/users-table.tsx'
+import Admin from './components/admin/admin.tsx'
 
 const router = createBrowserRouter([
     {
@@ -87,6 +88,7 @@ const router = createBrowserRouter([
             // TODO: TESTING ADMIN
             {
                 path: '/admin',
+                element: <AdminDashboard />,
             },
             {
                 path: '/users',
@@ -94,7 +96,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/dashboard',
-                element: <div>Dashboard</div>,
+                element: <AdminDashboard />,
             },
         ],
         errorElement: <div>404</div>,

@@ -41,6 +41,7 @@
         "react-responsive-carousel": "^3.2.23",
         "react-router-dom": "^6.23.1",
         "react-spinners": "^0.13.8",
+        "recharts": "^2.12.7",
         "swiper": "^11.1.4",
         "tailwind-merge": "^2.3.0",
         "tailwindcss-animate": "^1.0.7",
