@@ -65,11 +65,12 @@ function App() {
                         <div className="min-h-screen">
                             <div className="relative">
                                 <img
-                                    className="m-auto h-full max-h-96 object-cover w-full"
+                                    className="m-auto h-full max-h-96 object-cover w-full select-none"
                                     src={postExternalImg}
                                     alt=""
+                                    draggable="false"
                                 />
-                                <div className=" drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] text-slate-400 dark:text-white absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 sm:text-7xl font-bold bg-slate-500/[.15] rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-md border border-white/50 sm:p-10 p-4">
+                                <div className="select-none  drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] text-slate-400 dark:text-white absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 sm:text-7xl font-bold bg-slate-500/[.15] rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-md border border-white/50 sm:p-10 p-4">
                                     {currentPath}
                                 </div>
                             </div>

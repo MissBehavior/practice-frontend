@@ -24,7 +24,7 @@ function AdminSidenav() {
     ]
     return (
         <>
-            <div className="flex">
+            <div className="flex h-screen">
                 <div
                     className={` ${
                         open ? 'w-72' : 'w-20 '
@@ -45,6 +45,7 @@ function AdminSidenav() {
                             className={`cursor-pointer w-40 duration-500 ${
                                 open && 'rotate-[360deg]'
                             }`}
+                            draggable="false"
                         />
                     </div>
                     <ul className="pt-6">

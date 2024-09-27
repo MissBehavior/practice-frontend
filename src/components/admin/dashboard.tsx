@@ -25,20 +25,18 @@ import {
 } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
 import axios from 'axios'
-import { UserAdminData } from '@/types'
-
-interface DataPoint {
-    name: string
-    registered: number
-}
+import { DataPoint, UserAdminData } from '@/types'
+import UserCard from './users-card'
+import RegisterCountChart from './register-count-chart'
+import { useTheme } from '../theme-provider'
 
 function AdminDashboard() {
     const [chartData, setChartData] = useState<DataPoint[]>([])
-
-    const fetchData = async () => {
+    const { theme } = useTheme()
+    const fetchData = async (year: string) => {
         try {
             const response = await axios.get(
-                'http://localhost:3000/admin/users/year/2024'
+                'http://localhost:3000/admin/users/year/' + year
             )
             const usersData = response.data
             const monthCounts: { [key: string]: number } = {
@@ -71,71 +69,23 @@ function AdminDashboard() {
     }
 
     React.useEffect(() => {
-        fetchData()
+        const currentYear = new Date().getFullYear().toString()
+        fetchData(currentYear)
     }, [])
     return (
         <>
             {/* <div className="w-full p-6 h-2 bg-slate-500"> HEADER</div> */}
-            {/* // TODO: ALIGN ITEMS  */}
-            <div className="w-full h-1/3 flex flex-col p-4">
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="">
-                            Year
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="center">
-                        <div>1999</div> <div>2000</div>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-                <ResponsiveContainer width="100%" height="90%">
-                    <AreaChart
-                        width={500}
-                        height={300}
-                        data={chartData}
-                        barSize={20}
-                    >
-                        <CartesianGrid
-                            strokeDasharray="3 3"
-                            // vertical={false}
-                            stroke="#ddd"
-                        />
-                        <XAxis
-                            dataKey="name"
-                            axisLine={false}
-                            tick={{ fill: '#d1d5db' }}
-                            tickLine={false}
-                        />
-                        <YAxis />
-                        <Tooltip
-                            contentStyle={{
-                                borderRadius: '10px',
-                                borderColor: 'lightgray',
-                            }}
-                        />
-                        <Legend
-                            align="left"
-                            verticalAlign="top"
-                            wrapperStyle={{
-                                paddingTop: '20px',
-                                paddingBottom: '40px',
-                            }}
-                        />
-                        <Area
-                            type="monotone"
-                            dataKey="registered"
-                            stroke="#fa004f"
-                            fill="#8884d8"
-                            dot={{
-                                r: 5,
-                                stroke: '#ffffff',
-                                strokeWidth: 2,
-                                fill: '#fff',
-                            }}
-                            strokeWidth={4}
-                        />
-                    </AreaChart>
-                </ResponsiveContainer>
+            <div className="w-full lg:w-2/3 flex flex-col gap-8 p-4 mx-auto">
+                <div className="flex  gap-4 justify-between flex-wrap w-full">
+                    <UserCard count={10} date="Today" type="Users" />
+                    <UserCard count={120} date="Today" type="Gallery" />
+                    <UserCard count={15} date="Today" type="Clients" />
+                </div>
+                <RegisterCountChart
+                    chartData={chartData}
+                    theme={theme}
+                    fetchData={fetchData}
+                />
             </div>
         </>
     )

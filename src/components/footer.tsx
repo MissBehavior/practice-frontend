@@ -95,7 +95,12 @@ export default function Footer() {
             <div className="flex max-md:flex-col gap-4 align-middle mt-5">
                 <div className="max-w-2xl mx-auto text-center">
                     {/* <a href="javascript:void(0)" className="inline-block"> */}
-                    <img src={footerimg} alt="logo" className="w-65" />
+                    <img
+                        src={footerimg}
+                        alt="logo"
+                        className="w-65 select-none"
+                        draggable="false"
+                    />
                     {/* </a> */}
                 </div>
                 <p className="text-sm md:ml-auto">

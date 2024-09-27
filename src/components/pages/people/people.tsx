@@ -58,9 +58,10 @@ export default function People() {
                     >
                         <div className="flex flex-col justify-start min-h-[750px] sm:w-full md:w-96 p-6 bg-white dark:bg-slate-700 shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-500 text-center items-center">
                             <img
-                                className="w-64 object-cover rounded-t-md"
+                                className="w-64 object-cover rounded-t-md select-none"
                                 src={person.imgUrl}
                                 alt=""
+                                draggable="false"
                             />
                             <div className="mt-4">
                                 <h1 className="text-[20px] font-bold text-gray-700 dark:text-white">

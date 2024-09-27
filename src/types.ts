@@ -85,3 +85,8 @@ export const signInSchema = z.object({
 
 export type TSignInSchema = z.infer<typeof signInSchema>
 export type TSignUpSchema = z.infer<typeof signUpSchema>
+
+export interface DataPoint {
+    name: string
+    registered: number
+}

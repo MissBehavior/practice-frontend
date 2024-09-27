@@ -48,6 +48,7 @@ export default function Header() {
                         src={companyLogo}
                         alt="logo"
                         className="md:w-[170px] w-36 p-3 bg-white rounded-lg select-none"
+                        draggable="false"
                     />
                 </Link>
                 <div className="space-x-6 md:absolute md:right-10 flex items-center max-md:ml-auto">
