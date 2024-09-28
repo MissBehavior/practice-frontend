@@ -7,6 +7,12 @@ import i18n from '@/i18n/config'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/services/auth-service'
 import { MenuItem } from './menu-item'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { FaChevronDown } from 'react-icons/fa'
 export default function Header() {
     const { isLoggedIn, logoutFunc } = useAuth()
     const { user } = useAuth()
@@ -42,7 +48,7 @@ export default function Header() {
     }, [])
     return (
         <header className="shadow-md bg-white dark:bg-slate-700 font-sans tracking-wide relative z-50">
-            <section className="flex items-center lg:justify-center flex-wrap gap-5 relative py-3 px-10 border-gray-200 border-b dark:border-gray-700 lg:min-h-[80px] max-lg:min-h-[60px]">
+            <section className="flex items-center lg:justify-center flex-wrap gap-5 relative py-3 px-4 border-gray-200 border-b dark:border-gray-700 lg:min-h-[80px] max-lg:min-h-[60px]">
                 <Link to="/">
                     <img
                         src={companyLogo}
@@ -51,7 +57,7 @@ export default function Header() {
                         draggable="false"
                     />
                 </Link>
-                <div className="space-x-6 md:absolute md:right-10 flex items-center max-md:ml-auto">
+                <div className="space-x-4 md:absolute md:right-10 flex items-center max-md:ml-auto">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="cursor-pointer fill-black dark:fill-white"
@@ -90,12 +96,12 @@ export default function Header() {
                     </div>
                     {!isLoggedIn && (
                         <>
-                            <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-6 cursor-pointer">
+                            <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-4 cursor-pointer">
                                 <Button onClick={navToLogin}>
                                     {t('login')}
                                 </Button>
                             </div>
-                            <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-6 cursor-pointer">
+                            <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-4 cursor-pointer">
                                 <Button onClick={navToRegister}>
                                     {t('register')}
                                 </Button>
@@ -104,10 +110,59 @@ export default function Header() {
                     )}
                     {isLoggedIn && (
                         <>
-                            <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-6 cursor-pointer">
-                                <Button onClick={logoutFunc}>
-                                    {t('logout')}
-                                </Button>
+                            <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-4 cursor-pointer">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 ring-2 ring-gray-300 dark:ring-gray-500 hover:brightness-110">
+                                            {user.profileImgUrl === '' ? (
+                                                <svg
+                                                    className="w-10 h-10 text-gray-400 -left-1 bg-gray-300 rounded-full border-2 border-white dark:border-slate-500 p-2"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 20 20"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                        clipRule="evenodd"
+                                                    ></path>
+                                                </svg>
+                                            ) : (
+                                                <img
+                                                    src={user.profileImgUrl}
+                                                    alt="profile"
+                                                    className=" w-10 h-10 -left-1 bg-gray-300 rounded-full border-2 border-white dark:border-slate-500 p-2"
+                                                />
+                                            )}
+                                        </div>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent
+                                        align="center"
+                                        className="flex flex-col gap-2"
+                                    >
+                                        <Button>
+                                            <NavLink
+                                                to={'/profile'}
+                                                onClick={handleClick}
+                                                className={({
+                                                    isActive,
+                                                    isPending,
+                                                }) =>
+                                                    isPending
+                                                        ? 'pending'
+                                                        : isActive
+                                                        ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
+                                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
+                                                }
+                                            >
+                                                Profile
+                                            </NavLink>
+                                        </Button>
+                                        <Button onClick={logoutFunc}>
+                                            {t('logout')}
+                                        </Button>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
                             </div>
                         </>
                     )}

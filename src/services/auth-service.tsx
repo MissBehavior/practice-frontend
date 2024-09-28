@@ -22,6 +22,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         name: '',
         isAdmin: false,
         isEmployee: false,
+        email: '',
+        profileImgUrl: '',
+        profileImgPath: '',
     })
 
     useEffect(() => {
@@ -87,6 +90,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             name: '',
             isAdmin: false,
             isEmployee: false,
+            email: '',
+            profileImgUrl: '',
+            profileImgPath: '',
         })
         localStorage.removeItem('token')
         localStorage.removeItem('user')
@@ -100,6 +106,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 name: decodedToken.name,
                 isAdmin: decodedToken.isAdmin,
                 isEmployee: decodedToken.isEmployee,
+                email: decodedToken.email,
+                profileImgUrl: decodedToken.profileImgUrl,
+                profileImgPath: decodedToken.profileImgPath,
             }
             setUser(newUser)
             localStorage.setItem('user', JSON.stringify(newUser))
@@ -116,6 +125,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 setUserToken,
                 setUserFunc,
                 user,
+                setUser,
             }}
         >
             {children}

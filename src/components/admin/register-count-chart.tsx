@@ -65,8 +65,6 @@ function RegisterCountChart({
                 >
                     <CartesianGrid
                         strokeDasharray="3 3"
-                        // vertical={false}
-                        // stroke="#ddd"
                         stroke={theme == 'dark' ? '#ddd' : '#363636'}
                     />
                     <XAxis

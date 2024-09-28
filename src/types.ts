@@ -10,6 +10,7 @@ export interface AuthContextType {
     setUserToken: (token: AuthToken) => void
     userToken: AuthToken | null
     user: User
+    setUser: (user: User) => void
 }
 export interface JwtPayload {
     isAdmin: boolean
@@ -19,6 +20,9 @@ export interface JwtPayload {
     exp: number
     aud: string
     iss: string
+    email: string
+    profileImgUrl: string
+    profileImgPath: string
 }
 export interface AuthToken {
     accessToken: string
@@ -29,7 +33,9 @@ export interface User {
     name: string
     isAdmin: boolean
     isEmployee: boolean
-    mail?: string
+    email: string
+    profileImgUrl: string
+    profileImgPath: string
 }
 export interface UserAdminData {
     _id: string
@@ -39,6 +45,8 @@ export interface UserAdminData {
     isEmployee: boolean
     createdAt: string
     updatedAt: string
+    profileImgUrl: string
+    profileImgPath: string
 }
 export interface SolutionsData {
     _id: string

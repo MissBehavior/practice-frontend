@@ -22,6 +22,7 @@ import TeamUpdates from './components/team-updates/team-updates.tsx'
 import AdminDashboard from './components/admin/dashboard.tsx'
 import UsersTable from './components/admin/users-table.tsx'
 import Admin from './components/admin/admin.tsx'
+import Profile from './components/pages/profile/profile.tsx'
 
 const router = createBrowserRouter([
     {
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
             {
                 path: '/solutions/:id',
                 element: <SolutionsDetail />,
+            },
+            {
+                path: '/profile',
+                element: <Profile />,
             },
             {
                 element: <EmployeeRoutes />,

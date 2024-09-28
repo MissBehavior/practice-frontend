@@ -32,6 +32,8 @@ import { useTheme } from '../theme-provider'
 
 function AdminDashboard() {
     const [chartData, setChartData] = useState<DataPoint[]>([])
+    const [userCount, setUserCount] = useState<number>()
+    const [galleryCount, setGalleryCount] = useState<number>()
     const { theme } = useTheme()
     const fetchData = async (year: string) => {
         try {
@@ -68,17 +70,49 @@ function AdminDashboard() {
         }
     }
 
+    const fetchUserCount = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:3000/admin/users/count/all/'
+            )
+            setUserCount(response.data.total)
+        } catch (error) {
+            console.error('Error fetching data:', error)
+        }
+    }
+    const fetchGalleryCount = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:3000/admin/gallery/count/all/'
+            )
+            console.log('gallery count:', response)
+            setGalleryCount(response.data.total)
+        } catch (error) {
+            console.error('Error fetching data:', error)
+        }
+    }
+
     React.useEffect(() => {
         const currentYear = new Date().getFullYear().toString()
         fetchData(currentYear)
+        fetchUserCount()
+        fetchGalleryCount()
     }, [])
     return (
         <>
             {/* <div className="w-full p-6 h-2 bg-slate-500"> HEADER</div> */}
             <div className="w-full lg:w-2/3 flex flex-col gap-8 p-4 mx-auto">
                 <div className="flex  gap-4 justify-between flex-wrap w-full">
-                    <UserCard count={10} date="Today" type="Users" />
-                    <UserCard count={120} date="Today" type="Gallery" />
+                    <UserCard
+                        count={userCount ? userCount : 0}
+                        date="Today"
+                        type="Users"
+                    />
+                    <UserCard
+                        count={galleryCount ? galleryCount : 0}
+                        date="Today"
+                        type="Gallery"
+                    />
                     <UserCard count={15} date="Today" type="Clients" />
                 </div>
                 <RegisterCountChart
