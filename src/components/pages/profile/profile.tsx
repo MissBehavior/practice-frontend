@@ -9,14 +9,52 @@ import React, { useState } from 'react'
 import { MdModeEdit } from 'react-icons/md'
 
 function Profile() {
+    const { userToken, user, setUser } = useAuth()
+    const api = useAxios()
     const [selectedFile, setSelectedFile] = useState<File | null>(null)
     const [open, setOpen] = useState(false)
 
+    const [name, setName] = useState(user.name)
+    const [email, setEmail] = useState(user.email)
+    const [phone, setPhone] = useState('(123) 123-1234') // Update with real user data if available
+    const [languages, setLanguages] = useState('English, Spanish') // Update with real user data if available
+    const [isDirty, setIsDirty] = useState(false)
+
+    const handleInputChange = (
+        e: React.ChangeEvent<HTMLInputElement>,
+        setter: React.Dispatch<React.SetStateAction<string>>
+    ) => {
+        setter(e.target.value)
+        setIsDirty(true)
+    }
+
+    const handleSaveChanges = async () => {
+        const updatedUser = { ...user, name, email }
+        try {
+            const response = await api.patch(`/user/${user.id}`, updatedUser, {
+                headers: {
+                    Authorization: `Bearer ${userToken!.accessToken}`,
+                },
+            })
+            console.log('User updated:', response.data)
+            setUser(updatedUser) // Update user in the context
+            alert('Profile updated successfully!')
+            setIsDirty(false)
+        } catch (error) {
+            console.error('Error updating profile:', error)
+            alert('Failed to update profile')
+        }
+    }
+    const handleCancelChanges = () => {
+        // Reset the input fields to their original values
+        setName(user.name)
+        setEmail(user.email)
+        setPhone('(123) 123-1234') // Reset to original value if available
+        setLanguages('English, Spanish') // Reset to original value if available
+        setIsDirty(false) // Mark as no changes
+    }
+
     const closeMenu = () => setOpen(false)
-
-    const { userToken, user, setUser } = useAuth()
-    const api = useAxios()
-
     const uploadProfileImage = () => {
         const input = document.createElement('input')
         input.type = 'file'
@@ -170,36 +208,75 @@ function Profile() {
                                     <span className="font-bold w-24 dark:text-gray-200">
                                         Full name:
                                     </span>
-                                    <span className="">{user.name}</span>
+                                    <input
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) =>
+                                            handleInputChange(e, setName)
+                                        }
+                                        className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-gray-200 dark:border-gray-600"
+                                        placeholder="Enter your full name"
+                                    />
                                 </li>
-
-                                {/* <li className="flex border-b py-2">
-                                    <span className="font-bold w-24 dark:text-gray-200">
-                                        Joined:
-                                    </span>
-                                    <span className="">
-                                        {new Date(user.createdAt).toDateString()}
-                                    </span>
-                                </li> */}
                                 <li className="flex border-b py-2">
                                     <span className="font-bold w-24 dark:text-gray-200">
                                         Mobile:
                                     </span>
-                                    <span className="">(123) 123-1234</span>
+                                    <input
+                                        type="text"
+                                        value={phone}
+                                        onChange={(e) =>
+                                            handleInputChange(e, setPhone)
+                                        }
+                                        className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-gray-200 dark:border-gray-600"
+                                        placeholder="Enter your mobile number"
+                                    />
                                 </li>
                                 <li className="flex border-b py-2">
                                     <span className="font-bold w-24 dark:text-gray-200">
                                         Email:
                                     </span>
-                                    <span className="">{user.email}</span>
+                                    <input
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) =>
+                                            handleInputChange(e, setEmail)
+                                        }
+                                        className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-gray-200 dark:border-gray-600"
+                                        placeholder="Enter your email"
+                                    />
                                 </li>
                                 <li className="flex border-b py-2">
                                     <span className="font-bold w-24 ">
                                         Languages:
                                     </span>
-                                    <span className="">English, Spanish</span>
+                                    <input
+                                        type="text"
+                                        value={languages}
+                                        onChange={(e) =>
+                                            handleInputChange(e, setLanguages)
+                                        }
+                                        className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-gray-200 dark:border-gray-600"
+                                        placeholder="Enter languages spoken"
+                                    />
                                 </li>
                             </ul>
+                            {isDirty && (
+                                <div className="mt-4 flex space-x-4">
+                                    <button
+                                        onClick={handleSaveChanges}
+                                        className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+                                    >
+                                        Save Changes
+                                    </button>
+                                    <button
+                                        onClick={handleCancelChanges}
+                                        className="p-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
