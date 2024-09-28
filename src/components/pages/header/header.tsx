@@ -262,12 +262,13 @@ export default function Header() {
                                 link="team-updates"
                             />
                         )}
-
-                        <MenuItem
-                            handleClick={handleClick}
-                            text="admin"
-                            link="dashboard"
-                        />
+                        {user.isAdmin && (
+                            <MenuItem
+                                handleClick={handleClick}
+                                text="admin"
+                                link="dashboard"
+                            />
+                        )}
                     </ul>
                 </div>
 

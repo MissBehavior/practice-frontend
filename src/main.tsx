@@ -24,6 +24,7 @@ import UsersTable from './components/admin/users-table.tsx'
 import Admin from './components/admin/admin.tsx'
 import Profile from './components/pages/profile/profile.tsx'
 import ProtectedRoutes from './services/protected-routes.tsx'
+import AdminRoutes from './services/admin-routes.tsx'
 
 const router = createBrowserRouter([
     {
@@ -98,17 +99,34 @@ const router = createBrowserRouter([
             },
             // TODO: TESTING ADMIN
             {
-                path: '/admin',
-                element: <AdminDashboard />,
+                element: <AdminRoutes />,
+                children: [
+                    {
+                        path: '/admin',
+                        element: <AdminDashboard />,
+                    },
+                    {
+                        path: '/users',
+                        element: <UsersTable />,
+                    },
+                    {
+                        path: '/dashboard',
+                        element: <AdminDashboard />,
+                    },
+                ],
             },
-            {
-                path: '/users',
-                element: <UsersTable />,
-            },
-            {
-                path: '/dashboard',
-                element: <AdminDashboard />,
-            },
+            // {
+            //     path: '/admin',
+            //     element: <AdminDashboard />,
+            // },
+            // {
+            //     path: '/users',
+            //     element: <UsersTable />,
+            // },
+            // {
+            //     path: '/dashboard',
+            //     element: <AdminDashboard />,
+            // },
         ],
         errorElement: <div>404</div>,
     },
