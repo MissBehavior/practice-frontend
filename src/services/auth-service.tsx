@@ -17,6 +17,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [userToken, setUserToken] = useState<any>(null)
+    const [isAuthLoading, setIsAuthLoading] = useState(true) // Add loading state
+
     const [user, setUser] = useState<User>({
         id: '',
         name: '',
@@ -37,6 +39,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 // Attempt to refresh the token
                 refreshAccessToken(parsedToken)
             } else {
+                console.log('Token still valid')
                 setIsLoggedIn(true)
                 setUserToken(parsedToken)
                 setUserFunc(parsedToken)
@@ -48,6 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 setUser(JSON.parse(storedUser))
             }
         }
+        setIsAuthLoading(false)
     }, [])
     const decodeToken = (token: any) => {
         try {
@@ -126,6 +130,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 setUserFunc,
                 user,
                 setUser,
+                isAuthLoading,
             }}
         >
             {children}

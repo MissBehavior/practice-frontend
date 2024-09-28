@@ -37,10 +37,6 @@ function Profile() {
         const formData = new FormData()
         formData.append('image', file)
         formData.append('userId', user.id)
-
-        console.log(userToken!.accessToken)
-        console.log(file.name)
-        console.log(file.size)
         try {
             const response = await api.post('/user/uploadprofile', formData, {
                 headers: {
@@ -48,10 +44,6 @@ function Profile() {
                     Authorization: `Bearer ${userToken!.accessToken}`,
                 },
             })
-            console.log(response)
-            console.log(response.data)
-            console.log(response.data.savedUser.profileImgUrl)
-            console.log(response.data.savedUser.profileImgPath)
             const updatedUser = {
                 ...user,
                 profileImgUrl: response.data.savedUser.profileImgUrl,
@@ -76,23 +68,18 @@ function Profile() {
                 }
             )
             console.log(response)
-            // Update the user profile image URL in the auth context
             const updatedUser = {
                 ...user,
                 profileImgUrl: '',
                 profileImgPath: '',
             }
-            setUser(updatedUser) // Update the user state in AuthProvider
-            localStorage.setItem('user', JSON.stringify(updatedUser)) // Sync with localStorage
-            alert('File deleted successfully')
+            setUser(updatedUser)
+            localStorage.setItem('user', JSON.stringify(updatedUser))
         } catch (error) {
             console.error('Error deleting file:', error)
             alert('Failed to delete file')
         }
     }
-    console.log(user)
-    console.log('#####################')
-    console.log(user.profileImgUrl)
     return (
         <>
             <div className="h-full bg-gray-200 dark:bg-slate-600 p-8">

@@ -3,8 +3,14 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '@/services/auth-service' // Adjust the path as necessary
 
 const ProtectedRoutes = () => {
-    const { isLoggedIn } = useAuth()
+    const { isLoggedIn, isAuthLoading } = useAuth()
 
+    // If still checking authentication, show a loading screen or return null
+    if (isAuthLoading) {
+        return <div>Loading...</div> // Or a spinner/loading component
+    }
+
+    // Only redirect to login if auth is confirmed to be false
     if (!isLoggedIn) {
         return <Navigate to="/login" />
     }

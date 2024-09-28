@@ -23,6 +23,7 @@ import AdminDashboard from './components/admin/dashboard.tsx'
 import UsersTable from './components/admin/users-table.tsx'
 import Admin from './components/admin/admin.tsx'
 import Profile from './components/pages/profile/profile.tsx'
+import ProtectedRoutes from './services/protected-routes.tsx'
 
 const router = createBrowserRouter([
     {
@@ -70,8 +71,13 @@ const router = createBrowserRouter([
                 element: <SolutionsDetail />,
             },
             {
-                path: '/profile',
-                element: <Profile />,
+                element: <ProtectedRoutes />,
+                children: [
+                    {
+                        path: '/profile',
+                        element: <Profile />,
+                    },
+                ],
             },
             {
                 element: <EmployeeRoutes />,

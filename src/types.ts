@@ -11,6 +11,7 @@ export interface AuthContextType {
     userToken: AuthToken | null
     user: User
     setUser: (user: User) => void
+    isAuthLoading: boolean
 }
 export interface JwtPayload {
     isAdmin: boolean
