@@ -50,7 +50,10 @@ function RegisterCountChart({
                     className="flex flex-col gap-2"
                 >
                     {getYearsArray().map((year) => (
-                        <Button onClick={() => fetchData(year.toString())}>
+                        <Button
+                            key={year}
+                            onClick={() => fetchData(year.toString())}
+                        >
                             {year}
                         </Button>
                     ))}

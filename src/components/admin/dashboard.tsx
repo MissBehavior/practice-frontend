@@ -85,7 +85,6 @@ function AdminDashboard() {
             const response = await axios.get(
                 'http://localhost:3000/admin/gallery/count/all/'
             )
-            console.log('gallery count:', response)
             setGalleryCount(response.data.total)
         } catch (error) {
             console.error('Error fetching data:', error)

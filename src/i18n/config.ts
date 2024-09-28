@@ -68,6 +68,7 @@ i18n.use(initReactI18next).init({
                 errorDeleting: 'Error deleting',
                 onlyOneImageAllowed: 'Only one image is allowed',
                 max20Images: 'Maximum 20 images allowed',
+                admin: 'Admin',
             },
         },
         // Lithuanian Language
@@ -125,6 +126,7 @@ i18n.use(initReactI18next).init({
                 errorDeleting: 'Klaida trinant',
                 onlyOneImageAllowed: 'Leidžiamas tik vienas paveikslėlis',
                 max20Images: 'Maksimaliai leidžiami 20 paveikslėlių',
+                admin: 'Adminas',
             },
         },
     },

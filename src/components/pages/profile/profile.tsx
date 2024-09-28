@@ -10,6 +10,10 @@ import { MdModeEdit } from 'react-icons/md'
 
 function Profile() {
     const [selectedFile, setSelectedFile] = useState<File | null>(null)
+    const [open, setOpen] = useState(false)
+
+    const closeMenu = () => setOpen(false)
+
     const { userToken, user, setUser } = useAuth()
     const api = useAxios()
 
@@ -31,6 +35,7 @@ function Profile() {
             await handleFileUpload(file)
         }
         input.click()
+        closeMenu()
     }
 
     const handleFileUpload = async (file: File) => {
@@ -75,6 +80,7 @@ function Profile() {
             }
             setUser(updatedUser)
             localStorage.setItem('user', JSON.stringify(updatedUser))
+            closeMenu()
         } catch (error) {
             console.error('Error deleting file:', error)
             alert('Failed to delete file')
@@ -86,7 +92,7 @@ function Profile() {
                 <div className="bg-white dark:bg-slate-800 rounded-lg shadow-xl pb-8">
                     <div className="w-full h-[250px] rounded-tl-lg rounded-tr-lg bg-gradient-to-tr from-green-500 from-20% via-green-600 via-40% to-blue-600 dark:bg-gradient-to-tr dark:from-violet-900 dark:from-20% dark:via-cyan-700 dark:via-40% dark:to-pink-700"></div>
                     <div className="flex flex-col items-center -mt-20 profileIMG">
-                        <DropdownMenu>
+                        <DropdownMenu open={open} onOpenChange={setOpen}>
                             <DropdownMenuTrigger asChild>
                                 <div className="hover:brightness-110 cursor-pointer">
                                     {user.profileImgUrl === '' ? (

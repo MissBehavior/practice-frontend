@@ -18,9 +18,13 @@ export default function Header() {
     const { user } = useAuth()
     const { t } = useTranslation()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [open, setOpen] = useState(false)
+
+    const closeMenu = () => setOpen(false)
 
     const handleClick = () => {
         setIsMenuOpen(!isMenuOpen)
+        closeMenu()
     }
 
     const setLanguage = (lang: string) => () => {
@@ -111,7 +115,10 @@ export default function Header() {
                     {isLoggedIn && (
                         <>
                             <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-4 cursor-pointer">
-                                <DropdownMenu>
+                                <DropdownMenu
+                                    open={open}
+                                    onOpenChange={setOpen}
+                                >
                                     <DropdownMenuTrigger asChild>
                                         <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 ring-2 ring-gray-300 dark:ring-gray-500 hover:brightness-110">
                                             {user.profileImgUrl === '' ? (
