@@ -52,7 +52,6 @@ export default function Login() {
 
     if (status === 'success') {
         console.log('-------success data---------')
-        console.log(userToken)
         toast({
             variant: 'success',
             title: 'Login Success',

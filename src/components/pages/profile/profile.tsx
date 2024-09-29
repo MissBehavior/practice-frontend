@@ -13,10 +13,26 @@ function Profile() {
     const api = useAxios()
     const [selectedFile, setSelectedFile] = useState<File | null>(null)
     const [open, setOpen] = useState(false)
+    const [testUser, setTestUser] = useState<any>({})
 
+    // const fetchTestUser = async () => {
+    //     try {
+    //         const response = await api.get('/user/' + user.id)
+    //         console.log('response:', response)
+    //         console.log('-----------------')
+    //         setTestUser(response.data)
+    //         console.log(testUser)
+    //         console.log(response.data)
+    //     } catch (error) {
+    //         console.error('Error fetching data:', error)
+    //     }
+    // }
+    // React.useEffect(() => {
+    //     fetchTestUser()
+    // }, [])
     const [name, setName] = useState(user.name)
     const [email, setEmail] = useState(user.email)
-    const [phone, setPhone] = useState('(123) 123-1234') // Update with real user data if available
+    const [telefon, setTelefon] = useState(user.telefon) // Update with real user data if available
     const [languages, setLanguages] = useState('English, Spanish') // Update with real user data if available
     const [isDirty, setIsDirty] = useState(false)
 
@@ -29,7 +45,7 @@ function Profile() {
     }
 
     const handleSaveChanges = async () => {
-        const updatedUser = { ...user, name, email }
+        const updatedUser = { ...user, name, email, telefon }
         try {
             const response = await api.patch(`/user/${user.id}`, updatedUser, {
                 headers: {
@@ -37,8 +53,8 @@ function Profile() {
                 },
             })
             console.log('User updated:', response.data)
+            console.log('Updated user:', updatedUser)
             setUser(updatedUser) // Update user in the context
-            alert('Profile updated successfully!')
             setIsDirty(false)
         } catch (error) {
             console.error('Error updating profile:', error)
@@ -49,7 +65,7 @@ function Profile() {
         // Reset the input fields to their original values
         setName(user.name)
         setEmail(user.email)
-        setPhone('(123) 123-1234') // Reset to original value if available
+        setTelefon(user.telefon) // Reset to original value if available
         setLanguages('English, Spanish') // Reset to original value if available
         setIsDirty(false) // Mark as no changes
     }
@@ -224,9 +240,9 @@ function Profile() {
                                     </span>
                                     <input
                                         type="text"
-                                        value={phone}
+                                        value={telefon}
                                         onChange={(e) =>
-                                            handleInputChange(e, setPhone)
+                                            handleInputChange(e, setTelefon)
                                         }
                                         className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-gray-200 dark:border-gray-600"
                                         placeholder="Enter your mobile number"
@@ -239,6 +255,7 @@ function Profile() {
                                     <input
                                         type="email"
                                         value={email}
+                                        disabled
                                         onChange={(e) =>
                                             handleInputChange(e, setEmail)
                                         }

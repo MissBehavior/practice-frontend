@@ -21,6 +21,7 @@ export interface JwtPayload {
     exp: number
     aud: string
     iss: string
+    telefon: string
     email: string
     profileImgUrl: string
     profileImgPath: string
@@ -37,6 +38,7 @@ export interface User {
     email: string
     profileImgUrl: string
     profileImgPath: string
+    telefon: string
 }
 export interface UserAdminData {
     _id: string

@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         name: '',
         isAdmin: false,
         isEmployee: false,
+        telefon: '',
         email: '',
         profileImgUrl: '',
         profileImgPath: '',
@@ -95,6 +96,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             isAdmin: false,
             isEmployee: false,
             email: '',
+            telefon: '',
             profileImgUrl: '',
             profileImgPath: '',
         })
@@ -104,12 +106,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
     const setUserFunc = (token: any) => {
         const decodedToken = decodeToken(token)
+        console.log('decodedToken:', decodedToken)
+        console.log('token:', token)
         if (decodedToken) {
             const newUser = {
                 id: decodedToken.aud,
                 name: decodedToken.name,
                 isAdmin: decodedToken.isAdmin,
                 isEmployee: decodedToken.isEmployee,
+                telefon: decodedToken.telefon,
                 email: decodedToken.email,
                 profileImgUrl: decodedToken.profileImgUrl,
                 profileImgPath: decodedToken.profileImgPath,

@@ -147,10 +147,9 @@ export default function Header() {
                                         align="center"
                                         className="flex flex-col gap-2"
                                     >
-                                        <Button>
+                                        <Button onClick={handleClick}>
                                             <NavLink
                                                 to={'/profile'}
-                                                onClick={handleClick}
                                                 className={({
                                                     isActive,
                                                     isPending,
@@ -158,8 +157,8 @@ export default function Header() {
                                                     isPending
                                                         ? 'pending'
                                                         : isActive
-                                                        ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
-                                                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
+                                                        ? 'hover:text-[#007bff] text-gray-300 dark:text-gray-700 hover:dark:text-[#007bff] p-2 font-bold text-[20px] block'
+                                                        : 'hover:text-[#007bff] text-gray-300 dark:text-gray-700 hover:dark:text-[#007bff] p-2 font-bold text-[20px] block'
                                                 }
                                             >
                                                 Profile
