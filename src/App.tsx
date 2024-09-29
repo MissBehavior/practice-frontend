@@ -9,8 +9,6 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { Toaster } from './components/ui/toaster'
 import postExternalImg from '/cropped-Featured-picture-1.jpg'
 import { useEffect, useState } from 'react'
-import AdminDashboard from './components/admin/dashboard'
-import AdminSidenav from './components/admin/sidenav'
 import Admin from './components/admin/admin'
 
 // ACTS AS ROOT LAYOUT

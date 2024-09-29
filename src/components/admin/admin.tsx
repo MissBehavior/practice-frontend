@@ -1,5 +1,4 @@
 import React from 'react'
-import UsersTable from './users-table'
 import AdminSidenav from './sidenav'
 import { Outlet } from 'react-router-dom'
 import Header from '../pages/header/header'

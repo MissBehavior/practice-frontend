@@ -26,7 +26,7 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Button } from '../ui/button'
+import { Button } from '../../ui/button'
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -181,27 +181,35 @@ export function DataTable<TData, TValue>({
                 {table.getRowModel().rows.length ? (
                     table.getRowModel().rows.map((row) => (
                         <div key={row.id} className="border-b-8 p-10">
-                            {row.getVisibleCells().map((cell, index) => (
-                                <div
-                                    key={cell.id}
-                                    className="flex justify-between p-1"
-                                >
-                                    <span className="font-bold">
-                                        {
-                                            table.getHeaderGroups()[0].headers[
-                                                index
-                                            ].id
-                                        }
-                                        {cell.column.columnDef.header as string}
-                                    </span>
-                                    <span>
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext()
-                                        )}
-                                    </span>
-                                </div>
-                            ))}
+                            {row.getVisibleCells().map((cell) => {
+                                const header = table
+                                    .getHeaderGroups()[0]
+                                    .headers.find(
+                                        (h) => h.column.id === cell.column.id
+                                    )
+                                return (
+                                    <div
+                                        key={cell.id}
+                                        className="flex justify-between p-1"
+                                    >
+                                        <span className="font-bold">
+                                            {header
+                                                ? flexRender(
+                                                      header.column.columnDef
+                                                          .header,
+                                                      header.getContext()
+                                                  )
+                                                : cell.column.id}
+                                        </span>
+                                        <span>
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext()
+                                            )}
+                                        </span>
+                                    </div>
+                                )
+                            })}
                         </div>
                     ))
                 ) : (

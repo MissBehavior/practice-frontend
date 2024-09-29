@@ -48,6 +48,7 @@ export interface UserAdminData {
     isEmployee: boolean
     createdAt: string
     updatedAt: string
+    telefon: string
     profileImgUrl: string
     profileImgPath: string
 }

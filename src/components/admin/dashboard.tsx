@@ -1,31 +1,6 @@
 import React, { useState } from 'react'
-import UsersTable from './users-table'
-import AdminSidenav from './sidenav'
-import { Outlet } from 'react-router-dom'
-import Header from '../pages/header/header'
-import {
-    BarChart,
-    Bar,
-    Rectangle,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-    ResponsiveContainer,
-    AreaChart,
-    Area,
-    Line,
-    Scatter,
-} from 'recharts'
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from '../ui/dropdown-menu'
-import { Button } from '../ui/button'
 import axios from 'axios'
-import { DataPoint, UserAdminData } from '@/types'
+import { DataPoint } from '@/types'
 import UserCard from './users-card'
 import RegisterCountChart from './register-count-chart'
 import { useTheme } from '../theme-provider'

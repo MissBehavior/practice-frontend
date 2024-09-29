@@ -20,8 +20,7 @@ import GalleryDetail from './components/pages/gallery/gallery-detail.tsx'
 import EmployeeRoutes from './services/employee-routes.tsx'
 import TeamUpdates from './components/team-updates/team-updates.tsx'
 import AdminDashboard from './components/admin/dashboard.tsx'
-import UsersTable from './components/admin/users-table.tsx'
-import Admin from './components/admin/admin.tsx'
+import UsersTable from './components/admin/table/users-table.tsx'
 import Profile from './components/pages/profile/profile.tsx'
 import ProtectedRoutes from './services/protected-routes.tsx'
 import AdminRoutes from './services/admin-routes.tsx'
@@ -115,18 +114,6 @@ const router = createBrowserRouter([
                     },
                 ],
             },
-            // {
-            //     path: '/admin',
-            //     element: <AdminDashboard />,
-            // },
-            // {
-            //     path: '/users',
-            //     element: <UsersTable />,
-            // },
-            // {
-            //     path: '/dashboard',
-            //     element: <AdminDashboard />,
-            // },
         ],
         errorElement: <div>404</div>,
     },
