@@ -31,36 +31,49 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     })
 
     useEffect(() => {
-        // Check if there's a token in localStorage
-        const token = localStorage.getItem('token')
-        if (token) {
-            const parsedToken = JSON.parse(token) as AuthToken
-            const decodedToken = jwtDecode<JwtPayload>(parsedToken.accessToken)
-            if (dayjs.unix(decodedToken.exp).isBefore(dayjs())) {
-                // Attempt to refresh the token
-                refreshAccessToken(parsedToken)
+        const checkAuth = async () => {
+            setIsAuthLoading(true)
+
+            // Check if there's a token in localStorage
+            const token = localStorage.getItem('token')
+            if (token) {
+                const parsedToken = JSON.parse(token) as AuthToken
+                const decodedToken = jwtDecode<JwtPayload>(
+                    parsedToken.accessToken
+                )
+                if (dayjs.unix(decodedToken.exp).isBefore(dayjs())) {
+                    // Attempt to refresh the token
+                    // console.log('Token expired, attempting to refresh')
+                    // console.log(token)
+                    // console.log('----------------')
+                    // console.log('----------------')
+                    // console.log(parsedToken)
+                    await refreshAccessToken(parsedToken)
+                } else {
+                    setIsLoggedIn(true)
+                    setUserToken(parsedToken)
+                    setUserFunc(parsedToken)
+                }
             } else {
-                console.log('Token still valid')
-                setIsLoggedIn(true)
-                setUserToken(parsedToken)
-                setUserFunc(parsedToken)
+                // Check for user data in localStorage
+                const storedUser = localStorage.getItem('user')
+                if (storedUser) {
+                    setUser(JSON.parse(storedUser))
+                    setIsAuthLoading(false)
+                }
+                setIsLoggedIn(false)
             }
-        } else {
-            // Check for user data in localStorage
-            const storedUser = localStorage.getItem('user')
-            if (storedUser) {
-                setUser(JSON.parse(storedUser))
-            }
+            setIsAuthLoading(false)
         }
-        setIsAuthLoading(false)
+        checkAuth()
     }, [])
     const decodeToken = (token: any) => {
         try {
             const decodedToken = jwtDecode<JwtPayload>(token.accessToken)
-            console.log('decodedToken:', decodedToken)
+            // console.log('decodedToken:', decodedToken)
             return decodedToken
         } catch (error) {
-            console.error('Invalid token:', error)
+            // console.error('Invalid token:', error)
             return null
         }
     }

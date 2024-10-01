@@ -4,14 +4,15 @@ import { useAuth } from '@/services/auth-service' // Adjust the path as necessar
 
 const ProtectedRoutes = () => {
     const { isLoggedIn, isAuthLoading } = useAuth()
-
+    console.log('isLoggedIn user:', isLoggedIn)
+    console.log('EmployeeRoisLoggedInutes isAuthLoading:', isAuthLoading)
     // If still checking authentication, show a loading screen or return null
     if (isAuthLoading) {
         return <div>Loading...</div> // Or a spinner/loading component
     }
 
     // Only redirect to login if auth is confirmed to be false
-    if (!isLoggedIn) {
+    if (!isLoggedIn && !isAuthLoading) {
         return <Navigate to="/login" />
     }
 

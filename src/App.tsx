@@ -30,6 +30,15 @@ function App() {
             case '/profile':
                 setCurrentPath('Profile')
                 break
+            case '/login':
+                setCurrentPath('Login')
+                break
+            case '/register':
+                setCurrentPath('Register')
+                break
+            case '/forgot-password':
+                setCurrentPath('Reset Password')
+                break
             case '/team-updates':
                 setCurrentPath('Team Updates')
                 break

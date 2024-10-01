@@ -94,9 +94,13 @@ export const signInSchema = z.object({
     email: z.string().email(),
     password: z.string().min(8, 'Password must be at least 8 characters'),
 })
+export const forgotPasswordSchema = z.object({
+    email: z.string().email('Invalid email').nonempty('Email is required'),
+})
 
 export type TSignInSchema = z.infer<typeof signInSchema>
 export type TSignUpSchema = z.infer<typeof signUpSchema>
+export type TForgotPasswordSchema = z.infer<typeof forgotPasswordSchema>
 
 export interface DataPoint {
     name: string

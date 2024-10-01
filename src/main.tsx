@@ -24,6 +24,8 @@ import UsersTable from './components/admin/table/users-table.tsx'
 import Profile from './components/pages/profile/profile.tsx'
 import ProtectedRoutes from './services/protected-routes.tsx'
 import AdminRoutes from './services/admin-routes.tsx'
+import TableExample from './components/admin/table/table-example.tsx'
+import OtpFlow from './components/pages/otp-flow.tsx'
 
 const router = createBrowserRouter([
     {
@@ -91,6 +93,10 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login />,
+            },
+            {
+                path: '/forgot-password',
+                element: <OtpFlow />,
             },
             {
                 path: '/register',

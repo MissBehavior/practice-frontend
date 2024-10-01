@@ -3,7 +3,7 @@ import { Button } from '../ui/button'
 import { useTranslation } from 'react-i18next'
 import { toast } from '../ui/use-toast'
 import axios from 'axios'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { AuthToken, TSignInSchema, signInSchema } from '@/types'
@@ -13,7 +13,6 @@ export default function Login() {
     const { loginFunc, isLoggedIn, setUserFunc } = useAuth()
 
     const navigate = useNavigate()
-    const userRef = useRef<HTMLInputElement>(null)
     // const [name = '', setName] = React.useState<string>()
     // const [email = '', setEmail] = React.useState<string>()
     // const [password = '', setPassword] = React.useState<string>()
@@ -21,10 +20,7 @@ export default function Login() {
     const [userToken, setUserToken] = React.useState<AuthToken>()
     const [error, setError] = React.useState<string>()
     const { t } = useTranslation()
-    useEffect(() => {
-        if (userRef.current === null) return
-        userRef.current.focus()
-    }, [])
+
     const {
         register,
         handleSubmit,
@@ -89,6 +85,7 @@ export default function Login() {
             setStatus('error')
         }
     }
+
     return (
         <>
             {status === 'error' && (
@@ -142,6 +139,12 @@ export default function Login() {
                         >
                             {t('login')}
                         </Button>
+                        <NavLink
+                            to="/forgot-password"
+                            className="text-blue-500"
+                        >
+                            Forgot Password?
+                        </NavLink>
                     </form>
                 </div>
             </div>

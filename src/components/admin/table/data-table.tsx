@@ -153,6 +153,7 @@ export function DataTable<TData, TValue>({
                                                                 ? 'lightgreen'
                                                                 : '',
                                                     }}
+                                                    className="p-1"
                                                 >
                                                     {flexRender(
                                                         cell.column.columnDef
