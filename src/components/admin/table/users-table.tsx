@@ -8,7 +8,6 @@ import { useAuth, useAxios } from '@/services/auth-service'
 function UsersTable() {
     const { userToken } = useAuth()
     const api = useAxios()
-    const { t } = useTranslation()
 
     const [users, setUsers] = useState<UserAdminData[]>([])
     const fetchData = async () => {

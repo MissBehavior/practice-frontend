@@ -32,7 +32,7 @@ function AdminDashboard() {
             }
             usersData.forEach((user: any) => {
                 const date = new Date(user.createdAt)
-                const month = date.toLocaleString('default', { month: 'short' })
+                const month = date.toLocaleString('en', { month: 'short' })
                 monthCounts[month]++
             })
             const formattedData = Object.keys(monthCounts).map((month) => ({

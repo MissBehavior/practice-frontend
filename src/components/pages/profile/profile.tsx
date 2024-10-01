@@ -6,6 +6,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useAuth, useAxios } from '@/services/auth-service'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { MdModeEdit } from 'react-icons/md'
 
 function Profile() {
@@ -14,22 +15,8 @@ function Profile() {
     const [selectedFile, setSelectedFile] = useState<File | null>(null)
     const [open, setOpen] = useState(false)
     const [testUser, setTestUser] = useState<any>({})
+    const { t } = useTranslation()
 
-    // const fetchTestUser = async () => {
-    //     try {
-    //         const response = await api.get('/user/' + user.id)
-    //         console.log('response:', response)
-    //         console.log('-----------------')
-    //         setTestUser(response.data)
-    //         console.log(testUser)
-    //         console.log(response.data)
-    //     } catch (error) {
-    //         console.error('Error fetching data:', error)
-    //     }
-    // }
-    // React.useEffect(() => {
-    //     fetchTestUser()
-    // }, [])
     const [name, setName] = useState(user.name)
     const [email, setEmail] = useState(user.email)
     const [telefon, setTelefon] = useState(user.telefon) // Update with real user data if available
@@ -179,10 +166,10 @@ function Profile() {
                                 className="flex flex-col gap-2"
                             >
                                 <Button onClick={() => uploadProfileImage()}>
-                                    Upload new Image
+                                    {t('upload_image')}
                                 </Button>
                                 <Button onClick={() => deleteProfileImage()}>
-                                    Remove Image
+                                    {t('delete_image')}
                                 </Button>
                             </DropdownMenuContent>
                         </DropdownMenu>
@@ -217,12 +204,12 @@ function Profile() {
                     <div className="w-full flex flex-col 2xl:w-1/2 ">
                         <div className="flex-1 bg-white rounded-lg shadow-xl p-8 dark:bg-slate-800 text-gray-500 dark:text-gray-300">
                             <h4 className="text-xl text-gray-500 dark:text-gray-300 font-bold">
-                                Personal Info
+                                {t('profile_info')}
                             </h4>
                             <ul className="mt-2 ">
                                 <li className="flex border-y py-2">
                                     <span className="font-bold w-24 dark:text-gray-200">
-                                        Full name:
+                                        {t('name')}
                                     </span>
                                     <input
                                         type="text"
@@ -236,7 +223,7 @@ function Profile() {
                                 </li>
                                 <li className="flex border-b py-2">
                                     <span className="font-bold w-24 dark:text-gray-200">
-                                        Mobile:
+                                        {t('phone')}
                                     </span>
                                     <input
                                         type="text"
@@ -250,7 +237,7 @@ function Profile() {
                                 </li>
                                 <li className="flex border-b py-2">
                                     <span className="font-bold w-24 dark:text-gray-200">
-                                        Email:
+                                        {t('email')}
                                     </span>
                                     <input
                                         type="email"
@@ -265,7 +252,7 @@ function Profile() {
                                 </li>
                                 <li className="flex border-b py-2">
                                     <span className="font-bold w-24 ">
-                                        Languages:
+                                        {t('languages')}
                                     </span>
                                     <input
                                         type="text"
@@ -284,13 +271,13 @@ function Profile() {
                                         onClick={handleSaveChanges}
                                         className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
                                     >
-                                        Save Changes
+                                        {t('save_changes')}
                                     </button>
                                     <button
                                         onClick={handleCancelChanges}
                                         className="p-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition"
                                     >
-                                        Cancel
+                                        {t('cancel')}
                                     </button>
                                 </div>
                             )}

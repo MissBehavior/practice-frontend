@@ -102,6 +102,11 @@ export default function Header() {
                         <>
                             <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-4 cursor-pointer">
                                 <Button onClick={navToLogin}>
+                                    SignIn/SignUp
+                                </Button>
+                            </div>
+                            <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-4 cursor-pointer">
+                                <Button onClick={navToLogin}>
                                     {t('login')}
                                 </Button>
                             </div>
@@ -161,7 +166,7 @@ export default function Header() {
                                                         : 'hover:text-[#007bff] text-gray-300 dark:text-gray-700 hover:dark:text-[#007bff] p-2 font-bold text-[20px] block'
                                                 }
                                             >
-                                                Profile
+                                                {t('profile')}
                                             </NavLink>
                                         </Button>
                                         <Button onClick={logoutFunc}>
