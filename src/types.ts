@@ -82,6 +82,22 @@ export interface PostData {
     userName: string
     postPicture: string
 }
+export interface PostDataInternal {
+    _id: string
+    title: string
+    content: string
+    userId: string
+    createdAt: string
+    userName: string
+    postPicture: string
+    likes: string[]
+    comments: CommentData[]
+}
+export interface CommentData {
+    text: string
+    user: string
+}
+
 import { z } from 'zod'
 
 export const signUpSchema = z.object({

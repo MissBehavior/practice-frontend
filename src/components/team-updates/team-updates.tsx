@@ -6,7 +6,7 @@ import { useAuth, useAxios } from '@/services/auth-service'
 // import PostDelete from './post-delete'
 // import PostNew from './post-new'
 import parse from 'html-react-parser'
-import { PostData } from '@/types'
+import { PostData, PostDataInternal } from '@/types'
 // import PostEdit from './post-edit'
 import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
@@ -16,20 +16,23 @@ import TeamUpdateNew from './team-updates-new'
 import TeamUpdateDelete from './team-updates-delete'
 import { toast } from '../ui/use-toast'
 import 'react-quill/dist/quill.snow.css' // Import React Quill's Snow theme CSS
-
+import { FaRegHeart } from 'react-icons/fa'
+import { FaRegCommentDots } from 'react-icons/fa'
 interface PaginatedResponse {
     totalPages: number
     currentPage: number
-    posts: PostData[]
+    posts: PostDataInternal[]
 }
 export default function TeamUpdates() {
     const { user, userToken } = useAuth()
     const api = useAxios()
-    const [data, setData] = useState<PostData[]>([])
+    const [data, setData] = useState<PostDataInternal[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [totalPages, setTotalPages] = useState<number>(1)
     const { t } = useTranslation()
+
+    const [comment, setComment] = useState('')
 
     const handleNextPage = () => {
         setCurrentPage((prevPage) => prevPage + 1)
@@ -166,7 +169,108 @@ export default function TeamUpdates() {
                             <div className="ql-editor">
                                 {parse(item.content)}
                             </div>
-                            <section className="px-4 py-2 mt-2"></section>
+                            <hr className="border-1 w-full border-slate-600" />
+                            <div className="flex flex-row justify-between">
+                                <button className="btn mr-auto">
+                                    {item.likes.length} <FaRegHeart />
+                                </button>
+                                <button
+                                    className="btn"
+                                    onClick={() =>
+                                        (
+                                            document.getElementById(
+                                                `comments_modal${item._id}`
+                                            ) as HTMLDialogElement
+                                        ).showModal()
+                                    }
+                                >
+                                    {item.comments.length} <FaRegCommentDots />
+                                </button>
+                                <dialog
+                                    id={`comments_modal${item._id}`}
+                                    className="modal border-none outline-none"
+                                >
+                                    <div className="modal-box rounded border border-gray-600">
+                                        <div className="flex flex-wrap items-center flex-1 px-4 py-1 text-center mx-auto">
+                                            <a
+                                                href="#"
+                                                className="hover:underline"
+                                            >
+                                                <h2 className="text-2xl font-bold tracking-normal text-gray-800 dark:text-white">
+                                                    {item.title}
+                                                </h2>
+                                            </a>
+                                        </div>
+                                        <div className="md:flex-shrink-0 dark:text-white">
+                                            <img
+                                                src={item.postPicture}
+                                                alt={`Post image for ${item.title}`}
+                                                className="w-full max-h-[450px] rounded-b-none object-contain px-8 mb-4 box-border"
+                                            />
+                                        </div>
+                                        <div className="ql-editor">
+                                            {parse(item.content)}
+                                        </div>
+                                        <h3 className="font-bold text-lg mb-4">
+                                            COMMENTS
+                                        </h3>
+                                        <div className="flex flex-col gap-3 max-h-60 overflow-auto">
+                                            {item.comments.length === 0 && (
+                                                <p className="text-sm text-slate-500">
+                                                    No comments yet 🤔 Be the
+                                                    first one to comment!
+                                                </p>
+                                            )}
+                                            {item.comments.map((comment) => (
+                                                <div className="flex gap-2 items-start">
+                                                    <div className="avatar">
+                                                        <div className="w-8 rounded-full"></div>
+                                                    </div>
+                                                    <div className="flex flex-col">
+                                                        <div className="flex items-center gap-1">
+                                                            <span className="font-bold">
+                                                                {comment.user}
+                                                            </span>
+                                                            <span className="text-gray-700 text-sm">
+                                                                @{comment.user}
+                                                            </span>
+                                                        </div>
+                                                        <div className="text-sm">
+                                                            {comment.text}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <form
+                                            className="flex gap-2 items-center mt-4 border-t border-gray-600 pt-2"
+                                            // onSubmit={handlePostComment}
+                                        >
+                                            <textarea
+                                                className="textarea w-full p-1 rounded text-md resize-none border focus:outline-none  border-gray-800"
+                                                placeholder="Add a comment..."
+                                                value={comment}
+                                                onChange={(e) =>
+                                                    setComment(e.target.value)
+                                                }
+                                            />
+                                            <button className="btn btn-primary rounded-full btn-sm text-white px-4">
+                                                Post
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <form
+                                        method="dialog"
+                                        className="modal-backdrop"
+                                    >
+                                        <button className="outline-none">
+                                            close
+                                        </button>
+                                    </form>
+                                </dialog>
+                                <hr />
+                            </div>
+                            <hr className="border-1 w-full border-slate-600" />
                         </div>
                     </div>
                 ))}
