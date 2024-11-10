@@ -1,13 +1,8 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-// import { Skeleton } from '../../ui/skeleton'
-// import { Button } from '../../ui/button'
 import { useAuth, useAxios } from '@/services/auth-service'
-// import PostDelete from './post-delete'
-// import PostNew from './post-new'
 import parse from 'html-react-parser'
 import { PostData, PostDataInternal } from '@/types'
-// import PostEdit from './post-edit'
 import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 import { Skeleton } from '../ui/skeleton'
@@ -43,7 +38,33 @@ export default function TeamUpdates() {
     const handlePrevPage = () => {
         setCurrentPage((prevPage) => prevPage - 1)
     }
-
+    const likeUnlikeHandle = async (postId: string) => {
+        try {
+            const response = await axios.patch(
+                'http://localhost:3000/postinternal/like/' + postId,
+                { userId: user.id },
+                {
+                    headers: {
+                        Authorization: `Bearer ${userToken!.accessToken}`,
+                    },
+                }
+            )
+            const updatedPost = response.data
+            setData((prevData) =>
+                prevData.map((post) =>
+                    post._id === postId ? { ...post, likes: updatedPost } : post
+                )
+            )
+        } catch (error) {
+            console.error('Error liking/unliking post:', error)
+            toast({
+                variant: 'destructive',
+                title: t('error'),
+                description: t('error'),
+            })
+            console.error('Error deleting :', error)
+        }
+    }
     const fetchData = async (page: number) => {
         setLoading(true)
         try {
@@ -171,7 +192,10 @@ export default function TeamUpdates() {
                             </div>
                             <hr className="border-1 w-full border-slate-600" />
                             <div className="flex flex-row justify-between">
-                                <button className="btn mr-auto">
+                                <button
+                                    className="btn mr-auto"
+                                    onClick={() => likeUnlikeHandle(item._id)}
+                                >
                                     {item.likes.length} <FaRegHeart />
                                 </button>
                                 <button
