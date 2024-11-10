@@ -38,6 +38,38 @@ export default function TeamUpdates() {
     const handlePrevPage = () => {
         setCurrentPage((prevPage) => prevPage - 1)
     }
+    const handlePostComment = async (postId: string) => {
+        try {
+            const response = await axios.post(
+                'http://localhost:3000/postinternal/comment/' + postId,
+                { userId: user.id, text: comment },
+                {
+                    headers: {
+                        Authorization: `Bearer ${userToken!.accessToken}`,
+                    },
+                }
+            )
+            const updatedPost = response.data
+            console.log('updatedPost:', updatedPost)
+            setData((prevData) =>
+                prevData.map((post) =>
+                    post._id === postId
+                        ? { ...post, comments: updatedPost.comments }
+                        : post
+                )
+            )
+            setComment('')
+        } catch (error) {
+            console.error('Error posting comment:', error)
+            toast({
+                variant: 'destructive',
+                title: t('error'),
+                description: t('error'),
+            })
+            console.error('Error deleting :', error)
+        }
+    }
+
     const likeUnlikeHandle = async (postId: string) => {
         try {
             const response = await axios.patch(
@@ -268,7 +300,10 @@ export default function TeamUpdates() {
                                         </div>
                                         <form
                                             className="flex gap-2 items-center mt-4 border-t border-gray-600 pt-2"
-                                            // onSubmit={handlePostComment}
+                                            onSubmit={(e) => {
+                                                e.preventDefault()
+                                                handlePostComment(item._id)
+                                            }}
                                         >
                                             <textarea
                                                 className="textarea w-full p-1 rounded text-md resize-none border focus:outline-none  border-gray-800"
