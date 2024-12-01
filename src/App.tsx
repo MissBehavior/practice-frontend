@@ -1,6 +1,5 @@
 import './App.css'
 import 'swiper/css'
-import Header from './components/pages/header/header'
 import Footer from './components/footer'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Outlet, useLocation } from 'react-router-dom'
@@ -10,6 +9,7 @@ import { Toaster } from './components/ui/toaster'
 import postExternalImg from '/cropped-Featured-picture-1.jpg'
 import { useEffect, useState } from 'react'
 import Admin from './components/admin/admin'
+import Header from './components/header/header'
 
 // ACTS AS ROOT LAYOUT
 function App() {
@@ -42,7 +42,8 @@ function App() {
             case '/team-updates':
                 setCurrentPath('Team Updates')
                 break
-            case '/' || '/home':
+            case '/':
+            case '/home':
                 setCurrentPath('Home')
                 break
             case '/clients':
@@ -57,6 +58,7 @@ function App() {
             case '/admin':
             case '/dashboard':
             case '/users':
+            case '/kanban':
                 setCurrentPath('Admin')
                 break
             default:
@@ -66,33 +68,31 @@ function App() {
     }, [pathname])
     return (
         <>
-            <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-                {currentPath === 'Admin' && <Admin />}
-                {currentPath !== 'Admin' && (
-                    <>
-                        <Header />
-                        <Toaster />
-                        {currentPath !== 'Profile' && (
-                            <div className="min-h-screen">
-                                <div className="relative">
-                                    <img
-                                        className="m-auto h-full max-h-96 object-cover w-full select-none"
-                                        src={postExternalImg}
-                                        alt=""
-                                        draggable="false"
-                                    />
-                                    <div className="select-none  drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] text-slate-400 dark:text-white absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 sm:text-7xl font-bold bg-slate-500/[.15] rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-md border border-white/50 sm:p-10 p-4">
-                                        {currentPath}
-                                    </div>
+            {currentPath === 'Admin' && <Admin />}
+            {currentPath !== 'Admin' && (
+                <>
+                    <Header />
+
+                    {currentPath !== 'Profile' && (
+                        <div className="min-h-screen">
+                            <div className="relative">
+                                <img
+                                    className="m-auto h-full max-h-96 object-cover w-full select-none"
+                                    src={postExternalImg}
+                                    alt=""
+                                    draggable="false"
+                                />
+                                <div className="select-none  drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] text-slate-400 dark:text-white absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 sm:text-7xl font-bold bg-slate-500/[.15] rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-md border border-white/50 sm:p-10 p-4">
+                                    {currentPath}
                                 </div>
-                                <Outlet />
                             </div>
-                        )}
-                        {currentPath === 'Profile' && <Outlet />}
-                        <Footer />
-                    </>
-                )}
-            </ThemeProvider>
+                            <Outlet />
+                        </div>
+                    )}
+                    {currentPath === 'Profile' && <Outlet />}
+                    <Footer />
+                </>
+            )}
         </>
     )
 }

@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from '../ui/dropdown-menu'
-import { Button } from '../ui/button'
+
 import {
     Area,
     AreaChart,
@@ -17,6 +12,12 @@ import {
 } from 'recharts'
 import { DataPoint } from '@/types'
 import { FaChevronDown } from 'react-icons/fa'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
 
 function RegisterCountChart({
     chartData,
@@ -37,7 +38,7 @@ function RegisterCountChart({
         )
     }
     return (
-        <div className="dark:bg-slate-700 bg-slate-200 rounded-lg p-4">
+        <div className="dark:bg-slate-700 bg-slate-200 rounded-lg p-4 h-96">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="dark:text-slate-200">

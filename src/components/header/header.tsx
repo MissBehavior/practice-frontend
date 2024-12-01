@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 import companyLogo from '/logo.png'
-import { ModeToggle } from '../../mode-toggle'
-import { Button } from '../../ui/button'
 import { useTranslation } from 'react-i18next'
 import i18n from '@/i18n/config'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
@@ -13,6 +11,8 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { FaChevronDown } from 'react-icons/fa'
+import { ModeToggle } from '../mode-toggle'
+import { Button } from '../ui/button'
 export default function Header() {
     const { isLoggedIn, logoutFunc } = useAuth()
     const { user } = useAuth()
@@ -180,7 +180,7 @@ export default function Header() {
                 </div>
             </section>
 
-            <div className="flex flex-wrap pt-3.5 xl:px-5 overflow-x-auto">
+            <div className="flex flex-wrap  xl:px-5 overflow-x-auto">
                 <div
                     id="collapseMenu"
                     style={{ display: isMenuOpen ? 'block' : 'none' }}

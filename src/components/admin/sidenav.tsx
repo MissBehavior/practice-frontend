@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { MenuItem } from '../pages/header/menu-item'
 import { NavLink } from 'react-router-dom'
 import { FaChevronLeft } from 'react-icons/fa'
 import { RxDashboard } from 'react-icons/rx'
@@ -18,6 +17,12 @@ function AdminSidenav() {
             title: 'Users',
             src: <MdOutlinePeopleAlt />,
             to: '/users',
+            gap: false,
+        },
+        {
+            title: 'Kanban',
+            src: <MdOutlinePeopleAlt />,
+            to: '/kanbanboard',
             gap: false,
         },
         // { title: 'Loyalty Cards', src: <FaChevronLeft />, gap: true to: },

@@ -5,14 +5,14 @@ import parse from 'html-react-parser'
 import { PostData, PostDataInternal } from '@/types'
 import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
-import { Skeleton } from '../ui/skeleton'
-import { Button } from '../ui/button'
 import TeamUpdateNew from './team-updates-new'
 import TeamUpdateDelete from './team-updates-delete'
-import { toast } from '../ui/use-toast'
 import 'react-quill/dist/quill.snow.css' // Import React Quill's Snow theme CSS
 import { FaRegHeart } from 'react-icons/fa'
 import { FaRegCommentDots } from 'react-icons/fa'
+import { toast } from '@/components/ui/use-toast'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Button } from '@/components/ui/button'
 interface PaginatedResponse {
     totalPages: number
     currentPage: number

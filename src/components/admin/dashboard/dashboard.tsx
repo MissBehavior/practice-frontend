@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { DataPoint } from '@/types'
 import UserCard from './users-card'
+import { useTheme } from '../../theme-provider'
 import RegisterCountChart from './register-count-chart'
-import { useTheme } from '../theme-provider'
 
 function AdminDashboard() {
     const [chartData, setChartData] = useState<DataPoint[]>([])

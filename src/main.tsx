@@ -4,28 +4,31 @@ import App from './App.tsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './i18n/config.ts'
-import PostExternal from './components/pages/posts-external/posts-external.tsx'
-import About from './components/pages/about/about.tsx'
-import Career from './components/pages/career/career.tsx'
-import Clients from './components/pages/clients/clients.tsx'
-import Gallery from './components/pages/gallery/gallery.tsx'
-import Home from './components/pages/home.tsx'
-import Solutions from './components/pages/solutions/solutions.tsx'
-import People from './components/pages/people/people.tsx'
-import Login from './components/pages/login.tsx'
-import Register from './components/pages/register.tsx'
+import PostExternal from './pages/posts-external/posts-external.tsx'
+import About from './pages/about/about.tsx'
+import Career from './pages/career/career.tsx'
+import Clients from './pages/clients/clients.tsx'
+import Gallery from './pages/gallery/gallery.tsx'
+import Home from './pages/home/home.tsx'
+import Solutions from './pages/solutions/solutions.tsx'
+import People from './pages/people/people.tsx'
+import Login from './pages/auth/login.tsx'
+import Register from './pages/auth/register.tsx'
 import { AuthProvider } from './services/auth-service.tsx'
-import SolutionsDetail from './components/pages/solutions/solutions-detail.tsx'
-import GalleryDetail from './components/pages/gallery/gallery-detail.tsx'
+import SolutionsDetail from './pages/solutions/solutions-detail.tsx'
+import GalleryDetail from './pages/gallery/gallery-detail.tsx'
 import EmployeeRoutes from './services/employee-routes.tsx'
-import TeamUpdates from './components/team-updates/team-updates.tsx'
-import AdminDashboard from './components/admin/dashboard.tsx'
+import AdminDashboard from './components/admin/dashboard/dashboard.tsx'
 import UsersTable from './components/admin/table/users-table.tsx'
-import Profile from './components/pages/profile/profile.tsx'
+import Profile from './pages/profile/profile.tsx'
 import ProtectedRoutes from './services/protected-routes.tsx'
 import AdminRoutes from './services/admin-routes.tsx'
-import TableExample from './components/admin/table/table-example.tsx'
-import OtpFlow from './components/pages/otp-flow.tsx'
+import OtpFlow from './pages/auth/otp-flow.tsx'
+import Kanban from './components/admin/tasks/kanban.tsx'
+import NextTopLoader from 'nextjs-toploader'
+import { ThemeProvider } from './components/theme-provider.tsx'
+import { Toaster } from './components/ui/toaster.tsx'
+import TeamUpdates from './pages/team-updates/team-updates.tsx'
 
 const router = createBrowserRouter([
     {
@@ -102,22 +105,42 @@ const router = createBrowserRouter([
                 path: '/register',
                 element: <Register />,
             },
+            {
+                path: '/admin',
+                element: <AdminDashboard />,
+            },
+            {
+                path: '/users',
+                element: <UsersTable />,
+            },
+            {
+                path: '/kanban',
+                element: <Kanban />,
+            },
+            {
+                path: '/dashboard',
+                element: <AdminDashboard />,
+            },
             // TODO: TESTING ADMIN
             {
                 element: <AdminRoutes />,
                 children: [
-                    {
-                        path: '/admin',
-                        element: <AdminDashboard />,
-                    },
-                    {
-                        path: '/users',
-                        element: <UsersTable />,
-                    },
-                    {
-                        path: '/dashboard',
-                        element: <AdminDashboard />,
-                    },
+                    // {
+                    //     path: '/admin',
+                    //     element: <AdminDashboard />,
+                    // },
+                    // {
+                    //     path: '/users',
+                    //     element: <UsersTable />,
+                    // },
+                    // {
+                    //     path: '/kanban',
+                    //     element: <Kanban />,
+                    // },
+                    // {
+                    //     path: '/dashboard',
+                    //     element: <AdminDashboard />,
+                    // },
                 ],
             },
         ],
@@ -130,7 +153,11 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <AuthProvider>
-        <RouterProvider router={router} />
-    </AuthProvider>
+    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+        <AuthProvider>
+            <NextTopLoader />
+            <RouterProvider router={router} />
+            <Toaster />
+        </AuthProvider>
+    </ThemeProvider>
 )

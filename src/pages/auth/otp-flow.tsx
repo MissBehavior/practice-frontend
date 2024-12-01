@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import ForgotPassword from './forgot-password'
 import OtpVerification from './otp-verification'
+import ForgotPassword from './forgot-password'
 
 const OtpFlow: React.FC = () => {
     const [email, setEmail] = useState<string | null>(null)

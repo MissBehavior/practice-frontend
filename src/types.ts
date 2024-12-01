@@ -98,6 +98,20 @@ export interface CommentData {
     user: string
 }
 
+export interface Task {
+    _id: string
+    title: string
+    description: string
+    dueDate: string
+    tags: string[]
+    assignee: string[]
+    stage: string
+    createdAt: string
+    updatedAt: string
+    createdBy: string
+}
+
+import exp from 'constants'
 import { z } from 'zod'
 
 export const signUpSchema = z.object({
