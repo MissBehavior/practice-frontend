@@ -32,10 +32,9 @@ import { useAxios } from '@/services/auth-service'
 
 type ProjectCardProps = {
     task: Task
-    onViewCard: (task: Task) => void
 }
 
-export const ProjectCard = ({ task, onViewCard }: ProjectCardProps) => {
+export const ProjectCard = ({ task }: ProjectCardProps) => {
     const navigate = useNavigate()
     const api = useAxios()
 

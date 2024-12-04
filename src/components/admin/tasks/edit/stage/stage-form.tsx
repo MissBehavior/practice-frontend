@@ -1,5 +1,5 @@
 // stage-form.tsx
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import { AiOutlineFlag } from 'react-icons/ai'
 import { Task } from '@/types'
 import axios from 'axios'
@@ -19,9 +19,11 @@ type Props = {
 }
 
 export const StageForm = ({ isLoading, task, taskId }: Props) => {
-    const socket = useContext(SocketContext)
+    // const socket = useContext(SocketContext)
     const [stages, setStages] = useState<{ id: string; title: string }[]>([])
     const [selectedStage, setSelectedStage] = useState<string>(task.stage || '')
+    const selectRef = useRef<HTMLButtonElement | null>(null) // Reference to the Select
+    const [open, setOpen] = useState(false)
     const stagesArr = {
         data: [
             { id: '1', title: 'Backlog' },
@@ -44,13 +46,20 @@ export const StageForm = ({ isLoading, task, taskId }: Props) => {
         // };
         // fetchStages();
         setStages(stagesArr.data)
+        return () => {
+            console.log('Unmounting StageForm')
+            setOpen(false) // Close Select
+            setSelectedStage('') // Reset selection state
+            if (selectRef.current) {
+                selectRef.current.blur()
+            }
+        }
     }, [])
 
-    const handleStageChange = async (value: string) => {
-        setSelectedStage(value)
-        task.stage = value
+    const handleStageChange = async (stage: string) => {
+        setSelectedStage(stage)
         try {
-            await axios.put(`http://localhost:3000/tasks/${task._id}`, task)
+            await axios.put(`http://localhost:3000/tasks/${taskId}`, { stage })
         } catch (error) {
             console.error('Error updating task:', error)
         }
@@ -65,9 +74,16 @@ export const StageForm = ({ isLoading, task, taskId }: Props) => {
             <div className="flex items-center">
                 <AiOutlineFlag className="mr-2" />
 
-                <Select value={selectedStage} onValueChange={handleStageChange}>
-                    <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Theme" />
+                <Select
+                    open={open}
+                    onOpenChange={() => {
+                        setOpen(!open)
+                    }}
+                    value={selectedStage}
+                    onValueChange={handleStageChange}
+                >
+                    <SelectTrigger className="w-[180px]" ref={selectRef}>
+                        <SelectValue placeholder="No Stage" />
                     </SelectTrigger>
                     <SelectContent>
                         {stages.map((stage) => (

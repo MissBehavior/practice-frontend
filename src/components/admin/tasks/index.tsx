@@ -10,7 +10,6 @@ import { KanbanItem } from './item'
 import { ProjectCardMemo, ProjectCardSkeleton } from './card'
 import { KanbanAddCardButton } from './add-card-button'
 import { Task } from '@/types'
-import { TasksEditPage } from './edit/task-edit-page'
 
 export interface Stage {
     id: string
@@ -23,12 +22,8 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
     const [tasks, setTasks] = useState<Task[]>([])
     const [stages, setStages] = useState<Stage[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [selectedTask, setSelectedTask] = useState<Task | null>(null)
-    const handleViewCard = (task: Task) => {
-        setSelectedTask(task)
-    }
+
     useEffect(() => {
-        // Fetch initial data
         const fetchData = async () => {
             setIsLoading(true)
             try {
@@ -36,7 +31,6 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
                     axios.get('http://localhost:3000/tasks'),
                     // axios.get('http://localhost:3000/stages'),
                 ])
-
                 setTasks(tasksResponse.data)
                 const stages = {
                     data: [
@@ -51,14 +45,11 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
             }
             setIsLoading(false)
         }
-
         fetchData()
-
         // WebSocket event handlers
         const handleTaskCreated = (newTask: Task) => {
             setTasks((prevTasks) => [...prevTasks, newTask])
         }
-
         const handleTaskUpdated = (updatedTask: Task) => {
             setTasks((prevTasks) =>
                 prevTasks.map((task) =>
@@ -66,17 +57,14 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
                 )
             )
         }
-
         const handleTaskDeleted = (deletedTaskId: string) => {
             setTasks((prevTasks) =>
                 prevTasks.filter((task) => task._id !== deletedTaskId)
             )
         }
-
         socket.on('taskCreated', handleTaskCreated)
         socket.on('taskUpdated', handleTaskUpdated)
         socket.on('taskDeleted', handleTaskDeleted)
-
         return () => {
             socket.off('taskCreated', handleTaskCreated)
             socket.off('taskUpdated', handleTaskUpdated)
@@ -141,6 +129,7 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
         navigate(path)
     }
     if (isLoading) return <PageSkeleton />
+
     return (
         <>
             <KanbanBoardContainer>
@@ -162,10 +151,7 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
                                             id={task._id}
                                             data={task}
                                         >
-                                            <ProjectCardMemo
-                                                task={task}
-                                                onViewCard={handleViewCard}
-                                            />
+                                            <ProjectCardMemo task={task} />
                                         </KanbanItem>
                                     ))}
                                 {!stageTasks.length && (

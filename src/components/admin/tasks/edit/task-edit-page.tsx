@@ -66,7 +66,15 @@ export const TasksEditPage = () => {
         }
     }, [taskId, socket])
 
+    useEffect(() => {
+        return () => {
+            setActiveAccordion(undefined)
+            setTask(null)
+        }
+    }, [])
+
     const closeModal = () => {
+        setActiveAccordion(undefined)
         navigate('/kanban')
     }
 
