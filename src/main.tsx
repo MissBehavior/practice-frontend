@@ -24,11 +24,12 @@ import Profile from './pages/profile/profile.tsx'
 import ProtectedRoutes from './services/protected-routes.tsx'
 import AdminRoutes from './services/admin-routes.tsx'
 import OtpFlow from './pages/auth/otp-flow.tsx'
-import Kanban from './components/admin/tasks/kanban.tsx'
 import NextTopLoader from 'nextjs-toploader'
 import { ThemeProvider } from './components/theme-provider.tsx'
 import { Toaster } from './components/ui/toaster.tsx'
 import TeamUpdates from './pages/team-updates/team-updates.tsx'
+import { TasksListPage } from './components/admin/tasks/index.tsx'
+import { TasksEditPage } from './components/admin/tasks/edit/task-edit-page.tsx'
 
 const router = createBrowserRouter([
     {
@@ -115,7 +116,14 @@ const router = createBrowserRouter([
             },
             {
                 path: '/kanban',
-                element: <Kanban />,
+                // element: <Kanban />,
+                element: <TasksListPage />,
+                children: [
+                    {
+                        path: ':taskId',
+                        element: <TasksEditPage />,
+                    },
+                ],
             },
             {
                 path: '/dashboard',

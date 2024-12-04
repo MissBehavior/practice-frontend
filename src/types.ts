@@ -104,11 +104,17 @@ export interface Task {
     description: string
     dueDate: string
     tags: string[]
-    assignee: string[]
+    assignee: assigneeUser[]
     stage: string
     createdAt: string
     updatedAt: string
     createdBy: string
+}
+export interface assigneeUser {
+    _id: string
+    name: string
+    email: string
+    profileImgUrl: string
 }
 
 import exp from 'constants'
