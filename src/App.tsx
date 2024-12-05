@@ -71,7 +71,7 @@ function App() {
                 <>
                     <Header />
 
-                    {currentCategory !== 'Profile' && (
+                    {/* {currentCategory !== 'Profile' && (
                         <div className="min-h-screen">
                             <div className="relative">
                                 <img
@@ -86,7 +86,8 @@ function App() {
                             </div>
                             <Outlet />
                         </div>
-                    )}
+                    )} */}
+                    <Outlet />
                     {currentCategory === 'Profile' && <Outlet />}
                     <Footer />
                 </>

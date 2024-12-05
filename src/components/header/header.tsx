@@ -51,7 +51,7 @@ export default function Header() {
         }
     }, [])
     return (
-        <header className="shadow-md bg-white dark:bg-slate-700 font-sans tracking-wide relative z-50">
+        <header className="shadow-md bg-white dark:bg-[#191919] font-sans tracking-wide relative z-50">
             <section className="flex items-center lg:justify-center flex-wrap gap-5 relative py-3 px-4 border-gray-200 border-b dark:border-gray-700 lg:min-h-[80px] max-lg:min-h-[60px]">
                 <Link to="/">
                     <img

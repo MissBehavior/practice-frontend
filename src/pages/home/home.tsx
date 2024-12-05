@@ -1,7 +1,15 @@
 import { useTranslation } from 'react-i18next'
 import homeLogo from '/1122.png'
 import i18n from '@/i18n/config'
-//
+import postExternalImg from '/cropped-Featured-picture-1.jpg'
+import SliderOne from './sliderone'
+import About from './about'
+import Service from './service'
+import FunFacts from './funfacts'
+import Team from './team'
+import Clients from './clients'
+import Footer from './footer'
+
 export default function Home() {
     const textTranslations = {
         lt1: `Esame auganti atsidavusių talentų komanda, teikianti inžinerinę pagalbą ir sprendimus verslui: apskaičiuojame projekto sąmatas, apdorojame užsakymus, ruošiame CAD brėžinius,  planuojame gamybą ir siūlome IT paslaugas, pritaikytas Jūsų verslo poreikiams. Įkurta  2002 m. Skandinavijos langų ir durų rinkos lyderio, nuolat tobuliname savo procesus ir plečiame paslaugų sritis. Naujos idėjos ir jų įgyvendinimas yra įdomi mūsų verslo veiklos dalis. Darbas tarptautinėje aplinkoje leidžia mums surinkti vertingų žinių iš skirtingų verslo ir kultūrinių kontekstų. Nesvarbu, ar esate klientas, ar darbuotojas – leiskite mums tapti Jūsų sėkmės istorijos dalimi.`,
@@ -47,6 +55,73 @@ export default function Home() {
 
     return (
         <>
+            <SliderOne />
+            <div className="bg-[#191919]">
+                <About />
+            </div>
+            <div className="pt-32 pb-32 bg-[#101010]">
+                <div className="container">
+                    <Service />
+                </div>
+            </div>
+            <div className="pt-32 pb-32 bg-[#191919]">
+                <div className="container mx-auto">
+                    <div className="flex justify-center mb-8">
+                        <div className="w-full text-center">
+                            <h3 className="text-5xl font-extrabold text-white">
+                                Our Fun Facts
+                            </h3>
+                        </div>
+                    </div>
+                    <FunFacts />
+                </div>
+            </div>
+            <div className="pt-28 pb-28 bg-[#101010]">
+                <div className="container mx-auto">
+                    <Team />
+                </div>
+            </div>
+
+            <div className="pb-28 bg-[#191919]">
+                <div className="container mx-auto">
+                    <Clients />
+                </div>
+            </div>
+
+            <Footer />
+            {/*            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <div className="pt-32 pb-32 bg-[#191919]"> 
+
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+
+*/}
             <div className="flex flex-row justify-center text-center center align-middle  place-items-center xs:mx-5 xs:my-5 md:mx-32 md:my-20 2xl:mx-60 xs:flex-col xl:flex-row md:gap-10">
                 <p className="w-full text-left text-xl">
                     {i18n.language === 'lt'
