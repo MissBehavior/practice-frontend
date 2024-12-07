@@ -100,7 +100,7 @@ function SliderOne() {
     if (init) {
         return (
             <>
-                <div className="relative h-3/5 mb-4">
+                <div className="relative h-1/2 xs:p-10 lg:p-36">
                     <div className="absolute inset-0 bg-[url('/imagebg.jpg')] bg-cover filter brightness-50 scale-105">
                         <Particles
                             className="relative h-full w-full"
@@ -134,7 +134,7 @@ function SliderOne() {
                                     Contact Us
                                 </a>
                                 <a
-                                    href="#"
+                                    href="#servicesid"
                                     className="px-7 py-3 w-full bg-gray-700 text-gray-200 text-center rounded-md block sm:w-auto"
                                 >
                                     Check Our Services

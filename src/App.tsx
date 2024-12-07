@@ -1,11 +1,11 @@
 import './App.css'
 import 'swiper/css'
-import Footer from './components/footer'
 import { Outlet, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Admin from './components/admin/admin'
 import Header from './components/header/header'
 import postExternalImg from '/cropped-Featured-picture-1.jpg'
+import Footer from './pages/home/footer'
 
 function App() {
     const { pathname } = useLocation()
@@ -88,7 +88,7 @@ function App() {
                         </div>
                     )} */}
                     <Outlet />
-                    {currentCategory === 'Profile' && <Outlet />}
+                    {/* <Footer /> */}
                     <Footer />
                 </>
             )}

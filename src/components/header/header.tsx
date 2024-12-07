@@ -62,18 +62,6 @@ export default function Header() {
                     />
                 </Link>
                 <div className="space-x-4 md:absolute md:right-10 flex items-center max-md:ml-auto">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="cursor-pointer fill-black dark:fill-white"
-                        width="20px"
-                        height="20px"
-                        viewBox="0 0 512 512"
-                    >
-                        <path
-                            d="M449.643 0H62.357C27.973 0 0 27.973 0 62.357v387.285C0 484.027 27.973 512 62.357 512H260.86c8.349 0 15.118-6.769 15.118-15.118v-183.31c0-8.349-6.769-15.118-15.118-15.118h-54.341v-43.033h54.341c8.349 0 15.118-6.769 15.118-15.118v-61.192c0-33.116 26.942-60.058 60.059-60.058h52.433v43.033h-52.433c-9.387 0-17.025 7.639-17.025 17.026v61.192c0 8.349 6.769 15.118 15.118 15.118h54.341v43.033H334.13c-8.349 0-15.118 6.769-15.118 15.118v183.31c0 8.349 6.769 15.118 15.118 15.118h115.513C484.027 512 512 484.027 512 449.643V62.357C512 27.973 484.027 0 449.643 0zm32.121 449.643c0 17.712-14.409 32.122-32.122 32.122H349.246V328.69h54.341c8.349 0 15.118-6.769 15.118-15.118v-73.268c0-8.349-6.769-15.118-15.118-15.118h-54.341v-32.864h54.341c8.349 0 15.118-6.769 15.118-15.118v-73.268c0-8.349-6.769-15.118-15.118-15.118h-67.551c-49.788 0-90.294 40.506-90.294 90.294v46.074h-54.341c-8.349 0-15.118 6.769-15.118 15.118v73.268c0 8.349 6.769 15.118 15.118 15.118h54.341v153.074H62.357c-17.712 0-32.122-14.409-32.122-32.122V62.357c0-17.712 14.409-32.122 32.122-32.122h387.285c17.712 0 32.122 14.409 32.122 32.122v387.286z"
-                            data-original="#000000"
-                        />
-                    </svg>
                     <ModeToggle />
                     <div className=" border-gray-300 border-l-2 dark:border-gray-600 pl-5 h-[40px] flex flex-row items-center justify-center gap-2 select-none">
                         <a
@@ -238,21 +226,21 @@ export default function Header() {
                             text="solutions"
                             link="solutions"
                         />
-                        <MenuItem
+                        {/* <MenuItem
                             handleClick={handleClick}
                             text="people"
                             link="people"
-                        />
+                        /> */}
                         <MenuItem
                             handleClick={handleClick}
                             text="gallery"
                             link="gallery"
                         />
-                        <MenuItem
+                        {/* <MenuItem
                             handleClick={handleClick}
                             text="clients"
                             link="clients"
-                        />
+                        /> */}
                         <MenuItem
                             handleClick={handleClick}
                             text="post_external"

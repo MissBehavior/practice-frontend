@@ -10,6 +10,7 @@ import { PostData } from '@/types'
 import PostEdit from './post-edit'
 import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
+import Breadcrumb from './breadcrumb'
 interface PaginatedResponse {
     totalPages: number
     currentPage: number
@@ -31,7 +32,6 @@ export default function PostExternal() {
     const handlePrevPage = () => {
         setCurrentPage((prevPage) => prevPage - 1)
     }
-
     const fetchData = async (page: number) => {
         setLoading(true)
         try {
@@ -55,7 +55,6 @@ export default function PostExternal() {
             setLoading(false)
         }
     }
-
     useEffect(() => {
         // setTimeout(() => {
         fetchData(currentPage)
@@ -63,7 +62,6 @@ export default function PostExternal() {
         // fetchData(currentPage)
     }, [currentPage])
     if (loading) {
-        //md:w-1/2 lg:w-1/3
         return (
             <section className="flex flex-row flex-wrap mx-auto justify-center ">
                 {Array.from({ length: 10 }).map((_, index) => (
@@ -85,18 +83,7 @@ export default function PostExternal() {
 
     return (
         <>
-            {/* {data.map((item) => (
-                <div
-                    key={item._id}
-                    style={{ marginBottom: 20 }}
-                    className="flex items-center space-x-4 justify-center m-5"
-                >
-                    <h1>ID:{item._id}</h1>
-                    <h1>Title:{item.title}</h1>
-                    <p>Content:{item.content}</p>
-                    <p>By User:{item.userId}</p>
-                </div>
-            ))} */}
+            <Breadcrumb title={'News'} parent={'News'} />
             {user.isAdmin && (
                 <PostNew fetchData={fetchData} currentPage={currentPage} />
             )}

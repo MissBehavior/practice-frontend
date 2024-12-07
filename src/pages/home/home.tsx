@@ -1,14 +1,14 @@
 import { useTranslation } from 'react-i18next'
-import homeLogo from '/1122.png'
 import i18n from '@/i18n/config'
-import postExternalImg from '/cropped-Featured-picture-1.jpg'
 import SliderOne from './sliderone'
 import About from './about'
 import Service from './service'
 import FunFacts from './funfacts'
 import Team from './team'
 import Clients from './clients'
-import Footer from './footer'
+import Solutions from './solutions'
+import NewsHome from './news'
+import ScrollButton from './scroll-to-top'
 
 export default function Home() {
     const textTranslations = {
@@ -51,19 +51,25 @@ export default function Home() {
         sendRequestlt: `Siųsti užklausą`,
     }
 
-    const { t } = useTranslation()
-
     return (
         <>
-            <SliderOne />
+            <div className="bg-[#191919]">
+                <SliderOne />
+            </div>
             <div className="bg-[#191919]">
                 <About />
             </div>
-            <div className="pt-32 pb-32 bg-[#101010]">
+            <div className="pt-32 pb-32 bg-[#101010]" id="servicesid">
                 <div className="container">
                     <Service />
                 </div>
             </div>
+            <div className="py-28 bg-[#191919]">
+                <div className="mb-14">
+                    <Solutions />
+                </div>
+            </div>
+
             <div className="pt-32 pb-32 bg-[#191919]">
                 <div className="container mx-auto">
                     <div className="flex justify-center mb-8">
@@ -83,46 +89,21 @@ export default function Home() {
             </div>
 
             <div className="pb-28 bg-[#191919]">
+                <div className="mb-14">
+                    <NewsHome />
+                </div>
+            </div>
+
+            <div className="pb-28 bg-[#191919]">
                 <div className="container mx-auto">
                     <Clients />
                 </div>
             </div>
+            <div className="backto-top">
+                <ScrollButton />
+            </div>
 
-            <Footer />
-            {/*            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            <div className="pt-32 pb-32 bg-[#191919]"> 
-
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-
-*/}
-            <div className="flex flex-row justify-center text-center center align-middle  place-items-center xs:mx-5 xs:my-5 md:mx-32 md:my-20 2xl:mx-60 xs:flex-col xl:flex-row md:gap-10">
+            {/* <div className="flex flex-row justify-center text-center center align-middle  place-items-center xs:mx-5 xs:my-5 md:mx-32 md:my-20 2xl:mx-60 xs:flex-col xl:flex-row md:gap-10">
                 <p className="w-full text-left text-xl">
                     {i18n.language === 'lt'
                         ? textTranslations.lt1
@@ -166,7 +147,7 @@ a
                             : textTranslations.sendRequestlt}
                     </a>
                 </p>
-            </div>
+            </div> */}
         </>
     )
 }

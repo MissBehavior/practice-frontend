@@ -4,7 +4,7 @@ import aboutImg from '/traehus-vinduer-og-doere6.jpg'
 const About = () => {
     const title = 'About'
     const description =
-        'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which dont look even slightly believable. If you are going to use a passage of Lorem Ipsum,'
+        'Winbas is the first and only official representative trading Danish manufacturer – Outline windows and doors in Lithuania. High-quality wooden or wood-clad aluminum windows from Denmark are an excellent investment for your home. With over 30 years of manufacturing experience, accumulated experience allows us to offer customers the most suitable architectural and design solutions that ensure the highest energy efficiency. Outline offers a wide range of designs. Windows opening to the outside or inside, a variety of colors, the possibility to match window and door accessories to your interior.'
 
     return (
         <div className=" text-white py-16 relative">
@@ -34,21 +34,28 @@ const About = () => {
                                     Who we are
                                 </h3>
                                 <p className="text-gray-400">
-                                    There are many variations of passages of
-                                    Lorem Ipsum available, but the majority have
-                                    suffered.
+                                    We are a growing team of dedicated talents
+                                    providing engineering assistance & solutions
+                                    for business: we calculate project’s
+                                    estimates, process orders, prepare CAD
+                                    drawings, as well as plan production and
+                                    offer IT services specifically tailored to
+                                    your business needs.
                                 </p>
                             </div>
 
                             {/* Second Info Box */}
                             <div>
                                 <h3 className="text-xl font-semibold mb-2">
-                                    Who we are
+                                    Story
                                 </h3>
                                 <p className="text-gray-400">
-                                    There are many variations of passages of
-                                    Lorem Ipsum available, but the majority have
-                                    suffered.
+                                    Founded in 2002 by the Scandinavian window
+                                    and door market leader, we continuously
+                                    improve our processes and expand areas of
+                                    our services. New ideas and their
+                                    implementation is an exciting part of the
+                                    way our business operates.
                                 </p>
                             </div>
                         </div>
