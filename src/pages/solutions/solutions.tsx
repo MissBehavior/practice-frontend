@@ -23,6 +23,8 @@ import { MdDeleteForever } from 'react-icons/md'
 import SolutionsDelete from './solutions-delete-confirm'
 import SolutionsEditDialog from './solutions-edit-dialog'
 import { SolutionsData } from '@/types'
+import Breadcrumb from '@/components/breadcrumb'
+import { FaCalendarAlt, FaUser } from 'react-icons/fa'
 
 export default function Solutions() {
     const { user } = useAuth()
@@ -53,78 +55,105 @@ export default function Solutions() {
     }, [])
     if (loading) {
         return (
-            <section className="flex flex-row flex-wrap mx-auto justify-center ">
-                {Array.from({ length: 5 }).map((_, index) => (
-                    <div
-                        key={index}
-                        className="flex w-full px-4 py-6 md:w-1/2 lg:w-1/3 justify-center"
-                    >
-                        <div className="space-y-3">
-                            <Skeleton className="h-36 w-full" />
-                            <Skeleton className="h-8 w-1/2 flex flex-wrap items-center flex-1 px-4 py-1 text-center mx-auto" />
-                            <Skeleton className="h-32 w-[450px]" />
-                            <Skeleton className="h-16 w-[350px] mb-20" />
+            <div className="bg-[#101010] min-h-screen">
+                <Breadcrumb title={'Solutions'} parent={'Solutions'} />
+
+                <section className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {Array.from({ length: 6 }).map((_, index) => (
+                        <div
+                            key={index}
+                            className="flex flex-col overflow-hidden rounded-lg shadow bg-gray-800 p-4"
+                        >
+                            <Skeleton className="h-48 w-full mb-4 rounded" />
+                            <Skeleton className="h-6 w-3/4 mb-2 rounded" />
+                            <Skeleton className="h-4 w-full mb-4 rounded" />
+                            <Skeleton className="h-10 w-1/2 rounded" />
                         </div>
-                    </div>
-                ))}
-            </section>
+                    ))}
+                </section>
+                <div className="flex items-center space-x-4 justify-center py-4">
+                    <Skeleton className="h-10 w-24 rounded" />
+                    <Skeleton className="h-10 w-24 rounded" />
+                </div>
+            </div>
         )
     }
-
     return (
         <>
-            <div
-                className={
-                    ' flex flex-wrap justify-center gap-4 items-start bg-white dark:bg-background'
-                }
-            >
-                {data.map((item, index) => (
-                    <div
-                        key={item._id}
-                        className="mt-16 mb-12 bg-white dark:bg-background flex justify-center items-center flex-col"
-                    >
-                        {user.isAdmin && (
-                            <div className="flex flex-row ml-auto mb-[-20px] z-10 gap-2">
-                                <SolutionsEditDialog
-                                    _id={item._id}
-                                    cardImgUrl={item.cardImgUrl}
-                                    titleCard={item.titleCard}
-                                    contentCard={item.contentCard}
-                                    fetchData={fetchData}
-                                />
-                                <SolutionsDelete
-                                    fetchData={fetchData}
-                                    index={item._id}
-                                />
-                            </div>
-                        )}
-                        <Link to={`/solutions/` + item._id}>
+            <Breadcrumb title={'Solutions'} parent={'Solutions'} />
+            <div className="pb-12 bg-[#191919]">
+                <div className="max-w-7xl mx-auto px-4">
+                    {user.isAdmin && (
+                        <SolutionsAddNewSolution fetchData={fetchData} />
+                    )}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {data.map((data, i) => (
                             <div
-                                className={`p-6 h-96 w-96 bg-white dark:bg-slate-700 shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 flex flex-col text-center items-center justify-center`}
-                                onMouseEnter={() => setHoveredItem(index)}
-                                onMouseLeave={() => setHoveredItem(undefined)}
+                                key={i}
+                                className="relative flex flex-col overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow bg-white"
                             >
-                                <img
-                                    className="w-64 object-cover rounded-t-md hover:scale-110 rounded transition-all duration-300 ease-in-out"
-                                    src={item.cardImgUrl}
-                                    alt=""
-                                />
-                                <div className="mt-4">
-                                    <h1 className="text-2xl font-bold text-gray-700 dark:text-white">
-                                        {item.titleCard}
-                                    </h1>
+                                {user.isAdmin && (
+                                    <div className="absolute flex flex-row z-10 gap-2 right-0">
+                                        <SolutionsEditDialog
+                                            _id={data._id}
+                                            cardImgUrl={data.cardImgUrl}
+                                            titleCard={data.titleCard}
+                                            contentCard={data.contentCard}
+                                            fetchData={fetchData}
+                                        />
+                                        <SolutionsDelete
+                                            fetchData={fetchData}
+                                            index={data._id}
+                                        />
+                                    </div>
+                                )}
+                                <Link to={`/solutions/${data._id}`}>
+                                    <img
+                                        className="w-full h-64 object-cover"
+                                        src={data.cardImgUrl}
+                                        alt={data.titleCard}
+                                    />
+                                </Link>
+                                <div className="p-6 flex flex-col justify-between flex-grow">
+                                    <h4 className="text-xl font-bold text-gray-800 mb-2">
+                                        <Link
+                                            to={`/solutions/${data._id}`}
+                                            className="hover:text-gray-600"
+                                        >
+                                            {data.titleCard}
+                                        </Link>
+                                    </h4>
+                                    <div className="flex items-center text-gray-600 text-sm mb-2">
+                                        <span>{data.contentCard}</span>
+                                    </div>
+                                    {/* Added Date Section */}
+                                    <div className="flex items-center text-gray-600 text-sm mb-2">
+                                        <FaCalendarAlt className="mr-2" />
+                                        <span>
+                                            {new Date(
+                                                data.createdAt
+                                            ).toLocaleDateString(undefined, {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric',
+                                            })}
+                                        </span>
+                                    </div>
+                                    {/* Added Author Section */}
 
-                                    <p className="text-sm mt-2 text-gray-700 dark:text-white max-w-64">
-                                        {item.contentCard}
-                                    </p>
+                                    <div className="mt-auto">
+                                        <Link
+                                            to={`/solutions/${data._id}`}
+                                            className="inline-block px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded hover:bg-gray-700 transition-colors"
+                                        >
+                                            Read More
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
-                        </Link>
+                        ))}
                     </div>
-                ))}
-                {user.isAdmin && (
-                    <SolutionsAddNewSolution fetchData={fetchData} />
-                )}
+                </div>
             </div>
         </>
     )

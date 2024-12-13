@@ -6,6 +6,7 @@ import Admin from './components/admin/admin'
 import Header from './components/header/header'
 import postExternalImg from '/cropped-Featured-picture-1.jpg'
 import Footer from './pages/home/footer'
+import ScrollButton from './pages/home/scroll-to-top'
 
 function App() {
     const { pathname } = useLocation()
@@ -89,6 +90,9 @@ function App() {
                     )} */}
                     <Outlet />
                     {/* <Footer /> */}
+                    <div className="backto-top">
+                        <ScrollButton />
+                    </div>
                     <Footer />
                 </>
             )}

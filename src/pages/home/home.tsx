@@ -94,13 +94,10 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="pb-28 bg-[#191919]">
+            <div className="pb-28 bg-[#101010]">
                 <div className="container mx-auto">
                     <Clients />
                 </div>
-            </div>
-            <div className="backto-top">
-                <ScrollButton />
             </div>
 
             {/* <div className="flex flex-row justify-center text-center center align-middle  place-items-center xs:mx-5 xs:my-5 md:mx-32 md:my-20 2xl:mx-60 xs:flex-col xl:flex-row md:gap-10">

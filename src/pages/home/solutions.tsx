@@ -10,6 +10,7 @@ import { useAuth } from '@/services/auth-service'
 import axios from 'axios'
 import { SolutionsData } from '@/types'
 import { Skeleton } from '@/components/ui/skeleton'
+import { Button } from '@/components/ui/button'
 
 export default function Solutions() {
     const { user } = useAuth()
@@ -44,7 +45,7 @@ export default function Solutions() {
 
     return (
         <div className="container mx-auto px-4">
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap justify-between items-end">
                 <div className="w-full lg:w-1/2">
                     <div className="mb-8">
                         <h2 className="text-3xl font-semibold text-white">
@@ -53,9 +54,14 @@ export default function Solutions() {
                         <p className="text-slate-50 mt-4">{description}</p>
                     </div>
                 </div>
+                <div className="mt-4 lg:mt-0">
+                    <Link to="/solutions">
+                        <Button variant="outline">View all solutions</Button>
+                    </Link>
+                </div>
             </div>
 
-            <div className="">
+            <div className="py-8">
                 <Swiper
                     modules={[Navigation, Pagination, Autoplay]}
                     navigation={true}
@@ -125,12 +131,12 @@ export default function Solutions() {
                                                     </a>
                                                 </h4>
                                                 <div>
-                                                    <a
+                                                    <Link
                                                         className="inline-block bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded hover:bg-blue-800 transition-colors duration-300"
-                                                        href="/portfolio-details"
+                                                        to={`/solutions/${card._id}`}
                                                     >
                                                         Learn more
-                                                    </a>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>
@@ -138,7 +144,7 @@ export default function Solutions() {
                                         {/* Link overlay for entire card */}
                                         <Link
                                             className="absolute inset-0"
-                                            to="/portfolio-details"
+                                            to={`/solutions/${card._id}`}
                                         ></Link>
                                     </div>
                                 </SwiperSlide>

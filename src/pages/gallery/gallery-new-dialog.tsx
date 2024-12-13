@@ -137,7 +137,7 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
     })
 
     return (
-        <div className="mt-16 mb-12  bg-white dark:bg-background flex justify-center items-center select-none">
+        <div className="mt-16 mb-12 flex justify-center items-center select-none">
             <div className="">
                 <Dialog
                     open={open}

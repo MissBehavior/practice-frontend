@@ -68,7 +68,7 @@ export default function Header() {
                             onClick={setLanguage('en')}
                             className={
                                 i18n.language === 'en'
-                                    ? 'p-2 bg-slate-300 dark:bg-slate-800 rounded cursor-pointer'
+                                    ? 'p-2 bg-slate-300 dark:bg-background rounded cursor-pointer dark:hover:bg-accent dark:hover:text-accent-foreground'
                                     : 'p-2 cursor-pointer'
                             }
                         >
@@ -79,7 +79,7 @@ export default function Header() {
                             onClick={setLanguage('lt')}
                             className={
                                 i18n.language === 'lt'
-                                    ? 'p-2 bg-slate-300 dark:bg-slate-800 rounded cursor-pointer'
+                                    ? 'p-2 bg-slate-300 dark:bg-background rounded cursor-pointer hover:bg-accent hover:text-accent-foreground'
                                     : 'p-2 cursor-pointer'
                             }
                         >

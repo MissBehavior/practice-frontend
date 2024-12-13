@@ -26,29 +26,39 @@ export const getDateColor = (args: {
     return args.defaultColor ?? 'default'
 }
 
-export const getRandomColorFromString = (text: string) => {
+export const getRandomColorFromString = (
+    text: string
+): { backgroundColor: string; textColor: string } => {
     const colors = [
-        '#ff9c6e',
-        '#ff7875',
-        '#ffc069',
-        '#ffd666',
-        '#fadb14',
-        '#95de64',
-        '#5cdbd3',
-        '#69c0ff',
-        '#85a5ff',
-        '#b37feb',
-        '#ff85c0',
+        '#d6293e', // Red
+        '#4f9ef8', // Blue
+        '#0cbc87', // Green
+        '#f7c32e', // Yellow
     ]
 
+    // Generate a consistent hash based on the input text
     let hash = 0
     for (let i = 0; i < text.length; i++) {
         hash = text.charCodeAt(i) + ((hash << 5) - hash)
         hash = hash & hash
     }
-    hash = ((hash % colors.length) + colors.length) % colors.length
+    const index = ((hash % colors.length) + colors.length) % colors.length
+    const baseColor = colors[index]
 
-    return colors[hash]
+    // Helper function to convert hex to rgba
+    const hexToRgba = (hex: string, alpha: number): string => {
+        const bigint = parseInt(hex.slice(1), 16)
+        const r = (bigint >> 16) & 255
+        const g = (bigint >> 8) & 255
+        const b = bigint & 255
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`
+    }
+
+    // Set background color with 0.1 opacity and text color with full opacity
+    const backgroundColor = hexToRgba(baseColor, 0.1)
+    const textColor = baseColor
+
+    return { backgroundColor, textColor }
 }
 
 export const getNameInitials = (name: string, count = 2) => {

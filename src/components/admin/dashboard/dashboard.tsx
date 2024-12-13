@@ -4,6 +4,7 @@ import { DataPoint } from '@/types'
 import UserCard from './users-card'
 import { useTheme } from '../../theme-provider'
 import RegisterCountChart from './register-count-chart'
+import KanbanPieChart from './kanban-pie-chart'
 
 function AdminDashboard() {
     const [chartData, setChartData] = useState<DataPoint[]>([])
@@ -88,12 +89,31 @@ function AdminDashboard() {
                         type="Gallery"
                     />
                     <UserCard count={15} date="Today" type="Clients" />
+                    <UserCard count={45} date="TODO" type="TeamUpdates" />
+                    <UserCard count={45} date="TODO" type="TasksInKanban" />
+                    <UserCard count={45} date="TODO" type="NrOnGoingInKanban" />
                 </div>
+                <UserCard
+                    count={11111111111111}
+                    date="DIFFERENT"
+                    type="MstLikdPostNTFINI"
+                />
+                <UserCard
+                    count={11111111111111}
+                    date="DIFFERENT"
+                    type="UserMstTaskKanban"
+                />
+                <UserCard
+                    count={1111111111}
+                    date="DIFFERENT"
+                    type="MstCmmentdPst"
+                />
                 <RegisterCountChart
                     chartData={chartData}
                     theme={theme}
                     fetchData={fetchData}
                 />
+                <KanbanPieChart />
             </div>
         </>
     )

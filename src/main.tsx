@@ -30,6 +30,8 @@ import { Toaster } from './components/ui/toaster.tsx'
 import TeamUpdates from './pages/team-updates/team-updates.tsx'
 import { TasksListPage } from './components/admin/tasks/index.tsx'
 import { TasksEditPage } from './components/admin/tasks/edit/task-edit-page.tsx'
+import PostDetail from './pages/posts-external/post-detail.tsx'
+import TeamUpdateDetail from './pages/team-updates/team-updates-detail.tsx'
 
 const router = createBrowserRouter([
     {
@@ -51,6 +53,10 @@ const router = createBrowserRouter([
             {
                 path: '/post-external',
                 element: <PostExternal />,
+            },
+            {
+                path: '/post-external/:id',
+                element: <PostDetail />,
             },
             {
                 path: '/clients',
@@ -91,6 +97,10 @@ const router = createBrowserRouter([
                     {
                         path: '/team-updates',
                         element: <TeamUpdates />,
+                    },
+                    {
+                        path: '/team-updates/:id',
+                        element: <TeamUpdateDetail />,
                     },
                 ],
             },

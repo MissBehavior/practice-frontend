@@ -6,23 +6,45 @@ import { useAuth } from '@/services/auth-service'
 import PostDelete from './post-delete'
 import PostNew from './post-new'
 import parse from 'html-react-parser'
-import { PostData } from '@/types'
+import { Category, PostData, PostsResponse } from '@/types'
 import PostEdit from './post-edit'
 import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
-import Breadcrumb from './breadcrumb'
-interface PaginatedResponse {
-    totalPages: number
-    currentPage: number
-    posts: PostData[]
-}
+import Breadcrumb from '../../components/breadcrumb'
+import { Link } from 'react-router-dom'
+import LatestPost from './latest-port'
+import { useForm } from 'react-hook-form'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from '@/components/ui/command'
+import { Textarea } from '@/components/ui/textarea'
+import CreatePostNew from './create-post-new'
+import { fetchPosts } from '@/services/api'
+import PostGrid from './post-grid'
+
 export default function PostExternal() {
-    const { user } = useAuth()
+    const { user, userToken } = useAuth()
     const [data, setData] = useState<PostData[]>([])
+
     const [loading, setLoading] = useState<boolean>(true)
+    const [latestPost, setLatestPost] = useState<PostData | null>(null)
+    const [categories, setCategories] = useState<Category[]>([])
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(
+        null
+    )
+
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [totalPages, setTotalPages] = useState<number>(1)
     const { t } = useTranslation()
+
     const handleNextPage = () => {
         setCurrentPage((prevPage) => prevPage + 1)
     }
@@ -32,11 +54,31 @@ export default function PostExternal() {
     const handlePrevPage = () => {
         setCurrentPage((prevPage) => prevPage - 1)
     }
+
+    const fetchPostsByCategory = async (categoryId: string, page: number) => {
+        setLoading(true)
+        try {
+            const response = await axios.get(
+                `http://localhost:3000/posts/category/${categoryId}`,
+                {
+                    params: { page, limit: 10 },
+                }
+            )
+            setData(response.data.posts)
+            setTotalPages(response.data.totalPages)
+            setCurrentPage(response.data.currentPage)
+            setLoading(false)
+        } catch (error) {
+            console.error('Error fetching data:', error)
+            setLoading(false)
+        }
+    }
+
     const fetchData = async (page: number) => {
         setLoading(true)
         try {
-            const response = await axios.get<PaginatedResponse>(
-                'http://localhost:3000/post',
+            const response = await axios.get<PostsResponse>(
+                'http://localhost:3000/posts',
                 {
                     params: { page, limit: 10 },
                 }
@@ -47,8 +89,9 @@ export default function PostExternal() {
             setData(response.data.posts)
             setTotalPages(response.data.totalPages)
             setCurrentPage(response.data.currentPage)
+            setLatestPost(response.data.latestPost)
+            setCategories(response.data.categories)
             setLoading(false)
-            console.log(data)
             console.log('-----------------')
         } catch (error) {
             console.error('Error fetching data:', error)
@@ -56,87 +99,139 @@ export default function PostExternal() {
         }
     }
     useEffect(() => {
+        // const getLatestPost = async () => {
+        //     try {
+        //         const data = await fetchPosts(1, 1) // Fetch the first page with 1 post
+        //         setLatestPost(data.latestPost)
+        //         console.log('Latest post:', data.latestPost)
+        //     } catch (error) {
+        //         console.error('Error fetching latest post:', error)
+        //     }
+        // }
+        // getLatestPost()
         // setTimeout(() => {
-        fetchData(currentPage)
-        // }, 10000)
-        // fetchData(currentPage)
-    }, [currentPage])
+        //     fetchData(currentPage)
+        // }, 100000)
+        if (!selectedCategory) {
+            fetchData(currentPage)
+        } else {
+            fetchPostsByCategory(selectedCategory, currentPage)
+        }
+    }, [currentPage, selectedCategory])
     if (loading) {
         return (
-            <section className="flex flex-row flex-wrap mx-auto justify-center ">
-                {Array.from({ length: 10 }).map((_, index) => (
-                    <div
-                        key={index}
-                        className="flex w-full px-4 py-6 justify-center"
-                    >
-                        <div className="space-y-3">
-                            <Skeleton className="h-36 w-full" />
-                            <Skeleton className="h-8 w-1/2 flex flex-wrap items-center flex-1 px-4 py-1 text-center mx-auto" />
-                            <Skeleton className="h-32 w-[450px]" />
-                            <Skeleton className="h-16 w-[350px] mb-20" />
-                        </div>
+            <div className="bg-[#101010] min-h-screen">
+                <Breadcrumb title={t('News')} parent={t('News')} />
+                {user.isAdmin && (
+                    <div className="flex justify-end p-4">
+                        <Skeleton className="h-10 w-40 rounded" />
                     </div>
+                )}
+                <div className="max-w-7xl mx-auto px-4 py-6">
+                    <LatestPost latestPost={null} />
+                </div>
+                <section className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {Array.from({ length: 6 }).map((_, index) => (
+                        <div
+                            key={index}
+                            className="flex flex-col overflow-hidden rounded-lg shadow bg-gray-800 p-4"
+                        >
+                            <Skeleton className="h-48 w-full mb-4 rounded" />
+                            <Skeleton className="h-6 w-3/4 mb-2 rounded" />
+                            <Skeleton className="h-4 w-full mb-4 rounded" />
+                            <Skeleton className="h-10 w-1/2 rounded" />
+                        </div>
+                    ))}
+                </section>
+                <div className="flex items-center space-x-4 justify-center py-4">
+                    <Skeleton className="h-10 w-24 rounded" />
+                    <Skeleton className="h-10 w-24 rounded" />
+                </div>
+            </div>
+        )
+    }
+    const renderCategoryButtons = () => {
+        return (
+            <div className="flex gap-2 justify-center mt-4 flex-wrap">
+                <Button
+                    variant={selectedCategory === null ? 'default' : 'outline'}
+                    onClick={() => {
+                        if (selectedCategory !== null) {
+                            setSelectedCategory(null)
+                            setCurrentPage(1)
+                        }
+                    }}
+                >
+                    All Posts
+                </Button>
+                {categories.map((cat) => (
+                    <Button
+                        key={cat._id}
+                        variant={
+                            selectedCategory === cat._id ? 'default' : 'outline'
+                        }
+                        onClick={() => {
+                            if (selectedCategory !== cat._id) {
+                                setSelectedCategory(cat._id)
+                                setCurrentPage(1)
+                            }
+                        }}
+                    >
+                        {cat.name}
+                    </Button>
                 ))}
-            </section>
+            </div>
         )
     }
 
     return (
-        <>
+        <div className="bg-[#101010]">
             <Breadcrumb title={'News'} parent={'News'} />
-            {user.isAdmin && (
-                <PostNew fetchData={fetchData} currentPage={currentPage} />
-            )}
-            <section className="flex flex-row flex-wrap mx-auto justify-center">
-                {data.map((item) => (
-                    <div
-                        key={item._id}
-                        className="flex flex-col transition-all duration-150 lg:w-1/3 sm:w-full  xl:w-1/3 2xl:w-1/4 px-4 py-6 justify-center mr-10 ml-10"
-                    >
-                        {user.isAdmin && (
-                            <div className="flex flex-row ml-auto mr-[25px] mb-[-25px] z-10 gap-2">
-                                <PostEdit
-                                    fetchData={fetchData}
-                                    currentPage={currentPage}
-                                    item={item}
-                                />
-                                <PostDelete
-                                    fetchData={fetchData}
-                                    currentPage={currentPage}
-                                    index={item._id}
-                                />
+
+            <LatestPost latestPost={latestPost} />
+            {/* <div className="py-28 bg-[#191919]">
+                <div className="max-w-7xl mx-auto px-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {data.map((post, i) => (
+                            <div
+                                key={i}
+                                className="flex flex-col overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow bg-white"
+                            >
+                                <Link to="/blog-details">
+                                    <img
+                                        className="w-full h-64 object-cover"
+                                        src={post.postPicture}
+                                        alt={post.title}
+                                    />
+                                </Link>
+                                <div className="p-6 flex flex-col justify-between flex-grow">
+                                    <p className="text-sm font-medium text-gray-500 mb-2">
+                                        CATEGORY
+                                    </p>
+                                    <h4 className="text-lg font-semibold text-gray-800 mb-4">
+                                        <Link
+                                            to="/blog-details"
+                                            className="hover:text-gray-600"
+                                        >
+                                            {post.title}
+                                        </Link>
+                                    </h4>
+                                    <div>
+                                        <Link
+                                            to="/blog-details"
+                                            className="inline-block px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded hover:bg-gray-700 transition-colors"
+                                        >
+                                            Read More
+                                        </Link>
+                                    </div>
+                                </div>
                             </div>
-                        )}
-                        <div className="flex flex-col items-stretch min-h-full min-w-full pb-4 transition-all duration-150 bg-white dark:bg-slate-700 shadow-lg hover:shadow-2xl mb-5 ">
-                            <div className="flex flex-wrap items-center flex-1 px-4 py-1 text-center mx-auto">
-                                <a href="#" className="hover:underline">
-                                    <h2 className="text-2xl font-bold tracking-normal text-gray-800 dark:text-white">
-                                        {item.title}
-                                    </h2>
-                                </a>
-                            </div>
-                            <div className="md:flex-shrink-0 dark:text-white">
-                                <img
-                                    src={item.postPicture}
-                                    alt={`Post image for ${item.title}`}
-                                    className="w-full h-full rounded-b-none object-contain px-8 mb-16 box-border"
-                                />
-                            </div>
-                            <div className="flex flex-row flex-wrap w-full px-4 py-2 overflow-hidden text-justify text-gray-700 dark:text-white">
-                                <span className="mx-1 text-xs text-gray-600 dark:text-white">
-                                    {formatDate(item.createdAt)}
-                                </span>
-                            </div>
-                            <div className="flex flex-row flex-wrap w-full px-4 py-2 overflow-hidden text-justify text-gray-700 dark:text-white">
-                                {parse(item.content)}
-                            </div>
-                            <section className="px-4 py-2 mt-2"></section>
-                        </div>
+                        ))}
                     </div>
-                ))}
-            </section>
-            {data.length > 10 && (
-                <div className="flex items-center space-x-4 justify-center m-5">
+                </div>
+            </div>
+            {totalPages > 1 && (
+                <div className="flex items-center space-x-4 justify-center bg-[#191919]">
                     <Button
                         disabled={currentPage === 1}
                         onClick={handlePrevPage}
@@ -150,7 +245,19 @@ export default function PostExternal() {
                         {t('next')}
                     </Button>
                 </div>
+            )} */}
+            {renderCategoryButtons()}
+            {user.isAdmin && (
+                <CreatePostNew onPostCreated={() => fetchData(currentPage)} />
             )}
-        </>
+            <PostGrid
+                data={data}
+                totalPages={totalPages}
+                currentPage={currentPage}
+                onNextPage={handleNextPage}
+                onPrevPage={handlePrevPage}
+                t={t}
+            />
+        </div>
     )
 }

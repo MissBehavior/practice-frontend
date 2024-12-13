@@ -61,6 +61,7 @@ export interface SolutionsData {
     contentMain?: string
     contentMainImg?: string
     contantMainImgPath?: string
+    createdAt: string
 }
 export interface GalleryData {
     _id: string
@@ -77,25 +78,41 @@ export interface PostData {
     _id: string
     title: string
     content: string
-    userId: string
+    userId: UserObjectPopulated
     createdAt: string
-    userName: string
     postPicture: string
+    categories: Category[]
+}
+export interface Category {
+    _id: string
+    name: string
+    count?: number
+}
+export interface PostsResponse {
+    totalPages: number
+    currentPage: number
+    latestPost: PostData
+    categories: Category[]
+    posts: PostData[]
 }
 export interface PostDataInternal {
     _id: string
     title: string
     content: string
-    userId: string
+    userId: UserObjectPopulated
     createdAt: string
     userName: string
     postPicture: string
-    likes: string[]
+    likes: UserObjectPopulated[]
     comments: CommentData[]
 }
 export interface CommentData {
+    _id: string
     text: string
-    user: string
+    user: UserObjectPopulated
+    likes: UserObjectPopulated[]
+    createdAt: string
+    updatedAt: string
 }
 
 export interface Task {
@@ -104,13 +121,13 @@ export interface Task {
     description: string
     dueDate: string
     tags: string[]
-    assignee: assigneeUser[]
+    assignee: UserObjectPopulated[]
     stage: string
     createdAt: string
     updatedAt: string
     createdBy: string
 }
-export interface assigneeUser {
+export interface UserObjectPopulated {
     _id: string
     name: string
     email: string

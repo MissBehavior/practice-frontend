@@ -24,7 +24,7 @@ const socialLinks: SocialLink[] = [
 
 const Footer: React.FC = () => {
     return (
-        <div className="pt-8 pb-8 bg-[#1d1e24]">
+        <div className="pt-8 pb-8 bg-[#191919]">
             <div className="container mx-auto px-4">
                 <div className="flex flex-wrap items-center justify-between">
                     {/* Logo */}

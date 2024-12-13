@@ -23,7 +23,7 @@ function NewsHome() {
         setLoading(true)
         try {
             const response = await axios.get<PaginatedResponse>(
-                'http://localhost:3000/post',
+                'http://localhost:3000/posts',
                 {
                     params: { limit: 3 },
                 }
@@ -43,7 +43,7 @@ function NewsHome() {
     }, [])
 
     return (
-        <div className="pt-28 bg-white dark:bg-neutral-900 mb-8">
+        <div className="pt-28 bg-white dark:bg-[#191919] mb-8">
             <div className="container mx-auto px-4">
                 {/* Header Section */}
                 <div className="flex flex-wrap items-end justify-between">

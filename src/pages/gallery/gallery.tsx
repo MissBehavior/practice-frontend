@@ -6,6 +6,7 @@ import GalleryNewDialog from './gallery-new-dialog'
 import { GalleryData } from '@/types'
 import GalleryDelete from './gallery-delete'
 import { Link } from 'react-router-dom'
+import Breadcrumb from '@/components/breadcrumb'
 
 export default function Gallery() {
     const { user } = useAuth()
@@ -54,8 +55,66 @@ export default function Gallery() {
     }
 
     return (
-        <>
-            <div
+        <div className="h-svh bg-[#101010]">
+            <Breadcrumb title={'Gallery'} parent={'Gallery'} />
+            <section id="portfolio" className="text-center py-12 ">
+                <div className="container mx-auto px-4">
+                    {/* Section Header */}
+                    <div className="mb-12">
+                        <p className="mt-4 text-white max-w-md mx-auto">
+                            Explore our collection of stunning images showcasing
+                            our work and creativity.
+                        </p>
+                    </div>
+
+                    {/* Gallery Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                        {data.map((item, index) => (
+                            <div
+                                key={`${item.title}-${index}`}
+                                className="relative overflow-hidden rounded-lg shadow-lg group"
+                            >
+                                {user.isAdmin && (
+                                    <div className="absolute top-2 right-2 z-20">
+                                        <GalleryDelete
+                                            fetchData={fetchData}
+                                            index={item._id}
+                                        />
+                                    </div>
+                                )}
+                                {/* Image */}
+                                <img
+                                    src={item.cardImgUrl}
+                                    alt={item.title}
+                                    className="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500"
+                                />
+
+                                {/* Overlay */}
+                                <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <div className="text-center">
+                                        <h3 className="text-white text-xl font-semibold mb-2">
+                                            {item.title}
+                                        </h3>
+                                        <a
+                                            href={item.cardImgUrl}
+                                            title={item.title}
+                                            target="_blank"
+                                            data-lightbox-gallery="gallery1"
+                                            className="inline-block px-4 py-2 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700 transition-colors duration-300"
+                                        >
+                                            View Image
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                        {user.isAdmin && (
+                            <GalleryNewDialog fetchData={fetchData} />
+                        )}
+                    </div>
+                </div>
+            </section>
+            {/* <div
                 className={
                     'flex flex-wrap justify-center gap-4 items-start bg-white dark:bg-background'
                 }
@@ -105,7 +164,7 @@ export default function Gallery() {
                 )}
 
                 {user.isAdmin && <GalleryNewDialog fetchData={fetchData} />}
-            </div>
-        </>
+            </div> */}
+        </div>
     )
 }

@@ -122,7 +122,7 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
         })
 
     return (
-        <div className="mt-16 mb-12 min-h-32 dark:bg-background flex justify-center items-center select-none">
+        <div className=" min-h-32 bg-[#101010] flex justify-center items-center select-none">
             <div className="">
                 <Dialog
                     open={open}
@@ -142,7 +142,7 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
                             </h1>
                         </div>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[800px] mt-16 mb-12 min-h-32">
+                    <DialogContent className="sm:max-w-[800px] mt-16 mb-12 min-h-48 bg-[#101010]">
                         <DialogHeader>
                             <DialogTitle> {t('newPost')}</DialogTitle>
                             <DialogDescription></DialogDescription>

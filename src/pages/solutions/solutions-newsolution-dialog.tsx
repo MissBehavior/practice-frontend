@@ -93,7 +93,7 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
         fetchData()
     }
     return (
-        <div className="mt-16 mb-12 min-h-64 bg-white dark:bg-background flex justify-center items-center select-none">
+        <div className="min-h-48 flex justify-center items-center select-none">
             <div className="">
                 <Dialog
                     open={open}
