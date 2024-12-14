@@ -33,7 +33,7 @@ const PostGrid: React.FC<PostGridProps> = React.memo(
                                 key={i}
                                 className="flex flex-col overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow bg-white"
                             >
-                                <Link to="/blog-details">
+                                <Link to={`/post-external/${post._id}`}>
                                     <img
                                         className="w-full h-64 object-cover"
                                         src={post.postPicture}
@@ -92,7 +92,7 @@ const PostGrid: React.FC<PostGridProps> = React.memo(
                                     </p>
                                     <h4 className="text-xl font-bold text-gray-800 mb-2">
                                         <Link
-                                            to="/blog-details"
+                                            to={`/post-external/${post._id}`}
                                             className="hover:text-gray-600"
                                         >
                                             {post.title}

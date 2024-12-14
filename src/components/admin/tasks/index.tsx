@@ -10,6 +10,7 @@ import { KanbanItem } from './item'
 import { ProjectCardMemo, ProjectCardSkeleton } from './card'
 import { KanbanAddCardButton } from './add-card-button'
 import { Task } from '@/types'
+import { NewTaskDialog } from './new-task-dialog'
 
 export interface Stage {
     id: string
@@ -22,6 +23,9 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
     const [tasks, setTasks] = useState<Task[]>([])
     const [stages, setStages] = useState<Stage[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
+
+    const [showDialog, setShowDialog] = useState(false)
+    const [selectedStageTitle, setSelectedStageTitle] = useState<string>('')
 
     useEffect(() => {
         const fetchData = async () => {
@@ -116,12 +120,20 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
     }
 
     const handleAddCard = (stageTitle: string) => {
-        const path =
-            stageTitle === 'Unassigned'
-                ? '/tasks/new'
-                : `/tasks/new?stage=${stageTitle}`
+        setSelectedStageTitle(stageTitle)
+        setShowDialog(true)
+    }
+    const handleCreateTask = async (newTaskData: Partial<Task>) => {
+        try {
+            const response = await axios.post(
+                'http://localhost:3000/tasks',
+                newTaskData
+            )
 
-        navigate(path)
+            setTasks((prevTasks) => [...prevTasks, response.data])
+        } catch (error) {
+            console.error('Error creating task:', error)
+        }
     }
     if (isLoading) return <PageSkeleton />
 
@@ -162,13 +174,14 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
                 </KanbanBoard>
             </KanbanBoardContainer>
             <Outlet />
-            {/* {selectedTask && (
-                <TasksEditPage
-                    task={selectedTask}
-                    onClose={() => setSelectedTask(null)}
+
+            {showDialog && (
+                <NewTaskDialog
+                    stageTitle={selectedStageTitle}
+                    onClose={() => setShowDialog(false)}
+                    onCreate={handleCreateTask}
                 />
             )}
-            {children} */}
         </>
     )
 }

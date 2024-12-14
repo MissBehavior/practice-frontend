@@ -76,6 +76,24 @@ export const columns = (
         ),
     },
     {
+        accessorKey: 'languages',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }
+            >
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+                <span>Languages</span>
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const languages = row.original.languages ?? []
+            return <span>{languages.join(', ')}</span>
+        },
+    },
+    {
         accessorKey: 'isAdmin',
         header: ({ column }) => (
             <Button

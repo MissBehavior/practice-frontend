@@ -23,6 +23,8 @@ function UsersTable() {
             const response = await axios.get(
                 'http://localhost:3000/admin/users'
             )
+            console.log('#################')
+            console.log(response)
             setUsers(response.data.allUsers)
         } catch (error) {
             console.error('Error fetching data:', error)

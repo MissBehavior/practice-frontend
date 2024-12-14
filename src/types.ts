@@ -51,6 +51,7 @@ export interface UserAdminData {
     telefon: string
     profileImgUrl: string
     profileImgPath: string
+    languages: string[]
 }
 export interface SolutionsData {
     _id: string
@@ -136,6 +137,7 @@ export interface UserObjectPopulated {
 
 import exp from 'constants'
 import { z } from 'zod'
+import { languages } from './pages/profile/languages'
 
 export const signUpSchema = z.object({
     name: z.string().min(3, 'Name must be at least 3 characters'),
