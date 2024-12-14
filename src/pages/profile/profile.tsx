@@ -4,6 +4,7 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { Input } from '@/components/ui/input'
 import { useAuth, useAxios } from '@/services/auth-service'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -239,15 +240,15 @@ function Profile() {
                                     <span className="font-bold w-24 dark:text-gray-200">
                                         {t('email')}
                                     </span>
-                                    <input
-                                        type="email"
-                                        value={email}
-                                        disabled
+                                    <Input
                                         onChange={(e) =>
                                             handleInputChange(e, setEmail)
                                         }
-                                        className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-gray-200 dark:border-gray-600"
+                                        disabled
+                                        type="email"
                                         placeholder="Enter your email"
+                                        value={email}
+                                        className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-gray-200 dark:border-gray-600"
                                     />
                                 </li>
                                 <li className="flex border-b py-2">
@@ -264,7 +265,7 @@ function Profile() {
                                         placeholder="Enter languages spoken"
                                     />
                                 </li>
-                                <div className="flex-1 bg-white rounded-lg shadow-xl p-8 dark:bg-slate-700 text-gray-500 dark:text-gray-300">
+                                {/* <div className="flex-1 bg-white rounded-lg shadow-xl p-8 dark:bg-slate-700 text-gray-500 dark:text-gray-300">
                                     <h4 className="text-xl text-gray-500 dark:text-gray-300 font-bold">
                                         {t('userRole')}
                                     </h4>
@@ -284,13 +285,13 @@ function Profile() {
                                                 {t('is_employee')}
                                             </span>
                                             <span className="flex-1 text-gray-700 dark:text-gray-300">
-                                                {user.isEmployee
+                                                {user.isEmployee 
                                                     ? t('yes')
                                                     : t('no')}
                                             </span>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> */}
                             </ul>
                             {isDirty && (
                                 <div className="mt-4 flex space-x-4">
