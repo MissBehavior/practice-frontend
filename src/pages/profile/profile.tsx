@@ -9,6 +9,22 @@ import { useAuth, useAxios } from '@/services/auth-service'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MdModeEdit } from 'react-icons/md'
+import Select from 'react-select'
+import { languages } from './languages'
+
+export type LanguageCode = string
+export type Language = {
+    name: string
+    nativeName: string
+}
+type Option = { value: string; label: string }
+
+const languageOptions: Option[] = Object.entries(languages).map(
+    ([code, lang]) => ({
+        value: code,
+        label: `${lang.name} (${lang.nativeName})`,
+    })
+)
 
 function Profile() {
     const { userToken, user, setUser } = useAuth()
@@ -23,6 +39,9 @@ function Profile() {
     const [telefon, setTelefon] = useState(user.telefon) // Update with real user data if available
     const [languages, setLanguages] = useState('English, Spanish') // Update with real user data if available
     const [isDirty, setIsDirty] = useState(false)
+    const [selectedOptions, setSelectedOptions] = React.useState<
+        Option[] | null
+    >(null)
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement>,
@@ -263,6 +282,14 @@ function Profile() {
                                         }
                                         className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-gray-200 dark:border-gray-600"
                                         placeholder="Enter languages spoken"
+                                    />
+                                    <Select
+                                        isMulti
+                                        options={languageOptions}
+                                        value={selectedOptions}
+                                        onChange={(opts) =>
+                                            setSelectedOptions(opts as Option[])
+                                        }
                                     />
                                 </li>
                                 {/* <div className="flex-1 bg-white rounded-lg shadow-xl p-8 dark:bg-slate-700 text-gray-500 dark:text-gray-300">
