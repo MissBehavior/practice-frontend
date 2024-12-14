@@ -1,32 +1,27 @@
-import { Row } from '@tanstack/react-table'
-
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuRadioGroup,
-    DropdownMenuRadioItem,
     DropdownMenuSeparator,
-    DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '../custom/button'
 import { RxDotsHorizontal } from 'react-icons/rx'
 import { UserAdminData } from '@/types'
 import { MdDeleteForever } from 'react-icons/md'
+import { Row } from '@tanstack/react-table'
 
-interface DataTableRowActionsProps<TData> {
+interface DataTableRowActionsProps {
     row: Row<UserAdminData>
     deleteUser: (id: string) => void
+    editUser: (user: UserAdminData) => void
 }
 
-export function DataTableRowActions<TData>({
+export function DataTableRowActions({
     row,
     deleteUser,
-}: DataTableRowActionsProps<TData>) {
+    editUser,
+}: DataTableRowActionsProps) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -39,21 +34,18 @@ export function DataTableRowActions<TData>({
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[160px]">
-                <DropdownMenuItem>Edit</DropdownMenuItem>
-                <DropdownMenuItem>Make a copy</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => editUser(row.original)}>
+                    Edit
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                     <Button
                         className="capitalize bg-red-400 hover:bg-red-600"
-                        onClick={() => {
-                            console.log('DeleteUser called')
-                            deleteUser(row.original._id)
-                        }}
+                        onClick={() => deleteUser(row.original._id)}
                     >
                         Delete
                         <MdDeleteForever />
                     </Button>
-                    <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

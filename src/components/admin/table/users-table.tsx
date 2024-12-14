@@ -3,51 +3,122 @@ import { DataTable } from './data-table'
 import { columns } from './columns'
 import axios from 'axios'
 import { UserAdminData } from '@/types'
-import { useTranslation } from 'react-i18next'
 import { useAuth, useAxios } from '@/services/auth-service'
+import { Button } from '@/components/ui/button'
+import { EditUserDialog } from './edit-user-dialog'
+import { CreateUserDialog } from './create-user-dialog'
+
 function UsersTable() {
     const { userToken } = useAuth()
     const api = useAxios()
 
     const [users, setUsers] = useState<UserAdminData[]>([])
+    const [editingUser, setEditingUser] = useState<UserAdminData | null>(null)
+    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+
+    const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
+
     const fetchData = async () => {
         try {
             const response = await axios.get(
                 'http://localhost:3000/admin/users'
             )
-            console.log('response:', response)
-            console.log('-----------------')
             setUsers(response.data.allUsers)
-            console.log(users)
-            console.log(response)
         } catch (error) {
             console.error('Error fetching data:', error)
         }
     }
-    const deleteUser = async (index: string) => {
+
+    const deleteUser = async (id: string) => {
         try {
-            const response = await api.delete('/admin/users/' + index, {
+            await api.delete('/admin/users/' + id, {
                 headers: {
                     Authorization: `Bearer ${userToken!.accessToken}`,
                 },
             })
-            console.log(response.data)
-            setUsers((prevUsers) =>
-                prevUsers.filter((user) => user._id !== index)
-            )
+            setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id))
         } catch (error) {
             console.error('Error deleting :', error)
         }
-        // fetchData()
+    }
+
+    const editUser = (user: UserAdminData) => {
+        setEditingUser(user)
+        setIsEditDialogOpen(true)
+    }
+
+    const handleCloseEditDialog = () => {
+        setIsEditDialogOpen(false)
+        setEditingUser(null)
+    }
+
+    const handleUpdateUser = async (updatedData: Partial<UserAdminData>) => {
+        if (!editingUser) return
+        try {
+            const response = await api.put(
+                '/admin/users/' + editingUser._id,
+                updatedData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${userToken!.accessToken}`,
+                    },
+                }
+            )
+
+            // Update local state
+            setUsers((prevUsers) =>
+                prevUsers.map((user) =>
+                    user._id === editingUser._id ? response.data : user
+                )
+            )
+
+            // Close dialog after saving
+            handleCloseEditDialog()
+        } catch (error) {
+            console.error('Error updating user:', error)
+        }
+    }
+
+    const handleCreateUser = async (newUserData: Partial<UserAdminData>) => {
+        try {
+            const response = await api.post('/admin/users', newUserData, {
+                headers: {
+                    Authorization: `Bearer ${userToken!.accessToken}`,
+                },
+            })
+
+            // Add the new user to the state
+            setUsers((prevUsers) => [...prevUsers, response.data])
+            setIsCreateDialogOpen(false)
+        } catch (error) {
+            console.error('Error creating user:', error)
+        }
     }
 
     React.useEffect(() => {
         fetchData()
     }, [])
+
     return (
-        <section className="py-24 px-4 flex flex-col h-full w-full ">
-            <h1 className="text-3x1 font-bold">Users</h1>
-            <DataTable columns={columns(deleteUser)} data={users} />
+        <section className="py-24 px-4 flex flex-col h-screen w-full">
+            <div className="flex flex-row justify-between items-center">
+                <h1 className="text-3x1 font-bold">Users</h1>
+                <Button onClick={() => setIsCreateDialogOpen(true)}>
+                    Create User
+                </Button>
+            </div>
+            <DataTable columns={columns(deleteUser, editUser)} data={users} />
+            <EditUserDialog
+                isOpen={isEditDialogOpen}
+                onClose={handleCloseEditDialog}
+                userData={editingUser}
+                onSubmit={handleUpdateUser}
+            />
+            <CreateUserDialog
+                isOpen={isCreateDialogOpen}
+                onClose={() => setIsCreateDialogOpen(false)}
+                onSubmit={handleCreateUser}
+            />
         </section>
     )
 }

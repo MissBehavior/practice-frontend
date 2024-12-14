@@ -31,12 +31,14 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
                     axios.get('http://localhost:3000/tasks'),
                     // axios.get('http://localhost:3000/stages'),
                 ])
+                console.log('tasksResponse', tasksResponse)
                 setTasks(tasksResponse.data)
                 const stages = {
                     data: [
                         { id: '1', title: 'Backlog' },
                         { id: '2', title: 'In Progress' },
                         { id: '3', title: 'DONE' },
+                        { id: '4', title: 'Unassigned' },
                     ],
                 }
                 setStages(stages.data)
@@ -85,13 +87,6 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
                 (task) => task.stage === stage.title
             )
         })
-
-        // Tasks without a stage
-        groupedTasks['Unassigned'] = tasks.filter(
-            (task) =>
-                !task.stage ||
-                !stages.some((stage) => stage.title === task.stage)
-        )
 
         return groupedTasks
     }, [tasks, stages])

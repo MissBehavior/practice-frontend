@@ -1,4 +1,3 @@
-// duedate-form.tsx
 import React, { useState, useContext } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -19,7 +18,6 @@ export const DueDateForm = ({ initialValues, cancelForm, taskId }: Props) => {
     const formattedDueDate = initialValues.dueDate
         ? format(new Date(initialValues.dueDate), "yyyy-MM-dd'T'HH:mm")
         : ''
-
     const [dueDate, setDueDate] = useState(formattedDueDate)
 
     const handleSave = async () => {
@@ -28,8 +26,6 @@ export const DueDateForm = ({ initialValues, cancelForm, taskId }: Props) => {
             await axios.put(`http://localhost:3000/tasks/${taskId}`, {
                 dueDate: isoDueDate,
             })
-
-            //   socket.emit('taskUpdated', { _id: taskId, dueDate: isoDueDate });
         } catch (error) {
             console.error('Error updating due date:', error)
         }

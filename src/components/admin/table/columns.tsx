@@ -6,12 +6,17 @@ import { MdDeleteForever } from 'react-icons/md'
 import { DataTableRowActions } from './data-table-row-actions'
 
 export const columns = (
-    deleteUser: (id: string) => void
+    deleteUser: (id: string) => void,
+    editUser: (user: UserAdminData) => void
 ): ColumnDef<UserAdminData>[] => [
     {
         id: 'actions',
         cell: ({ row }) => (
-            <DataTableRowActions deleteUser={deleteUser} row={row} />
+            <DataTableRowActions
+                deleteUser={deleteUser}
+                editUser={editUser}
+                row={row}
+            />
         ),
     },
     // {

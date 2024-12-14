@@ -259,22 +259,23 @@ export default function TeamUpdates() {
                                                 )}
                                             </span>
                                         </div>
-                                        <div className="flex align-middle items-center gap-2">
-                                            <span>{t('by')}</span>
+                                        <div className="flex align-middle items-center gap-1">
                                             <Avatar>
                                                 <AvatarImage
                                                     src={
                                                         post.userId
                                                             .profileImgUrl
                                                     }
-                                                    className="w-8 h-8 rounded-full bg-gray-400"
+                                                    className="w-7 h-7 rounded-full bg-gray-400"
                                                     alt="@shadcn"
                                                 />
                                                 <AvatarFallback>
                                                     <FaUser className="m-2" />
                                                 </AvatarFallback>
                                             </Avatar>
-                                            <span>{post.userId.name}</span>
+                                            <span>
+                                                {t('by')} {post.userId.name}
+                                            </span>
                                         </div>
                                     </div>
                                     <div className="flex justify-between items-center  border-gray-200 pt-2">

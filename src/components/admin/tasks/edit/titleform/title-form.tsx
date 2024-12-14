@@ -1,4 +1,3 @@
-// title-form.tsx
 import React, { useState, useContext, useEffect } from 'react'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -36,7 +35,6 @@ export const TitleForm = ({ initialValues, isLoading, taskId }: Props) => {
                 })
                 setIsSubmitting(false)
             } catch (error) {
-                // Handle error (e.g., show a notification)
                 setIsSubmitting(false)
             }
         }

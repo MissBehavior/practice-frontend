@@ -102,6 +102,17 @@ const router = createBrowserRouter([
                         path: '/team-updates/:id',
                         element: <TeamUpdateDetail />,
                     },
+                    {
+                        path: '/kanban',
+                        // element: <Kanban />,
+                        element: <TasksListPage />,
+                        children: [
+                            {
+                                path: ':taskId',
+                                element: <TasksEditPage />,
+                            },
+                        ],
+                    },
                 ],
             },
             {
@@ -116,49 +127,35 @@ const router = createBrowserRouter([
                 path: '/register',
                 element: <Register />,
             },
-            {
-                path: '/admin',
-                element: <AdminDashboard />,
-            },
-            {
-                path: '/users',
-                element: <UsersTable />,
-            },
-            {
-                path: '/kanban',
-                // element: <Kanban />,
-                element: <TasksListPage />,
-                children: [
-                    {
-                        path: ':taskId',
-                        element: <TasksEditPage />,
-                    },
-                ],
-            },
-            {
-                path: '/dashboard',
-                element: <AdminDashboard />,
-            },
+            // {
+            //     path: '/admin',
+            //     element: <AdminDashboard />,
+            // },
+            // {
+            //     path: '/users',
+            //     element: <UsersTable />,
+            // },
+
+            // {
+            //     path: '/dashboard',
+            //     element: <AdminDashboard />,
+            // },
             // TODO: TESTING ADMIN
             {
                 element: <AdminRoutes />,
                 children: [
-                    // {
-                    //     path: '/admin',
-                    //     element: <AdminDashboard />,
-                    // },
-                    // {
-                    //     path: '/users',
-                    //     element: <UsersTable />,
-                    // },
-                    // {
-                    //     path: '/kanban',
-                    //     element: <Kanban />,
-                    // },
-                    // {
-                    //     path: '/dashboard',
-                    //     element: <AdminDashboard />,
-                    // },
+                    {
+                        path: '/admin',
+                        element: <AdminDashboard />,
+                    },
+                    {
+                        path: '/users',
+                        element: <UsersTable />,
+                    },
+                    {
+                        path: '/dashboard',
+                        element: <AdminDashboard />,
+                    },
                 ],
             },
         ],

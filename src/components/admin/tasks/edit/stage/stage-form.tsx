@@ -1,9 +1,7 @@
-// stage-form.tsx
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import { AiOutlineFlag } from 'react-icons/ai'
 import { Task } from '@/types'
 import axios from 'axios'
-import { SocketContext } from '@/SocketContext'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
     Select,
@@ -19,7 +17,6 @@ type Props = {
 }
 
 export const StageForm = ({ isLoading, task, taskId }: Props) => {
-    // const socket = useContext(SocketContext)
     const [stages, setStages] = useState<{ id: string; title: string }[]>([])
     const [selectedStage, setSelectedStage] = useState<string>(task.stage || '')
     const selectRef = useRef<HTMLButtonElement | null>(null) // Reference to the Select
@@ -29,27 +26,15 @@ export const StageForm = ({ isLoading, task, taskId }: Props) => {
             { id: '1', title: 'Backlog' },
             { id: '2', title: 'In Progress' },
             { id: '3', title: 'DONE' },
+            { id: '4', title: 'Unassigned' },
         ],
     }
     useEffect(() => {
-        // const fetchStages = async () => {
-        //   try {
-        //     const response = await axios.get('http://localhost:3000/stages');
-        //     const stageOptions = response.data.map((stage: any) => ({
-        //       label: stage.title,
-        //       value: stage.title,
-        //     }));
-        //     setStages(stageOptions);
-        //   } catch (error) {
-        //     console.error('Error fetching stages:', error);
-        //   }
-        // };
-        // fetchStages();
         setStages(stagesArr.data)
         return () => {
             console.log('Unmounting StageForm')
-            setOpen(false) // Close Select
-            setSelectedStage('') // Reset selection state
+            setOpen(false)
+            setSelectedStage('')
             if (selectRef.current) {
                 selectRef.current.blur()
             }
