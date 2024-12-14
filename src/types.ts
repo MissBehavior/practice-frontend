@@ -79,6 +79,7 @@ export interface PostData {
     _id: string
     title: string
     content: string
+    contentLT: string
     userId: UserObjectPopulated
     createdAt: string
     postPicture: string

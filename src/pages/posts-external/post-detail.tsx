@@ -16,6 +16,7 @@ import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 import Breadcrumb from '@/components/breadcrumb'
 import Tag from './tag'
+import i18n from '@/i18n/config'
 
 const PostDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>()
@@ -177,13 +178,10 @@ const PostDetail: React.FC = () => {
                             </div>
                             <div className="prose prose-lg text-gray-800">
                                 {/* Render HTML content safely */}
-                                <div
-                                    dangerouslySetInnerHTML={{
-                                        __html: post.content,
-                                    }}
-                                />
+                                {i18n.language === 'en'
+                                    ? post.content
+                                    : post.contentLT}
                             </div>
-                            {/* Optional: Display additional information or related posts */}
                         </div>
                     </div>
                 </div>

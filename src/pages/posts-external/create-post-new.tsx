@@ -27,6 +27,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
 
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
+    const [contentLT, setContentLT] = useState('')
     const [image, setImage] = useState<File | null>(null)
     const [selectedCategories, setSelectedCategories] = useState<string[]>([])
 
@@ -34,6 +35,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
     const [errors, setErrors] = useState<{
         title?: string
         content?: string
+        contentLT?: string
         image?: string
         categories?: string
     }>({})
@@ -102,12 +104,14 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
         const newErrors: {
             title?: string
             content?: string
+            contentLT?: string
             image?: string
             categories?: string
         } = {}
 
         if (!title.trim()) newErrors.title = 'Title is required'
         if (!content.trim()) newErrors.content = 'Content is required'
+        if (!contentLT.trim()) newErrors.contentLT = 'ContentLT is required'
         if (!image) newErrors.image = 'Image is required'
         if (selectedCategories.length === 0)
             newErrors.categories = 'At least one category is required'
@@ -133,6 +137,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
             const formData = new FormData()
             formData.append('title', title)
             formData.append('content', content)
+            formData.append('contentLT', contentLT)
             formData.append('userId', user.id)
             selectedCategories.forEach((cat) =>
                 formData.append('categories', cat)
@@ -166,6 +171,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
         setOpen(false)
         setTitle('')
         setContent('')
+        setContentLT('')
         setImage(null)
         setSelectedCategories([])
         setQuery('')
@@ -201,6 +207,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
                 } else {
                     setTitle('')
                     setContent('')
+                    setContentLT('')
                     setSelectedCategories([])
                     setQuery('')
                 }
@@ -240,6 +247,20 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
                         {errors.content && (
                             <p className="text-red-500 text-sm">
                                 {errors.content}
+                            </p>
+                        )}
+                    </div>
+                    <div>
+                        <Label htmlFor="contentLT">ContentLT</Label>
+                        <Textarea
+                            id="contentLT"
+                            rows={5}
+                            value={contentLT}
+                            onChange={(e) => setContentLT(e.target.value)}
+                        />
+                        {errors.contentLT && (
+                            <p className="text-red-500 text-sm">
+                                {errors.contentLT}
                             </p>
                         )}
                     </div>

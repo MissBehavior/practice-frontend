@@ -4,6 +4,7 @@ import { PostData } from '@/types'
 import { getRandomColorFromString } from '../../lib/utils'
 import Tag from './tag'
 import { Link } from 'react-router-dom'
+import i18n from '@/i18n/config'
 
 interface LatestPostProps {
     latestPost: PostData | null
@@ -26,7 +27,11 @@ export default function LatestPost({ latestPost }: LatestPostProps) {
                         {latestPost.title}
                     </p>
                     <p className="mt-3 text-gray-600">
-                        {latestPost.content.substring(0, 200)}...
+                        {i18n.language === 'en'
+                            ? latestPost.content.substring(0, 200)
+                            : latestPost.contentLT.substring(0, 200)}
+                        ...
+                        {/* {latestPost.content.substring(0, 200)}... */}
                     </p>
 
                     <Link
