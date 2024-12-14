@@ -21,6 +21,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from '@/components/ui/button'
 import Breadcrumb from '@/components/breadcrumb'
 import { Link } from 'react-router-dom'
+import { Avatar } from '@radix-ui/react-avatar'
+import { AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 interface PaginatedResponse {
     totalPages: number
     currentPage: number
@@ -257,8 +259,21 @@ export default function TeamUpdates() {
                                                 )}
                                             </span>
                                         </div>
-                                        <div className="flex">
-                                            <FaUser className="mr-2" />
+                                        <div className="flex align-middle items-center">
+                                            <Avatar>
+                                                <AvatarImage
+                                                    src={
+                                                        post.userId
+                                                            .profileImgUrl
+                                                    }
+                                                    className="w-8 h-8 rounded-full bg-gray-400"
+                                                    alt="@shadcn"
+                                                />
+                                                <AvatarFallback>
+                                                    <FaUser className="m-2" />
+                                                </AvatarFallback>
+                                            </Avatar>
+
                                             <span>
                                                 {t('by')} {post.userId.name}
                                             </span>

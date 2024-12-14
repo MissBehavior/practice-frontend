@@ -310,7 +310,7 @@ export default function Header() {
                                                     : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
                                             }
                                         >
-                                            {t('Dashboard')}
+                                            {t('dashboard')}
                                         </NavLink>
                                         <NavLink
                                             to="/users"
@@ -321,7 +321,7 @@ export default function Header() {
                                                     : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
                                             }
                                         >
-                                            {t('Users')}
+                                            {t('users')}
                                         </NavLink>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
