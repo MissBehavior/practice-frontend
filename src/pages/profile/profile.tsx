@@ -264,6 +264,33 @@ function Profile() {
                                         placeholder="Enter languages spoken"
                                     />
                                 </li>
+                                <div className="flex-1 bg-white rounded-lg shadow-xl p-8 dark:bg-slate-700 text-gray-500 dark:text-gray-300">
+                                    <h4 className="text-xl text-gray-500 dark:text-gray-300 font-bold">
+                                        {t('userRole')}
+                                    </h4>
+                                    <ul className="mt-2">
+                                        <li className="flex border-b py-2">
+                                            <span className="font-bold w-24 dark:text-gray-200">
+                                                {t('is_admin')}
+                                            </span>
+                                            <span className="flex-1 text-gray-700 dark:text-gray-300">
+                                                {user.isAdmin
+                                                    ? t('yes')
+                                                    : t('no')}
+                                            </span>
+                                        </li>
+                                        <li className="flex border-b py-2">
+                                            <span className="font-bold w-24 dark:text-gray-200">
+                                                {t('is_employee')}
+                                            </span>
+                                            <span className="flex-1 text-gray-700 dark:text-gray-300">
+                                                {user.isEmployee
+                                                    ? t('yes')
+                                                    : t('no')}
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </ul>
                             {isDirty && (
                                 <div className="mt-4 flex space-x-4">
