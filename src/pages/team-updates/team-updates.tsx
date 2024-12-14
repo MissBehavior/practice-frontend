@@ -159,7 +159,7 @@ export default function TeamUpdates() {
     }
     if (loading) {
         return (
-            <div className="bg-[#101010] min-h-screen">
+            <div className="dark:bg-[#101010] bg-slate-300 min-h-screen">
                 <Breadcrumb
                     title={'Team Updates'}
                     parent={'Team Updates'}
@@ -204,7 +204,7 @@ export default function TeamUpdates() {
                     currentPage={currentPage}
                 />
             )}
-            <div className="py-28 bg-[#191919]">
+            <div className="py-28 dark:bg-[#101010] bg-slate-300">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {data.map((post, i) => (

@@ -53,28 +53,31 @@ export default function Home() {
 
     return (
         <>
-            <div className="bg-[#191919]">
+            <div className="dark:bg-[#191919] bg-slate-300">
                 <SliderOne />
             </div>
-            <div className="bg-[#191919]">
+            <div className="dark:bg-[#191919] bg-slate-300">
                 <About />
             </div>
-            <div className="pt-32 pb-32 bg-[#101010]" id="servicesid">
+            <div
+                className="pt-32 pb-32 dark:bg-[#101010] bg-slate-500"
+                id="servicesid"
+            >
                 <div className="container">
                     <Service />
                 </div>
             </div>
-            <div className="py-28 bg-[#191919]">
+            <div className="py-28 dark:bg-[#191919] bg-slate-300">
                 <div className="mb-14">
                     <Solutions />
                 </div>
             </div>
 
-            <div className="pt-32 pb-32 bg-[#191919]">
+            <div className="pt-32 pb-32 dark:bg-[#191919] bg-slate-500">
                 <div className="container mx-auto">
                     <div className="flex justify-center mb-8">
                         <div className="w-full text-center">
-                            <h3 className="text-5xl font-extrabold text-white">
+                            <h3 className="text-5xl font-extrabold dark:text-white text-gray-800">
                                 Our Fun Facts
                             </h3>
                         </div>
@@ -82,84 +85,23 @@ export default function Home() {
                     <FunFacts />
                 </div>
             </div>
-            <div className="pt-28 pb-28 bg-[#101010]">
+            <div className="pt-28 pb-28 dark:bg-[#101010] bg-slate-300">
                 <div className="container mx-auto">
                     <Team />
                 </div>
             </div>
 
-            <div className="pb-28 bg-[#191919]">
+            <div className="pb-28 dark:bg-[#191919] bg-slate-500">
                 <div className="mb-14">
                     <NewsHome />
                 </div>
             </div>
 
-            <div className="pb-28 bg-[#101010]">
+            <div className="pb-28 dark:bg-[#101010] bg-slate-300">
                 <div className="container mx-auto">
                     <Clients />
                 </div>
             </div>
-
-            {/* <div className="flex flex-row justify-center text-center center align-middle  place-items-center xs:mx-5 xs:my-5 md:mx-32 md:my-20 2xl:mx-60 xs:flex-col xl:flex-row md:gap-10">
-                <p className="w-full text-left text-xl">
-                    {i18n.language === 'lt'
-                        ? textTranslations.lt1
-                        : textTranslations.en1 || i18n.language === 'en'
-                        ? textTranslations.en1
-                        : textTranslations.lt1}
-                </p>
-                <img
-                    src={homeLogo}
-                    alt=""
-                    className="w-1/2 xs:w-full xl:w-1/2"
-                />
-            </div>
-            <div className="flex flex-col gap-5 xs:mx-5 md:mx-32 2xl:mx-60 xs:mb-5 md:mb-20">
-                <p className="w-full text-left text-xl">
-                    {i18n.language === 'lt'
-                        ? textTranslations.lt2
-                        : textTranslations.en2 || i18n.language === 'en'
-                        ? textTranslations.en2
-                        : textTranslations.lt2}
-                </p>
-                <p className="text-xl">
-                    <a
-                        href="https://outline.dk"
-                        className="text-blue-600 dark:text-slate-400"
-                    >
-                        Home (outline.dk)
-                    </a>
-                </p>
-                <p className="text-xl">Contact us: Tel. +37060658526</p>
-                <p className="text-xl">
-                    <a
-                        className="text-blue-600 dark:text-slate-400"
-                        href="mailto:pardavimai.vilnius@winbas.eu"
-                    >
-                        {i18n.language === 'lt'
-                            ? textTranslations.sendRequestlt
-                            : textTranslations.sendRequest ||
-                              i18n.language === 'en'
-                            ? textTranslations.sendRequest
-                            : textTranslations.sendRequestlt}
-                    </a>
-                </p>
-            </div> */}
         </>
     )
 }
-/*  <p>
-                Winbas is the first and only official representative trading
-                Danish manufacturer – Outline windows and doors in Lithuania.
-                High-quality wooden or wood-clad aluminum windows from Denmark
-                are an excellent investment for your home. With over 30 years of
-                manufacturing experience, accumulated experience allows us to
-                offer customers the most suitable architectural and design
-                solutions that ensure the highest energy efficiency. Outline
-                offers a wide range of designs. Windows opening to the outside
-                or inside, a variety of colors, the possibility to match window
-                and door accessories to your interior. Outline – Windows and
-                doors designed for your home! You can find more information
-                about the products by clicking on the link.: Home (outline.dk)
-                Contact us: Tel. +37060658526 Send request
-            </p> */

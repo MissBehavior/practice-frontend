@@ -24,7 +24,7 @@ const ScrollButton: React.FC = () => {
             type="button"
             onClick={scrollToTop}
             aria-label="Scroll to top"
-            className="fixed right-0 bottom-10 z-50 p-10 text-5xl transition-opacity duration-300"
+            className="fixed right-0 bottom-12 z-50 p-10 text-5xl transition-opacity duration-300"
             style={{
                 opacity: visible ? 1 : 0,
                 pointerEvents: visible ? 'auto' : 'none',

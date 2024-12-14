@@ -24,7 +24,7 @@ const socialLinks: SocialLink[] = [
 
 const Footer: React.FC = () => {
     return (
-        <div className="pt-8 pb-8 bg-[#191919]">
+        <div className="pt-8 pb-8 dark:bg-[#191919] bg-slate-500">
             <div className="container mx-auto px-4">
                 <div className="flex flex-wrap items-center justify-between">
                     {/* Logo */}
@@ -62,7 +62,7 @@ const Footer: React.FC = () => {
                     </div>
                     {/* Copyright */}
                     <div className="w-full sm:w-auto">
-                        <div className="text-center sm:text-right text-gray-400">
+                        <div className="text-center sm:text-right dark:text-gray-400 text-gray-800">
                             <p>
                                 © 2022, UAB "WinBas" Žalgirio g. 90c, LT-09303
                                 Vilnius info@winbas.eu +370 52051212

@@ -43,7 +43,7 @@ function NewsHome() {
     }, [])
 
     return (
-        <div className="pt-28 bg-white dark:bg-[#191919] mb-8">
+        <div className="pt-28 mb-8">
             <div className="container mx-auto px-4">
                 {/* Header Section */}
                 <div className="flex flex-wrap items-end justify-between">
@@ -51,7 +51,7 @@ function NewsHome() {
                         <h2 className="text-3xl font-bold text-neutral-900 dark:text-white">
                             Latest News
                         </h2>
-                        <p className="mt-4 text-neutral-500">
+                        <p className="mt-4 dark:text-neutral-500 text-gray-800">
                             There are many variations of passages of Lorem Ipsum
                             available, but the majority have suffered
                             alteration.

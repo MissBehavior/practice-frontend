@@ -39,7 +39,7 @@ const FunFacts: React.FC = () => {
             {Data.map((value, index) => (
                 <div className="w-full sm:w-1/2 lg:w-1/3 px-4 mb-8" key={index}>
                     <div className="text-center">
-                        <h5 className="text-5xl font-medium text-white after:content-['+']">
+                        <h5 className="text-5xl font-medium dark:text-white text-gray-700 after:content-['+']">
                             <VisibilitySensor
                                 onChange={onVisibilityChange}
                                 offset={{ top: 10 }}
@@ -51,7 +51,9 @@ const FunFacts: React.FC = () => {
                                 />
                             </VisibilitySensor>
                         </h5>
-                        <p className="mt-4 text-gray-400">{value.countTitle}</p>
+                        <p className="mt-4 dark:text-gray-400 text-gray-700">
+                            {value.countTitle}
+                        </p>
                     </div>
                 </div>
             ))}

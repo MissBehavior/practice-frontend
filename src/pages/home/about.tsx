@@ -7,7 +7,7 @@ const About = () => {
         'Winbas is the first and only official representative trading Danish manufacturer – Outline windows and doors in Lithuania. High-quality wooden or wood-clad aluminum windows from Denmark are an excellent investment for your home. With over 30 years of manufacturing experience, accumulated experience allows us to offer customers the most suitable architectural and design solutions that ensure the highest energy efficiency. Outline offers a wide range of designs. Windows opening to the outside or inside, a variety of colors, the possibility to match window and door accessories to your interior.'
 
     return (
-        <div className=" text-white py-16 relative">
+        <div className=" dark:text-white text-gray-800 py-16 relative">
             <div className="container mx-auto px-4">
                 <div className="flex flex-col lg:flex-row items-center lg:gap-10 gap-6">
                     {/* Image Section */}
@@ -25,7 +25,9 @@ const About = () => {
                     <div className="w-full lg:w-1/2">
                         <div>
                             <h2 className="text-3xl font-bold mb-4">{title}</h2>
-                            <p className="text-gray-400 mb-6">{description}</p>
+                            <p className="dark:text-gray-400 text-gray-800 mb-6">
+                                {description}
+                            </p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                             {/* First Info Box */}
@@ -33,7 +35,7 @@ const About = () => {
                                 <h3 className="text-xl font-semibold mb-2">
                                     Who we are
                                 </h3>
-                                <p className="text-gray-400">
+                                <p className="dark:text-gray-400 text-gray-800">
                                     We are a growing team of dedicated talents
                                     providing engineering assistance & solutions
                                     for business: we calculate project’s
@@ -49,7 +51,7 @@ const About = () => {
                                 <h3 className="text-xl font-semibold mb-2">
                                     Story
                                 </h3>
-                                <p className="text-gray-400">
+                                <p className="dark:text-gray-400 text-gray-800">
                                     Founded in 2002 by the Scandinavian window
                                     and door market leader, we continuously
                                     improve our processes and expand areas of

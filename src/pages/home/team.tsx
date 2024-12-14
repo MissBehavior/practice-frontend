@@ -60,12 +60,12 @@ const Team: React.FC = () => {
                         <TabPanel key={person.id}>
                             <div className="text-center">
                                 <div className="max-w-5xl mx-auto">
-                                    <p className="text-2xl text-white font-bold">
+                                    <p className="text-2xl dark:text-white text-gray-800 font-bold">
                                         {person.text}
                                     </p>
                                 </div>
                                 <div className="mt-6">
-                                    <h6 className="text-xl font-sans text-white uppercase">
+                                    <h6 className="text-xl font-sans dark:text-white text-gray-800 uppercase">
                                         <span>{person.name} </span>-{' '}
                                         <span className="text-gray-400">
                                             {person.role}
