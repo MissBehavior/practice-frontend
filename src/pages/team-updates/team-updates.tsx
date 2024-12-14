@@ -269,7 +269,7 @@ export default function TeamUpdates() {
                                             onClick={() =>
                                                 likeUnlikeHandle(post._id)
                                             }
-                                            className="flex items-center text-gray-600"
+                                            className="flex items-center text-gray-600 cursor-pointer hover:text-red-600"
                                         >
                                             {post.likes.some(
                                                 (like) => like._id === user.id
