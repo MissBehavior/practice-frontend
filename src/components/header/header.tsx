@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import companyLogo from '/logo.png'
 import { useTranslation } from 'react-i18next'
 import i18n from '@/i18n/config'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/services/auth-service'
 import { MenuItem } from './menu-item'
 import {
@@ -21,13 +21,16 @@ import {
     NavigationMenuList,
     NavigationMenuTrigger,
 } from '../ui/navigation-menu'
+import { RxDashboard } from 'react-icons/rx'
+import { MdOutlinePeopleAlt } from 'react-icons/md'
 export default function Header() {
     const { isLoggedIn, logoutFunc } = useAuth()
     const { user } = useAuth()
     const { t } = useTranslation()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [open, setOpen] = useState(false)
-
+    const [adminMenuOpen, setAdminMenuOpen] = useState(false)
+    const location = useLocation()
     const closeMenu = () => setOpen(false)
 
     const handleClick = () => {
@@ -58,6 +61,10 @@ export default function Header() {
             document.removeEventListener('keydown', handleKeyDown)
         }
     }, [])
+    useEffect(() => {
+        // Close the dropdown whenever the route changes
+        setAdminMenuOpen(false)
+    }, [location])
     return (
         <header className="shadow-md bg-white dark:bg-[#191919] font-sans tracking-wide relative z-50">
             <section className="flex items-center lg:justify-center flex-wrap gap-5 relative py-3 px-4 border-gray-200 border-b dark:border-gray-700 lg:min-h-[80px] max-lg:min-h-[60px]">
@@ -263,26 +270,74 @@ export default function Header() {
                             />
                         )}
                         {user.isAdmin && (
+                            <div
+                                className="relative max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3"
+                                onMouseEnter={() => setAdminMenuOpen(true)}
+                                onMouseLeave={() => setAdminMenuOpen(false)}
+                            >
+                                <DropdownMenu
+                                    open={adminMenuOpen}
+                                    onOpenChange={setAdminMenuOpen}
+                                >
+                                    <DropdownMenuTrigger asChild>
+                                        <button
+                                            className={
+                                                'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block w-full text-left flex items-center justify-between'
+                                            }
+                                        >
+                                            <span>{t('admin')}</span>
+                                            <FaChevronDown className="ml-2 text-sm" />
+                                        </button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent
+                                        align="start"
+                                        className="flex flex-col gap-2 bg-white dark:bg-gray-800 p-2 rounded shadow-lg"
+                                    >
+                                        <NavLink
+                                            to="/dashboard"
+                                            onClick={handleClick}
+                                            className={({ isActive }) =>
+                                                isActive
+                                                    ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
+                                                    : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
+                                            }
+                                        >
+                                            {t('Dashboard')}
+                                        </NavLink>
+                                        <NavLink
+                                            to="/users"
+                                            onClick={handleClick}
+                                            className={({ isActive }) =>
+                                                isActive
+                                                    ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
+                                                    : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
+                                            }
+                                        >
+                                            {t('Users')}
+                                        </NavLink>
+                                        <NavLink
+                                            to="/kanban"
+                                            onClick={handleClick}
+                                            className={({ isActive }) =>
+                                                isActive
+                                                    ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
+                                                    : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
+                                            }
+                                        >
+                                            {t('Kanban')}
+                                        </NavLink>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </div>
+                        )}
+
+                        {/*user.isAdmin && (
                             <MenuItem
                                 handleClick={handleClick}
                                 text="admin"
                                 link="dashboard"
                             />
-                            // <NavigationMenu>
-                            //     <NavigationMenuList>
-                            //         <NavigationMenuItem>
-                            //             <NavigationMenuTrigger>
-                            //                 Item One
-                            //             </NavigationMenuTrigger>
-                            //             <NavigationMenuContent>
-                            //                 <ul className="absolute z-10 top-0 grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                            //                     Beep
-                            //                 </ul>
-                            //             </NavigationMenuContent>
-                            //         </NavigationMenuItem>
-                            //     </NavigationMenuList>
-                            // </NavigationMenu>
-                        )}
+                        )*/}
                     </ul>
                 </div>
 
