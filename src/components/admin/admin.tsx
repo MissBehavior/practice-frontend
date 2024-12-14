@@ -29,7 +29,7 @@ function Admin() {
         //         {/* page main content ends */}
         //     </SidebarInset>
         // </SidebarProvider>
-        <div className="relative h-full overflow-hidden bg-background">
+        <div className="relative h-full overflow-hidden dark:bg-[#101010] bg-slate-300">
             {/* <AdminSidenav /> */}
             <Header />
             {/* <Sidebar

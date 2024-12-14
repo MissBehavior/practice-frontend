@@ -46,7 +46,7 @@ const KanbanPieChart: React.FC = () => {
         return null
     }
     return (
-        <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke dark:bg-slate-700 bg-slate-200 px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark xl:col-span-5">
+        <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke dark:bg-[#191919] bg-slate-200 px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark xl:col-span-5">
             <div className="mb-3 justify-between gap-4 sm:flex">
                 <div>
                     <h5 className="text-xl font-semibold text-black dark:text-white">

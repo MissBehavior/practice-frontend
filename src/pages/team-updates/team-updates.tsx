@@ -259,7 +259,8 @@ export default function TeamUpdates() {
                                                 )}
                                             </span>
                                         </div>
-                                        <div className="flex align-middle items-center">
+                                        <div className="flex align-middle items-center gap-2">
+                                            <span>{t('by')}</span>
                                             <Avatar>
                                                 <AvatarImage
                                                     src={
@@ -273,10 +274,7 @@ export default function TeamUpdates() {
                                                     <FaUser className="m-2" />
                                                 </AvatarFallback>
                                             </Avatar>
-
-                                            <span>
-                                                {t('by')} {post.userId.name}
-                                            </span>
+                                            <span>{post.userId.name}</span>
                                         </div>
                                     </div>
                                     <div className="flex justify-between items-center  border-gray-200 pt-2">
