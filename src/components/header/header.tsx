@@ -269,6 +269,14 @@ export default function Header() {
                                 link="team-updates"
                             />
                         )}
+                        {user.isEmployee && (
+                            <MenuItem
+                                handleClick={handleClick}
+                                text="kanban"
+                                link="kanban"
+                            />
+                        )}
+
                         {user.isAdmin && (
                             <div
                                 className="relative max-lg:border-b max-lg:border-gray-300 dark:max-lg:border-gray-600 max-lg:py-3"
@@ -291,7 +299,7 @@ export default function Header() {
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent
                                         align="start"
-                                        className="flex flex-col gap-2 bg-white dark:bg-gray-800 p-2 rounded shadow-lg"
+                                        className="flex flex-col gap-2 bg-white dark:bg-gray-800 p-2 rounded shadow-lg -mt-1"
                                     >
                                         <NavLink
                                             to="/dashboard"
@@ -314,17 +322,6 @@ export default function Header() {
                                             }
                                         >
                                             {t('Users')}
-                                        </NavLink>
-                                        <NavLink
-                                            to="/kanban"
-                                            onClick={handleClick}
-                                            className={({ isActive }) =>
-                                                isActive
-                                                    ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
-                                                    : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
-                                            }
-                                        >
-                                            {t('Kanban')}
                                         </NavLink>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
