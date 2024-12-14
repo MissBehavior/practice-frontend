@@ -25,7 +25,7 @@ const MAX_DISPLAY_CATEGORIES = 4
 const PostGrid: React.FC<PostGridProps> = React.memo(
     ({ data, totalPages, currentPage, onNextPage, onPrevPage, t }) => {
         return (
-            <div className="py-28 bg-[#191919]">
+            <div className="py-28  dark:bg-[#191919] bg-slate-400">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {data.map((post, i) => (
@@ -132,7 +132,7 @@ const PostGrid: React.FC<PostGridProps> = React.memo(
                     </div>
                 </div>
                 {totalPages > 1 && (
-                    <div className="flex items-center space-x-4 justify-center bg-[#191919] mt-5">
+                    <div className="flex items-center space-x-4 justify-center dark:bg-[#191919] bg-slate-400 mt-5">
                         <Button
                             disabled={currentPage === 1}
                             onClick={onPrevPage}

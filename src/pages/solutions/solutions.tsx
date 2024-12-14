@@ -55,14 +55,14 @@ export default function Solutions() {
     }, [])
     if (loading) {
         return (
-            <div className="bg-[#101010] min-h-screen">
+            <div className="dark:bg-[#101010] bg-slate-300 min-h-screen">
                 <Breadcrumb title={'Solutions'} parent={'Solutions'} />
 
                 <section className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {Array.from({ length: 6 }).map((_, index) => (
                         <div
                             key={index}
-                            className="flex flex-col overflow-hidden rounded-lg shadow bg-gray-800 p-4"
+                            className="flex flex-col overflow-hidden rounded-lg shadow dark:bg-gray-800 bg-slate-400 p-4"
                         >
                             <Skeleton className="h-48 w-full mb-4 rounded" />
                             <Skeleton className="h-6 w-3/4 mb-2 rounded" />
@@ -81,7 +81,7 @@ export default function Solutions() {
     return (
         <>
             <Breadcrumb title={'Solutions'} parent={'Solutions'} />
-            <div className="pb-12 bg-[#191919]">
+            <div className="pb-12 dark:bg-[#191919] bg-slate-300">
                 <div className="max-w-7xl mx-auto px-4">
                     {user.isAdmin && (
                         <SolutionsAddNewSolution fetchData={fetchData} />

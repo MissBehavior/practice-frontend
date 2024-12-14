@@ -120,7 +120,7 @@ export default function PostExternal() {
     }, [currentPage, selectedCategory])
     if (loading) {
         return (
-            <div className="bg-[#101010] min-h-screen">
+            <div className="dark:bg-[#101010] bg-slate-300 min-h-screen">
                 <Breadcrumb title={t('News')} parent={t('News')} />
                 {user.isAdmin && (
                     <div className="flex justify-end p-4">
@@ -134,7 +134,7 @@ export default function PostExternal() {
                     {Array.from({ length: 6 }).map((_, index) => (
                         <div
                             key={index}
-                            className="flex flex-col overflow-hidden rounded-lg shadow bg-gray-800 p-4"
+                            className="flex flex-col overflow-hidden rounded-lg shadow dark:bg-gray-800 bg-slate-400 p-4"
                         >
                             <Skeleton className="h-48 w-full mb-4 rounded" />
                             <Skeleton className="h-6 w-3/4 mb-2 rounded" />
@@ -185,71 +185,17 @@ export default function PostExternal() {
     }
 
     return (
-        <div className="bg-[#101010]">
+        <div className="dark:bg-[#101010] bg-slate-300">
             <Breadcrumb title={'News'} parent={'News'} />
-
             <LatestPost latestPost={latestPost} />
-            {/* <div className="py-28 bg-[#191919]">
-                <div className="max-w-7xl mx-auto px-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {data.map((post, i) => (
-                            <div
-                                key={i}
-                                className="flex flex-col overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow bg-white"
-                            >
-                                <Link to="/blog-details">
-                                    <img
-                                        className="w-full h-64 object-cover"
-                                        src={post.postPicture}
-                                        alt={post.title}
-                                    />
-                                </Link>
-                                <div className="p-6 flex flex-col justify-between flex-grow">
-                                    <p className="text-sm font-medium text-gray-500 mb-2">
-                                        CATEGORY
-                                    </p>
-                                    <h4 className="text-lg font-semibold text-gray-800 mb-4">
-                                        <Link
-                                            to="/blog-details"
-                                            className="hover:text-gray-600"
-                                        >
-                                            {post.title}
-                                        </Link>
-                                    </h4>
-                                    <div>
-                                        <Link
-                                            to="/blog-details"
-                                            className="inline-block px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded hover:bg-gray-700 transition-colors"
-                                        >
-                                            Read More
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-            {totalPages > 1 && (
-                <div className="flex items-center space-x-4 justify-center bg-[#191919]">
-                    <Button
-                        disabled={currentPage === 1}
-                        onClick={handlePrevPage}
-                    >
-                        {t('previous')}
-                    </Button>
-                    <Button
-                        disabled={currentPage === totalPages}
-                        onClick={handleNextPage}
-                    >
-                        {t('next')}
-                    </Button>
-                </div>
-            )} */}
-            {renderCategoryButtons()}
             {user.isAdmin && (
-                <CreatePostNew onPostCreated={() => fetchData(currentPage)} />
+                <div className="flex flex-col items-center w-full align-middle my-2">
+                    <CreatePostNew
+                        onPostCreated={() => fetchData(currentPage)}
+                    />
+                </div>
             )}
+            {renderCategoryButtons()}
             <PostGrid
                 data={data}
                 totalPages={totalPages}

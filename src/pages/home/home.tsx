@@ -73,7 +73,7 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="pt-32 pb-32 dark:bg-[#191919] bg-slate-500">
+            <div className="pt-32 pb-32 dark:bg-[#101010] bg-slate-500">
                 <div className="container mx-auto">
                     <div className="flex justify-center mb-8">
                         <div className="w-full text-center">
@@ -85,13 +85,13 @@ export default function Home() {
                     <FunFacts />
                 </div>
             </div>
-            <div className="pt-28 pb-28 dark:bg-[#101010] bg-slate-300">
+            <div className="pt-28 pb-28 dark:bg-[#191919] bg-slate-300">
                 <div className="container mx-auto">
                     <Team />
                 </div>
             </div>
 
-            <div className="pb-28 dark:bg-[#191919] bg-slate-500">
+            <div className="pb-28 dark:bg-[#101010] bg-slate-500">
                 <div className="mb-14">
                     <NewsHome />
                 </div>

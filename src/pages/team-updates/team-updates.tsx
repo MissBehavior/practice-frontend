@@ -172,7 +172,7 @@ export default function TeamUpdates() {
                     {Array.from({ length: 6 }).map((_, index) => (
                         <div
                             key={index}
-                            className="flex flex-col overflow-hidden rounded-lg shadow bg-gray-800 p-4"
+                            className="flex flex-col overflow-hidden rounded-lg shadow dark:bg-gray-800 bg-slate-200 p-4"
                         >
                             <Skeleton className="h-48 w-full mb-4 rounded" />
                             <Skeleton className="h-6 w-3/4 mb-2 rounded" />

@@ -48,10 +48,12 @@ export default function Solutions() {
             <div className="flex flex-wrap justify-between items-end">
                 <div className="w-full lg:w-1/2">
                     <div className="mb-8">
-                        <h2 className="text-3xl font-semibold text-white">
+                        <h2 className="text-3xl font-semibold dark:text-white text-black">
                             {title}
                         </h2>
-                        <p className="text-slate-50 mt-4">{description}</p>
+                        <p className="dark:text-slate-50 text-gray-700 mt-4">
+                            {description}
+                        </p>
                     </div>
                 </div>
                 <div className="mt-4 lg:mt-0">

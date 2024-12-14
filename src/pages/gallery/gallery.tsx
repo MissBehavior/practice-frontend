@@ -36,32 +36,31 @@ export default function Gallery() {
     }, [])
     if (loading) {
         return (
-            <section className="flex flex-row flex-wrap mx-auto justify-center ">
-                {Array.from({ length: 5 }).map((_, index) => (
-                    <div
-                        key={index}
-                        className="flex w-full px-4 py-6 md:w-1/2 lg:w-1/3 justify-center"
-                    >
-                        <div className="space-y-3">
-                            <Skeleton className="h-36 w-full" />
-                            <Skeleton className="h-8 w-1/2 flex flex-wrap items-center flex-1 px-4 py-1 text-center mx-auto" />
-                            <Skeleton className="h-32 w-[450px]" />
-                            <Skeleton className="h-16 w-[350px] mb-20" />
+            <div className="dark:bg-[#101010] bg-slate-300 min-h-screen">
+                <Breadcrumb title={'Gallery'} parent={'Gallery'} />
+
+                <section className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {Array.from({ length: 6 }).map((_, index) => (
+                        <div
+                            key={index}
+                            className="flex flex-col overflow-hidden rounded-lg shadow dark:bg-gray-800 bg-slate-400 p-4"
+                        >
+                            <Skeleton className="h-48 w-full mb-4 rounded" />
                         </div>
-                    </div>
-                ))}
-            </section>
+                    ))}
+                </section>
+            </div>
         )
     }
 
     return (
-        <div className="h-svh bg-[#101010]">
+        <div className="h-svh dark:bg-[#101010] bg-slate-400">
             <Breadcrumb title={'Gallery'} parent={'Gallery'} />
             <section id="portfolio" className="text-center py-12 ">
                 <div className="container mx-auto px-4">
                     {/* Section Header */}
                     <div className="mb-12">
-                        <p className="mt-4 text-white max-w-md mx-auto">
+                        <p className="mt-4 dark:text-white text-black max-w-md mx-auto">
                             Explore our collection of stunning images showcasing
                             our work and creativity.
                         </p>

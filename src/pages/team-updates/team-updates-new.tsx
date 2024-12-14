@@ -122,7 +122,7 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
         })
 
     return (
-        <div className=" min-h-32 bg-[#101010] flex justify-center items-center select-none">
+        <div className=" min-h-32 dark:bg-[#101010] bg-slate-300 flex justify-center items-center select-none">
             <div className="">
                 <Dialog
                     open={open}
