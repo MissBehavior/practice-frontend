@@ -34,17 +34,18 @@ export default function TeamUpdates() {
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [totalPages, setTotalPages] = useState<number>(1)
     const { t } = useTranslation()
+    const [searchQuery, setSearchQuery] = useState<string>('') // state for search
 
     const [comment, setComment] = useState('')
 
     const handleNextPage = () => {
         setCurrentPage((prevPage) => prevPage + 1)
     }
-    const formatDate = (date: string) => {
-        return format(new Date(date), 'dd-MM-yyyy')
-    }
     const handlePrevPage = () => {
         setCurrentPage((prevPage) => prevPage - 1)
+    }
+    const formatDate = (date: string) => {
+        return format(new Date(date), 'dd-MM-yyyy')
     }
     const handlePostComment = async (postId: string) => {
         try {
@@ -105,19 +106,20 @@ export default function TeamUpdates() {
             console.error('Error deleting :', error)
         }
     }
-    const fetchData = async (page: number) => {
+    const fetchData = async (page: number, query?: string) => {
         setLoading(true)
         try {
+            const params: any = { page, limit: 10 }
+            if (query && query.trim() !== '') {
+                params.query = query
+            }
             const response = await api.get<PaginatedResponse>(
                 'http://localhost:3000/postinternal',
                 {
                     headers: {
                         Authorization: `Bearer ${userToken!.accessToken}`,
                     },
-                    params: {
-                        page,
-                        limit: 10,
-                    },
+                    params,
                 }
             )
             console.log('response:', response)
@@ -145,14 +147,24 @@ export default function TeamUpdates() {
     }
     useEffect(() => {
         // setTimeout(() => {
-        fetchData(currentPage)
+        fetchData(currentPage, searchQuery)
         // }, 10000)
         // fetchData(currentPage)
     }, [currentPage])
+    const handleSearch = (q: string) => {
+        setSearchQuery(q)
+        fetchData(1, q)
+    }
     if (loading) {
         return (
             <div className="bg-[#101010] min-h-screen">
-                <Breadcrumb title={'Team Updates'} parent={'Team Updates'} />
+                <Breadcrumb
+                    title={'Team Updates'}
+                    parent={'Team Updates'}
+                    search
+                    onSearch={handleSearch}
+                    currentQuery={searchQuery}
+                />
 
                 <section className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {Array.from({ length: 6 }).map((_, index) => (
@@ -177,7 +189,13 @@ export default function TeamUpdates() {
 
     return (
         <>
-            <Breadcrumb title={'Team Updates'} parent={'Team Updates'} search />
+            <Breadcrumb
+                title={'Team Updates'}
+                parent={'Team Updates'}
+                search
+                onSearch={handleSearch}
+                currentQuery={searchQuery}
+            />
             {user.isEmployee && (
                 <TeamUpdateNew
                     fetchData={fetchData}

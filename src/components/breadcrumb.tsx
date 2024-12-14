@@ -10,22 +10,36 @@ interface BreadcrumbProps {
     title: string
     parent: string
     search?: boolean
+    onSearch?: (query: string) => void
+    currentQuery?: string
 }
 
-const Breadcrumb: FC<BreadcrumbProps> = ({ title, parent, search = false }) => {
-    const [searchQuery, setSearchQuery] = React.useState('')
+const Breadcrumb: FC<BreadcrumbProps> = ({
+    title,
+    parent,
+    search = false,
+    onSearch,
+    currentQuery,
+}) => {
+    const [searchQuery, setSearchQuery] = React.useState(currentQuery || '')
 
-    const handleSearch = (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         // Handle the search logic here
         console.log('Search Query:', searchQuery)
-        // You can add your search handling logic here
+        if (onSearch) {
+            console.log('Search Query ONSEARCH TRUE:', searchQuery)
+            onSearch(searchQuery)
+        }
     }
 
     const handleClear = () => {
         setSearchQuery('')
+        if (onSearch) onSearch('')
     }
-
+    React.useEffect(() => {
+        setSearchQuery(currentQuery || '')
+    }, [currentQuery])
     if (search) {
         return (
             <div
@@ -44,7 +58,7 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ title, parent, search = false }) => {
 
                         {/* Search Form */}
                         <form
-                            onSubmit={handleSearch}
+                            onSubmit={handleSubmit}
                             className="relative w-1/2 md:w-1/4 mx-auto mt-6"
                         >
                             {/* Search Icon as a button */}

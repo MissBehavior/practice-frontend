@@ -16,7 +16,6 @@ const KanbanPieChart: React.FC = () => {
             .then((response) => {
                 console.log('Task stats-----------')
                 console.log('Task stats:', response.data)
-                // response.data should be an array of { stage: string; count: number }
                 setData(response.data)
             })
             .catch((error) => {
@@ -26,10 +25,26 @@ const KanbanPieChart: React.FC = () => {
     useEffect(() => {
         getStatisticsKanban()
     }, [])
-
-    // Compute total tasks for percentage calculations
     const totalTasks = data.reduce((acc, curr) => acc + curr.count, 0)
-
+    const CustomTooltip = ({ active, payload }: any) => {
+        if (active && payload && payload.length) {
+            const { value } = payload[0]
+            return (
+                <div
+                    className="custom-tooltip bg-white dark:bg-gray-800 p-2 rounded shadow"
+                    style={{ border: '1px solid #ddd' }}
+                >
+                    <p className="label text-black dark:text-white">
+                        <strong>Stage:</strong> {payload[0].payload.stage}
+                    </p>
+                    <p className="intro text-black dark:text-white">
+                        <strong>Count:</strong> {value}
+                    </p>
+                </div>
+            )
+        }
+        return null
+    }
     return (
         <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke dark:bg-slate-700 bg-slate-200 px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark xl:col-span-5">
             <div className="mb-3 justify-between gap-4 sm:flex">
@@ -81,10 +96,10 @@ const KanbanPieChart: React.FC = () => {
                     <PieChart width={400} height={400}>
                         <Pie
                             data={data}
-                            cx={120}
+                            cx={200}
                             cy={200}
                             innerRadius={60}
-                            outerRadius={100}
+                            outerRadius={120}
                             fill="#8884d8"
                             paddingAngle={2}
                             dataKey="count"
@@ -96,6 +111,7 @@ const KanbanPieChart: React.FC = () => {
                                 />
                             ))}
                         </Pie>
+                        <Tooltip content={<CustomTooltip />} />
                     </PieChart>
                 </div>
             </div>

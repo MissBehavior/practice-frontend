@@ -13,6 +13,14 @@ import {
 import { FaChevronDown } from 'react-icons/fa'
 import { ModeToggle } from '../mode-toggle'
 import { Button } from '../ui/button'
+import {
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+} from '../ui/navigation-menu'
 export default function Header() {
     const { isLoggedIn, logoutFunc } = useAuth()
     const { user } = useAuth()
@@ -260,6 +268,20 @@ export default function Header() {
                                 text="admin"
                                 link="dashboard"
                             />
+                            // <NavigationMenu>
+                            //     <NavigationMenuList>
+                            //         <NavigationMenuItem>
+                            //             <NavigationMenuTrigger>
+                            //                 Item One
+                            //             </NavigationMenuTrigger>
+                            //             <NavigationMenuContent>
+                            //                 <ul className="absolute z-10 top-0 grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                            //                     Beep
+                            //                 </ul>
+                            //             </NavigationMenuContent>
+                            //         </NavigationMenuItem>
+                            //     </NavigationMenuList>
+                            // </NavigationMenu>
                         )}
                     </ul>
                 </div>
