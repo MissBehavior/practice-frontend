@@ -78,6 +78,7 @@ export interface galleryImages {
 export interface PostData {
     _id: string
     title: string
+    titleLT: string
     content: string
     contentLT: string
     userId: UserObjectPopulated

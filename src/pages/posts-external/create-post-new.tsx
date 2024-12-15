@@ -15,6 +15,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { useAuth } from '@/services/auth-service'
 import { Category } from '@/types'
+import { t } from 'i18next'
 
 interface CreatePostNewProps {
     onPostCreated?: () => void
@@ -26,6 +27,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
     const [loading, setLoading] = useState(false)
 
     const [title, setTitle] = useState('')
+    const [titleLT, setTitleLT] = useState('')
     const [content, setContent] = useState('')
     const [contentLT, setContentLT] = useState('')
     const [image, setImage] = useState<File | null>(null)
@@ -34,6 +36,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
     // Error states for validation
     const [errors, setErrors] = useState<{
         title?: string
+        titleLT?: string
         content?: string
         contentLT?: string
         image?: string
@@ -103,6 +106,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
     const validateFields = () => {
         const newErrors: {
             title?: string
+            titleLT?: string
             content?: string
             contentLT?: string
             image?: string
@@ -110,6 +114,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
         } = {}
 
         if (!title.trim()) newErrors.title = 'Title is required'
+        if (!titleLT.trim()) newErrors.titleLT = 'TitleLT is required'
         if (!content.trim()) newErrors.content = 'Content is required'
         if (!contentLT.trim()) newErrors.contentLT = 'ContentLT is required'
         if (!image) newErrors.image = 'Image is required'
@@ -136,6 +141,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
             setLoading(true)
             const formData = new FormData()
             formData.append('title', title)
+            formData.append('titleLT', titleLT)
             formData.append('content', content)
             formData.append('contentLT', contentLT)
             formData.append('userId', user.id)
@@ -170,6 +176,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
     const resetDialogState = () => {
         setOpen(false)
         setTitle('')
+        setTitleLT('')
         setContent('')
         setContentLT('')
         setImage(null)
@@ -206,6 +213,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
                     resetDialogState()
                 } else {
                     setTitle('')
+                    setTitleLT('')
                     setContent('')
                     setContentLT('')
                     setSelectedCategories([])
@@ -215,7 +223,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
             }}
         >
             <DialogTrigger asChild>
-                <Button variant="default">Create New Post</Button>
+                <Button variant="default">{t('createNewPost')}</Button>
             </DialogTrigger>
             <DialogContent className="max-w-lg">
                 <form onSubmit={onSubmit} className="space-y-4">
@@ -231,6 +239,20 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
                         {errors.title && (
                             <p className="text-red-500 text-sm">
                                 {errors.title}
+                            </p>
+                        )}
+                    </div>
+                    <div>
+                        <Label htmlFor="titleLT">TitleLT</Label>
+                        <Input
+                            id="titleLT"
+                            type="text"
+                            value={titleLT}
+                            onChange={(e) => setTitleLT(e.target.value)}
+                        />
+                        {errors.titleLT && (
+                            <p className="text-red-500 text-sm">
+                                {errors.titleLT}
                             </p>
                         )}
                     </div>
@@ -311,7 +333,6 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
                             </div>
                         )}
 
-                        {/* INSERT IT HERE ? SOMEHOW */}
                         <div className="relative">
                             <Input
                                 ref={inputRef}

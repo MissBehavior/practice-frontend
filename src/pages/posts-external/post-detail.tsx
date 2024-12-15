@@ -26,8 +26,6 @@ const PostDetail: React.FC = () => {
     const navigate = useNavigate()
     const { t } = useTranslation()
     useEffect(() => {
-        console.log('USEEFFECT')
-        console.log(id)
         if (!id) {
             setError(t('post_not_found'))
             setLoading(false)
@@ -160,7 +158,9 @@ const PostDetail: React.FC = () => {
                                 )}
                             </div>
                             <h1 className="text-3xl font-bold text-gray-800 mb-4">
-                                {post.title}
+                                {i18n.language === 'en'
+                                    ? post.title
+                                    : post.titleLT}
                             </h1>
                             <div className="flex items-center text-gray-600 text-sm mb-4">
                                 <FaCalendarAlt className="mr-2" />

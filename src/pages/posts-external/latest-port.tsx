@@ -5,12 +5,14 @@ import { getRandomColorFromString } from '../../lib/utils'
 import Tag from './tag'
 import { Link } from 'react-router-dom'
 import i18n from '@/i18n/config'
+import { useTranslation } from 'react-i18next'
 
 interface LatestPostProps {
     latestPost: PostData | null
 }
 
 export default function LatestPost({ latestPost }: LatestPostProps) {
+    const { t } = useTranslation()
     if (!latestPost) return <div>Loading...</div>
 
     return (
@@ -24,7 +26,9 @@ export default function LatestPost({ latestPost }: LatestPostProps) {
                             ))}
                     </div>
                     <p className="mt-2 text-xl font-black md:mt-6 md:text-4xl">
-                        {latestPost.title}
+                        {i18n.language === 'en'
+                            ? latestPost.title
+                            : latestPost.titleLT}
                     </p>
                     <p className="mt-3 text-gray-600">
                         {i18n.language === 'en'
@@ -38,7 +42,7 @@ export default function LatestPost({ latestPost }: LatestPostProps) {
                         to={`/post-external/${latestPost._id}`}
                         className="mt-4 mr-2 flex items-center justify-center rounded-md bg-sky-400 px-8 py-2 text-center text-white duration-150 md:mb-4 hover:translate-y-1 hover:bg-sky-500"
                     >
-                        Read More
+                        {t('read_more')}
                     </Link>
                 </div>
                 <div className="mx-auto hidden items-center px-5 md:flex md:p-8">

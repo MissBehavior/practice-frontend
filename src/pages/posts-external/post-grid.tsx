@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/tooltip'
 import { FaCalendarAlt, FaUser } from 'react-icons/fa' // Import the calendar and user icons
 import Tag from './tag'
+import i18n from '@/i18n/config'
 
 interface PostGridProps {
     data: PostData[]
@@ -95,7 +96,9 @@ const PostGrid: React.FC<PostGridProps> = React.memo(
                                             to={`/post-external/${post._id}`}
                                             className="hover:text-gray-600"
                                         >
-                                            {post.title}
+                                            {i18n.language === 'en'
+                                                ? post.title
+                                                : post.titleLT}
                                         </Link>
                                     </h4>
                                     {/* Added Date Section */}
@@ -123,7 +126,7 @@ const PostGrid: React.FC<PostGridProps> = React.memo(
                                             to={`/post-external/${post._id}`}
                                             className="inline-block px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded hover:bg-gray-700 transition-colors"
                                         >
-                                            Read More
+                                            {t('readMore')}
                                         </Link>
                                     </div>
                                 </div>

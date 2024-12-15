@@ -121,7 +121,7 @@ export default function PostExternal() {
     if (loading) {
         return (
             <div className="dark:bg-[#101010] bg-slate-300 min-h-screen">
-                <Breadcrumb title={t('News')} parent={t('News')} />
+                <Breadcrumb title={t('news')} parent={t('news')} />
                 {user.isAdmin && (
                     <div className="flex justify-end p-4">
                         <Skeleton className="h-10 w-40 rounded" />
@@ -162,7 +162,7 @@ export default function PostExternal() {
                         }
                     }}
                 >
-                    All Posts
+                    {t('allposts')}
                 </Button>
                 {categories.map((cat) => (
                     <Button
@@ -186,7 +186,7 @@ export default function PostExternal() {
 
     return (
         <div className="dark:bg-[#101010] bg-slate-300">
-            <Breadcrumb title={'News'} parent={'News'} />
+            <Breadcrumb title={t('news')} parent={t('news')} />
             <LatestPost latestPost={latestPost} />
             {user.isAdmin && (
                 <div className="flex flex-col items-center w-full align-middle my-2">
