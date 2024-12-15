@@ -26,19 +26,27 @@ import {
 import { DueDateHeader } from './duedate/duedate-header'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
+import { DescriptionHeader } from './description/description-header'
+import { DescriptionForm } from './description/description-form'
 
-export const TasksEditPage = () => {
+export const TasksEditPage: React.FC = () => {
     const { taskId } = useParams<{ taskId: string }>()
     const socket = useContext(SocketContext)
     const navigate = useNavigate()
+
     if (!taskId) {
         return <div>Task ID is missing</div>
     }
+
     const [task, setTask] = useState<Task | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [isDialogOpen, setIsDialogOpen] = useState(true)
+
     const [activeAccordion, setActiveAccordion] = useState<string | undefined>(
         undefined
     )
+    const [isEditingDescription, setIsEditingDescription] =
+        useState<boolean>(false)
 
     useEffect(() => {
         const fetchTask = async () => {
@@ -55,6 +63,7 @@ export const TasksEditPage = () => {
             }
         }
         fetchTask()
+
         const handleTaskUpdated = (updatedTask: Task) => {
             if (updatedTask._id === taskId) {
                 setTask(updatedTask)
@@ -75,6 +84,8 @@ export const TasksEditPage = () => {
 
     const closeModal = () => {
         setActiveAccordion(undefined)
+        setIsEditingDescription(false)
+        setIsDialogOpen(false)
         navigate('/kanban')
     }
 
@@ -82,6 +93,19 @@ export const TasksEditPage = () => {
         socket.emit('deleteTask', { id: taskId })
         closeModal()
     }
+
+    const handleCancelDescription = () => {
+        setIsEditingDescription(false)
+    }
+
+    const handleAddDescription = () => {
+        setIsEditingDescription(true)
+    }
+
+    const handleEditDescription = () => {
+        setIsEditingDescription(true)
+    }
+
     if (isLoading) {
         return <div>Loading...</div>
     }
@@ -89,21 +113,38 @@ export const TasksEditPage = () => {
     if (!task) {
         return <div>Task not found</div>
     }
+
     return (
         <Dialog open={true} onOpenChange={(open) => !open && closeModal()}>
             <DialogContent
-                className="kanban-update-modal"
-                style={{ width: '586px' }}
+                className="kanban-update-modal max-h-[80vh] overflow-y-auto max-md:max-w-full"
                 aria-describedby={undefined}
             >
                 <DialogHeader>
                     <DialogTitle>{task.title}</DialogTitle>
                 </DialogHeader>
-                <div className="p-4">
+                <div className="p-4 space-y-4">
                     <TitleForm
                         initialValues={{ title: task?.title || '' }}
                         taskId={taskId}
                     />
+                    <div className="p-4 border rounded-md">
+                        {isEditingDescription ? (
+                            <DescriptionForm
+                                initialValues={{
+                                    description: task.description,
+                                }}
+                                cancelForm={handleCancelDescription}
+                                taskId={task._id}
+                            />
+                        ) : (
+                            <DescriptionHeader
+                                description={task.description}
+                                onAdd={handleAddDescription}
+                                onEdit={handleEditDescription}
+                            />
+                        )}
+                    </div>
                     <StageForm task={task} taskId={taskId} />
                     <Accordion
                         type="single"
