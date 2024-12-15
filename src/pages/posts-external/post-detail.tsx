@@ -209,20 +209,7 @@ const PostDetail: React.FC = () => {
                                                 />
                                                 <div className="flex-auto px-6 py-5">
                                                     <span className="mb-2 flex items-center text-sm font-semibold">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            className="mr-2 h-4 w-4"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            stroke="currentColor"
-                                                            stroke-width="2"
-                                                        >
-                                                            <path
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round"
-                                                                d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"
-                                                            />
-                                                        </svg>
+                                                        <FaCalendarAlt className="mr-2" />
                                                         {format(
                                                             new Date(
                                                                 randomPost.createdAt
@@ -231,16 +218,17 @@ const PostDetail: React.FC = () => {
                                                         )}
                                                     </span>
                                                     <h3 className="mt-4 mb-3 text-xl font-semibold xl:text-2xl">
-                                                        {randomPost.title}
+                                                        {i18n.language === 'en'
+                                                            ? randomPost.title
+                                                            : randomPost.titleLT}
                                                     </h3>
                                                     <p className="mb-4 text-base font-light">
-                                                        {randomPost.content.substring(
-                                                            0,
-                                                            50
-                                                        )}
+                                                        {i18n.language === 'en'
+                                                            ? randomPost.content
+                                                            : randomPost.contentLT}
                                                         ...
                                                     </p>
-                                                    <span className="inline-block cursor-pointer select-none rounded-full border border-gray-800 bg-gray-800 px-2 py-1 text-center align-middle text-sm font-semibold leading-normal text-white no-underline shadow-sm">
+                                                    <span className="inline-block cursor-pointer select-none rounded-md border border-gray-800 bg-gray-800 px-2 py-1 text-center align-middle text-sm font-semibold leading-normal text-white no-underline shadow-sm">
                                                         {t('readMore')}
                                                     </span>
                                                 </div>
