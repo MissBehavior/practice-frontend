@@ -314,6 +314,22 @@ export default function TeamUpdates() {
                         ))}
                     </div>
                 </div>
+                {totalPages > 1 && (
+                    <div className="flex items-center space-x-4 justify-center dark:bg-[#101010] bg-slate-400 mt-5">
+                        <Button
+                            disabled={currentPage === 1}
+                            onClick={handlePrevPage}
+                        >
+                            {t('previous')}
+                        </Button>
+                        <Button
+                            disabled={currentPage === totalPages}
+                            onClick={handleNextPage}
+                        >
+                            {t('next')}
+                        </Button>
+                    </div>
+                )}
             </div>
         </>
     )
