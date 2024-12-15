@@ -8,6 +8,7 @@ import GalleryDelete from './gallery-delete'
 import { Link } from 'react-router-dom'
 import Breadcrumb from '@/components/breadcrumb'
 import { useTranslation } from 'react-i18next'
+import GalleryEditDialog from './gallery-edit'
 
 export default function Gallery() {
     const { user } = useAuth()
@@ -59,7 +60,6 @@ export default function Gallery() {
             <Breadcrumb title={'Gallery'} parent={'Gallery'} />
             <section id="portfolio" className="text-center py-12 ">
                 <div className="container mx-auto px-4">
-                    {/* Section Header */}
                     <div className="mb-12">
                         <p className="mt-4 dark:text-white text-black max-w-md mx-auto">
                             Explore our collection of stunning images showcasing
@@ -67,7 +67,6 @@ export default function Gallery() {
                         </p>
                     </div>
 
-                    {/* Gallery Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                         {data.map((item, index) => (
                             <div
@@ -80,16 +79,24 @@ export default function Gallery() {
                                             fetchData={fetchData}
                                             index={item._id}
                                         />
+                                        <GalleryEditDialog
+                                            gallery={{
+                                                _id: item._id,
+                                                title: item.title,
+                                                cardImgUrl: item.cardImgUrl,
+                                                galleryImages:
+                                                    item.galleryImages || [],
+                                            }}
+                                            fetchData={fetchData}
+                                        />
                                     </div>
                                 )}
-                                {/* Image */}
                                 <img
                                     src={item.cardImgUrl}
                                     alt={item.title}
                                     className="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500"
                                 />
 
-                                {/* Overlay */}
                                 <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                     <div className="text-center">
                                         <h3 className="text-white text-xl font-semibold mb-2">
@@ -113,57 +120,6 @@ export default function Gallery() {
                     </div>
                 </div>
             </section>
-            {/* <div
-                className={
-                    'flex flex-wrap justify-center gap-4 items-start bg-white dark:bg-background'
-                }
-            >
-                {data.map((item) => (
-                    <div
-                        key={item._id}
-                        className="mt-16 mb-12 min-h-64 bg-white dark:bg-background flex justify-center items-center flex-col cursor-pointer"
-                    >
-                        {user.isAdmin && (
-                            <div className="flex flex-row ml-auto mb-[-20px] z-10 gap-2">
-                                <GalleryDelete
-                                    fetchData={fetchData}
-                                    index={item._id}
-                                />
-                            </div>
-                        )}
-                        <Link to={`/gallery/` + item._id}>
-                            <div
-                                className={`p-6 bg-white dark:bg-slate-700 shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
-                            >
-                                <img
-                                    className="w-64 object-cover rounded-t-md hover:scale-110 rounded transition-all duration-300 ease-in-out"
-                                    src={item.cardImgUrl}
-                                    alt=""
-                                />
-                                <div className="mt-4">
-                                    <h1 className="text-2xl font-bold text-gray-700 dark:text-white">
-                                        {item.title}
-                                    </h1>
-                                    <p className="text-base mt-2 text-cyan-600"></p>
-                                </div>
-                            </div>
-                        </Link>
-                    </div>
-                ))}
-                {data?.length < 1 && (
-                    <div
-                        className={` mt-10 p-6 bg-white dark:bg-slate-700 rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
-                    >
-                        <div className="p-10">
-                            <h1 className="text-xl mt-2 text-gray-700 dark:text-white max-w-64">
-                                Coming soon !
-                            </h1>
-                        </div>
-                    </div>
-                )}
-
-                {user.isAdmin && <GalleryNewDialog fetchData={fetchData} />}
-            </div> */}
         </div>
     )
 }

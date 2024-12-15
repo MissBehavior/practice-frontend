@@ -16,6 +16,7 @@ import { toast } from '@/components/ui/use-toast'
 import parse from 'html-react-parser'
 import DotLoader from 'react-spinners/DotLoader'
 import { useTheme } from '@/components/theme-provider'
+import Breadcrumb from '@/components/breadcrumb'
 
 function SolutionsDetail() {
     const { user, userToken } = useAuth()
@@ -70,21 +71,24 @@ function SolutionsDetail() {
 
     if (loading) {
         return (
-            <section className="flex flex-col flex-wrap mx-auto justify-center align-middle items-start text-center mr-auto ml-auto">
-                {Array.from({ length: 1 }).map((_, index) => (
-                    <div
-                        key={index}
-                        className="flex w-full px-4 py-6 md:w-1/2 lg:w-1/3 justify-center"
-                    >
-                        <div className="space-y-3">
-                            <Skeleton className="h-36 w-full" />
-                            <Skeleton className="h-8 w-1/2 flex flex-wrap items-center flex-1 px-4 py-1 text-center mx-auto" />
-                            <Skeleton className="h-32 w-[450px]" />
-                            <Skeleton className="h-16 w-[350px] mb-20" />
+            <>
+                <Breadcrumb title={t('Solutions')} parent={t('Solutions')} />
+                <section className="flex flex-col flex-wrap mx-auto items-start text-center content-center h-screen">
+                    {Array.from({ length: 1 }).map((_, index) => (
+                        <div
+                            key={index}
+                            className="flex w-full px-4 py-6 md:w-1/2 lg:w-1/3 justify-center"
+                        >
+                            <div className="space-y-3">
+                                <Skeleton className="h-36 w-full" />
+                                <Skeleton className="h-8 w-1/2 flex flex-wrap items-center flex-1 px-4 py-1 text-center mx-auto" />
+                                <Skeleton className="h-32 w-[450px]" />
+                                <Skeleton className="h-16 w-[350px] mb-20" />
+                            </div>
                         </div>
-                    </div>
-                ))}
-            </section>
+                    ))}
+                </section>
+            </>
         )
     }
 
@@ -137,6 +141,7 @@ function SolutionsDetail() {
     }
     return (
         <>
+            <Breadcrumb title={t('Solutions')} parent={t('Solutions')} />
             <div className="mt-16 mb-12 min-h-64 bg-white dark:bg-background flex justify-center items-center flex-col">
                 {user.isAdmin && (
                     <div className="flex flex-row mb-[-20px] z-10 gap-2">

@@ -45,14 +45,6 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
         },
         [galleryImages]
     )
-    const handleMainImgChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        if (event.target.files && event.target.files.length > 0) {
-            setCardImgUrl(event.target.files[0])
-        }
-    }
-
     const handleSubmit = async (e: React.FormEvent) => {
         console.log('SUBMIT CALLED AYY')
         e.preventDefault()

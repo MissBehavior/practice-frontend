@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import {
     Dialog,
@@ -11,10 +12,10 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuth, useAxios } from '@/services/auth-service'
-import React, { useEffect } from 'react'
 import { MdEdit } from 'react-icons/md'
 import { useTranslation } from 'react-i18next'
 import { toast } from '@/components/ui/use-toast'
+
 interface SolutionsEditDialogProps {
     fetchData: () => void
     _id: string
@@ -34,20 +35,25 @@ function SolutionsEditDialog({
     const api = useAxios()
     const [open, setOpen] = React.useState(false)
     const [image, setImage] = React.useState<File | null>(null)
+    const [preview, setPreview] = React.useState<string>(cardImgUrl)
     const [contentCardEdit, setContentCard] = React.useState('')
     const [titleCardEdit, setTitleCard] = React.useState('')
     const { t } = useTranslation()
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        console.log('HANDLE SUBMIT in EDIT')
-        if (!image) {
-            alert('Please select an image to upload.')
-            return
-        }
+
         const formData = new FormData()
-        formData.append('image', image)
+        // Include the existing image URL if no new image is selected
+        if (image) {
+            formData.append('image', image)
+        } else {
+            formData.append('cardImgUrl', cardImgUrl) // Use the existing image
+        }
+
         formData.append('titleCard', titleCardEdit)
         formData.append('contentCard', contentCardEdit)
+
         try {
             const response = await api.patch('/solutions/' + _id, formData, {
                 headers: {
@@ -57,7 +63,7 @@ function SolutionsEditDialog({
             })
             console.log(response.data)
         } catch (error) {
-            console.error('Error Updating :', error)
+            console.error('Error Updating:', error)
             toast({
                 variant: 'destructive',
                 title: t('error'),
@@ -68,20 +74,23 @@ function SolutionsEditDialog({
         setOpen(false)
         fetchData()
     }
+
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log('Image selected')
-        console.log(e.target.files?.[0])
         const file = e.target.files?.[0]
         if (file) {
             setImage(file)
+            setPreview(URL.createObjectURL(file)) // Dynamically preview the new image
         } else {
             setImage(null)
+            setPreview(cardImgUrl) // Revert to the original image if no file is selected
         }
     }
+
     useEffect(() => {
         setTitleCard(titleCard)
         setContentCard(contentCard)
-    }, [])
+    }, [titleCard, contentCard])
+
     return (
         <div>
             <Dialog open={open} onOpenChange={setOpen}>
@@ -96,17 +105,28 @@ function SolutionsEditDialog({
                         <DialogDescription></DialogDescription>
                     </DialogHeader>
                     <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
+                        {/* Image Preview Section */}
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="file" className="text-right">
                                 {t('image')}
                             </Label>
-                            <Input
-                                id="file"
-                                className="col-span-3"
-                                type="file"
-                                onChange={handleImage}
-                            />
+                            <div className="col-span-3">
+                                <Input
+                                    id="file"
+                                    type="file"
+                                    onChange={handleImage}
+                                />
+                                {preview && (
+                                    <img
+                                        src={preview}
+                                        alt="Preview"
+                                        className="mt-2 rounded-md w-full h-40 object-contain"
+                                    />
+                                )}
+                            </div>
                         </div>
+
+                        {/* Title Field */}
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="title" className="text-right">
                                 {t('title')}
@@ -114,12 +134,13 @@ function SolutionsEditDialog({
                             <Input
                                 id="title"
                                 placeholder={titleCard}
+                                value={titleCardEdit}
                                 className="col-span-3"
-                                onChange={(e) => {
-                                    setTitleCard(e.target.value)
-                                }}
+                                onChange={(e) => setTitleCard(e.target.value)}
                             />
                         </div>
+
+                        {/* Description Field */}
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="description" className="text-right">
                                 {t('description')}
@@ -127,10 +148,9 @@ function SolutionsEditDialog({
                             <Input
                                 id="description"
                                 placeholder={contentCard}
+                                value={contentCardEdit}
                                 className="col-span-3"
-                                onChange={(e) => {
-                                    setContentCard(e.target.value)
-                                }}
+                                onChange={(e) => setContentCard(e.target.value)}
                             />
                         </div>
                     </form>
