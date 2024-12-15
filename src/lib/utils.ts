@@ -5,8 +5,16 @@ import dayjs from 'dayjs'
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }
-
-type DateColors = 'success' | 'processing' | 'error' | 'default' | 'warning'
+type DateColors =
+    | 'success'
+    | 'destructive'
+    | 'outline'
+    | 'secondary'
+    | 'error'
+    | 'default'
+    | 'warning'
+    | null
+    | undefined
 
 export const getDateColor = (args: {
     date: string
@@ -22,8 +30,8 @@ export const getDateColor = (args: {
     if (date.isBefore(today.add(3, 'day'))) {
         return 'warning'
     }
-
-    return args.defaultColor ?? 'default'
+    console.log(args.defaultColor)
+    return args.defaultColor ?? 'success'
 }
 
 export const getRandomColorFromString = (

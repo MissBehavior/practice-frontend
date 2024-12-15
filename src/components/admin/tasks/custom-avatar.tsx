@@ -8,19 +8,20 @@ type Props = {
     name?: string
     src?: string
     alt?: string
-    size?: 'small' | 'medium' | 'large'
+    size?: 'xsmall' | 'small' | 'medium' | 'large'
     className?: string
     style?: React.CSSProperties
 }
 
 const sizeClasses = {
+    xsmall: 'h-4 w-4 text-xs',
     small: 'h-8 w-8 text-sm',
     medium: 'h-10 w-10 text-base',
     large: 'h-12 w-12 text-lg',
 }
 
 const CustomAvatarComponent = (
-    { name = '', src, alt, size = 'medium', className, style }: Props,
+    { name = '', src, alt, size = 'medium', className }: Props,
     ref: React.Ref<HTMLSpanElement>
 ) => {
     const initials = getNameInitials(name)
@@ -28,23 +29,30 @@ const CustomAvatarComponent = (
     const sizeClass = sizeClasses[size]
 
     return (
-        <Avatar
+        <span
             ref={ref}
             className={cn(
                 'flex items-center justify-center',
                 sizeClass,
                 className
             )}
-            style={{ backgroundColor, ...style }}
         >
-            {src ? (
-                <AvatarImage src={src} alt={alt || name} />
-            ) : (
-                <AvatarFallback>
-                    {initials || <FaUser className="h-4 w-4 text-gray-500" />}
-                </AvatarFallback>
-            )}
-        </Avatar>
+            <Avatar className="flex items-center justify-center">
+                {src ? (
+                    <AvatarImage
+                        src={src}
+                        alt={alt || name}
+                        className="bg-muted"
+                    />
+                ) : (
+                    <AvatarFallback>
+                        {initials || (
+                            <FaUser className="h-4 w-4 text-gray-500" />
+                        )}
+                    </AvatarFallback>
+                )}
+            </Avatar>
+        </span>
     )
 }
 
