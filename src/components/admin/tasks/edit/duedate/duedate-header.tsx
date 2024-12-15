@@ -40,13 +40,8 @@ export const DueDateHeader = ({ dueDate }: Props) => {
     }
 
     return (
-        <button
-            className="text-blue-500 hover:underline"
-            onClick={() => {
-                // Handle add due date action
-            }}
-        >
+        <span className="text-blue-500 hover:underline" onClick={() => {}}>
             Add due date
-        </button>
+        </span>
     )
 }
