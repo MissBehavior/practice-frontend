@@ -112,7 +112,7 @@ const PostDetail: React.FC = () => {
                         <FaArrowLeft className="mr-2" />
                         {t('back_to_posts')}
                     </Link>
-                    <div className="bg-white rounded-lg shadow-lg overflow-hidden h-svh">
+                    <div className="bg-white rounded-lg shadow-lg overflow-hidden min-h-screen h-auto">
                         <img
                             className="w-full h-96 object-cover"
                             src={post.postPicture}
