@@ -42,8 +42,6 @@ const PostDetail: React.FC = () => {
                 const response = await axios.get<PostDetailType>(
                     `http://localhost:3000/posts/${id}`
                 )
-                console.log('lllllllllllllllllllllll')
-                console.log(response.data)
                 setPost(response.data.post)
                 setRandomPosts(response.data.randomPosts)
             } catch (err: any) {
@@ -200,7 +198,7 @@ const PostDetail: React.FC = () => {
                             <div className="mx-auto grid max-w-screen-lg justify-center px-4 sm:grid-cols-2 sm:gap-6 sm:px-8 md:grid-cols-3">
                                 {randomPosts &&
                                     randomPosts.map((randomPost) => (
-                                        <article className="mx-auto my-4 flex flex-col overflow-hidden rounded-lg border border-gray-300 bg-white text-gray-900 transition hover:translate-y-2 hover:shadow-lg">
+                                        <article className="my-4 flex flex-col overflow-hidden rounded-lg border border-gray-300 bg-white text-gray-900 transition hover:translate-y-2 hover:shadow-lg">
                                             <Link
                                                 to={`/post-external/${randomPost._id}`}
                                             >
