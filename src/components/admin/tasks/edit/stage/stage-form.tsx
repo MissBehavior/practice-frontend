@@ -4,6 +4,7 @@ import { Task } from '@/types'
 import axios from 'axios'
 import Select from 'react-select'
 import { Skeleton } from '@/components/ui/skeleton'
+import clsx from 'clsx'
 
 type Props = {
     isLoading?: boolean
@@ -61,7 +62,7 @@ export const StageForm = ({ isLoading, task, taskId }: Props) => {
     }
 
     return (
-        <div className="flex items-center justify-between p-4 border-b  shadow-sm">
+        <div className="flex items-center justify-between p-4  shadow-sm">
             <div className="flex items-center w-full">
                 <AiOutlineFlag className="mr-3 text-gray-600" size={24} />
 
@@ -70,63 +71,71 @@ export const StageForm = ({ isLoading, task, taskId }: Props) => {
                     onChange={handleStageChange}
                     options={stages}
                     placeholder="Select Stage"
-                    className="w-56"
+                    className="w-full"
                     classNamePrefix="react-select"
-                    styles={{
-                        control: (provided, state) => ({
-                            ...provided,
-                            minHeight: '2.5rem',
-                            height: '2.5rem',
-                            borderColor: state.isFocused
-                                ? '#4F46E5'
-                                : '#D1D5DB',
-                            boxShadow: state.isFocused
-                                ? '0 0 0 1px #4F46E5'
-                                : provided.boxShadow,
-                            '&:hover': {
-                                borderColor: '#4F46E5',
-                            },
-                        }),
-                        dropdownIndicator: (provided) => ({
-                            ...provided,
-                            padding: '0 8px',
-                        }),
-                        clearIndicator: (provided) => ({
-                            ...provided,
-                            padding: '0 8px',
-                        }),
-                        valueContainer: (provided) => ({
-                            ...provided,
-                            padding: '0 8px',
-                        }),
-                        input: (provided) => ({
-                            ...provided,
-                            margin: '0px',
-                        }),
-                        menu: (provided) => ({
-                            ...provided,
-                            borderRadius: '0.5rem',
-                            marginTop: '0.25rem',
-                        }),
-                        option: (provided, state) => ({
-                            ...provided,
-                            padding: '0.75rem 1rem',
-                            backgroundColor: state.isSelected
-                                ? '#4F46E5'
-                                : state.isFocused
-                                ? '#EEF2FF'
-                                : '#FFFFFF',
-                            color: state.isSelected ? '#FFFFFF' : '#374151',
-                            cursor: 'pointer',
-                        }),
-                        singleValue: (provided) => ({
-                            ...provided,
-                            color: '#374151',
-                        }),
-                        placeholder: (provided) => ({
-                            ...provided,
-                            color: '#9CA3AF',
-                        }),
+                    classNames={{
+                        // Control (the outer container)
+                        control: ({ isFocused }) =>
+                            clsx(
+                                'relative flex items-center bg-white dark:bg-[#191919] border rounded-md shadow-sm',
+                                'min-h-[2.5rem] h-10', // minHeight and height
+                                'px-2', // horizontal padding
+                                isFocused
+                                    ? 'border-blue-500 ring-2 ring-blue-500'
+                                    : 'border-gray-300 dark:border-gray-600',
+                                'hover:border-blue-500'
+                            ),
+
+                        // Dropdown Indicator (the arrow)
+                        dropdownIndicator: () =>
+                            clsx(
+                                'flex items-center pr-2', // padding right
+                                'text-gray-500 dark:text-gray-400'
+                            ),
+
+                        // Value Container (where the selected value appears)
+                        valueContainer: () =>
+                            clsx(
+                                'flex flex-1 flex-wrap items-center gap-1',
+                                'px-2' // horizontal padding
+                            ),
+
+                        // Input (the text input inside the select)
+                        input: () =>
+                            clsx('text-gray-900 dark:text-gray-200', 'm-0 p-0'),
+
+                        // Menu (the dropdown menu)
+                        menu: () =>
+                            clsx(
+                                'absolute z-10 mt-1 w-full bg-white dark:bg-slate-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg',
+                                'max-h-60 overflow-auto'
+                            ),
+
+                        // Option (each item in the dropdown)
+                        option: ({ isFocused, isSelected }) =>
+                            clsx(
+                                'cursor-pointer select-none relative py-3 px-4',
+                                isSelected
+                                    ? 'bg-blue-500 text-white'
+                                    : isFocused
+                                    ? 'bg-blue-100 dark:bg-[#101010]'
+                                    : 'bg-white dark:bg-[#191919] text-gray-900 dark:text-gray-200'
+                            ),
+
+                        // Single Value (the selected value displayed)
+                        singleValue: () =>
+                            clsx('text-gray-900 dark:text-gray-200'),
+
+                        // Placeholder (the placeholder text)
+                        placeholder: () =>
+                            clsx('text-gray-500 dark:text-gray-400'),
+
+                        // Indicators Container (holds dropdown and clear indicators)
+                        indicatorsContainer: () => clsx('flex items-center'),
+
+                        // Indicator Separator (the divider between value and indicators)
+                        indicatorSeparator: () =>
+                            clsx('bg-gray-300 dark:bg-white h-5 mx-1'),
                     }}
                 />
             </div>

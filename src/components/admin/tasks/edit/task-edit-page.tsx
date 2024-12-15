@@ -119,15 +119,12 @@ export const TasksEditPage: React.FC = () => {
     return (
         <Dialog open={true} onOpenChange={(open) => !open && closeModal()}>
             <DialogContent
-                className="kanban-update-modal max-h-[90vh] overflow-y-auto max-md:max-w-full"
+                className="kanban-update-modal max-h-[90vh] overflow-y-auto max-md:max-w-full bg-[#101010] dark:bg-[#191919]"
                 aria-describedby={undefined}
             >
                 <DialogHeader>
                     <DialogTitle>{task.title}</DialogTitle>
                 </DialogHeader>
-                <div className="p-4 border rounded-md">
-                    <AssigneeSelection task={task} taskId={taskId} />
-                </div>
                 <div className="p-4 border rounded-md">
                     <Label>Title:</Label>
                     <TitleForm
@@ -135,7 +132,7 @@ export const TasksEditPage: React.FC = () => {
                         taskId={taskId}
                     />
                 </div>
-                <div className="p-4 border rounded-md">
+                <div className="p-4 border rounded-md ">
                     <Label>Description:</Label>
                     {isEditingDescription ? (
                         <DescriptionForm
@@ -153,7 +150,10 @@ export const TasksEditPage: React.FC = () => {
                         />
                     )}
                 </div>
-                <div className="p-4 border rounded-md bg-white dark:bg-[#191919]">
+                <div className="p-4 border rounded-md ">
+                    <AssigneeSelection task={task} taskId={taskId} />
+                </div>
+                <div className="p-4 border rounded-md ">
                     <Label>Stage:</Label>
                     <StageForm task={task} taskId={taskId} />
                 </div>

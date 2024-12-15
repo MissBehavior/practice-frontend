@@ -63,7 +63,7 @@ export const TitleForm = ({ initialValues, isLoading, taskId }: Props) => {
                 onChange={handleTitleChange}
                 onBlur={handleTitleBlur}
                 disabled={isSubmitting}
-                className="w-full"
+                className="w-full bg-[#191919] dark:bg-[#101010] text-white dark:text-white"
             />
         </div>
     )

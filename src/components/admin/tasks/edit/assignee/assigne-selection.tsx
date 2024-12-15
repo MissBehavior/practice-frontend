@@ -113,14 +113,14 @@ const AssigneeSelection: React.FC<Props> = ({ task, taskId }) => {
     }
 
     return (
-        <div className="border-t pt-4">
+        <div className="">
             <Label>Assignees</Label>
             {currentAssignees.length > 0 && (
                 <div className="mb-2 flex flex-wrap gap-2">
                     {currentAssignees.map((user) => (
                         <span
                             key={user._id}
-                            className="flex items-center gap-1 dark:bg-[#101010] bg-slate-300 rounded px-2 py-1 text-sm"
+                            className="flex items-center gap-1 dark:bg-[#191919] bg-slate-300 rounded px-2 py-1 text-sm hover:filter hover:brightness-125"
                         >
                             {user.name} ({user.email})
                             <button
