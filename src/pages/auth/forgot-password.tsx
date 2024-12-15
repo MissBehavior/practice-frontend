@@ -3,8 +3,9 @@ import { Button } from '../../components/ui/button'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { forgotPasswordSchema, TForgotPasswordSchema } from '@/types'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 
 interface EmailSubmitProps {
     onEmailSubmit: (email: string) => void
@@ -13,6 +14,7 @@ interface EmailSubmitProps {
 const ForgotPassword: React.FC<EmailSubmitProps> = ({ onEmailSubmit }) => {
     const [email, setEmail] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
+    const { t } = useTranslation()
 
     const {
         register,
@@ -82,38 +84,58 @@ const ForgotPassword: React.FC<EmailSubmitProps> = ({ onEmailSubmit }) => {
     }, [])
 
     return (
-        <div className="flex flex-wrap justify-center items-start bg-white dark:bg-background">
-            <div className="mt-16 mb-12 min-h-64 w-full bg-white dark:bg-background flex justify-center items-center flex-col">
-                <form
-                    onSubmit={handleSubmit(onSubmitE)}
-                    className={`flex flex-col gap-10 p-16 xs:w-full md:w-11/12 lg:w-9/12 xl:w-7/12 2xl:w-2/6 w-full bg-white dark:bg-slate-700 shadow-xl hover:shadow-2xl transition-all transform duration-300 text-center items-center justify-center`}
-                >
-                    <input
-                        {...register('email')}
-                        type="email"
-                        placeholder="Email"
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="w-full px-2 py-2 rounded border-solid border-slate-700 dark:border-slate-300 border-2  dark:bg-slate-700"
-                    />
-                    {errors.email && (
-                        <p className="text-red-500">{`${errors.email.message}`}</p>
-                    )}
-                    {error && <p style={{ color: 'red' }}>{error}</p>}
+        <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
+            <div className="max-w-md w-full bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
+                <div className="text-center">
+                    <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Sign in to your account
+                    </h2>
+                </div>
 
-                    <Button
-                        variant={'secondary'}
-                        disabled={isSubmitting}
-                        type="submit"
-                        className="disabled:bg-red-500 py-2 rounded"
-                        onClick={() => {
-                            handleSubmit(onSubmitE)
-                        }}
-                    >
-                        Send Email
-                    </Button>
-                    <NavLink to="/login" className="text-blue-500">
-                        Return to login
-                    </NavLink>
+                <form
+                    className="space-y-6 mt-8"
+                    onSubmit={handleSubmit(onSubmitE)}
+                >
+                    <div>
+                        <label
+                            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                            htmlFor="email"
+                        >
+                            Email address
+                        </label>
+                        <div className="mt-1">
+                            <input
+                                {...register('email')}
+                                className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm border-gray-300 placeholder-gray-400 dark:bg-gray-800 dark:border-gray-600 dark:text-white focus:ring-indigo-500 focus:border-indigo-500"
+                                id="email"
+                                type="email"
+                                autoComplete="email"
+                                placeholder="your@email.com"
+                                required
+                                autoFocus
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                            {errors.email && (
+                                <p className="text-red-500">{`${errors.email.message}`}</p>
+                            )}
+                            {error && <p style={{ color: 'red' }}>{error}</p>}
+                        </div>
+                    </div>
+                    <div>
+                        <Button
+                            disabled={isSubmitting}
+                            type="submit"
+                            className="inline-flex items-center border font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 px-4 py-2 text-base bg-black text-white hover:bg-gray-800 border-black focus:ring-black w-full justify-center"
+                            onClick={() => {
+                                handleSubmit(onSubmitE)
+                            }}
+                        >
+                            {t('send_email')}
+                        </Button>
+                        <NavLink to="/login" className="text-blue-500">
+                            Return to login
+                        </NavLink>
+                    </div>
                 </form>
             </div>
         </div>

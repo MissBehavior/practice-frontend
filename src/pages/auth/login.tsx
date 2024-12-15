@@ -88,7 +88,111 @@ export default function Login() {
 
     return (
         <>
-            {status === 'error' && (
+            <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
+                {status === 'error' && (
+                    <div
+                        style={{
+                            backgroundColor: '#e57373',
+                            textAlign: 'center',
+                            fontWeight: 'bold',
+                        }}
+                        className="Auth-form"
+                    >
+                        {error}
+                    </div>
+                )}
+                <div className="max-w-md w-full bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
+                    <div className="text-center">
+                        <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            Sign in to your account
+                        </h2>
+                        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                            Don't have an account?{' '}
+                            <Link
+                                to="/register"
+                                className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-300"
+                            >
+                                Sign Up →
+                            </Link>
+                        </p>
+                    </div>
+
+                    <form
+                        className="space-y-6 mt-8"
+                        onSubmit={handleSubmit(onSubmitE)}
+                    >
+                        <div>
+                            <label
+                                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                                htmlFor="email"
+                            >
+                                Email address
+                            </label>
+                            <div className="mt-1">
+                                <input
+                                    {...register('email')}
+                                    className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm border-gray-300 placeholder-gray-400 dark:bg-gray-800 dark:border-gray-600 dark:text-white focus:ring-indigo-500 focus:border-indigo-500"
+                                    id="email"
+                                    type="email"
+                                    autoComplete="email"
+                                    placeholder="your@email.com"
+                                    required
+                                    autoFocus
+                                />
+                                {errors.email && (
+                                    <p className="text-red-500">{`${errors.email.message}`}</p>
+                                )}
+                            </div>
+                        </div>
+
+                        <div>
+                            <label
+                                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                                htmlFor="password"
+                            >
+                                Password
+                            </label>
+                            <div className="mt-1">
+                                <input
+                                    {...register('password')}
+                                    className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm border-gray-300 placeholder-gray-400 dark:bg-gray-800 dark:border-gray-600 dark:text-white focus:ring-indigo-500 focus:border-indigo-500"
+                                    id="password"
+                                    type="password"
+                                    placeholder="••••••••"
+                                    required
+                                />
+                                {errors.password && (
+                                    <p className="text-red-500">{`${errors.password.message}`}</p>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center"></div>
+                            <div className="text-sm">
+                                <Link
+                                    to="/forgot-password"
+                                    className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-300"
+                                >
+                                    Forgot your password?
+                                </Link>
+                            </div>
+                        </div>
+
+                        <div>
+                            <Button
+                                disabled={isSubmitting}
+                                type="submit"
+                                className="inline-flex items-center border font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 px-4 py-2 text-base bg-black text-white hover:bg-gray-800 border-black focus:ring-black w-full justify-center"
+                            >
+                                {t('login')}
+                            </Button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {/* {status === 'error' && (
                 <div
                     style={{
                         backgroundColor: '#e57373',
@@ -147,7 +251,7 @@ export default function Login() {
                         </NavLink>
                     </form>
                 </div>
-            </div>
+            </div> */}
         </>
     )
 }

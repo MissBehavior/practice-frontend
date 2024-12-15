@@ -103,21 +103,21 @@ export default function Header() {
                     </div>
                     {!isLoggedIn && (
                         <>
-                            <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-4 cursor-pointer">
+                            {/* <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-4 cursor-pointer">
                                 <Button onClick={navToLogin}>
                                     SignIn/SignUp
                                 </Button>
-                            </div>
+                            </div> */}
                             <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-4 cursor-pointer">
                                 <Button onClick={navToLogin}>
                                     {t('login')}
                                 </Button>
                             </div>
-                            <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-4 cursor-pointer">
+                            {/* <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-4 cursor-pointer">
                                 <Button onClick={navToRegister}>
                                     {t('register')}
                                 </Button>
-                            </div>
+                            </div> */}
                         </>
                     )}
                     {isLoggedIn && (
