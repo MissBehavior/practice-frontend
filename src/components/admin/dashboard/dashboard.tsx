@@ -5,6 +5,8 @@ import UserCard from './users-card'
 import { useTheme } from '../../theme-provider'
 import RegisterCountChart from './register-count-chart'
 import KanbanPieChart from './kanban-pie-chart'
+import MostLikedPostCard from './most-liked-post-card'
+import MostCommentedPostCard from './most-commented-post'
 
 function AdminDashboard() {
     const [chartData, setChartData] = useState<DataPoint[]>([])
@@ -93,21 +95,16 @@ function AdminDashboard() {
                     <UserCard count={45} date="TODO" type="TasksInKanban" />
                     <UserCard count={45} date="TODO" type="NrOnGoingInKanban" />
                 </div>
-                <UserCard
-                    count={11111111111111}
-                    date="DIFFERENT"
-                    type="MstLikdPostNTFINI"
-                />
+                <div className="flex flex-row gap-2 max-md:flex-col">
+                    <MostLikedPostCard />
+                    <MostCommentedPostCard />
+                </div>
                 <UserCard
                     count={11111111111111}
                     date="DIFFERENT"
                     type="UserMstTaskKanban"
                 />
-                <UserCard
-                    count={1111111111}
-                    date="DIFFERENT"
-                    type="MstCmmentdPst"
-                />
+
                 <RegisterCountChart
                     chartData={chartData}
                     theme={theme}
