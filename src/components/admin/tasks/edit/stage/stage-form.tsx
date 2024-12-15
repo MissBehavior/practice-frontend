@@ -61,7 +61,7 @@ export const StageForm = ({ isLoading, task, taskId }: Props) => {
     }
 
     return (
-        <div className="flex items-center justify-between p-4 border-b bg-white shadow-sm">
+        <div className="flex items-center justify-between p-4 border-b  shadow-sm">
             <div className="flex items-center w-full">
                 <AiOutlineFlag className="mr-3 text-gray-600" size={24} />
 

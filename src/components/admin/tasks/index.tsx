@@ -1,4 +1,3 @@
-// index.tsx
 import React, { useState, useEffect, useMemo, useContext } from 'react'
 import axios from 'axios'
 import { DragEndEvent } from '@dnd-kit/core'
@@ -36,7 +35,6 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
             try {
                 const [tasksResponse] = await Promise.all([
                     api.get('http://localhost:3000/tasks'),
-                    // axios.get('http://localhost:3000/stages'),
                 ])
                 console.log('tasksResponse', tasksResponse)
                 setTasks(tasksResponse.data)
@@ -133,7 +131,6 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
                 newTaskData
             )
             console.log('Task created:', response.data)
-            // setTasks((prevTasks) => [...prevTasks, response.data])
         } catch (error) {
             console.error('Error creating task:', error)
         }

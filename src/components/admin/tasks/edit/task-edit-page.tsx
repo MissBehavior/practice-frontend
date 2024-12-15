@@ -29,6 +29,7 @@ import axios from 'axios'
 import { DescriptionHeader } from './description/description-header'
 import { DescriptionForm } from './description/description-form'
 import AssigneeSelection from './assignee/assigne-selection'
+import { Label } from '@/components/ui/label'
 
 export const TasksEditPage: React.FC = () => {
     const { taskId } = useParams<{ taskId: string }>()
@@ -118,72 +119,76 @@ export const TasksEditPage: React.FC = () => {
     return (
         <Dialog open={true} onOpenChange={(open) => !open && closeModal()}>
             <DialogContent
-                className="kanban-update-modal max-h-[80vh] overflow-y-auto max-md:max-w-full"
+                className="kanban-update-modal max-h-[90vh] overflow-y-auto max-md:max-w-full"
                 aria-describedby={undefined}
             >
                 <DialogHeader>
                     <DialogTitle>{task.title}</DialogTitle>
                 </DialogHeader>
-                <div className="p-4 space-y-4">
+                <div className="p-4 border rounded-md">
+                    <AssigneeSelection task={task} taskId={taskId} />
+                </div>
+                <div className="p-4 border rounded-md">
+                    <Label>Title:</Label>
                     <TitleForm
                         initialValues={{ title: task?.title || '' }}
                         taskId={taskId}
                     />
-                    <div className="p-4 border rounded-md">
-                        {isEditingDescription ? (
-                            <DescriptionForm
-                                initialValues={{
-                                    description: task.description,
-                                }}
-                                cancelForm={handleCancelDescription}
-                                taskId={task._id}
-                            />
-                        ) : (
-                            <DescriptionHeader
-                                description={task.description}
-                                onAdd={handleAddDescription}
-                                onEdit={handleEditDescription}
-                            />
-                        )}
-                    </div>
+                </div>
+                <div className="p-4 border rounded-md">
+                    <Label>Description:</Label>
+                    {isEditingDescription ? (
+                        <DescriptionForm
+                            initialValues={{
+                                description: task.description,
+                            }}
+                            cancelForm={handleCancelDescription}
+                            taskId={task._id}
+                        />
+                    ) : (
+                        <DescriptionHeader
+                            description={task.description}
+                            onAdd={handleAddDescription}
+                            onEdit={handleEditDescription}
+                        />
+                    )}
+                </div>
+                <div className="p-4 border rounded-md bg-white dark:bg-[#191919]">
+                    <Label>Stage:</Label>
                     <StageForm task={task} taskId={taskId} />
-                    <Accordion
-                        type="single"
-                        collapsible
-                        value={activeAccordion}
-                        onValueChange={(value) => setActiveAccordion(value)}
-                    >
-                        <AccordionItem value="due-date">
-                            <AccordionTrigger>
-                                <span className="flex items-center justify-between w-full">
-                                    <span className="flex items-center">
-                                        <AiOutlineFieldTime className="mr-2" />
-                                        <span>Due date</span>
-                                    </span>
-                                    <DueDateHeader dueDate={task?.dueDate} />
+                </div>
+                <Accordion
+                    type="single"
+                    collapsible
+                    value={activeAccordion}
+                    onValueChange={(value) => setActiveAccordion(value)}
+                >
+                    <AccordionItem value="due-date">
+                        <AccordionTrigger>
+                            <span className="flex items-center justify-between w-full">
+                                <span className="flex items-center">
+                                    <AiOutlineFieldTime className="mr-2" />
+                                    <span>Due date</span>
                                 </span>
-                            </AccordionTrigger>
-                            <AccordionContent>
-                                <DueDateForm
-                                    initialValues={{
-                                        dueDate: task?.dueDate,
-                                    }}
-                                    taskId={taskId}
-                                    cancelForm={() =>
-                                        setActiveAccordion(undefined)
-                                    }
-                                />
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
-                    <div className="p-4 border rounded-md">
-                        <AssigneeSelection task={task} taskId={taskId} />
-                    </div>
-                    <div className="mt-4">
-                        <Button variant="destructive" onClick={handleDelete}>
-                            Delete card
-                        </Button>
-                    </div>
+                                <DueDateHeader dueDate={task?.dueDate} />
+                            </span>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                            <DueDateForm
+                                initialValues={{
+                                    dueDate: task?.dueDate,
+                                }}
+                                taskId={taskId}
+                                cancelForm={() => setActiveAccordion(undefined)}
+                            />
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+
+                <div className="mt-4">
+                    <Button variant="destructive" onClick={handleDelete}>
+                        Delete card
+                    </Button>
                 </div>
             </DialogContent>
         </Dialog>
