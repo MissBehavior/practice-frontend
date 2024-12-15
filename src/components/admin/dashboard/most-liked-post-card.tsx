@@ -54,7 +54,7 @@ const MostLikedPostCard: React.FC = () => {
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-5">
             <Link
                 to={`/team-updates/${post._id}`} // Replace with your actual post details route
-                className=" hover:text-blue-500 cursor-pointer"
+                className=" hover:text-blue-500 cursor-pointer hover:filter hover:brightness-110"
             >
                 {/* Card Title */}
                 <h2 className="text-lg font-bold text-gray-800 dark:text-white mb-4">
