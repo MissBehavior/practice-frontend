@@ -11,6 +11,7 @@ import { ProjectCardMemo, ProjectCardSkeleton } from './card'
 import { KanbanAddCardButton } from './add-card-button'
 import { Task, TaskToSend } from '@/types'
 import { NewTaskDialog } from './new-task-dialog'
+import { useAxios } from '@/services/auth-service'
 
 export interface Stage {
     id: string
@@ -19,6 +20,8 @@ export interface Stage {
 
 export const TasksListPage = ({ children }: React.PropsWithChildren) => {
     const navigate = useNavigate()
+    const api = useAxios()
+
     const socket = useContext(SocketContext)
     const [tasks, setTasks] = useState<Task[]>([])
     const [stages, setStages] = useState<Stage[]>([])
@@ -32,7 +35,7 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
             setIsLoading(true)
             try {
                 const [tasksResponse] = await Promise.all([
-                    axios.get('http://localhost:3000/tasks'),
+                    api.get('http://localhost:3000/tasks'),
                     // axios.get('http://localhost:3000/stages'),
                 ])
                 console.log('tasksResponse', tasksResponse)
@@ -125,7 +128,7 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
     }
     const handleCreateTask = async (newTaskData: Partial<TaskToSend>) => {
         try {
-            const response = await axios.post(
+            const response = await api.post(
                 'http://localhost:3000/tasks',
                 newTaskData
             )

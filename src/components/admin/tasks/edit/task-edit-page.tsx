@@ -28,6 +28,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { DescriptionHeader } from './description/description-header'
 import { DescriptionForm } from './description/description-form'
+import AssigneeSelection from './assignee/assigne-selection'
 
 export const TasksEditPage: React.FC = () => {
     const { taskId } = useParams<{ taskId: string }>()
@@ -175,6 +176,9 @@ export const TasksEditPage: React.FC = () => {
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
+                    <div className="p-4 border rounded-md">
+                        <AssigneeSelection task={task} taskId={taskId} />
+                    </div>
                     <div className="mt-4">
                         <Button variant="destructive" onClick={handleDelete}>
                             Delete card

@@ -37,7 +37,6 @@ export const StageForm = ({ isLoading, task, taskId }: Props) => {
             options.find((option) => option.value === task.stage) || null
         setSelectedStage(currentStage)
         return () => {
-            console.log('Unmounting StageForm')
             setSelectedStage(null)
         }
     }, [task.stage])

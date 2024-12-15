@@ -4,6 +4,7 @@ import axios from 'axios'
 import { Button } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
 import { useTheme } from '@/components/theme-provider'
+import { useAxios } from '@/services/auth-service'
 
 type Props = {
     initialValues: {
@@ -18,6 +19,8 @@ export const DescriptionForm: React.FC<Props> = ({
     cancelForm,
     taskId,
 }) => {
+    const api = useAxios()
+
     const { theme } = useTheme()
     const [description, setDescription] = useState<string>(
         initialValues.description || ''
@@ -27,7 +30,7 @@ export const DescriptionForm: React.FC<Props> = ({
     const handleSave = async () => {
         setIsSaving(true)
         try {
-            await axios.put(`http://localhost:3000/tasks/${taskId}`, {
+            await api.put(`http://localhost:3000/tasks/${taskId}`, {
                 description,
             })
             toast({
