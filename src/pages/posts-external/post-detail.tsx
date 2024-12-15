@@ -241,7 +241,7 @@ const PostDetail: React.FC = () => {
                                                         ...
                                                     </p>
                                                     <span className="inline-block cursor-pointer select-none rounded-full border border-gray-800 bg-gray-800 px-2 py-1 text-center align-middle text-sm font-semibold leading-normal text-white no-underline shadow-sm">
-                                                        Read Now
+                                                        {t('readMore')}
                                                     </span>
                                                 </div>
                                             </Link>

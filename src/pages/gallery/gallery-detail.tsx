@@ -1,16 +1,18 @@
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Gallery, GalleryProps, Item } from 'react-photoswipe-gallery'
 import 'photoswipe/dist/photoswipe.css'
 import Breadcrumb from '@/components/breadcrumb'
 import { GalleryData, galleryImages } from '@/types'
+import { FaArrowLeft } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 
 export default function GalleryDetail() {
     const { id } = useParams()
     const [gallery, setGallery] = useState<GalleryData>()
     const [images, setImages] = useState<galleryImages[]>([])
-
+    const { t } = useTranslation()
     const fetchGalleryDetails = async () => {
         try {
             const response = await axios.get(
@@ -86,6 +88,13 @@ export default function GalleryDetail() {
     return (
         <div className="min-h-screen bg-slate-300 dark:bg-[#101010]">
             <Breadcrumb title={gallery.title} parent={'Gallery'} />
+            <Link
+                to="/gallery"
+                className="flex items-center text-gray-300 hover:text-gray-500 mb-6"
+            >
+                <FaArrowLeft className="mr-2" />
+                {t('back_to_gallery')}
+            </Link>
             <section className="max-w-7xl mx-auto px-4 py-8">
                 <h1 className="text-2xl font-bold dark:text-white text-black mb-6 text-center">
                     {gallery.title}
