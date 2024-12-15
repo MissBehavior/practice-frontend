@@ -9,7 +9,7 @@ import { KanbanColumn, KanbanColumnSkeleton } from './column'
 import { KanbanItem } from './item'
 import { ProjectCardMemo, ProjectCardSkeleton } from './card'
 import { KanbanAddCardButton } from './add-card-button'
-import { Task } from '@/types'
+import { Task, TaskToSend } from '@/types'
 import { NewTaskDialog } from './new-task-dialog'
 
 export interface Stage {
@@ -123,14 +123,14 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
         setSelectedStageTitle(stageTitle)
         setShowDialog(true)
     }
-    const handleCreateTask = async (newTaskData: Partial<Task>) => {
+    const handleCreateTask = async (newTaskData: Partial<TaskToSend>) => {
         try {
             const response = await axios.post(
                 'http://localhost:3000/tasks',
                 newTaskData
             )
-
-            setTasks((prevTasks) => [...prevTasks, response.data])
+            console.log('Task created:', response.data)
+            // setTasks((prevTasks) => [...prevTasks, response.data])
         } catch (error) {
             console.error('Error creating task:', error)
         }

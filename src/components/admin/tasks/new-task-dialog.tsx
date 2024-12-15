@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import {
     Dialog,
     DialogContent,
@@ -10,64 +11,106 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Task, UserObjectPopulated } from '@/types' // Ensure correct path to your types
+import { Task, TaskToSend, UserObjectPopulated } from '@/types'
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandItem,
+    CommandList,
+} from '@/components/ui/command'
+import { useAuth, useAxios } from '@/services/auth-service'
 
 interface NewTaskDialogProps {
     stageTitle: string
     onClose: () => void
-    onCreate: (newTaskData: Partial<Task>) => Promise<void>
+    onCreate: (newTaskData: Partial<TaskToSend>) => Promise<void>
 }
-
 export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
     stageTitle,
     onClose,
     onCreate,
 }) => {
+    const { user, userToken } = useAuth()
+    const api = useAxios()
+
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [dueDate, setDueDate] = useState('')
     const [tags, setTags] = useState('')
 
-    // For simplicity, we'll ask for a single assignee’s name and email.
-    // In production, you'd have a user picker or a more sophisticated UI.
-    const [assigneeName, setAssigneeName] = useState('')
-    const [assigneeEmail, setAssigneeEmail] = useState('')
+    const [assignee, setAssignee] = useState<UserObjectPopulated[]>([])
+    const [allUsers, setAllUsers] = useState<UserObjectPopulated[]>([])
+    const [assigneeQuery, setAssigneeQuery] = useState('')
+    const [isAssigneeDropdownOpen, setIsAssigneeDropdownOpen] = useState(false)
+    const [loadingUsers, setLoadingUsers] = useState(false)
+    const [errorUsers, setErrorUsers] = useState<string | null>(null)
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            setLoadingUsers(true)
+            try {
+                const response = await api.get('http://localhost:3000/user/', {
+                    headers: {
+                        Authorization: `Bearer ${userToken!.accessToken}`,
+                    },
+                })
+                console.log('response NEW TASK', response)
+                setAllUsers(response.data)
+            } catch (error) {
+                console.error('Error fetching users:', error)
+                setErrorUsers('Failed to load users')
+            } finally {
+                setLoadingUsers(false)
+            }
+        }
+
+        fetchUsers()
+    }, [])
+
+    const handleAssigneeSelect = (user: UserObjectPopulated) => {
+        if (!assignee.find((assignee) => assignee._id === user._id)) {
+            setAssignee((prev) => [...prev, user])
+        }
+        setAssigneeQuery('')
+        setIsAssigneeDropdownOpen(false)
+    }
+
+    const removeAssignee = (userId: string) => {
+        setAssignee((prev) =>
+            prev.filter((assignee) => assignee._id !== userId)
+        )
+    }
+
+    const filteredUsers = allUsers.filter(
+        (user) =>
+            user.name.toLowerCase().includes(assigneeQuery.toLowerCase()) ||
+            user.email.toLowerCase().includes(assigneeQuery.toLowerCase())
+    )
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
-        // Parse tags
         const parsedTags = tags
-            ? tags
-                  .split(',')
-                  .map((tag) => tag.trim())
-                  .filter(Boolean)
-            : []
+            .split(',')
+            .map((tag) => tag.trim())
+            .filter(Boolean)
 
-        // If an assignee was provided
-        let assignees: UserObjectPopulated[] = []
-        if (assigneeName && assigneeEmail) {
-            assignees.push({
-                _id: '', // This will be assigned by the server. Leave blank or omit.
-                name: assigneeName,
-                email: assigneeEmail,
-                profileImgUrl: '', // If you have a default avatar, you might set that here or leave blank
-            })
-        }
+        const selectedAssigneeIds = assignee.map((user) => user._id)
 
-        const newTaskData: Partial<Task> = {
+        const newTaskData: Partial<TaskToSend> = {
             title,
             description,
-            dueDate, // If your server expects a date, ensure formatting is correct (e.g., ISO string).
+            dueDate,
             tags: parsedTags,
-            assignee: assignees,
+            assignee: selectedAssigneeIds,
             stage: stageTitle,
+            createdBy: user!.id,
         }
 
         await onCreate(newTaskData)
         onClose()
     }
-
     return (
         <Dialog open onOpenChange={onClose}>
             <DialogContent>
@@ -79,6 +122,7 @@ export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
                     onSubmit={handleSubmit}
                     className="flex flex-col gap-4 mt-4"
                 >
+                    {/* Title */}
                     <div>
                         <Label htmlFor="title">Title</Label>
                         <Input
@@ -88,6 +132,7 @@ export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
                             required
                         />
                     </div>
+                    {/* Description */}
                     <div>
                         <Label htmlFor="description">Description</Label>
                         <Input
@@ -96,6 +141,7 @@ export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
                             onChange={(e) => setDescription(e.target.value)}
                         />
                     </div>
+                    {/* Due Date */}
                     <div>
                         <Label htmlFor="dueDate">Due Date</Label>
                         <Input
@@ -105,6 +151,7 @@ export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
                             onChange={(e) => setDueDate(e.target.value)}
                         />
                     </div>
+                    {/* Tags */}
                     <div>
                         <Label htmlFor="tags">Tags (comma separated)</Label>
                         <Input
@@ -114,22 +161,84 @@ export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
                             placeholder="e.g. bug, frontend, urgent"
                         />
                     </div>
+                    {/* Assignees */}
                     <div className="border-t pt-4">
-                        <Label>Assignee</Label>
-                        <div className="flex flex-col gap-2 mt-2">
-                            <div>
-                                <Label htmlFor="assigneeName">Name</Label>
-                                <Input
-                                    id="assigneeName"
-                                    value={assigneeName}
-                                    onChange={(e) =>
-                                        setAssigneeName(e.target.value)
-                                    }
-                                    placeholder="e.g. John Doe"
-                                />
+                        <Label>Assignees</Label>
+                        {assignee.length > 0 && (
+                            <div className="mb-2 flex flex-wrap gap-2">
+                                {assignee.map((user) => (
+                                    <span
+                                        key={user._id}
+                                        className="flex items-center gap-1 bg-gray-200 rounded px-2 py-1 text-sm"
+                                    >
+                                        {user.name} ({user.email})
+                                        <button
+                                            type="button"
+                                            className="text-red-500"
+                                            onClick={() =>
+                                                removeAssignee(user._id)
+                                            }
+                                        >
+                                            x
+                                        </button>
+                                    </span>
+                                ))}
                             </div>
+                        )}
+
+                        <div className="relative">
+                            <Input
+                                placeholder="Search and select assignees..."
+                                value={assigneeQuery}
+                                onChange={(e) =>
+                                    setAssigneeQuery(e.target.value)
+                                }
+                                onFocus={() => setIsAssigneeDropdownOpen(true)}
+                                onBlur={() =>
+                                    setTimeout(
+                                        () => setIsAssigneeDropdownOpen(false),
+                                        150
+                                    )
+                                } // Delay to allow click
+                            />
+
+                            {isAssigneeDropdownOpen && (
+                                <div className="absolute top-full left-0 w-full bg-white border border-gray-300 z-50 rounded shadow-lg mt-1 max-h-60 overflow-auto">
+                                    <Command shouldFilter={false}>
+                                        <CommandList>
+                                            {filteredUsers.length > 0 ? (
+                                                <CommandGroup heading="Users">
+                                                    {filteredUsers.map(
+                                                        (user) => (
+                                                            <CommandItem
+                                                                key={user._id}
+                                                                onSelect={() =>
+                                                                    handleAssigneeSelect(
+                                                                        user
+                                                                    )
+                                                                }
+                                                            >
+                                                                {user.name} (
+                                                                {user.email})
+                                                            </CommandItem>
+                                                        )
+                                                    )}
+                                                </CommandGroup>
+                                            ) : (
+                                                <CommandEmpty>
+                                                    No users found
+                                                </CommandEmpty>
+                                            )}
+                                        </CommandList>
+                                    </Command>
+                                </div>
+                            )}
                         </div>
+                        {errorUsers && (
+                            <p className="text-red-500 text-sm">{errorUsers}</p>
+                        )}
                     </div>
+                    {/* Actions */}
                     <DialogFooter>
                         <Button type="button" variant="ghost" onClick={onClose}>
                             Cancel

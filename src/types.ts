@@ -130,6 +130,16 @@ export interface Task {
     updatedAt: string
     createdBy: string
 }
+
+export interface TaskToSend {
+    title: string
+    description: string
+    dueDate: string
+    tags: string[]
+    assignee: string[]
+    stage: string
+    createdBy: string
+}
 export interface UserObjectPopulated {
     _id: string
     name: string
