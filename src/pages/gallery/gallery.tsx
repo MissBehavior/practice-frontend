@@ -7,12 +7,13 @@ import { GalleryData } from '@/types'
 import GalleryDelete from './gallery-delete'
 import { Link } from 'react-router-dom'
 import Breadcrumb from '@/components/breadcrumb'
+import { useTranslation } from 'react-i18next'
 
 export default function Gallery() {
     const { user } = useAuth()
     const [data, setData] = useState<GalleryData[]>([])
     const [loading, setLoading] = useState<boolean>(true)
-
+    const { t } = useTranslation()
     const fetchData = async () => {
         setLoading(true)
         try {
@@ -94,15 +95,14 @@ export default function Gallery() {
                                         <h3 className="text-white text-xl font-semibold mb-2">
                                             {item.title}
                                         </h3>
-                                        <a
-                                            href={item.cardImgUrl}
+                                        <Link
+                                            to={`/gallery/` + item._id}
                                             title={item.title}
-                                            target="_blank"
                                             data-lightbox-gallery="gallery1"
                                             className="inline-block px-4 py-2 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700 transition-colors duration-300"
                                         >
-                                            View Image
-                                        </a>
+                                            {t('viewGallery')}
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
