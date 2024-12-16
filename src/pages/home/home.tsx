@@ -8,7 +8,6 @@ import Team from './team'
 import Clients from './clients'
 import Solutions from './solutions'
 import NewsHome from './news'
-import ScrollButton from './scroll-to-top'
 
 export default function Home() {
     const { t } = useTranslation()

@@ -12,9 +12,9 @@ import ReactMarkdown from 'react-markdown' // Import ReactMarkdown
 import DotLoader from 'react-spinners/DotLoader'
 import { useTheme } from '@/components/theme-provider'
 import Breadcrumb from '@/components/breadcrumb'
-import { Skeleton } from '@/components/ui/skeleton'
 import MDEditor from '@uiw/react-md-editor' // Import MDEditor
 import { Input } from '@/components/ui/input'
+import i18n from '@/i18n/config'
 
 function SolutionsDetail() {
     const { user, userToken } = useAuth()
@@ -337,36 +337,36 @@ function SolutionsDetail() {
 
                                 <div className="p-6">
                                     {/* Title Card */}
-                                    <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">
-                                        {data.titleCard}
-                                    </h1>
+                                    {i18n.language === 'en' ? (
+                                        <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                                            {data.titleCard}
+                                        </h1>
+                                    ) : (
+                                        <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                                            {data.titleCardLT}
+                                        </h2>
+                                    )}
 
-                                    {/* Title Card LT */}
-                                    <h2 className="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-4">
-                                        {data.titleCardLT}
-                                    </h2>
+                                    {/* {i18n.language === 'en' ? (
+                                        <div className="mb-4">
+                                            <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                                {t('contentCard')}
+                                            </h3>
+                                            <p className="text-gray-700 dark:text-gray-200">
+                                                {data.contentCard}
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <div className="mb-4">
+                                            <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                                {t('contentCardLT')}
+                                            </h3>
+                                            <p className="text-gray-700 dark:text-gray-200">
+                                                {data.contentCardLT}
+                                            </p>
+                                        </div>
+                                    )} */}
 
-                                    {/* Content Card */}
-                                    <div className="mb-4">
-                                        <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                            {t('contentCard')}
-                                        </h3>
-                                        <p className="text-gray-700 dark:text-gray-200">
-                                            {data.contentCard}
-                                        </p>
-                                    </div>
-
-                                    {/* Content Card LT */}
-                                    <div className="mb-4">
-                                        <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                            {t('contentCardLT')}
-                                        </h3>
-                                        <p className="text-gray-700 dark:text-gray-200">
-                                            {data.contentCardLT}
-                                        </p>
-                                    </div>
-
-                                    {/* Content Main Image */}
                                     {data.contentMainImg && (
                                         <img
                                             src={data.contentMainImg}
@@ -375,124 +375,169 @@ function SolutionsDetail() {
                                         />
                                     )}
 
-                                    {/* Content Main */}
-                                    <div className="prose dark:prose-dark max-w-none mb-4">
-                                        <ReactMarkdown
-                                            components={{
-                                                h1: ({ node, ...props }) => (
-                                                    <h1
-                                                        className="text-2xl font-bold"
-                                                        {...props}
-                                                    />
-                                                ),
-                                                h2: ({ node, ...props }) => (
-                                                    <h2
-                                                        className="text-xl font-semibold"
-                                                        {...props}
-                                                    />
-                                                ),
-                                                ul: ({ node, ...props }) => (
-                                                    <ul
-                                                        className="list-disc ml-5"
-                                                        {...props}
-                                                    />
-                                                ),
-                                                ol: ({ node, ...props }) => (
-                                                    <ol
-                                                        className="list-decimal ml-5"
-                                                        {...props}
-                                                    />
-                                                ),
-                                                table: ({ node, ...props }) => (
-                                                    <table
-                                                        className="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                                                        {...props}
-                                                    />
-                                                ),
-                                                th: ({ node, ...props }) => (
-                                                    <th
-                                                        className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-                                                        {...props}
-                                                    />
-                                                ),
-                                                td: ({ node, ...props }) => (
-                                                    <td
-                                                        className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300"
-                                                        {...props}
-                                                    />
-                                                ),
-                                                a: ({ node, ...props }) => (
-                                                    <a
-                                                        className="text-blue-600 dark:text-blue-400 hover:underline"
-                                                        {...props}
-                                                    />
-                                                ),
-                                            }}
-                                        >
-                                            {data.contentMain}
-                                        </ReactMarkdown>
-                                    </div>
-
-                                    {/* Content Main LT */}
-                                    <div className="prose dark:prose-dark max-w-none">
-                                        <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                            {t('contentMainLT')}
-                                        </h3>
-                                        <ReactMarkdown
-                                            components={{
-                                                h1: ({ node, ...props }) => (
-                                                    <h1
-                                                        className="text-2xl font-bold"
-                                                        {...props}
-                                                    />
-                                                ),
-                                                h2: ({ node, ...props }) => (
-                                                    <h2
-                                                        className="text-xl font-semibold"
-                                                        {...props}
-                                                    />
-                                                ),
-                                                ul: ({ node, ...props }) => (
-                                                    <ul
-                                                        className="list-disc ml-5"
-                                                        {...props}
-                                                    />
-                                                ),
-                                                ol: ({ node, ...props }) => (
-                                                    <ol
-                                                        className="list-decimal ml-5"
-                                                        {...props}
-                                                    />
-                                                ),
-                                                table: ({ node, ...props }) => (
-                                                    <table
-                                                        className="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                                                        {...props}
-                                                    />
-                                                ),
-                                                th: ({ node, ...props }) => (
-                                                    <th
-                                                        className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-                                                        {...props}
-                                                    />
-                                                ),
-                                                td: ({ node, ...props }) => (
-                                                    <td
-                                                        className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300"
-                                                        {...props}
-                                                    />
-                                                ),
-                                                a: ({ node, ...props }) => (
-                                                    <a
-                                                        className="text-blue-600 dark:text-blue-400 hover:underline"
-                                                        {...props}
-                                                    />
-                                                ),
-                                            }}
-                                        >
-                                            {data.contentMainLT}
-                                        </ReactMarkdown>
-                                    </div>
+                                    {i18n.language === 'en' ? (
+                                        <div className="prose dark:prose-dark max-w-none mb-4">
+                                            <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                                {t('contentMain')}
+                                            </h3>
+                                            <ReactMarkdown
+                                                components={{
+                                                    h1: ({
+                                                        node,
+                                                        ...props
+                                                    }) => (
+                                                        <h1
+                                                            className="text-2xl font-bold"
+                                                            {...props}
+                                                        />
+                                                    ),
+                                                    h2: ({
+                                                        node,
+                                                        ...props
+                                                    }) => (
+                                                        <h2
+                                                            className="text-xl font-semibold"
+                                                            {...props}
+                                                        />
+                                                    ),
+                                                    ul: ({
+                                                        node,
+                                                        ...props
+                                                    }) => (
+                                                        <ul
+                                                            className="list-disc ml-5"
+                                                            {...props}
+                                                        />
+                                                    ),
+                                                    ol: ({
+                                                        node,
+                                                        ...props
+                                                    }) => (
+                                                        <ol
+                                                            className="list-decimal ml-5"
+                                                            {...props}
+                                                        />
+                                                    ),
+                                                    table: ({
+                                                        node,
+                                                        ...props
+                                                    }) => (
+                                                        <table
+                                                            className="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                                                            {...props}
+                                                        />
+                                                    ),
+                                                    th: ({
+                                                        node,
+                                                        ...props
+                                                    }) => (
+                                                        <th
+                                                            className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+                                                            {...props}
+                                                        />
+                                                    ),
+                                                    td: ({
+                                                        node,
+                                                        ...props
+                                                    }) => (
+                                                        <td
+                                                            className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300"
+                                                            {...props}
+                                                        />
+                                                    ),
+                                                    a: ({ node, ...props }) => (
+                                                        <a
+                                                            className="text-blue-600 dark:text-blue-400 hover:underline"
+                                                            {...props}
+                                                        />
+                                                    ),
+                                                }}
+                                            >
+                                                {data.contentMain}
+                                            </ReactMarkdown>
+                                        </div>
+                                    ) : (
+                                        <div className="prose dark:prose-dark max-w-none mb-4">
+                                            <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                                {t('contentMainLT')}
+                                            </h3>
+                                            <ReactMarkdown
+                                                components={{
+                                                    h1: ({
+                                                        node,
+                                                        ...props
+                                                    }) => (
+                                                        <h1
+                                                            className="text-2xl font-bold"
+                                                            {...props}
+                                                        />
+                                                    ),
+                                                    h2: ({
+                                                        node,
+                                                        ...props
+                                                    }) => (
+                                                        <h2
+                                                            className="text-xl font-semibold"
+                                                            {...props}
+                                                        />
+                                                    ),
+                                                    ul: ({
+                                                        node,
+                                                        ...props
+                                                    }) => (
+                                                        <ul
+                                                            className="list-disc ml-5"
+                                                            {...props}
+                                                        />
+                                                    ),
+                                                    ol: ({
+                                                        node,
+                                                        ...props
+                                                    }) => (
+                                                        <ol
+                                                            className="list-decimal ml-5"
+                                                            {...props}
+                                                        />
+                                                    ),
+                                                    table: ({
+                                                        node,
+                                                        ...props
+                                                    }) => (
+                                                        <table
+                                                            className="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                                                            {...props}
+                                                        />
+                                                    ),
+                                                    th: ({
+                                                        node,
+                                                        ...props
+                                                    }) => (
+                                                        <th
+                                                            className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+                                                            {...props}
+                                                        />
+                                                    ),
+                                                    td: ({
+                                                        node,
+                                                        ...props
+                                                    }) => (
+                                                        <td
+                                                            className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300"
+                                                            {...props}
+                                                        />
+                                                    ),
+                                                    a: ({ node, ...props }) => (
+                                                        <a
+                                                            className="text-blue-600 dark:text-blue-400 hover:underline"
+                                                            {...props}
+                                                        />
+                                                    ),
+                                                }}
+                                            >
+                                                {data.contentMainLT}
+                                            </ReactMarkdown>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         )

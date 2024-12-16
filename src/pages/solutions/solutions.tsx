@@ -1,33 +1,20 @@
 import { Link } from 'react-router-dom'
-import classNamees from './solutions.module.css'
 import { useAuth } from '@/services/auth-service'
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import SolutionsAddNewSolution from './solutions-newsolution-dialog'
-import { MdEdit } from 'react-icons/md'
-import { IoMdAddCircleOutline } from 'react-icons/io'
-import { MdDeleteForever } from 'react-icons/md'
 import SolutionsDelete from './solutions-delete-confirm'
 import SolutionsEditDialog from './solutions-edit-dialog'
 import { SolutionsData } from '@/types'
 import Breadcrumb from '@/components/breadcrumb'
 import { FaCalendarAlt, FaUser } from 'react-icons/fa'
+import i18n from '@/i18n/config'
+import { useTranslation } from 'react-i18next'
 
 export default function Solutions() {
     const { user } = useAuth()
+    const { t } = useTranslation()
     const [data, setData] = useState<SolutionsData[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [hoveredItem, setHoveredItem] = useState<number | undefined>()
@@ -127,11 +114,17 @@ export default function Solutions() {
                                             to={`/solutions/${data._id}`}
                                             className="hover:text-gray-600"
                                         >
-                                            {data.titleCard}
+                                            {i18n.language === 'en'
+                                                ? data.titleCard
+                                                : data.titleCardLT}
                                         </Link>
                                     </h4>
                                     <div className="flex items-center text-gray-600 text-sm mb-2">
-                                        <span>{data.contentCard}</span>
+                                        <span>
+                                            {i18n.language === 'en'
+                                                ? data.contentCard
+                                                : data.contentCardLT}
+                                        </span>
                                     </div>
                                     {/* Added Date Section */}
                                     <div className="flex items-center text-gray-600 text-sm mb-2">
@@ -153,7 +146,7 @@ export default function Solutions() {
                                             to={`/solutions/${data._id}`}
                                             className="inline-block px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded hover:bg-gray-700 transition-colors"
                                         >
-                                            Read More
+                                            {t('read_more')}
                                         </Link>
                                     </div>
                                 </div>
