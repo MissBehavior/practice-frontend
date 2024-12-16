@@ -4,7 +4,6 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Admin from './components/admin/admin'
 import Header from './components/header/header'
-import postExternalImg from '/cropped-Featured-picture-1.jpg'
 import Footer from './pages/home/footer'
 import ScrollButton from './pages/home/scroll-to-top'
 
