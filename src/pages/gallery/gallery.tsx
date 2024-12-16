@@ -56,7 +56,7 @@ export default function Gallery() {
     }
 
     return (
-        <div className="h-svh dark:bg-[#101010] bg-slate-400">
+        <div className="min-h-svh dark:bg-[#101010] bg-slate-400">
             <Breadcrumb title={'Gallery'} parent={'Gallery'} />
             <section id="portfolio" className="text-center py-12 ">
                 <div className="container mx-auto px-4">

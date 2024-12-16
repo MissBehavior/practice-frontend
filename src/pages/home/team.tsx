@@ -1,5 +1,7 @@
 import React from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+import i18n from '@/i18n/config'
+import { useTranslation } from 'react-i18next'
 
 const mockdata = [
     {
@@ -52,6 +54,7 @@ const mockdata = [
 ]
 
 const Team: React.FC = () => {
+    const { t } = useTranslation()
     return (
         <div className="flex justify-center">
             <div className="w-full">
@@ -61,14 +64,18 @@ const Team: React.FC = () => {
                             <div className="text-center">
                                 <div className="max-w-5xl mx-auto">
                                     <p className="text-2xl dark:text-white text-gray-800 font-bold">
-                                        {person.text}
+                                        {i18n.language === 'en'
+                                            ? person.text
+                                            : person.textLt}
                                     </p>
                                 </div>
                                 <div className="mt-6">
                                     <h6 className="text-xl font-sans dark:text-white text-gray-800 uppercase">
                                         <span>{person.name} </span>-{' '}
                                         <span className="text-gray-400">
-                                            {person.role}
+                                            {i18n.language === 'en'
+                                                ? person.role
+                                                : person.roleLt}
                                         </span>
                                     </h6>
                                 </div>

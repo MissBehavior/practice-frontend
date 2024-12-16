@@ -1,82 +1,112 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { FiCast, FiLayers, FiUsers, FiMonitor } from 'react-icons/fi'
+import i18n from '@/i18n/config'
+import { Link } from 'react-router-dom'
 
 type ServiceItem = {
     icon: JSX.Element
     title: string
+    titleLT: string
     description: string
+    descriptionLT: string
 }
 
 const ServiceList: ServiceItem[] = [
     {
         icon: <FiCast className="text-4xl text-blue-600" />,
-        title: 'Business Strategy',
+        title: 'The client always comes first',
+        titleLT: 'Pirmiausia – Klientas',
         description:
-            'I throw myself down among the tall grass by the stream as I lie close to the earth.',
+            'Our goal is to understand the expectations of our clients and meet their needs on a highest level. As a company, we achieve these results by investing our energy and time, and taking each business case with respect, honesty and clarity.',
+        descriptionLT:
+            'Mūsų tikslas – suprasti kliento lūkesčius bei patenkinti jo poreikius. Tai darome investuodami savo energiją ir laiką, elgdamiesi pagarbiai ir sąžiningai.',
     },
     {
         icon: <FiLayers className="text-4xl text-blue-600" />,
-        title: 'Website Development',
+        title: 'Courage to improve',
+        titleLT: 'Drąsa tobulėti',
         description:
-            'I throw myself down among the tall grass by the stream as I lie close to the earth.',
+            'We are initiative and proactive – with an innovative mindset and openness to innovation, we aim to find and offer our clients the best solutions.',
+        descriptionLT:
+            'Mes esame iniciatyvūs – pasitelkdami pažangią mąstyseną bei atvirumą naujovėms siekiame rasti ir pasiūlyti klientams geriausius sprendimus.',
     },
     {
         icon: <FiUsers className="text-4xl text-blue-600" />,
-        title: 'Marketing & Reporting',
+        title: 'Competence and teamwork',
+        titleLT: 'Kompetentingi žmonės visada šalia',
         description:
-            'I throw myself down among the tall grass by the stream as I lie close to the earth.',
-    },
-    {
-        icon: <FiMonitor className="text-4xl text-blue-600" />,
-        title: 'Mobile App Development',
-        description:
-            'I throw myself down among the tall grass by the stream as I lie close to the earth.',
+            'Having competent people in our company, we strive to inspire by encouraging our employees to share their knowledge with each other and work in teams. This way we create a motivating and trust – based working environment for everybody. We also cherish honest feedback, which is an essential part of company’s success.',
+        descriptionLT:
+            'Turėdami tinkamas kompetencijas turinčių žmonių siekiame įkvėpti tobulėti. Skatiname darbuotojus dalintis žiniomis ir dirbti komandose – tokiu būdu kuriame motyvuojančią ir pasitikėjimu vieni kitais grįstą darbinę aplinką. Teikiame sąžiningą ir atvirą grįžtamąjį ryšį.',
     },
 ]
 
 const Service: React.FC = () => {
-    const title = 'Services'
+    const { t } = useTranslation()
+    const title = 'Vision'
+    const titleLT = 'Vizija'
     const description =
-        'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.'
+        'To be the strongest link in a business chain through smart engineering assistance & solutions.'
+    const descriptionLT =
+        'Būti stipriausia jungtimi verslo grandinėje teikiant klientams išmanias inžinerines paslaugas ir sprendimus.'
+    const title2 = 'Mission'
+    const title2LT = 'Misija'
+    const description2 = 'To back your way up to success'
+    const description2LT = 'Užtikrinti jūsų sėkmę.'
 
     return (
         <>
             <div className="flex flex-wrap">
-                {/* Left Column */}
                 <div className="w-full lg:w-1/3">
                     <div className="mt-8 lg:mt-0">
                         <h2 className="text-3xl font-bold text-white">
-                            {title}
+                            {i18n.language === 'en' ? title : titleLT}
                         </h2>
-                        <p className="mt-4 text-gray-400">{description}</p>
+                        <p className="mt-4 text-gray-400">
+                            {i18n.language === 'en'
+                                ? description
+                                : descriptionLT}
+                        </p>
+                        <h2 className="mt-8 text-3xl font-bold text-white">
+                            {i18n.language === 'en' ? title2 : title2LT}
+                        </h2>
+                        <p className="mt-4 text-gray-400">
+                            {i18n.language === 'en'
+                                ? description2
+                                : description2LT}
+                        </p>
                         <div className="mt-6">
                             <a
                                 className="inline-block px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-                                href="/service"
+                                href="mailto:info@winbas.eu"
                             >
-                                Request Custom Service
+                                {t('request_custom_service')}
                             </a>
                         </div>
                     </div>
                 </div>
-                {/* Right Column */}
                 <div className="w-full lg:w-2/3 mt-8 lg:mt-0">
                     <div className="flex flex-wrap">
                         {ServiceList.map((val, i) => (
                             <div className="w-full sm:w-1/2 p-4" key={i}>
-                                <a href="/service-details">
-                                    <div className="flex items-start">
+                                <Link to="/solutions">
+                                    <div className="flex items-start  hover:bg-gray-700 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg rounded-lg p-4">
                                         <div className="mr-4">{val.icon}</div>
                                         <div>
                                             <h3 className="text-xl font-semibold text-white">
-                                                {val.title}
+                                                {i18n.language === 'en'
+                                                    ? val.title
+                                                    : val.titleLT}
                                             </h3>
                                             <p className="mt-2 text-gray-400">
-                                                {val.description}
+                                                {i18n.language === 'en'
+                                                    ? val.description
+                                                    : val.descriptionLT}
                                             </p>
                                         </div>
                                     </div>
-                                </a>
+                                </Link>
                             </div>
                         ))}
                     </div>

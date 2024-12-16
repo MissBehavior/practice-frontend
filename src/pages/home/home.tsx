@@ -11,6 +11,7 @@ import NewsHome from './news'
 import ScrollButton from './scroll-to-top'
 
 export default function Home() {
+    const { t } = useTranslation()
     const textTranslations = {
         lt1: `Esame auganti atsidavusių talentų komanda, teikianti inžinerinę pagalbą ir sprendimus verslui: apskaičiuojame projekto sąmatas, apdorojame užsakymus, ruošiame CAD brėžinius,  planuojame gamybą ir siūlome IT paslaugas, pritaikytas Jūsų verslo poreikiams. Įkurta  2002 m. Skandinavijos langų ir durų rinkos lyderio, nuolat tobuliname savo procesus ir plečiame paslaugų sritis. Naujos idėjos ir jų įgyvendinimas yra įdomi mūsų verslo veiklos dalis. Darbas tarptautinėje aplinkoje leidžia mums surinkti vertingų žinių iš skirtingų verslo ir kultūrinių kontekstų. Nesvarbu, ar esate klientas, ar darbuotojas – leiskite mums tapti Jūsų sėkmės istorijos dalimi.`,
         lt2: `Winbas yra pirmas ir vienintelis oficialus atstovas prekiaujantis danų gamintojo – Outline langais ir durimis Lietuvoje. Kokybiški mediniai ar mediniai kaustyti aliuminiu langai iš Danijos – puiki investicija Jūsų namams. Per daugiau nei 30 metų gamybos sukaupta patirtis leidžia klientams pasiūlyti tinkamiausius architektūrinius ir dizaino sprendinius, kurie užtikrina aukščiausią energetinį efektyvumą.
@@ -78,7 +79,9 @@ export default function Home() {
                     <div className="flex justify-center mb-8">
                         <div className="w-full text-center">
                             <h3 className="text-5xl font-extrabold dark:text-white text-gray-800">
-                                Our Fun Facts
+                                {i18n.language === 'en'
+                                    ? 'Our Fun Facts'
+                                    : 'Mūsų įdomūs faktai'}
                             </h3>
                         </div>
                     </div>

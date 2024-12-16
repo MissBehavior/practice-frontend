@@ -11,9 +11,12 @@ import axios from 'axios'
 import { SolutionsData } from '@/types'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from '@/components/ui/button'
+import { useTranslation } from 'react-i18next'
+import i18n from '@/i18n/config'
 
 export default function Solutions() {
     const { user } = useAuth()
+    const { t } = useTranslation()
     const [solutionData, setSolutionData] = useState<SolutionsData[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [hoveredItem, setHoveredItem] = useState<number | undefined>()
@@ -40,8 +43,11 @@ export default function Solutions() {
     }, [])
 
     const title = 'Our Works'
+    const titleLT = 'Mūsų darbai'
     const description =
         'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.'
+    const descriptionLT =
+        'Yra daugybė Lorem Ipsum variantų, tačiau dauguma yra patyrę pakeitimus.'
 
     return (
         <div className="container mx-auto px-4">
@@ -49,16 +55,20 @@ export default function Solutions() {
                 <div className="w-full lg:w-1/2">
                     <div className="mb-8">
                         <h2 className="text-3xl font-semibold dark:text-white text-black">
-                            {title}
+                            {i18n.language === 'en' ? title : titleLT}
                         </h2>
                         <p className="dark:text-slate-50 text-gray-700 mt-4">
-                            {description}
+                            {i18n.language === 'en'
+                                ? description
+                                : descriptionLT}
                         </p>
                     </div>
                 </div>
                 <div className="mt-4 lg:mt-0">
                     <Link to="/solutions">
-                        <Button variant="outline">View all solutions</Button>
+                        <Button variant="outline">
+                            {t('view_all_solutions')}
+                        </Button>
                     </Link>
                 </div>
             </div>
@@ -137,7 +147,7 @@ export default function Solutions() {
                                                         className="inline-block bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded hover:bg-blue-800 transition-colors duration-300"
                                                         to={`/solutions/${card._id}`}
                                                     >
-                                                        Learn more
+                                                        {t('learn_more')}
                                                     </Link>
                                                 </div>
                                             </div>
