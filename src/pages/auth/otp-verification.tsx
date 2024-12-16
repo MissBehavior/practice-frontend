@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Link, useNavigate } from 'react-router-dom'
 
 interface OtpVerificationProps {
     email: string
@@ -11,21 +12,27 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
     onResetEmail,
 }) => {
     const [otp, setOtp] = useState<string>('')
-    const [timer, setTimer] = useState<number>(180) // 3 minutes timer (180 seconds)
+    const [timer, setTimer] = useState<number>(60) // 3 minutes timer (180 seconds)
     const [canResend, setCanResend] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
+    const navigate = useNavigate()
 
     // Start the countdown timer on component mount
     useEffect(() => {
-        const intervalId = setInterval(() => {
-            setTimer((prev) => (prev > 0 ? prev - 1 : 0))
-        }, 1000)
+        if (timer > 0) {
+            const intervalId = setInterval(() => {
+                setTimer((prev) => {
+                    if (prev <= 1) {
+                        clearInterval(intervalId)
+                        setCanResend(true)
+                        return 0
+                    }
+                    return prev - 1
+                })
+            }, 1000)
 
-        if (timer === 0) {
-            setCanResend(true) // Enable resend OTP
+            return () => clearInterval(intervalId) // Cleanup the interval on unmount
         }
-
-        return () => clearInterval(intervalId) // Cleanup the interval on unmount
     }, [timer])
 
     const handleSubmitOtp = async (e: React.FormEvent) => {
@@ -42,63 +49,121 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
 
             if (response.status === 200) {
                 console.log('OTP verified successfully')
-                // Proceed to password reset or other logic
+                // Navigate to ResetPassword component, passing email as state
+                navigate('/reset-password', { state: { email } })
             } else {
                 setError('Invalid OTP')
             }
-        } catch (error) {
-            setError('Error verifying OTP. Please try again.')
+        } catch (error: any) {
+            // Handle specific error messages from backend if available
+            if (
+                error.response &&
+                error.response.data &&
+                error.response.data.message
+            ) {
+                setError(error.response.data.message)
+            } else {
+                setError('Error verifying OTP. Please try again.')
+            }
         }
     }
 
     const handleResendOtp = async () => {
         if (canResend) {
             try {
-                const response = await axios.post('/forgot-password', { email })
+                const response = await axios.post(
+                    'http://localhost:3000/auth/forgot-password',
+                    { email }
+                )
 
                 if (response.status === 200) {
                     console.log('OTP resent successfully')
                     setTimer(180) // Reset timer to 3 minutes
                     setCanResend(false)
+                    setError(null) // Clear any previous errors
                 } else {
                     setError('Failed to resend OTP.')
                 }
-            } catch (error) {
-                setError('Error resending OTP. Please try again.')
+            } catch (error: any) {
+                if (
+                    error.response &&
+                    error.response.data &&
+                    error.response.data.message
+                ) {
+                    setError(error.response.data.message)
+                } else {
+                    setError('Error resending OTP. Please try again.')
+                }
             }
         }
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmitOtp}>
-                <div>
-                    <label>Enter OTP:</label>
-                    <input
-                        type="text"
-                        value={otp}
-                        onChange={(e) => setOtp(e.target.value)}
-                        required
-                    />
+        <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
+            <div className="max-w-md w-full bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
+                <div className="flex flex-1 flex-col justify-center space-y-5 max-w-md mx-auto mt-16">
+                    <form onSubmit={handleSubmitOtp}>
+                        <div className="flex flex-col space-y-2 text-center mb-4">
+                            <h2 className="text-3xl md:text-4xl font-bold">
+                                Confirm OTP
+                            </h2>
+                            <p className="text-md md:text-xl">
+                                Enter the OTP we just sent you.
+                            </p>
+                        </div>
+                        <div className="flex flex-col max-w-md space-y-5">
+                            <input
+                                type="text"
+                                value={otp}
+                                onChange={(e) => setOtp(e.target.value)}
+                                placeholder="Enter OTP"
+                                className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
+                                required
+                            />
+                            {error && <p className="text-red-500">{error}</p>}
+                            <div className="flex flex-row justify-between">
+                                <button
+                                    type="submit"
+                                    className="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white"
+                                >
+                                    Confirm
+                                </button>
+                                <div className="flex items-center justify-center">
+                                    {canResend ? (
+                                        <button
+                                            type="button"
+                                            className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-300"
+                                            onClick={handleResendOtp}
+                                        >
+                                            Resend OTP
+                                        </button>
+                                    ) : (
+                                        <p className="font-medium text-indigo-600 dark:text-indigo-300">
+                                            Time remaining:{' '}
+                                            {Math.floor(timer / 60)}:
+                                            {(timer % 60)
+                                                .toString()
+                                                .padStart(2, '0')}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center"></div>
+                        <div className="text-sm">
+                            <Link
+                                to="/forgot-password"
+                                className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-300"
+                                onClick={onResetEmail}
+                            >
+                                Return to Email Input
+                            </Link>
+                        </div>
+                    </div>
                 </div>
-                <button type="submit">Verify OTP</button>
-            </form>
-
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-
-            <div>
-                <p>
-                    Time remaining: {Math.floor(timer / 60)}:
-                    {(timer % 60).toString().padStart(2, '0')}
-                </p>
-                {canResend ? (
-                    <button onClick={handleResendOtp}>Resend OTP</button>
-                ) : (
-                    <button disabled>Resend OTP</button>
-                )}
             </div>
-
-            <button onClick={onResetEmail}>Return to Email Input</button>
         </div>
     )
 }

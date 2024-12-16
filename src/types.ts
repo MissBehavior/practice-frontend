@@ -164,6 +164,31 @@ export const signInSchema = z.object({
 export const forgotPasswordSchema = z.object({
     email: z.string().email('Invalid email').nonempty('Email is required'),
 })
+export const resetPasswordSchema = z
+    .object({
+        password: z
+            .string()
+            .min(8, { message: 'Password must be at least 8 characters long.' })
+            .regex(/[a-z]/, {
+                message: 'Password must contain at least one lowercase letter.',
+            })
+            .regex(/[A-Z]/, {
+                message: 'Password must contain at least one uppercase letter.',
+            })
+            .regex(/[0-9]/, {
+                message: 'Password must contain at least one number.',
+            })
+            .regex(/[^a-zA-Z0-9]/, {
+                message:
+                    'Password must contain at least one special character.',
+            }),
+        confirmPassword: z.string(),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+        message: 'Passwords do not match.',
+        path: ['confirmPassword'],
+    })
+export type TResetPasswordSchema = z.infer<typeof resetPasswordSchema>
 
 export type TSignInSchema = z.infer<typeof signInSchema>
 export type TSignUpSchema = z.infer<typeof signUpSchema>

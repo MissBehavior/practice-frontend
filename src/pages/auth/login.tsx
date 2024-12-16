@@ -89,20 +89,20 @@ export default function Login() {
     return (
         <>
             <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
-                {status === 'error' && (
-                    <div
-                        style={{
-                            backgroundColor: '#e57373',
-                            textAlign: 'center',
-                            fontWeight: 'bold',
-                        }}
-                        className="Auth-form"
-                    >
-                        {error}
-                    </div>
-                )}
                 <div className="max-w-md w-full bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
                     <div className="text-center">
+                        {status === 'error' && (
+                            <div
+                                style={{
+                                    backgroundColor: '#e57373',
+                                    textAlign: 'center',
+                                    fontWeight: 'bold',
+                                }}
+                                className="Auth-form"
+                            >
+                                {error}
+                            </div>
+                        )}
                         <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
                             Sign in to your account
                         </h2>
@@ -112,7 +112,7 @@ export default function Login() {
                                 to="/register"
                                 className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-300"
                             >
-                                Sign Up →
+                                {t('signup')} →
                             </Link>
                         </p>
                     </div>
@@ -126,7 +126,7 @@ export default function Login() {
                                 className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                                 htmlFor="email"
                             >
-                                Email address
+                                {t('email')}
                             </label>
                             <div className="mt-1">
                                 <input
@@ -150,7 +150,7 @@ export default function Login() {
                                 className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                                 htmlFor="password"
                             >
-                                Password
+                                {t('password')}
                             </label>
                             <div className="mt-1">
                                 <input
@@ -174,7 +174,7 @@ export default function Login() {
                                     to="/forgot-password"
                                     className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-300"
                                 >
-                                    Forgot your password?
+                                    {t('forgot_passwordquestion')}
                                 </Link>
                             </div>
                         </div>
@@ -191,67 +191,6 @@ export default function Login() {
                     </form>
                 </div>
             </div>
-
-            {/* {status === 'error' && (
-                <div
-                    style={{
-                        backgroundColor: '#e57373',
-                        textAlign: 'center',
-                        fontWeight: 'bold',
-                    }}
-                    className="Auth-form"
-                >
-                    {error}
-                </div>
-            )}
-            <div
-                className={
-                    'flex flex-wrap justify-center items-start bg-white dark:bg-background'
-                }
-            >
-                <div className="mt-16 mb-12 min-h-64 w-full bg-white dark:bg-background flex justify-center items-center flex-col">
-                    <form
-                        onSubmit={handleSubmit(onSubmitE)}
-                        className={`flex flex-col gap-10 p-16 xs:w-full md:w-11/12 lg:w-9/12 xl:w-7/12 2xl:w-2/6 w-full bg-white dark:bg-slate-700 shadow-xl hover:shadow-2xl transition-all transform duration-300 text-center items-center justify-center`}
-                    >
-                        <input
-                            {...register('email')}
-                            type="email"
-                            placeholder="Email"
-                            className="w-full px-2 py-2 rounded border-solid border-slate-700 dark:border-slate-300 border-2  dark:bg-slate-700"
-                        />
-                        {errors.email && (
-                            <p className="text-red-500">{`${errors.email.message}`}</p>
-                        )}
-                        <input
-                            {...register('password')}
-                            type="password"
-                            placeholder="Password"
-                            className="w-full px-2 py-2 rounded border-solid border-slate-700 dark:border-slate-300 border-2  dark:bg-slate-700"
-                        />
-                        {errors.password && (
-                            <p className="text-red-500">{`${errors.password.message}`}</p>
-                        )}
-
-                        <Button
-                            disabled={isSubmitting}
-                            type="submit"
-                            className="disabled:bg-red-500 py-2 rounded"
-                            onClick={() => {
-                                handleSubmit(onSubmitE)
-                            }}
-                        >
-                            {t('login')}
-                        </Button>
-                        <NavLink
-                            to="/forgot-password"
-                            className="text-blue-500"
-                        >
-                            Forgot Password?
-                        </NavLink>
-                    </form>
-                </div>
-            </div> */}
         </>
     )
 }

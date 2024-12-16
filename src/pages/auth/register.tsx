@@ -98,67 +98,132 @@ export default function Register() {
     }
     return (
         <>
-            {status === 'error' && (
-                <div
-                    style={{
-                        backgroundColor: '#e57373',
-                        textAlign: 'center',
-                        fontWeight: 'bold',
-                    }}
-                    className="Auth-form"
-                >
-                    {error}
-                </div>
-            )}
-            <div
-                className={
-                    'flex flex-wrap justify-center items-start bg-white dark:bg-background'
-                }
-            >
-                <div className="mt-16 mb-12 min-h-64 w-full bg-white dark:bg-background flex justify-center items-center flex-col">
-                    <form
-                        onSubmit={handleSubmit(onSubmit)}
-                        className={`flex flex-col gap-10 p-16 xs:w-full md:w-11/12 lg:w-9/12 xl:w-7/12 2xl:w-2/6 w-full bg-white dark:bg-slate-700 shadow-xl hover:shadow-2xl transition-all transform duration-300 text-center items-center justify-center`}
-                    >
-                        <input
-                            {...register('name')}
-                            type="name"
-                            placeholder="Name"
-                            className="w-full px-2 py-2 rounded border-solid border-slate-700 dark:border-slate-300 border-2  dark:bg-slate-700"
-                        />
-                        {errors.name && (
-                            <p className="text-red-500">
-                                {`${errors.name.message}`} eba
-                            </p>
-                        )}
-                        <input
-                            {...register('email')}
-                            type="email"
-                            placeholder="Email"
-                            className="w-full px-2 py-2 rounded border-solid border-slate-700 dark:border-slate-300 border-2  dark:bg-slate-700"
-                        />
-                        {errors.email && (
-                            <p className="text-red-500">{`${errors.email.message}`}</p>
-                        )}
-
-                        <input
-                            {...register('password')}
-                            type="password"
-                            placeholder="Password"
-                            className="w-full px-2 py-2 rounded border-solid border-slate-700 dark:border-slate-300 border-2  dark:bg-slate-700"
-                        />
-                        {errors.password && (
-                            <p className="text-red-500">{`${errors.password.message}`}</p>
-                        )}
-
-                        <Button
-                            disabled={isSubmitting}
-                            type="submit"
-                            className="disabled:bg-red-500 py-2 rounded"
-                            onClick={handleSubmit(onSubmit)}
+            <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
+                <div className="max-w-md w-full bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
+                    {status === 'error' && (
+                        <div
+                            style={{
+                                backgroundColor: '#e57373',
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                            }}
+                            className="Auth-form"
                         >
-                            {t('register')}
-                        </Button>
+                            {error}
+                        </div>
+                    )}
+                    <div className="text-center">
+                        <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            Sign up for an account
+                        </h2>
+                        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                            Have an account?{' '}
+                            <Link
+                                to="/login"
+                                className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-300"
+                            >
+                                Sign in →
+                            </Link>
+                        </p>
+                    </div>
+
+                    <form
+                        className="space-y-6 mt-8"
+                        onSubmit={handleSubmit(onSubmit)}
+                    >
+                        <div>
+                            <label
+                                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                                htmlFor="email"
+                            >
+                                Name
+                            </label>
+                            <div className="mt-1">
+                                <input
+                                    {...register('name')}
+                                    className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm border-gray-300 placeholder-gray-400 dark:bg-gray-800 dark:border-gray-600 dark:text-white focus:ring-indigo-500 focus:border-indigo-500"
+                                    id="name"
+                                    type="name"
+                                    placeholder="Name"
+                                    required
+                                    autoFocus
+                                />
+
+                                {errors.name && (
+                                    <p className="text-red-500">
+                                        {`${errors.name.message}`}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                        <div>
+                            <label
+                                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                                htmlFor="email"
+                            >
+                                Email address
+                            </label>
+                            <div className="mt-1">
+                                <input
+                                    {...register('email')}
+                                    className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm border-gray-300 placeholder-gray-400 dark:bg-gray-800 dark:border-gray-600 dark:text-white focus:ring-indigo-500 focus:border-indigo-500"
+                                    id="email"
+                                    type="email"
+                                    autoComplete="email"
+                                    placeholder="your@email.com"
+                                    required
+                                    autoFocus
+                                />
+                                {errors.email && (
+                                    <p className="text-red-500">{`${errors.email.message}`}</p>
+                                )}
+                            </div>
+                        </div>
+
+                        <div>
+                            <label
+                                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                                htmlFor="password"
+                            >
+                                Password
+                            </label>
+                            <div className="mt-1">
+                                <input
+                                    {...register('password')}
+                                    className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm border-gray-300 placeholder-gray-400 dark:bg-gray-800 dark:border-gray-600 dark:text-white focus:ring-indigo-500 focus:border-indigo-500"
+                                    id="password"
+                                    type="password"
+                                    placeholder="••••••••"
+                                    required
+                                />
+                                {errors.password && (
+                                    <p className="text-red-500">{`${errors.password.message}`}</p>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center"></div>
+                            <div className="text-sm">
+                                {/* <Link
+                                    to="/forgot-password"
+                                    className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-300"
+                                >
+                                    Forgot your password?
+                                </Link> */}
+                            </div>
+                        </div>
+
+                        <div>
+                            <Button
+                                disabled={isSubmitting}
+                                type="submit"
+                                className="inline-flex items-center border font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 px-4 py-2 text-base bg-black text-white hover:bg-gray-800 border-black focus:ring-black w-full justify-center"
+                                onClick={handleSubmit(onSubmit)}
+                            >
+                                {t('register')}
+                            </Button>
+                        </div>
                     </form>
                 </div>
             </div>

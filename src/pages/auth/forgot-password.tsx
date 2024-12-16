@@ -26,11 +26,9 @@ const ForgotPassword: React.FC<EmailSubmitProps> = ({ onEmailSubmit }) => {
     })
 
     const onSubmitE = async (data: TForgotPasswordSchema) => {
-        // ...
         if (email) {
             console.log('---- if Email in Request -----')
             try {
-                // Use axios to send the email to the forgot-password endpoint
                 const response = await axios.post(
                     'http://localhost:3000/auth/forgot-password/',
                     { email: email },
@@ -40,7 +38,7 @@ const ForgotPassword: React.FC<EmailSubmitProps> = ({ onEmailSubmit }) => {
                 console.log(response)
 
                 if (response.status === 200) {
-                    onEmailSubmit(email) // Pass the email to parent to switch to OTP verification
+                    onEmailSubmit(email)
                 } else {
                     console.log('Failed to send email.')
                     console.log(response)
@@ -53,6 +51,7 @@ const ForgotPassword: React.FC<EmailSubmitProps> = ({ onEmailSubmit }) => {
                         console.log('Bad request.')
                     } else if (error.response.status === 404) {
                         console.log('Email not found.')
+                        setError('Failed to send email.(Security Error)')
                     } else if (error.response.status === 429) {
                         console.log('Too many requests.')
                         setError('Too many requests. Please try again later.')
@@ -78,17 +77,14 @@ const ForgotPassword: React.FC<EmailSubmitProps> = ({ onEmailSubmit }) => {
         }
     }
 
-    useEffect(() => {
-        // if (userRef.current === null) return
-        // userRef.current.focus()
-    }, [])
+    useEffect(() => {}, [])
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
             <div className="max-w-md w-full bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
                 <div className="text-center">
                     <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Sign in to your account
+                        Enter your email
                     </h2>
                 </div>
 
@@ -126,9 +122,6 @@ const ForgotPassword: React.FC<EmailSubmitProps> = ({ onEmailSubmit }) => {
                             disabled={isSubmitting}
                             type="submit"
                             className="inline-flex items-center border font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 px-4 py-2 text-base bg-black text-white hover:bg-gray-800 border-black focus:ring-black w-full justify-center"
-                            onClick={() => {
-                                handleSubmit(onSubmitE)
-                            }}
                         >
                             {t('send_email')}
                         </Button>

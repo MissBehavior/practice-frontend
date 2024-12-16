@@ -32,6 +32,7 @@ import { TasksListPage } from './components/admin/tasks/index.tsx'
 import { TasksEditPage } from './components/admin/tasks/edit/task-edit-page.tsx'
 import PostDetail from './pages/posts-external/post-detail.tsx'
 import TeamUpdateDetail from './pages/team-updates/team-updates-detail.tsx'
+import ResetPassword from './pages/auth/reset-password.tsx'
 
 const router = createBrowserRouter([
     {
@@ -126,6 +127,10 @@ const router = createBrowserRouter([
             {
                 path: '/register',
                 element: <Register />,
+            },
+            {
+                path: '/reset-password',
+                element: <ResetPassword />,
             },
             // {
             //     path: '/admin',
