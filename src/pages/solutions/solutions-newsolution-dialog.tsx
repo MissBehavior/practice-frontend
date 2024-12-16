@@ -21,13 +21,18 @@ import DotLoader from 'react-spinners/DotLoader'
 interface SolutionsAddNewSolutionProps {
     fetchData: () => void
 }
+
 function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
     const { userToken } = useAuth()
     const api = useAxios()
     const [image, setImage] = useState<File | null>(null)
+    const [contentMainImg, setContentMainImg] = useState<File | null>(null)
     const [open, setOpen] = useState(false)
     const [contentCard, setContentCard] = useState('')
     const [titleCard, setTitleCard] = useState('')
+    const [titleCardLT, setTitleCardLT] = useState('')
+    const [contentMain, setContentMain] = useState('')
+    const [contentMainLT, setContentMainLT] = useState('')
     const { t } = useTranslation()
     const [loading, setLoading] = useState(false)
     const { theme } = useTheme()
@@ -43,24 +48,52 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
         }
     }
 
+    const handleContentMainImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log('Content Main Image selected')
+        console.log(e.target.files?.[0])
+        const file = e.target.files?.[0]
+        if (file) {
+            setContentMainImg(file)
+        } else {
+            setContentMainImg(null)
+        }
+    }
+
     const handleSubmit = async (e: React.FormEvent) => {
         setLoading(true)
         e.preventDefault()
         console.log('HANDLE SUBMIT')
         console.log(image)
-        if (!image || !titleCard || !contentCard) {
+        console.log(contentMainImg)
+
+        // Validate required fields
+        if (
+            !image ||
+            !titleCard ||
+            !titleCardLT ||
+            !contentCard ||
+            !contentMain ||
+            !contentMainLT ||
+            !contentMainImg
+        ) {
             toast({
                 variant: 'destructive',
                 title: t('error'),
                 description: t('fillAllFields'),
             })
+            setLoading(false)
             return
         }
 
         const formData = new FormData()
         formData.append('image', image)
         formData.append('titleCard', titleCard)
+        formData.append('titleCardLT', titleCardLT)
         formData.append('contentCard', contentCard)
+        formData.append('contentMain', contentMain)
+        formData.append('contentMainLT', contentMainLT)
+        formData.append('contentMainImg', contentMainImg)
+
         try {
             const response = await api.post(
                 '/solutions/api/upload/',
@@ -92,6 +125,7 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
         setLoading(false)
         fetchData()
     }
+
     return (
         <div className="min-h-48 flex justify-center items-center select-none">
             <div className="">
@@ -99,8 +133,12 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                     open={open}
                     onOpenChange={() => {
                         setImage(null)
+                        setContentMainImg(null)
                         setContentCard('')
                         setTitleCard('')
+                        setTitleCardLT('')
+                        setContentMain('')
+                        setContentMainLT('')
                         setOpen(!open)
                     }}
                 >
@@ -112,7 +150,7 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                             </h1>
                         </div>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
+                    <DialogContent className="sm:max-w-[600px]">
                         <DialogHeader>
                             <DialogTitle>{t('newSolution')}</DialogTitle>
                             <DialogDescription></DialogDescription>
@@ -121,6 +159,7 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                             className="grid gap-4 py-4"
                             onSubmit={handleSubmit}
                         >
+                            {/* Image Upload */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="file" className="text-right">
                                     {t('image')}
@@ -130,8 +169,10 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                                     className="col-span-3"
                                     type="file"
                                     onChange={handleImage}
+                                    accept="image/*"
                                 />
                             </div>
+                            {/* Title Card */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="title" className="text-right">
                                     {t('title')}
@@ -140,11 +181,30 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                                     id="title"
                                     placeholder={t('solutionTitle')}
                                     className="col-span-3"
+                                    value={titleCard}
                                     onChange={(e) => {
                                         setTitleCard(e.target.value)
                                     }}
+                                    required
                                 />
                             </div>
+                            {/* Title Card LT */}
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="titleLT" className="text-right">
+                                    {t('titleLT')}
+                                </Label>
+                                <Input
+                                    id="titleLT"
+                                    placeholder={t('solutionTitleLT')}
+                                    className="col-span-3"
+                                    value={titleCardLT}
+                                    onChange={(e) => {
+                                        setTitleCardLT(e.target.value)
+                                    }}
+                                    required
+                                />
+                            </div>
+                            {/* Content Card */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label
                                     htmlFor="description"
@@ -156,9 +216,67 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                                     id="description"
                                     placeholder={t('solutionDescription')}
                                     className="col-span-3"
+                                    value={contentCard}
                                     onChange={(e) => {
                                         setContentCard(e.target.value)
                                     }}
+                                    required
+                                />
+                            </div>
+                            {/* Content Main */}
+                            <div className="grid grid-cols-4 items-start gap-4">
+                                <Label
+                                    htmlFor="contentMain"
+                                    className="text-right mt-2"
+                                >
+                                    {t('contentMain')}
+                                </Label>
+                                <textarea
+                                    id="contentMain"
+                                    placeholder={t('solutionContentMain')}
+                                    className="col-span-3 p-2 border rounded"
+                                    value={contentMain}
+                                    onChange={(e) => {
+                                        setContentMain(e.target.value)
+                                    }}
+                                    required
+                                    rows={4}
+                                ></textarea>
+                            </div>
+                            {/* Content Main LT */}
+                            <div className="grid grid-cols-4 items-start gap-4">
+                                <Label
+                                    htmlFor="contentMainLT"
+                                    className="text-right mt-2"
+                                >
+                                    {t('contentMainLT')}
+                                </Label>
+                                <textarea
+                                    id="contentMainLT"
+                                    placeholder={t('solutionContentMainLT')}
+                                    className="col-span-3 p-2 border rounded"
+                                    value={contentMainLT}
+                                    onChange={(e) => {
+                                        setContentMainLT(e.target.value)
+                                    }}
+                                    required
+                                    rows={4}
+                                ></textarea>
+                            </div>
+                            {/* Content Main Image Upload */}
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label
+                                    htmlFor="contentMainImg"
+                                    className="text-right"
+                                >
+                                    {t('contentMainImg')}
+                                </Label>
+                                <Input
+                                    id="contentMainImg"
+                                    className="col-span-3"
+                                    type="file"
+                                    onChange={handleContentMainImage}
+                                    accept="image/*"
                                 />
                             </div>
                         </form>

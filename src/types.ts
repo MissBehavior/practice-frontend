@@ -58,10 +58,12 @@ export interface SolutionsData {
     cardImgUrl: string
     cardImgPath: string
     titleCard: string
+    titleCardLT: string
     contentCard: string
-    contentMain?: string
-    contentMainImg?: string
-    contantMainImgPath?: string
+    contentMain: string
+    contentMainLT: string
+    contentMainImg: string
+    contantMainImgPath: string
     createdAt: string
 }
 export interface GalleryData {

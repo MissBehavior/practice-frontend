@@ -1,13 +1,10 @@
-import { Skeleton } from '@/components/ui/skeleton'
-import { SolutionsData } from '@/types'
-import axios from 'axios'
+// src/components/SolutionsDetail.tsx
+
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import classNamees from './solutions.module.css'
-import MyEditor from '@/components/editor'
-import { Input } from '@/components/ui/input'
+import { SolutionsData } from '@/types'
+import axios from 'axios'
 import { useAuth, useAxios } from '@/services/auth-service'
-// import SolutionsEditDetail from './solution-edit-detail'
 import { Button } from '@/components/ui/button'
 import { MdEdit } from 'react-icons/md'
 import { IoCloseSharp } from 'react-icons/io5'
@@ -17,14 +14,17 @@ import parse from 'html-react-parser'
 import DotLoader from 'react-spinners/DotLoader'
 import { useTheme } from '@/components/theme-provider'
 import Breadcrumb from '@/components/breadcrumb'
+import { Skeleton } from '@/components/ui/skeleton'
+import MyEditor from '@/components/editor'
+import { Input } from '@/components/ui/input'
 
 function SolutionsDetail() {
     const { user, userToken } = useAuth()
     const api = useAxios()
-    const params = useParams()
+    const params = useParams<{ id: string }>()
     const [loading, setLoading] = useState<boolean>(true)
-    const [data, setData] = useState<SolutionsData>()
-    const [image, setImage] = React.useState<File | null>(null)
+    const [data, setData] = useState<SolutionsData | null>(null)
+    const [image, setImage] = useState<File | null>(null)
     const [contentMain, setContentMain] = useState('')
     const [titleCard, setTitleCard] = useState('')
     const [isEdit, setIsEdit] = useState(false)
@@ -34,21 +34,24 @@ function SolutionsDetail() {
     const fetchSolutionDetail = async () => {
         setLoading(true)
         try {
-            const response = await axios.get(
-                'http://localhost:3000/solutions/' + params.id
+            const response = await axios.get<SolutionsData>(
+                `http://localhost:3000/solutions/${params.id}`
             )
-            console.log('response:', response)
-            console.log('-----------------')
             setData(response.data)
             setTitleCard(response.data.titleCard)
             setContentMain(response.data.contentMain)
-            setLoading(false)
-            console.log(response.data)
         } catch (error) {
             console.error('Error fetching data:', error)
+            toast({
+                variant: 'destructive',
+                title: t('error'),
+                description: t('error_fetching_data'),
+            })
+        } finally {
             setLoading(false)
         }
     }
+
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
         if (file) {
@@ -57,60 +60,32 @@ function SolutionsDetail() {
             setImage(null)
         }
     }
-    useEffect(() => {
-        // setTimeout(() => {
-        fetchSolutionDetail()
-        // }, 100000)
-    }, [])
-    useEffect(() => {
-        if (data && data.contentMain) {
-            setContentMain(data.contentMain)
-            setTitleCard(data.titleCard)
-        }
-    }, [isEdit])
 
-    if (loading) {
-        return (
-            <>
-                <Breadcrumb title={t('Solutions')} parent={t('Solutions')} />
-                <section className="flex flex-col flex-wrap mx-auto items-start text-center content-center h-screen">
-                    {Array.from({ length: 1 }).map((_, index) => (
-                        <div
-                            key={index}
-                            className="flex w-full px-4 py-6 md:w-1/2 lg:w-1/3 justify-center"
-                        >
-                            <div className="space-y-3">
-                                <Skeleton className="h-36 w-full" />
-                                <Skeleton className="h-8 w-1/2 flex flex-wrap items-center flex-1 px-4 py-1 text-center mx-auto" />
-                                <Skeleton className="h-32 w-[450px]" />
-                                <Skeleton className="h-16 w-[350px] mb-20" />
-                            </div>
-                        </div>
-                    ))}
-                </section>
-            </>
-        )
-    }
+    useEffect(() => {
+        fetchSolutionDetail()
+    }, [params.id])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
-        console.log('HANDLE SUBMIT in EDIT')
-        if (!image || !contentMain) {
+        if (!contentMain) {
             toast({
                 variant: 'destructive',
                 title: t('error'),
                 description: t('fillAllFields'),
             })
+            setLoading(false)
             return
         }
+
         const formData = new FormData()
-        formData.append('image', image)
+        if (image) formData.append('image', image)
         formData.append('titleCard', titleCard)
         formData.append('contentMain', contentMain)
+
         try {
             const response = await api.patch(
-                '/solutions/detail/' + params.id,
+                `/solutions/detail/${params.id}`,
                 formData,
                 {
                     headers: {
@@ -119,142 +94,143 @@ function SolutionsDetail() {
                     },
                 }
             )
-            console.log(response.data)
+            toast({
+                variant: 'success',
+                title: t('success'),
+                description: t('changesSaved'),
+            })
+            setIsEdit(false)
+            fetchSolutionDetail()
         } catch (error) {
-            console.error('Error uploading image:', error)
+            console.error('Error updating solution:', error)
             toast({
                 variant: 'destructive',
                 title: t('error'),
-                description: t('error'),
+                description: t('error_saving_changes'),
             })
+        } finally {
             setLoading(false)
-            return
         }
-        toast({
-            variant: 'success',
-            title: t('success'),
-            description: t('changesSaved'),
-        })
-        setLoading(false)
-        setIsEdit(false)
-        fetchSolutionDetail()
     }
+
+    if (loading) {
+        return (
+            <>
+                <Breadcrumb title={t('Solutions')} parent={t('Solutions')} />
+                <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+                    <DotLoader
+                        color={theme === 'dark' ? '#ffffff' : '#3b82f6'}
+                        size={60}
+                    />
+                </div>
+            </>
+        )
+    }
+
     return (
         <>
             <Breadcrumb title={t('Solutions')} parent={t('Solutions')} />
-            <div className="mt-16 mb-12 min-h-64 bg-white dark:bg-background flex justify-center items-center flex-col">
-                {user.isAdmin && (
-                    <div className="flex flex-row mb-[-20px] z-10 gap-2">
-                        <Button
-                            className="rounded-md bg-slate-500 hover:bg-orange-300 shadow-lg transition-all transform duration-150 hover:scale-105 cursor-pointer"
-                            onClick={() => {
-                                setIsEdit(!isEdit)
-                            }}
-                        >
-                            {!isEdit && (
-                                <MdEdit className="relative top-0 right-0 w-[40px] p-1 h-[40px] rounded-md shadow-xl transition-all transform duration-150 hover:scale-105 cursor-pointer" />
-                            )}
-                            {isEdit && (
-                                <IoCloseSharp className="relative top-0 right-0 w-[40px] p-1 h-[40px] rounded-md shadow-xl transition-all transform duration-150 hover:scale-105 cursor-pointer" />
-                            )}
-                        </Button>
-                    </div>
-                )}
-                {isEdit && (
-                    <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
-                        <div
-                            className={
-                                'flex flex-wrap justify-center gap-4 items-start bg-white dark:bg-background'
-                            }
-                        >
-                            <div
-                                className={`p-6 min-w-[600px] gap-5 bg-white dark:bg-slate-700 rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
+            <div className="py-10 bg-gray-100 dark:bg-gray-900 min-h-screen">
+                <div className="max-w-5xl mx-auto px-4">
+                    {user.isAdmin && (
+                        <div className="flex justify-end mb-4">
+                            <Button
+                                variant="outline"
+                                className="flex items-center gap-2"
+                                onClick={() => setIsEdit(!isEdit)}
                             >
-                                <img
-                                    className="w-64 object-cover rounded-t-md hover:scale-110 rounded transition-all duration-300 ease-in-out mx-auto"
-                                    src={data!.contentMainImg}
-                                    alt=""
-                                />
-                                <div className="my-4">
-                                    <h1 className="text-2xl font-bold text-gray-700">
-                                        {data ? data.titleCard : titleCard}
-                                    </h1>
-                                    <Input
-                                        id="title"
-                                        className="col-span-3 mb-6"
-                                        type="text"
-                                        value={titleCard}
-                                        onChange={(e) =>
-                                            setTitleCard(e.target.value)
-                                        }
-                                    />
-                                    <Input
-                                        id="file"
-                                        className="col-span-3 mb-6"
-                                        type="file"
-                                        onChange={handleImage}
-                                    />
-
-                                    <MyEditor
-                                        valueEn={contentMain}
-                                        setValueEn={setContentMain}
-                                    />
-                                </div>
-                                {loading && (
-                                    <DotLoader
-                                        color={
-                                            theme === 'dark'
-                                                ? '#ffffff'
-                                                : 'rgb(51 65 85)'
-                                        }
-                                    />
+                                {isEdit ? (
+                                    <>
+                                        <IoCloseSharp size={20} />
+                                        {t('cancel')}
+                                    </>
+                                ) : (
+                                    <>
+                                        <MdEdit size={20} />
+                                        {t('edit')}
+                                    </>
                                 )}
-                                {!loading && (
-                                    <Button
-                                        onClick={handleSubmit}
-                                        type="submit"
-                                        className="w-full"
-                                    >
-                                        {t('submit')}
-                                    </Button>
-                                )}
-                            </div>
-                        </div>
-                    </form>
-                )}
-                {data?.contentMain == '' &&
-                    data?.contentMainImg == '' &&
-                    !isEdit && (
-                        <div
-                            className={`p-6 bg-white dark:bg-slate-700 rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
-                        >
-                            <div className="p-10">
-                                <h1 className="text-xl mt-2 text-gray-700 dark:text-white max-w-64">
-                                    Coming soon !
-                                </h1>
-                            </div>
+                            </Button>
                         </div>
                     )}
-                {data?.contentMain && data?.contentMainImg && !isEdit && (
-                    <div
-                        className={`p-6 min-w-[600px] min-h-[30vh] flex flex-col bg-white dark:bg-slate-700 rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center`}
-                    >
-                        <img
-                            className="w-64 object-cover rounded-t-md hover:scale-110 rounded transition-all duration-300 ease-in-out"
-                            src={data!.contentMainImg}
-                            alt=""
-                        />
-                        <div className="mt-4 w-full">
-                            <h1 className="text-2xl font-bold text-gray-700 dark:text-white">
-                                {data!.titleCard}
-                            </h1>
-
-                            <div className="ql-editor">
-                                {parse(data!.contentMain)}
+                    {isEdit ? (
+                        <form
+                            onSubmit={handleSubmit}
+                            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg"
+                        >
+                            <div className="mb-4">
+                                <label className="block text-gray-700 dark:text-gray-200 mb-2">
+                                    {t('title')}
+                                </label>
+                                <Input
+                                    type="text"
+                                    value={titleCard}
+                                    onChange={(e) =>
+                                        setTitleCard(e.target.value)
+                                    }
+                                    required
+                                    className="w-full"
+                                />
                             </div>
-                        </div>
-                    </div>
-                )}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 dark:text-gray-200 mb-2">
+                                    {t('image')}
+                                </label>
+                                <Input
+                                    type="file"
+                                    onChange={handleImage}
+                                    accept="image/*"
+                                    className="w-full"
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-gray-700 dark:text-gray-200 mb-2">
+                                    {t('content')}
+                                </label>
+                                <MyEditor
+                                    valueEn={contentMain}
+                                    setValueEn={setContentMain}
+                                />
+                            </div>
+                            <div className="flex justify-end">
+                                <Button type="submit" disabled={loading}>
+                                    {loading ? (
+                                        <DotLoader
+                                            color={
+                                                theme === 'dark'
+                                                    ? '#ffffff'
+                                                    : '#3b82f6'
+                                            }
+                                            size={20}
+                                        />
+                                    ) : (
+                                        t('submit')
+                                    )}
+                                </Button>
+                            </div>
+                        </form>
+                    ) : (
+                        data && (
+                            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                                {data.contentMainImg && (
+                                    <img
+                                        src={data.contentMainImg}
+                                        alt={data.titleCard}
+                                        className="w-full h-96 object-cover"
+                                    />
+                                )}
+                                <div className="p-6">
+                                    <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                                        {data.titleCard}
+                                    </h1>
+                                    <div className="prose dark:prose-dark max-w-none">
+                                        {parse(data.contentMain)}
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    )}
+                </div>
             </div>
         </>
     )
