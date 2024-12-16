@@ -60,6 +60,7 @@ export interface SolutionsData {
     titleCard: string
     titleCardLT: string
     contentCard: string
+    contentCardLT: string
     contentMain: string
     contentMainLT: string
     contentMainImg: string

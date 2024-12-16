@@ -10,12 +10,12 @@ import { MdEdit } from 'react-icons/md'
 import { IoCloseSharp } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
 import { toast } from '@/components/ui/use-toast'
-import parse from 'html-react-parser'
+import ReactMarkdown from 'react-markdown' // Import ReactMarkdown
 import DotLoader from 'react-spinners/DotLoader'
 import { useTheme } from '@/components/theme-provider'
 import Breadcrumb from '@/components/breadcrumb'
 import { Skeleton } from '@/components/ui/skeleton'
-import MyEditor from '@/components/editor'
+import MDEditor from '@uiw/react-md-editor' // Import MDEditor
 import { Input } from '@/components/ui/input'
 
 function SolutionsDetail() {
@@ -25,12 +25,17 @@ function SolutionsDetail() {
     const [loading, setLoading] = useState<boolean>(true)
     const [data, setData] = useState<SolutionsData | null>(null)
     const [image, setImage] = useState<File | null>(null)
-    const [contentMain, setContentMain] = useState('')
-    const [titleCard, setTitleCard] = useState('')
-    const [isEdit, setIsEdit] = useState(false)
+    const [contentMain, setContentMain] = useState<string | undefined>('')
+    const [contentMainLT, setContentMainLT] = useState<string | undefined>('')
+    const [titleCard, setTitleCard] = useState<string>('')
+    const [titleCardLT, setTitleCardLT] = useState<string>('')
+    const [contentCard, setContentCard] = useState<string>('')
+    const [contentCardLT, setContentCardLT] = useState<string>('')
+    const [isEdit, setIsEdit] = useState<boolean>(false)
     const { t } = useTranslation()
     const { theme } = useTheme()
 
+    // Fetch solution details from the backend
     const fetchSolutionDetail = async () => {
         setLoading(true)
         try {
@@ -39,7 +44,11 @@ function SolutionsDetail() {
             )
             setData(response.data)
             setTitleCard(response.data.titleCard)
+            setTitleCardLT(response.data.titleCardLT)
+            setContentCard(response.data.contentCard)
+            setContentCardLT(response.data.contentCardLT)
             setContentMain(response.data.contentMain)
+            setContentMainLT(response.data.contentMainLT)
         } catch (error) {
             console.error('Error fetching data:', error)
             toast({
@@ -52,6 +61,7 @@ function SolutionsDetail() {
         }
     }
 
+    // Handle image selection
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
         if (file) {
@@ -61,14 +71,21 @@ function SolutionsDetail() {
         }
     }
 
-    useEffect(() => {
-        fetchSolutionDetail()
-    }, [params.id])
-
+    // Handle form submission for editing
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
-        if (!contentMain) {
+
+        // Validate required fields
+        if (
+            !titleCard ||
+            !titleCardLT ||
+            !contentCard ||
+            !contentCardLT ||
+            !contentMain ||
+            !contentMainLT
+            // Image is optional in edit mode
+        ) {
             toast({
                 variant: 'destructive',
                 title: t('error'),
@@ -79,9 +96,15 @@ function SolutionsDetail() {
         }
 
         const formData = new FormData()
-        if (image) formData.append('image', image)
         formData.append('titleCard', titleCard)
+        formData.append('titleCardLT', titleCardLT)
+        formData.append('contentCard', contentCard)
+        formData.append('contentCardLT', contentCardLT)
         formData.append('contentMain', contentMain)
+        formData.append('contentMainLT', contentMainLT)
+        if (image) {
+            formData.append('contentMainImg', image)
+        }
 
         try {
             const response = await api.patch(
@@ -112,6 +135,11 @@ function SolutionsDetail() {
             setLoading(false)
         }
     }
+
+    useEffect(() => {
+        fetchSolutionDetail()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [params.id])
 
     if (loading) {
         return (
@@ -158,6 +186,7 @@ function SolutionsDetail() {
                             onSubmit={handleSubmit}
                             className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg"
                         >
+                            {/* Title Card */}
                             <div className="mb-4">
                                 <label className="block text-gray-700 dark:text-gray-200 mb-2">
                                     {t('title')}
@@ -172,9 +201,93 @@ function SolutionsDetail() {
                                     className="w-full"
                                 />
                             </div>
+
+                            {/* Title Card LT */}
                             <div className="mb-4">
                                 <label className="block text-gray-700 dark:text-gray-200 mb-2">
-                                    {t('image')}
+                                    {t('titleLT')}
+                                </label>
+                                <Input
+                                    type="text"
+                                    value={titleCardLT}
+                                    onChange={(e) =>
+                                        setTitleCardLT(e.target.value)
+                                    }
+                                    required
+                                    className="w-full"
+                                />
+                            </div>
+
+                            {/* Content Card */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 dark:text-gray-200 mb-2">
+                                    {t('contentCard')}
+                                </label>
+                                <Input
+                                    type="text"
+                                    value={contentCard}
+                                    onChange={(e) =>
+                                        setContentCard(e.target.value)
+                                    }
+                                    required
+                                    className="w-full"
+                                />
+                            </div>
+
+                            {/* Content Card LT */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 dark:text-gray-200 mb-2">
+                                    {t('contentCardLT')}
+                                </label>
+                                <Input
+                                    type="text"
+                                    value={contentCardLT}
+                                    onChange={(e) =>
+                                        setContentCardLT(e.target.value)
+                                    }
+                                    required
+                                    className="w-full"
+                                />
+                            </div>
+
+                            {/* Content Main */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 dark:text-gray-200 mb-2">
+                                    {t('contentMain')}
+                                </label>
+                                <MDEditor
+                                    value={contentMain}
+                                    onChange={(value) =>
+                                        setContentMain(value || '')
+                                    }
+                                    height={200}
+                                    data-color-mode={
+                                        theme === 'dark' ? 'dark' : 'light'
+                                    }
+                                />
+                            </div>
+
+                            {/* Content Main LT */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 dark:text-gray-200 mb-2">
+                                    {t('contentMainLT')}
+                                </label>
+                                <MDEditor
+                                    value={contentMainLT}
+                                    onChange={(value) =>
+                                        setContentMainLT(value || '')
+                                    }
+                                    height={200}
+                                    data-color-mode={
+                                        theme === 'dark' ? 'dark' : 'light'
+                                    }
+                                />
+                            </div>
+
+                            {/* Content Main Image Upload */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 dark:text-gray-200 mb-2">
+                                    {t('contentMainImg')}
                                 </label>
                                 <Input
                                     type="file"
@@ -182,16 +295,25 @@ function SolutionsDetail() {
                                     accept="image/*"
                                     className="w-full"
                                 />
+                                {/* Optional: Preview of selected image */}
+                                {image && (
+                                    <img
+                                        src={URL.createObjectURL(image)}
+                                        alt="Content Main Preview"
+                                        className="mt-2 h-48 w-full object-cover rounded"
+                                    />
+                                )}
+                                {/* If no new image is selected, show existing image */}
+                                {!image && data?.contentMainImg && (
+                                    <img
+                                        src={data.contentMainImg}
+                                        alt={data.titleCard}
+                                        className="mt-2 h-48 w-full object-cover rounded"
+                                    />
+                                )}
                             </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700 dark:text-gray-200 mb-2">
-                                    {t('content')}
-                                </label>
-                                <MyEditor
-                                    valueEn={contentMain}
-                                    setValueEn={setContentMain}
-                                />
-                            </div>
+
+                            {/* Submit Button */}
                             <div className="flex justify-end">
                                 <Button type="submit" disabled={loading}>
                                     {loading ? (
@@ -212,19 +334,172 @@ function SolutionsDetail() {
                     ) : (
                         data && (
                             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-                                {data.contentMainImg && (
+                                {/* Card Image */}
+                                {data.cardImgUrl && (
                                     <img
-                                        src={data.contentMainImg}
+                                        src={data.cardImgUrl}
                                         alt={data.titleCard}
                                         className="w-full h-96 object-cover"
                                     />
                                 )}
+
                                 <div className="p-6">
+                                    {/* Title Card */}
                                     <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">
                                         {data.titleCard}
                                     </h1>
+
+                                    {/* Title Card LT */}
+                                    <h2 className="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-4">
+                                        {data.titleCardLT}
+                                    </h2>
+
+                                    {/* Content Card */}
+                                    <div className="mb-4">
+                                        <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                            {t('contentCard')}
+                                        </h3>
+                                        <p className="text-gray-700 dark:text-gray-200">
+                                            {data.contentCard}
+                                        </p>
+                                    </div>
+
+                                    {/* Content Card LT */}
+                                    <div className="mb-4">
+                                        <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                            {t('contentCardLT')}
+                                        </h3>
+                                        <p className="text-gray-700 dark:text-gray-200">
+                                            {data.contentCardLT}
+                                        </p>
+                                    </div>
+
+                                    {/* Content Main Image */}
+                                    {data.contentMainImg && (
+                                        <img
+                                            src={data.contentMainImg}
+                                            alt={`${data.titleCard} Content`}
+                                            className="w-full h-64 object-cover mb-4 rounded"
+                                        />
+                                    )}
+
+                                    {/* Content Main */}
+                                    <div className="prose dark:prose-dark max-w-none mb-4">
+                                        <ReactMarkdown
+                                            components={{
+                                                h1: ({ node, ...props }) => (
+                                                    <h1
+                                                        className="text-2xl font-bold"
+                                                        {...props}
+                                                    />
+                                                ),
+                                                h2: ({ node, ...props }) => (
+                                                    <h2
+                                                        className="text-xl font-semibold"
+                                                        {...props}
+                                                    />
+                                                ),
+                                                ul: ({ node, ...props }) => (
+                                                    <ul
+                                                        className="list-disc ml-5"
+                                                        {...props}
+                                                    />
+                                                ),
+                                                ol: ({ node, ...props }) => (
+                                                    <ol
+                                                        className="list-decimal ml-5"
+                                                        {...props}
+                                                    />
+                                                ),
+                                                table: ({ node, ...props }) => (
+                                                    <table
+                                                        className="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                                                        {...props}
+                                                    />
+                                                ),
+                                                th: ({ node, ...props }) => (
+                                                    <th
+                                                        className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+                                                        {...props}
+                                                    />
+                                                ),
+                                                td: ({ node, ...props }) => (
+                                                    <td
+                                                        className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300"
+                                                        {...props}
+                                                    />
+                                                ),
+                                                a: ({ node, ...props }) => (
+                                                    <a
+                                                        className="text-blue-600 dark:text-blue-400 hover:underline"
+                                                        {...props}
+                                                    />
+                                                ),
+                                            }}
+                                        >
+                                            {data.contentMain}
+                                        </ReactMarkdown>
+                                    </div>
+
+                                    {/* Content Main LT */}
                                     <div className="prose dark:prose-dark max-w-none">
-                                        {parse(data.contentMain)}
+                                        <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                            {t('contentMainLT')}
+                                        </h3>
+                                        <ReactMarkdown
+                                            components={{
+                                                h1: ({ node, ...props }) => (
+                                                    <h1
+                                                        className="text-2xl font-bold"
+                                                        {...props}
+                                                    />
+                                                ),
+                                                h2: ({ node, ...props }) => (
+                                                    <h2
+                                                        className="text-xl font-semibold"
+                                                        {...props}
+                                                    />
+                                                ),
+                                                ul: ({ node, ...props }) => (
+                                                    <ul
+                                                        className="list-disc ml-5"
+                                                        {...props}
+                                                    />
+                                                ),
+                                                ol: ({ node, ...props }) => (
+                                                    <ol
+                                                        className="list-decimal ml-5"
+                                                        {...props}
+                                                    />
+                                                ),
+                                                table: ({ node, ...props }) => (
+                                                    <table
+                                                        className="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                                                        {...props}
+                                                    />
+                                                ),
+                                                th: ({ node, ...props }) => (
+                                                    <th
+                                                        className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+                                                        {...props}
+                                                    />
+                                                ),
+                                                td: ({ node, ...props }) => (
+                                                    <td
+                                                        className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300"
+                                                        {...props}
+                                                    />
+                                                ),
+                                                a: ({ node, ...props }) => (
+                                                    <a
+                                                        className="text-blue-600 dark:text-blue-400 hover:underline"
+                                                        {...props}
+                                                    />
+                                                ),
+                                            }}
+                                        >
+                                            {data.contentMainLT}
+                                        </ReactMarkdown>
                                     </div>
                                 </div>
                             </div>

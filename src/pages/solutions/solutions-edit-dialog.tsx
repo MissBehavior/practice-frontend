@@ -15,53 +15,90 @@ import { useAuth, useAxios } from '@/services/auth-service'
 import { MdEdit } from 'react-icons/md'
 import { useTranslation } from 'react-i18next'
 import { toast } from '@/components/ui/use-toast'
+import MDEditor from '@uiw/react-md-editor'
 
 interface SolutionsEditDialogProps {
     fetchData: () => void
     _id: string
     cardImgUrl: string
+    contentMainImgUrl: string
     titleCard: string
+    titleCardLT: string
     contentCard: string
+    contentCardLT: string
+    contentMain: string
+    contentMainLT: string
 }
 
 function SolutionsEditDialog({
     _id,
     cardImgUrl,
+    contentMainImgUrl,
     titleCard,
+    titleCardLT,
     contentCard,
+    contentCardLT,
+    contentMain,
+    contentMainLT,
     fetchData,
 }: SolutionsEditDialogProps) {
     const { userToken } = useAuth()
     const api = useAxios()
     const [open, setOpen] = React.useState(false)
     const [image, setImage] = React.useState<File | null>(null)
+    const [contentMainImg, setContentMainImg] = React.useState<File | null>(
+        null
+    )
     const [preview, setPreview] = React.useState<string>(cardImgUrl)
-    const [contentCardEdit, setContentCard] = React.useState('')
-    const [titleCardEdit, setTitleCard] = React.useState('')
+    const [contentCardEdit, setContentCardEdit] = React.useState(contentCard)
+    const [contentCardLTEdit, setContentCardLTEdit] =
+        React.useState(contentCardLT)
+    const [titleCardEdit, setTitleCardEdit] = React.useState(titleCard)
+    const [titleCardLTEdit, setTitleCardLTEdit] = React.useState(titleCardLT)
+    const [contentMainEdit, setContentMainEdit] = React.useState(contentMain)
+    const [contentMainLTEdit, setContentMainLTEdit] =
+        React.useState(contentMainLT)
     const { t } = useTranslation()
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
         const formData = new FormData()
-        // Include the existing image URL if no new image is selected
+        // Append 'image' if a new image is selected
         if (image) {
             formData.append('image', image)
         } else {
-            formData.append('cardImgUrl', cardImgUrl) // Use the existing image
+            formData.append('cardImgUrl', cardImgUrl) // Use the existing image URL
         }
 
+        // Append 'contentMainImg' if a new content main image is selected
+        if (contentMainImg) {
+            formData.append('contentMainImg', contentMainImg)
+        } else {
+            formData.append('contentMainImgUrl', contentMainImgUrl) // Use the existing content main image URL
+        }
+
+        // Append other fields
         formData.append('titleCard', titleCardEdit)
+        formData.append('titleCardLT', titleCardLTEdit)
         formData.append('contentCard', contentCardEdit)
+        formData.append('contentCardLT', contentCardLTEdit)
+        formData.append('contentMain', contentMainEdit)
+        formData.append('contentMainLT', contentMainLTEdit)
 
         try {
-            const response = await api.patch('/solutions/' + _id, formData, {
+            const response = await api.patch(`/solutions/${_id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${userToken!.accessToken}`,
                 },
             })
             console.log(response.data)
+            toast({
+                variant: 'success',
+                title: t('success'),
+                description: t('changesSaved'),
+            })
         } catch (error) {
             console.error('Error Updating:', error)
             toast({
@@ -86,10 +123,23 @@ function SolutionsEditDialog({
         }
     }
 
+    const handleContentMainImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (file) {
+            setContentMainImg(file)
+        } else {
+            setContentMainImg(null)
+        }
+    }
+
     useEffect(() => {
-        setTitleCard(titleCard)
-        setContentCard(contentCard)
-    }, [titleCard, contentCard])
+        setTitleCardEdit(titleCard)
+        setTitleCardLTEdit(titleCardLT)
+        setContentCardEdit(contentCard)
+        setContentCardLTEdit(contentCardLT)
+        setContentMainEdit(contentMain)
+        setContentMainLTEdit(contentMainLT)
+    }, [titleCard, titleCardLT, contentCard, contentMain, contentMainLT])
 
     return (
         <div>
@@ -99,22 +149,23 @@ function SolutionsEditDialog({
                         <MdEdit className="relative top-0 right-0 w-[40px] p-1 h-[40px] rounded-md shadow-xl transition-all transform duration-150 hover:scale-105 cursor-pointer" />
                     </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[800px]">
                     <DialogHeader>
-                        <DialogTitle>{t('editSolution')} </DialogTitle>
+                        <DialogTitle>{t('editSolution')}</DialogTitle>
                         <DialogDescription></DialogDescription>
                     </DialogHeader>
                     <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
-                        {/* Image Preview Section */}
+                        {/* Image Upload Section */}
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="file" className="text-right">
+                            <Label htmlFor="image" className="text-right">
                                 {t('image')}
                             </Label>
                             <div className="col-span-3">
                                 <Input
-                                    id="file"
+                                    id="image"
                                     type="file"
                                     onChange={handleImage}
+                                    accept="image/*"
                                 />
                                 {preview && (
                                     <img
@@ -126,36 +177,154 @@ function SolutionsEditDialog({
                             </div>
                         </div>
 
-                        {/* Title Field */}
+                        {/* Content Main Image Upload Section */}
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="title" className="text-right">
+                            <Label
+                                htmlFor="contentMainImg"
+                                className="text-right"
+                            >
+                                {t('contentMainImg')}
+                            </Label>
+                            <div className="col-span-3">
+                                <Input
+                                    id="contentMainImg"
+                                    type="file"
+                                    onChange={handleContentMainImage}
+                                    accept="image/*"
+                                />
+                                {contentMainImg ? (
+                                    <img
+                                        src={URL.createObjectURL(
+                                            contentMainImg
+                                        )}
+                                        alt="Content Main Preview"
+                                        className="mt-2 rounded-md w-full h-40 object-contain"
+                                    />
+                                ) : (
+                                    contentMainImgUrl && (
+                                        <img
+                                            src={contentMainImgUrl}
+                                            alt="Content Main Existing"
+                                            className="mt-2 rounded-md w-full h-40 object-contain"
+                                        />
+                                    )
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Title Card */}
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="titleCard" className="text-right">
                                 {t('title')}
                             </Label>
                             <Input
-                                id="title"
+                                id="titleCard"
                                 placeholder={titleCard}
-                                value={titleCardEdit}
                                 className="col-span-3"
-                                onChange={(e) => setTitleCard(e.target.value)}
+                                value={titleCardEdit}
+                                onChange={(e) =>
+                                    setTitleCardEdit(e.target.value)
+                                }
+                                required
                             />
                         </div>
 
-                        {/* Description Field */}
+                        {/* Title Card LT */}
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="description" className="text-right">
-                                {t('description')}
+                            <Label htmlFor="titleCardLT" className="text-right">
+                                {t('titleLT')}
                             </Label>
                             <Input
-                                id="description"
-                                placeholder={contentCard}
-                                value={contentCardEdit}
+                                id="titleCardLT"
+                                placeholder={titleCardLT}
                                 className="col-span-3"
-                                onChange={(e) => setContentCard(e.target.value)}
+                                value={titleCardLTEdit}
+                                onChange={(e) =>
+                                    setTitleCardLTEdit(e.target.value)
+                                }
+                                required
                             />
+                        </div>
+
+                        {/* Content Card */}
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="contentCard" className="text-right">
+                                {t('contentCard')}
+                            </Label>
+                            <Input
+                                id="contentCard"
+                                placeholder={contentCard}
+                                className="col-span-3"
+                                value={contentCardEdit}
+                                onChange={(e) =>
+                                    setContentCardEdit(e.target.value)
+                                }
+                                required
+                            />
+                        </div>
+
+                        {/* Content Card LT */}
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label
+                                htmlFor="contentCardLT"
+                                className="text-right"
+                            >
+                                {t('contentCardLT')}
+                            </Label>
+                            <Input
+                                id="contentCardLT"
+                                placeholder={contentCardLT}
+                                className="col-span-3"
+                                value={contentCardLTEdit}
+                                onChange={(e) =>
+                                    setContentCardLTEdit(e.target.value)
+                                }
+                                required
+                            />
+                        </div>
+
+                        {/* Content Main */}
+                        <div className="grid grid-cols-4 items-start gap-4">
+                            <Label
+                                htmlFor="contentMain"
+                                className="text-right mt-2"
+                            >
+                                {t('contentMain')}
+                            </Label>
+                            <div className="col-span-3">
+                                <MDEditor
+                                    value={contentMainEdit}
+                                    onChange={(value) =>
+                                        setContentMainEdit(value || '')
+                                    }
+                                    height={200}
+                                    data-color-mode="light" // or dynamically set based on theme
+                                />
+                            </div>
+                        </div>
+
+                        {/* Content Main LT */}
+                        <div className="grid grid-cols-4 items-start gap-4">
+                            <Label
+                                htmlFor="contentMainLT"
+                                className="text-right mt-2"
+                            >
+                                {t('contentMainLT')}
+                            </Label>
+                            <div className="col-span-3">
+                                <MDEditor
+                                    value={contentMainLTEdit}
+                                    onChange={(value) =>
+                                        setContentMainLTEdit(value || '')
+                                    }
+                                    height={200}
+                                    data-color-mode="light" // or dynamically set based on theme
+                                />
+                            </div>
                         </div>
                     </form>
                     <DialogFooter>
-                        <Button onClick={handleSubmit} type="submit">
+                        <Button type="submit" onClick={handleSubmit}>
                             {t('submit')}
                         </Button>
                     </DialogFooter>

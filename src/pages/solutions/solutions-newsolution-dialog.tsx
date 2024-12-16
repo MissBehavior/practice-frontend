@@ -17,6 +17,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import DotLoader from 'react-spinners/DotLoader'
+import MDEditor from '@uiw/react-md-editor' // Import MDEditor
 
 interface SolutionsAddNewSolutionProps {
     fetchData: () => void
@@ -29,10 +30,11 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
     const [contentMainImg, setContentMainImg] = useState<File | null>(null)
     const [open, setOpen] = useState(false)
     const [contentCard, setContentCard] = useState('')
+    const [contentCardLT, setContentCardLT] = useState('')
     const [titleCard, setTitleCard] = useState('')
     const [titleCardLT, setTitleCardLT] = useState('')
-    const [contentMain, setContentMain] = useState('')
-    const [contentMainLT, setContentMainLT] = useState('')
+    const [contentMain, setContentMain] = useState<string | undefined>('') // Changed to handle string or undefined
+    const [contentMainLT, setContentMainLT] = useState<string | undefined>('') // Changed to handle string or undefined
     const { t } = useTranslation()
     const [loading, setLoading] = useState(false)
     const { theme } = useTheme()
@@ -66,12 +68,12 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
         console.log(image)
         console.log(contentMainImg)
 
-        // Validate required fields
         if (
             !image ||
             !titleCard ||
             !titleCardLT ||
             !contentCard ||
+            !contentCardLT ||
             !contentMain ||
             !contentMainLT ||
             !contentMainImg
@@ -90,6 +92,7 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
         formData.append('titleCard', titleCard)
         formData.append('titleCardLT', titleCardLT)
         formData.append('contentCard', contentCard)
+        formData.append('contentCardLT', contentCardLT)
         formData.append('contentMain', contentMain)
         formData.append('contentMainLT', contentMainLT)
         formData.append('contentMainImg', contentMainImg)
@@ -135,6 +138,7 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                         setImage(null)
                         setContentMainImg(null)
                         setContentCard('')
+                        setContentCardLT('')
                         setTitleCard('')
                         setTitleCardLT('')
                         setContentMain('')
@@ -150,13 +154,13 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                             </h1>
                         </div>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[600px]">
+                    <DialogContent className="sm:max-w-[800px]">
                         <DialogHeader>
                             <DialogTitle>{t('newSolution')}</DialogTitle>
                             <DialogDescription></DialogDescription>
                         </DialogHeader>
                         <form
-                            className="grid gap-4 py-4"
+                            className="grid gap-6 py-4"
                             onSubmit={handleSubmit}
                         >
                             {/* Image Upload */}
@@ -223,6 +227,26 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                                     required
                                 />
                             </div>
+                            {/* Content Card LT */}
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label
+                                    htmlFor="descriptionLT"
+                                    className="text-right"
+                                >
+                                    {t('descriptionLT')}
+                                </Label>
+                                <Input
+                                    id="descriptionLT"
+                                    placeholder={t('solutionDescriptionLT')}
+                                    className="col-span-3"
+                                    value={contentCardLT}
+                                    onChange={(e) => {
+                                        setContentCardLT(e.target.value)
+                                    }}
+                                    required
+                                />
+                            </div>
+
                             {/* Content Main */}
                             <div className="grid grid-cols-4 items-start gap-4">
                                 <Label
@@ -231,17 +255,18 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                                 >
                                     {t('contentMain')}
                                 </Label>
-                                <textarea
-                                    id="contentMain"
-                                    placeholder={t('solutionContentMain')}
-                                    className="col-span-3 p-2 border rounded"
-                                    value={contentMain}
-                                    onChange={(e) => {
-                                        setContentMain(e.target.value)
-                                    }}
-                                    required
-                                    rows={4}
-                                ></textarea>
+                                <div className="col-span-3">
+                                    <MDEditor
+                                        value={contentMain}
+                                        onChange={(value) =>
+                                            setContentMain(value)
+                                        }
+                                        height={200}
+                                        data-color-mode={
+                                            theme === 'dark' ? 'dark' : 'light'
+                                        }
+                                    />
+                                </div>
                             </div>
                             {/* Content Main LT */}
                             <div className="grid grid-cols-4 items-start gap-4">
@@ -251,17 +276,18 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                                 >
                                     {t('contentMainLT')}
                                 </Label>
-                                <textarea
-                                    id="contentMainLT"
-                                    placeholder={t('solutionContentMainLT')}
-                                    className="col-span-3 p-2 border rounded"
-                                    value={contentMainLT}
-                                    onChange={(e) => {
-                                        setContentMainLT(e.target.value)
-                                    }}
-                                    required
-                                    rows={4}
-                                ></textarea>
+                                <div className="col-span-3">
+                                    <MDEditor
+                                        value={contentMainLT}
+                                        onChange={(value) =>
+                                            setContentMainLT(value)
+                                        }
+                                        height={200}
+                                        data-color-mode={
+                                            theme === 'dark' ? 'dark' : 'light'
+                                        }
+                                    />
+                                </div>
                             </div>
                             {/* Content Main Image Upload */}
                             <div className="grid grid-cols-4 items-center gap-4">

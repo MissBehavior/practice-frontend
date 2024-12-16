@@ -81,7 +81,7 @@ export default function Solutions() {
     return (
         <>
             <Breadcrumb title={'Solutions'} parent={'Solutions'} />
-            <div className="pb-12 dark:bg-[#191919] bg-slate-300">
+            <div className="pb-12 dark:bg-[#191919] bg-slate-300 min-h-svh">
                 <div className="max-w-7xl mx-auto px-4">
                     {user.isAdmin && (
                         <SolutionsAddNewSolution fetchData={fetchData} />
@@ -97,8 +97,15 @@ export default function Solutions() {
                                         <SolutionsEditDialog
                                             _id={data._id}
                                             cardImgUrl={data.cardImgUrl}
+                                            contentMainImgUrl={
+                                                data.contentMainImg
+                                            }
                                             titleCard={data.titleCard}
+                                            titleCardLT={data.titleCardLT}
                                             contentCard={data.contentCard}
+                                            contentCardLT={data.contentCardLT}
+                                            contentMain={data.contentMain}
+                                            contentMainLT={data.contentMainLT}
                                             fetchData={fetchData}
                                         />
                                         <SolutionsDelete
