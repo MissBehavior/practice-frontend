@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { toast } from '@/components/ui/use-toast'
 import { useAuth, useAxios } from '@/services/auth-service'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import DotLoader from 'react-spinners/DotLoader'
@@ -33,8 +33,8 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
     const [contentCardLT, setContentCardLT] = useState('')
     const [titleCard, setTitleCard] = useState('')
     const [titleCardLT, setTitleCardLT] = useState('')
-    const [contentMain, setContentMain] = useState<string | undefined>('') // Changed to handle string or undefined
-    const [contentMainLT, setContentMainLT] = useState<string | undefined>('') // Changed to handle string or undefined
+    const [contentMain, setContentMain] = useState<string | undefined>('')
+    const [contentMainLT, setContentMainLT] = useState<string | undefined>('')
     const { t } = useTranslation()
     const [loading, setLoading] = useState(false)
     const { theme } = useTheme()
@@ -128,7 +128,20 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
         setLoading(false)
         fetchData()
     }
+    useEffect(() => {
+        if (!open) {
+            document.body.style.overflow = 'auto'
+            console.log('Body overflow reset to auto.')
+        } else {
+            document.body.style.overflow = 'hidden'
+            console.log('Body overflow set to hidden.')
+        }
 
+        return () => {
+            document.body.style.overflow = 'auto'
+            console.log('Component unmounted. Body overflow reset to auto.')
+        }
+    }, [open])
     return (
         <div className="min-h-48 flex justify-center items-center select-none">
             <div className="">
@@ -160,7 +173,7 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                             <DialogDescription></DialogDescription>
                         </DialogHeader>
                         <form
-                            className="grid gap-6 py-4"
+                            className="grid gap-4 py-4"
                             onSubmit={handleSubmit}
                         >
                             {/* Image Upload */}
@@ -261,7 +274,7 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                                         onChange={(value) =>
                                             setContentMain(value)
                                         }
-                                        height={200}
+                                        height={150}
                                         data-color-mode={
                                             theme === 'dark' ? 'dark' : 'light'
                                         }
@@ -282,7 +295,7 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                                         onChange={(value) =>
                                             setContentMainLT(value)
                                         }
-                                        height={200}
+                                        height={150}
                                         data-color-mode={
                                             theme === 'dark' ? 'dark' : 'light'
                                         }

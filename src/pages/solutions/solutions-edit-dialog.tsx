@@ -61,24 +61,19 @@ function SolutionsEditDialog({
     const { t } = useTranslation()
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-
         const formData = new FormData()
-        // Append 'image' if a new image is selected
         if (image) {
             formData.append('image', image)
         } else {
-            formData.append('cardImgUrl', cardImgUrl) // Use the existing image URL
+            formData.append('cardImgUrl', cardImgUrl)
         }
 
-        // Append 'contentMainImg' if a new content main image is selected
         if (contentMainImg) {
             formData.append('contentMainImg', contentMainImg)
         } else {
-            formData.append('contentMainImgUrl', contentMainImgUrl) // Use the existing content main image URL
+            formData.append('contentMainImgUrl', contentMainImgUrl)
         }
 
-        // Append other fields
         formData.append('titleCard', titleCardEdit)
         formData.append('titleCardLT', titleCardLTEdit)
         formData.append('contentCard', contentCardEdit)
@@ -93,7 +88,7 @@ function SolutionsEditDialog({
                     Authorization: `Bearer ${userToken!.accessToken}`,
                 },
             })
-            console.log(response.data)
+            console.log('Update successful:', response.data)
             toast({
                 variant: 'success',
                 title: t('success'),
@@ -108,6 +103,8 @@ function SolutionsEditDialog({
             })
             return
         }
+        console.log('Closing dialog...')
+
         setOpen(false)
         fetchData()
     }
@@ -116,10 +113,10 @@ function SolutionsEditDialog({
         const file = e.target.files?.[0]
         if (file) {
             setImage(file)
-            setPreview(URL.createObjectURL(file)) // Dynamically preview the new image
+            setPreview(URL.createObjectURL(file))
         } else {
             setImage(null)
-            setPreview(cardImgUrl) // Revert to the original image if no file is selected
+            setPreview(cardImgUrl)
         }
     }
 
@@ -140,7 +137,20 @@ function SolutionsEditDialog({
         setContentMainEdit(contentMain)
         setContentMainLTEdit(contentMainLT)
     }, [titleCard, titleCardLT, contentCard, contentMain, contentMainLT])
+    useEffect(() => {
+        if (!open) {
+            document.body.style.overflow = 'auto'
+            console.log('Body overflow reset to auto.')
+        } else {
+            document.body.style.overflow = 'hidden'
+            console.log('Body overflow set to hidden.')
+        }
 
+        return () => {
+            document.body.style.overflow = 'auto'
+            console.log('Component unmounted. Body overflow reset to auto.')
+        }
+    }, [open])
     return (
         <div>
             <Dialog open={open} onOpenChange={setOpen}>
@@ -171,7 +181,7 @@ function SolutionsEditDialog({
                                     <img
                                         src={preview}
                                         alt="Preview"
-                                        className="mt-2 rounded-md w-full h-40 object-contain"
+                                        className="mt-2 rounded-md w-full h-32 object-contain"
                                     />
                                 )}
                             </div>
@@ -198,14 +208,14 @@ function SolutionsEditDialog({
                                             contentMainImg
                                         )}
                                         alt="Content Main Preview"
-                                        className="mt-2 rounded-md w-full h-40 object-contain"
+                                        className="mt-2 rounded-md w-full h-32 object-contain"
                                     />
                                 ) : (
                                     contentMainImgUrl && (
                                         <img
                                             src={contentMainImgUrl}
                                             alt="Content Main Existing"
-                                            className="mt-2 rounded-md w-full h-40 object-contain"
+                                            className="mt-2 rounded-md w-full h-32 object-contain"
                                         />
                                     )
                                 )}
@@ -297,8 +307,8 @@ function SolutionsEditDialog({
                                     onChange={(value) =>
                                         setContentMainEdit(value || '')
                                     }
-                                    height={200}
-                                    data-color-mode="light" // or dynamically set based on theme
+                                    height={150}
+                                    data-color-mode="light"
                                 />
                             </div>
                         </div>
@@ -317,8 +327,8 @@ function SolutionsEditDialog({
                                     onChange={(value) =>
                                         setContentMainLTEdit(value || '')
                                     }
-                                    height={200}
-                                    data-color-mode="light" // or dynamically set based on theme
+                                    height={150}
+                                    data-color-mode="light"
                                 />
                             </div>
                         </div>

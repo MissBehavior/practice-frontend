@@ -1,5 +1,3 @@
-// src/components/SolutionsDetail.tsx
-
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { SolutionsData } from '@/types'
@@ -35,7 +33,6 @@ function SolutionsDetail() {
     const { t } = useTranslation()
     const { theme } = useTheme()
 
-    // Fetch solution details from the backend
     const fetchSolutionDetail = async () => {
         setLoading(true)
         try {
@@ -61,7 +58,6 @@ function SolutionsDetail() {
         }
     }
 
-    // Handle image selection
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
         if (file) {
@@ -71,12 +67,10 @@ function SolutionsDetail() {
         }
     }
 
-    // Handle form submission for editing
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
 
-        // Validate required fields
         if (
             !titleCard ||
             !titleCardLT ||
@@ -84,7 +78,6 @@ function SolutionsDetail() {
             !contentCardLT ||
             !contentMain ||
             !contentMainLT
-            // Image is optional in edit mode
         ) {
             toast({
                 variant: 'destructive',
@@ -138,7 +131,6 @@ function SolutionsDetail() {
 
     useEffect(() => {
         fetchSolutionDetail()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.id])
 
     if (loading) {
