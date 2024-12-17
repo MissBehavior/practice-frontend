@@ -5,13 +5,9 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './i18n/config.ts'
 import PostExternal from './pages/posts-external/posts-external.tsx'
-import About from './pages/about/about.tsx'
-import Career from './pages/career/career.tsx'
-import Clients from './pages/clients/clients.tsx'
 import Gallery from './pages/gallery/gallery.tsx'
 import Home from './pages/home/home.tsx'
 import Solutions from './pages/solutions/solutions.tsx'
-import People from './pages/people/people.tsx'
 import Login from './pages/auth/login.tsx'
 import Register from './pages/auth/register.tsx'
 import { AuthProvider } from './services/auth-service.tsx'
@@ -44,14 +40,6 @@ const router = createBrowserRouter([
                 element: <Home />,
             },
             {
-                path: '/about',
-                element: <About />,
-            },
-            {
-                path: '/career',
-                element: <Career />,
-            },
-            {
                 path: '/post-external',
                 element: <PostExternal />,
             },
@@ -59,10 +47,7 @@ const router = createBrowserRouter([
                 path: '/post-external/:id',
                 element: <PostDetail />,
             },
-            {
-                path: '/clients',
-                element: <Clients />,
-            },
+
             {
                 path: '/gallery',
                 element: <Gallery />,
@@ -71,10 +56,7 @@ const router = createBrowserRouter([
                 path: '/gallery/:id',
                 element: <GalleryDetail />,
             },
-            {
-                path: '/people',
-                element: <People />,
-            },
+
             {
                 path: '/solutions',
                 element: <Solutions />,

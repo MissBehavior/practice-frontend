@@ -1,6 +1,4 @@
 import React from 'react'
-import ServiceOne from './serviceone'
-import postExternalImg from '/cropped-Featured-picture-1.jpg'
 import { useEffect, useMemo, useState } from 'react'
 import Particles, { initParticlesEngine } from '@tsparticles/react'
 import { loadSlim } from '@tsparticles/slim'

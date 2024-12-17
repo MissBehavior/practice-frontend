@@ -113,11 +113,6 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
         }
         const updatedTask: Task = { ...task, stage: destinationStage || '' }
         handleUpdateRequest(updatedTask)
-        // Optimistically update the task locally
-        // setTasks((prevTasks) =>
-        //     prevTasks.map((t) => (t._id === taskId ? updatedTask : t))
-        // )
-        // socket.emit('taskUpdated', updatedTask)
     }
 
     const handleAddCard = (stageTitle: string) => {

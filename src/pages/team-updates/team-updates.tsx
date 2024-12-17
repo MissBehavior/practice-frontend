@@ -242,7 +242,7 @@ export default function TeamUpdates() {
                                             {post.title}
                                         </Link>
                                     </h4>
-                                    <div className="flex items-center text-gray-600 text-sm mb-2">
+                                    <div className="flex flex-col items-start text-gray-600 text-sm mb-2">
                                         <ReactMarkdown>
                                             {post.content}
                                         </ReactMarkdown>{' '}

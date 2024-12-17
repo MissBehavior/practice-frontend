@@ -369,9 +369,6 @@ function SolutionsDetail() {
 
                                     {i18n.language === 'en' ? (
                                         <div className="prose dark:prose-dark max-w-none mb-4">
-                                            <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                                {t('contentMain')}
-                                            </h3>
                                             <ReactMarkdown
                                                 components={{
                                                     h1: ({
@@ -450,9 +447,6 @@ function SolutionsDetail() {
                                         </div>
                                     ) : (
                                         <div className="prose dark:prose-dark max-w-none mb-4">
-                                            <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                                {t('contentMainLT')}
-                                            </h3>
                                             <ReactMarkdown
                                                 components={{
                                                     h1: ({
@@ -530,13 +524,13 @@ function SolutionsDetail() {
                                             </ReactMarkdown>
                                         </div>
                                     )}
-                                    {data.contentMainImg && (
+                                    {/* {data.contentMainImg && (
                                         <img
                                             src={data.contentMainImg}
                                             alt={`${data.titleCard} Content`}
                                             className="w-full h-64 object-cover mb-4 rounded"
                                         />
-                                    )}
+                                    )} */}
                                 </div>
                             </div>
                         )

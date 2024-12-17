@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Cookies from 'js-cookie'
-import AdminSidenav from './sidenav'
-import AppSidebar from './app-sidebar'
-import {
-    SidebarProvider,
-    SidebarTrigger,
-    SidebarInset,
-} from '@/components/ui/sidebar'
 import Header from '../header/header'
-import Sidebar from './app-sidebar'
 import useIsCollapsed from '@/hooks/use-is-collapsed'
 
 function Admin() {

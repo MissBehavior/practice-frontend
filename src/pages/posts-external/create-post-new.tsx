@@ -223,7 +223,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
             }}
         >
             <DialogTrigger asChild>
-                <Button variant="default">{t('createNewPost')}</Button>
+                <Button variant="outline">{t('createNewPost')}</Button>
             </DialogTrigger>
             <DialogContent className="max-w-lg">
                 <form onSubmit={onSubmit} className="space-y-4">
