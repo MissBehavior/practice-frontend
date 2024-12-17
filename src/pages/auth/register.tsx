@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { TSignUpSchema, signUpSchema, AuthToken } from '@/types'
 import { useAuth } from '@/services/auth-service'
+import i18n from '@/i18n/config'
 
 export default function Register() {
     const { loginFunc, setUserFunc } = useAuth()
@@ -114,15 +115,19 @@ export default function Register() {
                     )}
                     <div className="text-center">
                         <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-                            Sign up for an account
+                            {i18n.language === 'en'
+                                ? 'Sign up for an account'
+                                : 'Registruotis'}
                         </h2>
                         <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                            Have an account?{' '}
+                            {i18n.language === 'en'
+                                ? 'Have an account?'
+                                : 'Turite paskyrą?'}{' '}
                             <Link
                                 to="/login"
                                 className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-300"
                             >
-                                Sign in →
+                                {t('sign_in')} →
                             </Link>
                         </p>
                     </div>
@@ -136,7 +141,7 @@ export default function Register() {
                                 className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                                 htmlFor="email"
                             >
-                                Name
+                                {t('name')}
                             </label>
                             <div className="mt-1">
                                 <input
@@ -161,7 +166,7 @@ export default function Register() {
                                 className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                                 htmlFor="email"
                             >
-                                Email address
+                                {t('email')}
                             </label>
                             <div className="mt-1">
                                 <input
@@ -185,7 +190,7 @@ export default function Register() {
                                 className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                                 htmlFor="password"
                             >
-                                Password
+                                {t('password')}
                             </label>
                             <div className="mt-1">
                                 <input

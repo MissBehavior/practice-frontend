@@ -126,7 +126,7 @@ const PostGrid: React.FC<PostGridProps> = React.memo(
                                             to={`/post-external/${post._id}`}
                                             className="inline-block px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded hover:bg-gray-700 transition-colors"
                                         >
-                                            {t('readMore')}
+                                            {t('read_more')}
                                         </Link>
                                     </div>
                                 </div>

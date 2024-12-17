@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { AuthToken, TSignInSchema, signInSchema } from '@/types'
 import { useAuth } from '@/services/auth-service'
+import i18n from '@/i18n/config'
 
 export default function Login() {
     const { loginFunc, isLoggedIn, setUserFunc } = useAuth()
@@ -104,10 +105,14 @@ export default function Login() {
                             </div>
                         )}
                         <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-                            Sign in to your account
+                            {i18n.language === 'en'
+                                ? 'Sign in to your account'
+                                : 'Prisijungti prie savo paskyros'}
                         </h2>
                         <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                            Don't have an account?{' '}
+                            {i18n.language === 'en'
+                                ? "Don't have an account?"
+                                : 'Neturite paskyros?'}{' '}
                             <Link
                                 to="/register"
                                 className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-300"

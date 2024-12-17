@@ -6,6 +6,7 @@ import { forgotPasswordSchema, TForgotPasswordSchema } from '@/types'
 import { Link, NavLink } from 'react-router-dom'
 import axios from 'axios'
 import { useTranslation } from 'react-i18next'
+import i18n from '@/i18n/config'
 
 interface EmailSubmitProps {
     onEmailSubmit: (email: string) => void
@@ -84,7 +85,9 @@ const ForgotPassword: React.FC<EmailSubmitProps> = ({ onEmailSubmit }) => {
             <div className="max-w-md w-full bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
                 <div className="text-center">
                     <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Enter your email
+                        {i18n.language === 'en'
+                            ? 'Enter your email'
+                            : 'Įveskite savo el. paštą'}
                     </h2>
                 </div>
 
@@ -97,7 +100,7 @@ const ForgotPassword: React.FC<EmailSubmitProps> = ({ onEmailSubmit }) => {
                             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                             htmlFor="email"
                         >
-                            Email address
+                            {t('email')}
                         </label>
                         <div className="mt-1">
                             <input
@@ -126,7 +129,9 @@ const ForgotPassword: React.FC<EmailSubmitProps> = ({ onEmailSubmit }) => {
                             {t('send_email')}
                         </Button>
                         <NavLink to="/login" className="text-blue-500">
-                            Return to login
+                            {i18n.language === 'en'
+                                ? 'Return to login'
+                                : 'Grįžti į prisijungimą'}
                         </NavLink>
                     </div>
                 </form>

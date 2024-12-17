@@ -8,6 +8,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { resetPasswordSchema, TResetPasswordSchema } from '@/types'
+import i18n from '@/i18n/config'
 
 const ResetPassword: React.FC = () => {
     const navigate = useNavigate()
@@ -107,7 +108,9 @@ const ResetPassword: React.FC = () => {
                         {t('Reset Password')}
                     </h2>
                     <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                        Enter your new password below.
+                        {i18n.language === 'en'
+                            ? 'Enter your new password below'
+                            : 'Įveskite naują slaptažodį'}
                     </p>
                 </div>
 
@@ -120,7 +123,9 @@ const ResetPassword: React.FC = () => {
                             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                             htmlFor="password"
                         >
-                            New Password
+                            {i18n.language === 'en'
+                                ? 'New Password'
+                                : 'Naujas slaptažodis'}
                         </label>
                         <div className="mt-1">
                             <input
@@ -148,7 +153,9 @@ const ResetPassword: React.FC = () => {
                             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                             htmlFor="confirmPassword"
                         >
-                            Confirm New Password
+                            {i18n.language === 'en'
+                                ? 'Confirm New Password'
+                                : 'Patvirtinkite naują slaptažodį'}
                         </label>
                         <div className="mt-1">
                             <input
@@ -192,7 +199,9 @@ const ResetPassword: React.FC = () => {
                             to="/login"
                             className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-300"
                         >
-                            Back to Login
+                            {i18n.language === 'en'
+                                ? ' Back to Login'
+                                : 'Grįžti į prisijungimą'}
                         </Link>
                     </div>
                 </div>

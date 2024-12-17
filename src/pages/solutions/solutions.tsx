@@ -67,7 +67,7 @@ export default function Solutions() {
     }
     return (
         <>
-            <Breadcrumb title={'Solutions'} parent={'Solutions'} />
+            <Breadcrumb title={t('solutions')} parent={t('solutions')} />
             <div className="pb-12 dark:bg-[#191919] bg-slate-300 min-h-svh">
                 <div className="max-w-7xl mx-auto px-4">
                     {user.isAdmin && (

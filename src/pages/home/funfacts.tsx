@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
 import CountUp from 'react-countup'
 import VisibilitySensor from 'react-visibility-sensor'
+import i18n from '@/i18n/config'
+import { useTranslation } from 'react-i18next'
 
 type CounterData = {
     countNum: number
     countTitle: string
+    countTitleLT: string
 }
 
 const FunFacts: React.FC = () => {
     const [didViewCountUp, setDidViewCountUp] = useState(false)
+    const { t } = useTranslation()
 
     const onVisibilityChange = (isVisible: boolean) => {
         if (isVisible) {
@@ -18,19 +22,25 @@ const FunFacts: React.FC = () => {
 
     const Data: CounterData[] = [
         {
-            countNum: 199,
+            countNum: 15,
             countTitle:
-                'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those.',
+                'Trusted clients across Europe rely on us to deliver exceptional solutions and services for their businesses.',
+            countTitleLT:
+                'Patikimi klientai visoje Europoje pasitiki mumis, kad suteiktume išskirtinius sprendimus ir paslaugas jų verslui.',
         },
         {
-            countNum: 575,
+            countNum: 1000,
             countTitle:
-                'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those.',
+                'Projects successfully completed every year, showcasing our commitment to quality and efficiency.',
+            countTitleLT:
+                'Kasmet sėkmingai įgyvendinami projektai atspindi mūsų įsipareigojimą kokybei ir efektyvumui.',
         },
         {
-            countNum: 69,
+            countNum: 50,
             countTitle:
-                'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those.',
+                'Skilled team members dedicated to ensuring every project meets the highest standards of excellence.',
+            countTitleLT:
+                'Kvalifikuoti komandos nariai, pasiryžę užtikrinti, kad kiekvienas projektas atitiktų aukščiausius standartus.',
         },
     ]
 
@@ -52,7 +62,9 @@ const FunFacts: React.FC = () => {
                             </VisibilitySensor>
                         </h5>
                         <p className="mt-4 dark:text-gray-400 text-gray-700">
-                            {value.countTitle}
+                            {i18n.language === 'en'
+                                ? value.countTitle
+                                : value.countTitleLT}
                         </p>
                     </div>
                 </div>

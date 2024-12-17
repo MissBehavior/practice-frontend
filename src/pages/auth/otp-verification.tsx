@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
+import i18n from '@/i18n/config'
+import { useTranslation } from 'react-i18next'
 
 interface OtpVerificationProps {
     email: string
@@ -16,6 +18,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
     const [canResend, setCanResend] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
     const navigate = useNavigate()
+    const { t } = useTranslation()
 
     // Start the countdown timer on component mount
     useEffect(() => {
@@ -105,10 +108,14 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
                     <form onSubmit={handleSubmitOtp}>
                         <div className="flex flex-col space-y-2 text-center mb-4">
                             <h2 className="text-3xl md:text-4xl font-bold">
-                                Confirm OTP
+                                {i18n.language === 'en'
+                                    ? 'Confirm code'
+                                    : 'Įveskite slaptažodį'}
                             </h2>
                             <p className="text-md md:text-xl">
-                                Enter the OTP we just sent you.
+                                {i18n.language === 'en'
+                                    ? 'Enter the code we just sent you.'
+                                    : 'Įveskite kodą, kurį mes jums išsiuntėme.'}
                             </p>
                         </div>
                         <div className="flex flex-col max-w-md space-y-5">
@@ -116,7 +123,11 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
                                 type="text"
                                 value={otp}
                                 onChange={(e) => setOtp(e.target.value)}
-                                placeholder="Enter OTP"
+                                placeholder={
+                                    i18n.language === 'en'
+                                        ? 'Enter Code'
+                                        : 'Įveskite kodą'
+                                }
                                 className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
                                 required
                             />
@@ -126,7 +137,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
                                     type="submit"
                                     className="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white"
                                 >
-                                    Confirm
+                                    {t('confirm')}
                                 </button>
                                 <div className="flex items-center justify-center">
                                     {canResend ? (
@@ -135,11 +146,15 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
                                             className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-300"
                                             onClick={handleResendOtp}
                                         >
-                                            Resend OTP
+                                            {i18n.language === 'en'
+                                                ? 'Resend Code'
+                                                : 'Išsiųsti kodą iš naujo'}
                                         </button>
                                     ) : (
                                         <p className="font-medium text-indigo-600 dark:text-indigo-300">
-                                            Time remaining:{' '}
+                                            {i18n.language === 'en'
+                                                ? 'Time remaining:'
+                                                : 'Liko laiko:'}{' '}
                                             {Math.floor(timer / 60)}:
                                             {(timer % 60)
                                                 .toString()
@@ -158,7 +173,9 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
                                 className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-300"
                                 onClick={onResetEmail}
                             >
-                                Return to Email Input
+                                {i18n.language === 'en'
+                                    ? 'Return to Email Input'
+                                    : 'Grįžti į el. pašto įvedimą'}
                             </Link>
                         </div>
                     </div>

@@ -5,6 +5,8 @@ import { Input } from './ui/input'
 import { Button } from './admin/custom/button'
 import { Search } from 'lucide-react'
 import { HiMiniXMark } from 'react-icons/hi2'
+import i18n from '@/i18n/config'
+import { useTranslation } from 'react-i18next'
 
 interface BreadcrumbProps {
     title: string
@@ -22,6 +24,7 @@ const Breadcrumb: FC<BreadcrumbProps> = ({
     currentQuery,
 }) => {
     const [searchQuery, setSearchQuery] = React.useState(currentQuery || '')
+    const { t } = useTranslation()
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
@@ -73,7 +76,11 @@ const Breadcrumb: FC<BreadcrumbProps> = ({
                             {/* Input Field */}
                             <Input
                                 type="text"
-                                placeholder="Search"
+                                placeholder={
+                                    i18n.language === 'en'
+                                        ? 'Search...'
+                                        : 'Paieška...'
+                                }
                                 className="pl-10 pr-10"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -119,7 +126,9 @@ const Breadcrumb: FC<BreadcrumbProps> = ({
                                     to="/"
                                     className="text-gray-300 hover:text-white transition-colors"
                                 >
-                                    Home
+                                    {i18n.language === 'en'
+                                        ? 'Home'
+                                        : 'Pagrindinis'}
                                 </Link>
                             </li>
 

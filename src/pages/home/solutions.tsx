@@ -45,9 +45,9 @@ export default function Solutions() {
     const title = 'Our Works'
     const titleLT = 'Mūsų darbai'
     const description =
-        'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.'
+        'Explore the solutions we offer to help businesses optimize processes, improve efficiency, and achieve outstanding results.'
     const descriptionLT =
-        'Yra daugybė Lorem Ipsum variantų, tačiau dauguma yra patyrę pakeitimus.'
+        'Susipažinkite su mūsų siūlomais sprendimais, padedančiais įmonėms optimizuoti procesus, padidinti efektyvumą ir pasiekti puikių rezultatų.'
 
     return (
         <div className="container mx-auto px-4">

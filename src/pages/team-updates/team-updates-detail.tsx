@@ -252,7 +252,10 @@ export default function TeamUpdatesDetail() {
     if (loading) {
         return (
             <div className="container mx-auto px-4 py-8">
-                <Breadcrumb title={'Team Updates'} parent={'Team Updates'} />
+                <Breadcrumb
+                    title={t('team_updates')}
+                    parent={t('team_updates')}
+                />
                 <Skeleton className="h-[500px] w-full mb-6" />
                 <div className="space-y-4">
                     <Skeleton className="h-12 w-3/4" />
@@ -269,7 +272,7 @@ export default function TeamUpdatesDetail() {
 
     return (
         <div className="bg-[#101010] min-h-screen">
-            <Breadcrumb title={'Team Updates'} parent={'Team Updates'} />
+            <Breadcrumb title={t('team_updates')} parent={t('team_updates')} />
 
             <div className="container mx-auto px-4 py-8">
                 <div className="max-w-4xl mx-auto bg-[#191919] shadow-2xl rounded-2xl overflow-hidden">
@@ -305,7 +308,7 @@ export default function TeamUpdatesDetail() {
                                                 {t('editPost')}
                                             </DialogTitle>
                                             <DialogDescription>
-                                                {t('editPostDescription')}
+                                                {' '}
                                             </DialogDescription>
                                         </DialogHeader>
                                         <div className="grid gap-4 py-4">

@@ -102,7 +102,7 @@ const PostDetail: React.FC = () => {
 
     return (
         <>
-            <Breadcrumb title={t('News')} parent={t('News')} />
+            <Breadcrumb title={t('news')} parent={t('news')} />
             <div className="py-10 bg-[#191919] min-h-screen">
                 <div className="max-w-5xl mx-auto px-4 ">
                     <Link
@@ -229,7 +229,7 @@ const PostDetail: React.FC = () => {
                                                         ...
                                                     </p>
                                                     <span className="inline-block cursor-pointer select-none rounded-md border border-gray-800 bg-gray-800 px-2 py-1 text-center align-middle text-sm font-semibold leading-normal text-white no-underline shadow-sm">
-                                                        {t('readMore')}
+                                                        {t('read_more')}
                                                     </span>
                                                 </div>
                                             </Link>

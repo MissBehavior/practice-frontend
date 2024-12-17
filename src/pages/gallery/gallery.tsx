@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import Breadcrumb from '@/components/breadcrumb'
 import { useTranslation } from 'react-i18next'
 import GalleryEditDialog from './gallery-edit'
+import i18n from '@/i18n/config'
 
 export default function Gallery() {
     const { user } = useAuth()
@@ -39,7 +40,7 @@ export default function Gallery() {
     if (loading) {
         return (
             <div className="dark:bg-[#101010] bg-slate-300 min-h-screen">
-                <Breadcrumb title={'Gallery'} parent={'Gallery'} />
+                <Breadcrumb title={t('gallery')} parent={t('gallery')} />
 
                 <section className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {Array.from({ length: 6 }).map((_, index) => (
@@ -57,13 +58,14 @@ export default function Gallery() {
 
     return (
         <div className="min-h-svh dark:bg-[#101010] bg-slate-400">
-            <Breadcrumb title={'Gallery'} parent={'Gallery'} />
+            <Breadcrumb title={t('gallery')} parent={t('gallery')} />
             <section id="portfolio" className="text-center py-12 ">
                 <div className="container mx-auto px-4">
                     <div className="mb-12">
                         <p className="mt-4 dark:text-white text-black max-w-md mx-auto">
-                            Explore our collection of stunning images showcasing
-                            our work and creativity.
+                            {i18n.language === 'en'
+                                ? 'Explore our collection of stunning images showcasing our work and creativity.'
+                                : 'Naršykite mūsų nuostabių vaizdų kolekciją, atspindinčią mūsų darbą ir kūrybiškumą.'}
                         </p>
                     </div>
 

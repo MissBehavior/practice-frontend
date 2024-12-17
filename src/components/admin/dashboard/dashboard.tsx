@@ -7,12 +7,15 @@ import RegisterCountChart from './register-count-chart'
 import KanbanPieChart from './kanban-pie-chart'
 import MostLikedPostCard from './most-liked-post-card'
 import MostCommentedPostCard from './most-commented-post'
+import { useTranslation } from 'react-i18next'
 
 function AdminDashboard() {
     const [chartData, setChartData] = useState<DataPoint[]>([])
     const [userCount, setUserCount] = useState<number>()
     const [galleryCount, setGalleryCount] = useState<number>()
     const { theme } = useTheme()
+    const { t } = useTranslation()
+
     const fetchData = async (year: string) => {
         try {
             const response = await axios.get(
@@ -91,19 +94,20 @@ function AdminDashboard() {
                         type="Gallery"
                     />
                     <UserCard count={15} date="Today" type="Clients" />
+                </div>
+                <div className="flex  gap-4 justify-between flex-wrap w-full">
                     <UserCard count={45} date="TODO" type="TeamUpdates" />
-                    <UserCard count={45} date="TODO" type="TasksInKanban" />
-                    <UserCard count={45} date="TODO" type="NrOnGoingInKanban" />
+                    <UserCard
+                        count={45}
+                        date="TODO"
+                        type={t('tasksInKanban')}
+                    />
+                    <UserCard count={45} date="TODO" type={t('onGoingTasks')} />
                 </div>
                 <div className="flex flex-row gap-2 max-md:flex-col">
                     <MostLikedPostCard />
                     <MostCommentedPostCard />
                 </div>
-                <UserCard
-                    count={11111111111111}
-                    date="DIFFERENT"
-                    type="UserMstTaskKanban"
-                />
 
                 <RegisterCountChart
                     chartData={chartData}

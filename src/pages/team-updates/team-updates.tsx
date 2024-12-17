@@ -163,8 +163,8 @@ export default function TeamUpdates() {
         return (
             <div className="dark:bg-[#101010] bg-slate-300 min-h-screen">
                 <Breadcrumb
-                    title={'Team Updates'}
-                    parent={'Team Updates'}
+                    title={t('team_updates')}
+                    parent={t('team_updates')}
                     search
                     onSearch={handleSearch}
                     currentQuery={searchQuery}
@@ -194,8 +194,8 @@ export default function TeamUpdates() {
     return (
         <>
             <Breadcrumb
-                title={'Team Updates'}
-                parent={'Team Updates'}
+                title={t('team_updates')}
+                parent={t('team_updates')}
                 search
                 onSearch={handleSearch}
                 currentQuery={searchQuery}
@@ -311,7 +311,7 @@ export default function TeamUpdates() {
                                             to={`/team-updates/${post._id}`}
                                             className="inline-block px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded hover:bg-gray-700 transition-colors"
                                         >
-                                            Read More
+                                            {t('read_more')}
                                         </Link>
                                     </div>
                                 </div>

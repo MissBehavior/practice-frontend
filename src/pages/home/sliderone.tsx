@@ -117,19 +117,21 @@ function SliderOne() {
                     <section className="relative mx-auto max-w-screen-xl pb-12 px-4 items-center flex md:px-8 h-full">
                         <div className="space-y-4 flex-1 sm:text-center ">
                             <h1 className="text-white font-extrabold text-4xl xl:text-7xl uppercase">
-                                Company that redefines
-                                <h1 className="text-indigo-400">
+                                {i18n.language === 'en'
+                                    ? 'Company that redefines'
+                                    : 'Įmonė, iš naujo apibrėžianti'}
+
+                                <span className="text-indigo-400">
                                     {' '}
-                                    Creating windows
-                                </h1>
+                                    {i18n.language === 'en'
+                                        ? 'Creating windows'
+                                        : 'langų kūrimą'}
+                                </span>
                             </h1>
                             <p className="text-gray-300 max-w-xl leading-relaxed sm:mx-auto">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut
-                                enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat.
+                                {i18n.language === 'en'
+                                    ? 'High-quality engineering services for windows and doors, including project estimates, CAD drawings, order processing, and production planning.'
+                                    : 'Aukštos kokybės langų ir durų inžinerijos paslaugos, įskaitant projektų sąmatas, CAD brėžinius, užsakymų tvarkymą ir gamybos planavimą.'}
                             </p>
                             <div className="pt-10 items-center justify-center space-y-3 sm:space-x-6 sm:space-y-0 sm:flex ">
                                 <a

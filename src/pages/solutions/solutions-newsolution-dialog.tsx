@@ -192,11 +192,11 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                             {/* Title Card */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="title" className="text-right">
-                                    {t('title')}
+                                    {t('titleEN')}
                                 </Label>
                                 <Input
                                     id="title"
-                                    placeholder={t('solutionTitle')}
+                                    placeholder={t('solutionTitleEN')}
                                     className="col-span-3"
                                     value={titleCard}
                                     onChange={(e) => {
@@ -227,11 +227,11 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                                     htmlFor="description"
                                     className="text-right"
                                 >
-                                    {t('description')}
+                                    {t('descriptionEN')}
                                 </Label>
                                 <Input
                                     id="description"
-                                    placeholder={t('solutionDescription')}
+                                    placeholder={t('solutionDescriptionEN')}
                                     className="col-span-3"
                                     value={contentCard}
                                     onChange={(e) => {
@@ -266,7 +266,7 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                                     htmlFor="contentMain"
                                     className="text-right mt-2"
                                 >
-                                    {t('contentMain')}
+                                    {t('contentMainEN')}
                                 </Label>
                                 <div className="col-span-3">
                                     <MDEditor

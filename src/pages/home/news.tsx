@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
+import i18n from '@/i18n/config'
 import { useAuth } from '@/services/auth-service'
 import { PostData } from '@/types'
 import axios from 'axios'
@@ -49,17 +50,21 @@ function NewsHome() {
                 <div className="flex flex-wrap items-end justify-between">
                     <div className="w-full lg:w-1/2">
                         <h2 className="text-3xl font-bold text-neutral-900 dark:text-white">
-                            Latest News
+                            {i18n.language === 'en'
+                                ? 'Latest News'
+                                : 'Naujausi Naujienos'}
                         </h2>
                         <p className="mt-4 dark:text-neutral-500 text-gray-800">
-                            There are many variations of passages of Lorem Ipsum
-                            available, but the majority have suffered
-                            alteration.
+                            {i18n.language === 'en'
+                                ? 'Stay updated with the latest developments, achievements, and insights from our team. Sekite naujausius mūsų komandos įvykius, pasiekimus ir įžvalgas.'
+                                : 'Sekite naujausius mūsų komandos įvykius, pasiekimus ir įžvalgas.'}
                         </p>
                     </div>
                     <div className="mt-4 lg:mt-0">
                         <Link to="/post-external">
-                            <Button variant="outline">View All News</Button>
+                            <Button variant="outline">
+                                {t('view_all_news')}
+                            </Button>
                         </Link>
                     </div>
                 </div>
@@ -110,16 +115,18 @@ function NewsHome() {
                                                       {post.content}
                                                   </p>
                                                   <h4 className="text-xl font-bold mb-2 line-clamp-2">
-                                                      <Link to="/portfolio-details">
+                                                      <Link
+                                                          to={`/post-external/${post._id}`}
+                                                      >
                                                           {post.title}
                                                       </Link>
                                                   </h4>
                                                   <div>
                                                       <Link
                                                           className="inline-block bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded hover:bg-blue-800 transition-colors duration-300"
-                                                          to="/portfolio-details"
+                                                          to={`/post-external/${post._id}`}
                                                       >
-                                                          Learn more
+                                                          {t('learn_more')}
                                                       </Link>
                                                   </div>
                                               </div>
@@ -128,7 +135,7 @@ function NewsHome() {
                                           {/* Link overlay for entire card */}
                                           <Link
                                               className="absolute inset-0"
-                                              to="/portfolio-details"
+                                              to={`/post-external/${post._id}`}
                                           ></Link>
                                       </div>
                                   </div>
