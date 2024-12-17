@@ -10,9 +10,14 @@ import {
     MoveDirection,
     OutMode,
 } from '@tsparticles/engine'
+import i18n from '@/i18n/config'
+import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 function SliderOne() {
     const [init, setInit] = useState(false)
+    const { t } = useTranslation()
+
     useEffect(() => {
         initParticlesEngine(async (engine) => {
             // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
@@ -131,14 +136,14 @@ function SliderOne() {
                                     href="#"
                                     className="px-7 py-3 w-full bg-white text-gray-800 text-center rounded-md shadow-md block sm:w-auto"
                                 >
-                                    Contact Us
+                                    {t('contanctUs')}
                                 </a>
-                                <a
-                                    href="#servicesid"
+                                <Link
+                                    to="/solutions"
                                     className="px-7 py-3 w-full bg-gray-700 text-gray-200 text-center rounded-md block sm:w-auto"
                                 >
-                                    Check Our Services
-                                </a>
+                                    {t('services')}
+                                </Link>
                             </div>
                         </div>
                     </section>

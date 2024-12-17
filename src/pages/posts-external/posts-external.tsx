@@ -3,31 +3,12 @@ import axios from 'axios'
 import { Skeleton } from '../../components/ui/skeleton'
 import { Button } from '../../components/ui/button'
 import { useAuth } from '@/services/auth-service'
-import PostDelete from './post-delete'
-import PostNew from './post-new'
-import parse from 'html-react-parser'
 import { Category, PostData, PostsResponse } from '@/types'
-import PostEdit from './post-edit'
 import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 import Breadcrumb from '../../components/breadcrumb'
-import { Link } from 'react-router-dom'
 import LatestPost from './latest-port'
-import { useForm } from 'react-hook-form'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
-} from '@/components/ui/command'
-import { Textarea } from '@/components/ui/textarea'
 import CreatePostNew from './create-post-new'
-import { fetchPosts } from '@/services/api'
 import PostGrid from './post-grid'
 
 export default function PostExternal() {

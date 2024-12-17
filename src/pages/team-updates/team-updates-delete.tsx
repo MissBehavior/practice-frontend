@@ -73,19 +73,15 @@ function TeamUpdateDelete({
                         onSubmit={handleSubmit}
                     >
                         <Button
+                            type="button"
                             variant={'secondary'}
                             onClick={() => {
                                 setOpen(false)
                             }}
-                            type="submit"
                         >
                             {t('cancel')}
                         </Button>
-                        <Button
-                            variant={'destructive'}
-                            onClick={handleSubmit}
-                            type="submit"
-                        >
+                        <Button variant={'destructive'} type="submit">
                             {t('delete')}
                         </Button>
                     </form>

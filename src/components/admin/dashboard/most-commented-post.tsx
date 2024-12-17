@@ -3,6 +3,7 @@ import axios from 'axios'
 import { FaThumbsUp, FaCommentDots, FaUserCircle } from 'react-icons/fa'
 import { Link } from 'react-router-dom' // Using react-router-dom for navigation
 import { useTranslation } from 'react-i18next'
+import ReactMarkdown from 'react-markdown'
 
 interface MostCommentedPost {
     _id: string
@@ -53,15 +54,13 @@ const MostCommentedPostCard: React.FC = () => {
     return (
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-5">
             <Link
-                to={`/team-updates/${post._id}`} // Replace with your actual post details route
-                className=" hover:text-blue-500 cursor-pointer  hover:filter hover:brightness-110"
+                to={`/team-updates/${post._id}`}
+                className="hover:text-blue-500 cursor-pointer hover:filter hover:brightness-110"
             >
-                {/* Card Title */}
                 <h2 className="text-lg font-bold text-gray-800 dark:text-white mb-4">
                     {t('mostCommentedPost')}
                 </h2>
 
-                {/* User Information */}
                 <div className="flex items-center mb-4">
                     <div className="w-12 h-12 rounded-full overflow-hidden">
                         {post.userId?.profileImgUrl ? (
@@ -84,15 +83,13 @@ const MostCommentedPostCard: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Post Title and Content */}
                 <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
                     {post.title}
                 </h4>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    {post.content.length > 100
-                        ? `${post.content.substring(0, 100)}...`
-                        : post.content}
-                </p>
+
+                <div className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+                    <ReactMarkdown>{post.content}</ReactMarkdown>
+                </div>
 
                 {/* Stats */}
                 <div className="flex justify-between items-center">

@@ -47,7 +47,7 @@ export const KanbanBoard = ({
 
 export const KanbanBoardContainer = ({ children }: React.PropsWithChildren) => {
     return (
-        <div className="flex mx-[-32px] w-[calc(100%+64px)] h-screen dark:bg-[#101010]">
+        <div className="flex mx-[-32px] w-[calc(100%+64px)] min-h-svh dark:bg-[#101010]">
             <div className="flex w-full h-full px-[32px] overflow-auto">
                 {children}
             </div>

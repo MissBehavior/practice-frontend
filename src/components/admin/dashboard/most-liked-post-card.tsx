@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { FaThumbsUp, FaCommentDots, FaUserCircle } from 'react-icons/fa'
-import { Link } from 'react-router-dom' // Using react-router-dom for navigation
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import ReactMarkdown from 'react-markdown'
 
 interface MostLikedPost {
     _id: string
@@ -21,6 +22,7 @@ interface MostLikedPost {
 const MostLikedPostCard: React.FC = () => {
     const [post, setPost] = useState<MostLikedPost | null>(null)
     const { t } = useTranslation()
+
     const fetchMostLikedPost = async () => {
         try {
             const response = await axios.get(
@@ -41,7 +43,6 @@ const MostLikedPostCard: React.FC = () => {
         return (
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-5 text-center">
                 <p className="text-gray-500 dark:text-gray-400">
-                    {' '}
                     {t('noDataAvailable')}
                 </p>
             </div>
@@ -53,15 +54,13 @@ const MostLikedPostCard: React.FC = () => {
     return (
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-5">
             <Link
-                to={`/team-updates/${post._id}`} // Replace with your actual post details route
-                className=" hover:text-blue-500 cursor-pointer hover:filter hover:brightness-110"
+                to={`/team-updates/${post._id}`}
+                className="hover:text-blue-500 cursor-pointer hover:filter hover:brightness-110"
             >
-                {/* Card Title */}
                 <h2 className="text-lg font-bold text-gray-800 dark:text-white mb-4">
                     {t('mostLikedPost')}
                 </h2>
 
-                {/* User Information */}
                 <div className="flex items-center mb-4">
                     <div className="w-12 h-12 rounded-full overflow-hidden">
                         {post.userId?.profileImgUrl ? (
@@ -84,17 +83,14 @@ const MostLikedPostCard: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Post Title and Content */}
                 <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
                     {post.title}
                 </h4>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    {post.content.length > 100
-                        ? `${post.content.substring(0, 100)}...`
-                        : post.content}
-                </p>
 
-                {/* Stats */}
+                <div className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+                    <ReactMarkdown>{post.content}</ReactMarkdown>
+                </div>
+
                 <div className="flex justify-between items-center">
                     <div className="flex items-center text-gray-600 dark:text-gray-300">
                         <FaThumbsUp className="mr-2 text-blue-500" />

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
 import { useAuth, useAxios } from '@/services/auth-service'
-import parse from 'html-react-parser'
+import ReactMarkdown from 'react-markdown'
 import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 import { PostDataInternal } from '@/types'
@@ -13,25 +13,22 @@ import {
     FaRegHeart,
     FaUser,
     FaCommentDots,
-    FaReply,
     FaTrash,
-    FaEllipsisV,
 } from 'react-icons/fa'
 import Breadcrumb from '@/components/breadcrumb'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-
-interface CommentWithActions extends Comment {
-    isLiked: boolean
-    likeCount: number
-}
+import MDEditor from '@uiw/react-md-editor' // Import MDEditor
+import EditDialogOverflowEffect from './edit-details-overflow'
 
 export default function TeamUpdatesDetail() {
     const { id } = useParams<{ id: string }>()
@@ -42,6 +39,11 @@ export default function TeamUpdatesDetail() {
     const [post, setPost] = useState<PostDataInternal | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
     const [comment, setComment] = useState<string>('')
+    const [isEditing, setIsEditing] = useState<boolean>(false)
+    const [editTitle, setEditTitle] = useState<string>('')
+    const [editContent, setEditContent] = useState<string>('')
+    const [editImage, setEditImage] = useState<File | null>(null)
+    const [editImagePreview, setEditImagePreview] = useState<string>('')
 
     const fetchPostDetails = async () => {
         setLoading(true)
@@ -55,6 +57,9 @@ export default function TeamUpdatesDetail() {
                 }
             )
             setPost(response.data)
+            setEditTitle(response.data.title)
+            setEditContent(response.data.content)
+            setEditImagePreview(response.data.postPicture)
             setLoading(false)
         } catch (error) {
             console.error('Error fetching post details:', error)
@@ -92,7 +97,6 @@ export default function TeamUpdatesDetail() {
                     : null
             )
 
-            // Reset comment states
             setComment('')
         } catch (error) {
             console.error('Error posting comment:', error)
@@ -190,6 +194,57 @@ export default function TeamUpdatesDetail() {
         }
     }
 
+    const handleEditImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (file) {
+            setEditImage(file)
+            setEditImagePreview(URL.createObjectURL(file))
+        } else {
+            setEditImage(null)
+            setEditImagePreview(post?.postPicture || '')
+        }
+    }
+
+    const handleEditSubmit = async () => {
+        if (!post) return
+
+        try {
+            const formData = new FormData()
+            formData.append('title', editTitle)
+            formData.append('content', editContent)
+
+            if (editImage) {
+                formData.append('image', editImage)
+            } else {
+            }
+
+            const response = await api.patch(
+                `http://localhost:3000/postinternal/${post._id}`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${userToken!.accessToken}`,
+                    },
+                }
+            )
+
+            setPost(response.data)
+            toast({
+                variant: 'success',
+                title: t('success'),
+                description: t('changesSaved'),
+            })
+            setIsEditing(false)
+        } catch (error) {
+            console.error('Error updating post:', error)
+            toast({
+                variant: 'destructive',
+                title: t('error'),
+                description: t('errorUpdating'),
+            })
+        }
+    }
     useEffect(() => {
         fetchPostDetails()
     }, [id])
@@ -228,6 +283,131 @@ export default function TeamUpdatesDetail() {
                             <h1 className="text-4xl font-bold text-white mb-2">
                                 {post.title}
                             </h1>
+                            {/* Edit Button */}
+                            {(user.isAdmin ||
+                                (user.isEmployee &&
+                                    post.userName === user.name)) && (
+                                <Dialog
+                                    open={isEditing}
+                                    onOpenChange={setIsEditing}
+                                >
+                                    <DialogTrigger asChild>
+                                        <Button
+                                            variant="ghost"
+                                            className="mt-2 text-white bg-blue-500 hover:bg-blue-600"
+                                        >
+                                            {t('edit')}
+                                        </Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="sm:max-w-[800px]">
+                                        <DialogHeader>
+                                            <DialogTitle>
+                                                {t('editPost')}
+                                            </DialogTitle>
+                                            <DialogDescription>
+                                                {t('editPostDescription')}
+                                            </DialogDescription>
+                                        </DialogHeader>
+                                        <div className="grid gap-4 py-4">
+                                            {/* Image Upload Section */}
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <label
+                                                    htmlFor="editImage"
+                                                    className="text-right"
+                                                >
+                                                    {t('image')}
+                                                </label>
+                                                <div className="col-span-3">
+                                                    <input
+                                                        id="editImage"
+                                                        type="file"
+                                                        accept="image/*"
+                                                        onChange={
+                                                            handleEditImage
+                                                        }
+                                                        className="block w-full text-sm text-gray-500
+                                                        file:mr-4 file:py-2 file:px-4
+                                                        file:rounded-full file:border-0
+                                                        file:text-sm file:font-semibold
+                                                        file:bg-blue-50 file:text-blue-700
+                                                        hover:file:bg-blue-100"
+                                                    />
+                                                    {editImagePreview && (
+                                                        <img
+                                                            src={
+                                                                editImagePreview
+                                                            }
+                                                            alt="Edit Preview"
+                                                            className="mt-2 rounded-md w-full h-64 object-contain"
+                                                        />
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {/* Title Input */}
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <label
+                                                    htmlFor="editTitle"
+                                                    className="text-right"
+                                                >
+                                                    {t('title')}
+                                                </label>
+                                                <input
+                                                    id="editTitle"
+                                                    type="text"
+                                                    value={editTitle}
+                                                    onChange={(e) =>
+                                                        setEditTitle(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                    className="col-span-3 p-2 border rounded-lg bg-[#242e3d] text-white"
+                                                    required
+                                                />
+                                            </div>
+                                            {/* Content Editor */}
+                                            <div className="grid grid-cols-4 items-start gap-4">
+                                                <label
+                                                    htmlFor="editContent"
+                                                    className="text-right mt-2"
+                                                >
+                                                    {t('content')}
+                                                </label>
+                                                <div className="col-span-3">
+                                                    <MDEditor
+                                                        value={editContent}
+                                                        onChange={(value) =>
+                                                            setEditContent(
+                                                                value || ''
+                                                            )
+                                                        }
+                                                        height={300}
+                                                        preview="edit"
+                                                        data-color-mode="dark"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <DialogFooter>
+                                            <Button onClick={handleEditSubmit}>
+                                                {t('save_changes')}
+                                            </Button>
+                                            <Button
+                                                variant="outline"
+                                                onClick={() =>
+                                                    setIsEditing(false)
+                                                }
+                                            >
+                                                {t('cancel')}
+                                            </Button>
+                                        </DialogFooter>
+                                        {/* useEffect to manage body overflow */}
+                                        <EditDialogOverflowEffect
+                                            open={isEditing}
+                                        />
+                                    </DialogContent>
+                                </Dialog>
+                            )}
                         </div>
                     </div>
 
@@ -252,7 +432,7 @@ export default function TeamUpdatesDetail() {
                         </div>
 
                         <div className="prose max-w-none mb-8 text-white">
-                            {parse(post.content)}
+                            <ReactMarkdown>{post.content}</ReactMarkdown>{' '}
                         </div>
 
                         <div className="flex justify-between items-center border-t border-gray-200 pt-6">

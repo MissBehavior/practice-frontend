@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useAuth, useAxios } from '@/services/auth-service'
-import parse from 'html-react-parser'
+import ReactMarkdown from 'react-markdown' // Updated import
 import { PostData, PostDataInternal } from '@/types'
 import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 import TeamUpdateNew from './team-updates-new'
 import TeamUpdateDelete from './team-updates-delete'
-import 'react-quill/dist/quill.snow.css' // Import React Quill's Snow theme CSS
 import {
     FaCalendarAlt,
     FaCommentDots,
@@ -15,7 +14,6 @@ import {
     FaRegHeart,
     FaUser,
 } from 'react-icons/fa'
-import { FaRegCommentDots } from 'react-icons/fa'
 import { toast } from '@/components/ui/use-toast'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from '@/components/ui/button'
@@ -23,11 +21,13 @@ import Breadcrumb from '@/components/breadcrumb'
 import { Link } from 'react-router-dom'
 import { Avatar } from '@radix-ui/react-avatar'
 import { AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+
 interface PaginatedResponse {
     totalPages: number
     currentPage: number
     posts: PostDataInternal[]
 }
+
 export default function TeamUpdates() {
     const { user, userToken } = useAuth()
     const api = useAxios()
@@ -152,11 +152,13 @@ export default function TeamUpdates() {
         fetchData(currentPage, searchQuery)
         // }, 10000)
         // fetchData(currentPage)
-    }, [currentPage])
+    }, [currentPage, searchQuery]) // Added searchQuery as a dependency
+
     const handleSearch = (q: string) => {
         setSearchQuery(q)
-        fetchData(1, q)
+        setCurrentPage(1) // Reset to first page on new search
     }
+
     if (loading) {
         return (
             <div className="dark:bg-[#101010] bg-slate-300 min-h-screen">
@@ -241,7 +243,10 @@ export default function TeamUpdates() {
                                         </Link>
                                     </h4>
                                     <div className="flex items-center text-gray-600 text-sm mb-2">
-                                        <span>{parse(post.content)}</span>
+                                        <ReactMarkdown>
+                                            {post.content}
+                                        </ReactMarkdown>{' '}
+                                        {/* Updated here */}
                                     </div>
                                     <div className="flex items-center justify-between text-gray-600 text-sm mb-2">
                                         <div className="flex">

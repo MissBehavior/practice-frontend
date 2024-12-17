@@ -1,4 +1,4 @@
-import MyEditor from '@/components/editor'
+import { useTheme } from '@/components/theme-provider'
 import { Button } from '@/components/ui/button'
 import {
     Dialog,
@@ -12,20 +12,21 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuth, useAxios } from '@/services/auth-service'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import DOMPurify from 'dompurify'
 import { useTranslation } from 'react-i18next'
 import { toast } from '@/components/ui/use-toast'
-import { useTheme } from '@/components/theme-provider'
 import DotLoader from 'react-spinners/DotLoader'
 import { useDropzone } from 'react-dropzone'
 import { MdOutlineFileUpload } from 'react-icons/md'
+import MDEditor from '@uiw/react-md-editor' // New import
 
 interface TeamUpdateNewProps {
-    fetchData: (page: number) => void
+    fetchData: (page: number, query?: string) => void // Updated to accept query
     currentPage: number
 }
+
 function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
     const { user, userToken } = useAuth()
     const api = useAxios()
@@ -36,6 +37,7 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
     const [titlePost, setTitlePost] = useState<string>('')
     const [loading, setLoading] = useState(false)
     const { theme } = useTheme()
+
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log('Image selected')
         console.log(e.target.files?.[0])
@@ -46,11 +48,13 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
             setImage(null)
         }
     }
+
     const onDropMain = useCallback((acceptedFiles: File[]) => {
         if (acceptedFiles.length > 0) {
             setImage(acceptedFiles[0])
         }
     }, [])
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
@@ -71,11 +75,14 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
             setLoading(false)
             return
         }
-        const cleanHTML = DOMPurify.sanitize(valueEn)
+
+        // Optionally sanitize Markdown to HTML if needed
+        const cleanContent = DOMPurify.sanitize(valueEn)
+
         const formData = new FormData()
         formData.append('image', image)
         formData.append('title', titlePost)
-        formData.append('content', cleanHTML)
+        formData.append('content', cleanContent) // If you store as Markdown, you might not need to sanitize
         formData.append('userId', user.id)
         formData.append('userName', user.name)
         try {
@@ -103,8 +110,9 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
             description: t('changesSaved'),
         })
         setLoading(false)
-        fetchData(currentPage)
+        fetchData(currentPage, '') // Optionally reset query or keep it
     }
+
     const { getRootProps: getMainRootProps, getInputProps: getMainInputProps } =
         useDropzone({
             onDrop: onDropMain,
@@ -120,9 +128,22 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
                 })
             },
         })
+    useEffect(() => {
+        if (!open) {
+            document.body.style.overflow = 'auto'
+            console.log('Body overflow reset to auto.')
+        } else {
+            document.body.style.overflow = 'hidden'
+            console.log('Body overflow set to hidden.')
+        }
 
+        return () => {
+            document.body.style.overflow = 'auto'
+            console.log('Component unmounted. Body overflow reset to auto.')
+        }
+    }, [open])
     return (
-        <div className=" min-h-32 dark:bg-[#101010] bg-slate-300 flex justify-center items-center select-none">
+        <div className="min-h-32 dark:bg-[#101010] bg-slate-300 flex justify-center items-center select-none">
             <div className="">
                 <Dialog
                     open={open}
@@ -148,9 +169,10 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
                             <DialogDescription></DialogDescription>
                         </DialogHeader>
                         <form
-                            className="grid gap-4 py-4 max-h-[50vh] overflow-auto  "
+                            className="grid gap-4 py-4 max-h-[50vh] overflow-auto"
                             onSubmit={handleSubmit}
                         >
+                            {/* Image Upload */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="file" className="text-right">
                                     {t('image')}
@@ -159,8 +181,6 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
                                     {...getMainRootProps()}
                                     style={{
                                         border: '2px dashed gray',
-                                        //padding: '20px',
-                                        //margin: '10px 0',
                                     }}
                                     className="col-span-3 flex justify-center items-center align-middle cursor-pointer"
                                 >
@@ -187,6 +207,7 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
                                     )}
                                 </div>
                             </div>
+                            {/* Title Post */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="title" className="text-right">
                                     {t('title')}
@@ -195,18 +216,28 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
                                     id="title"
                                     placeholder={t('postTitle')}
                                     className="col-span-3"
+                                    value={titlePost}
                                     onChange={(e) => {
                                         setTitlePost(e.target.value)
                                     }}
+                                    required
                                 />
                             </div>
+                            {/* Markdown Editor */}
                             <div className="grid grid-cols-1 items-center gap-4">
                                 <Label className="text-left">
                                     {t('description')}
                                 </Label>
-                                <MyEditor
-                                    valueEn={valueEn}
-                                    setValueEn={setValueEn}
+                                <MDEditor
+                                    value={valueEn}
+                                    onChange={(value) =>
+                                        setValueEn(value || '')
+                                    }
+                                    height={200}
+                                    preview="edit"
+                                    data-color-mode={
+                                        theme === 'dark' ? 'dark' : 'light'
+                                    }
                                 />
                             </div>
                         </form>

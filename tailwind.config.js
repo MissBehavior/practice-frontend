@@ -118,5 +118,6 @@ module.exports = {
         require('tailwindcss-animate'),
         require('daisyui'),
         require('@tailwindcss/typography'),
+        require('@tailwindcss/line-clamp'),
     ],
 }
