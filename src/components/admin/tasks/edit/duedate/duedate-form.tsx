@@ -5,6 +5,7 @@ import { format } from 'date-fns'
 import { Task } from '@/types'
 import { SocketContext } from '@/SocketContext'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
     initialValues: {
@@ -14,6 +15,7 @@ type Props = {
     taskId: string
 }
 export const DueDateForm = ({ initialValues, cancelForm, taskId }: Props) => {
+    const { t } = useTranslation()
     const socket = useContext(SocketContext)
     const formattedDueDate = initialValues.dueDate
         ? format(new Date(initialValues.dueDate), "yyyy-MM-dd'T'HH:mm")
@@ -42,9 +44,9 @@ export const DueDateForm = ({ initialValues, cancelForm, taskId }: Props) => {
             />
             <div className="flex space-x-2">
                 <Button variant="secondary" onClick={cancelForm}>
-                    Cancel
+                    {t('cancel')}
                 </Button>
-                <Button onClick={handleSave}>Save</Button>
+                <Button onClick={handleSave}>{t('save')}</Button>
             </div>
         </div>
     )

@@ -13,20 +13,12 @@ import {
 import { FaChevronDown } from 'react-icons/fa'
 import { ModeToggle } from '../mode-toggle'
 import { Button } from '../ui/button'
-import {
-    NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
-    NavigationMenuTrigger,
-} from '../ui/navigation-menu'
-import { RxDashboard } from 'react-icons/rx'
-import { MdOutlinePeopleAlt } from 'react-icons/md'
+import { useLanguage } from '@/services/language-context'
 export default function Header() {
     const { isLoggedIn, logoutFunc } = useAuth()
     const { user } = useAuth()
     const { t } = useTranslation()
+    const { language, setLanguage } = useLanguage()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [open, setOpen] = useState(false)
     const [adminMenuOpen, setAdminMenuOpen] = useState(false)
@@ -38,15 +30,9 @@ export default function Header() {
         closeMenu()
     }
 
-    const setLanguage = (lang: string) => () => {
-        i18n.changeLanguage(lang)
-    }
     const navigate = useNavigate()
     const navToLogin = () => {
         navigate('/login')
-    }
-    const navToRegister = () => {
-        navigate('/register')
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -80,7 +66,7 @@ export default function Header() {
                     <ModeToggle />
                     <div className=" border-gray-300 border-l-2 dark:border-gray-600 pl-5 h-[40px] flex flex-row items-center justify-center gap-2 select-none">
                         <a
-                            onClick={setLanguage('en')}
+                            onClick={() => setLanguage('en')}
                             className={
                                 i18n.language === 'en'
                                     ? 'p-2 bg-slate-300 dark:bg-background rounded cursor-pointer dark:hover:bg-accent dark:hover:text-accent-foreground'
@@ -91,7 +77,7 @@ export default function Header() {
                         </a>
                         |
                         <a
-                            onClick={setLanguage('lt')}
+                            onClick={() => setLanguage('lt')}
                             className={
                                 i18n.language === 'lt'
                                     ? 'p-2 bg-slate-300 dark:bg-background rounded cursor-pointer hover:bg-accent hover:text-accent-foreground'
@@ -102,23 +88,9 @@ export default function Header() {
                         </a>
                     </div>
                     {!isLoggedIn && (
-                        <>
-                            {/* <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-4 cursor-pointer">
-                                <Button onClick={navToLogin}>
-                                    SignIn/SignUp
-                                </Button>
-                            </div> */}
-                            <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-4 cursor-pointer">
-                                <Button onClick={navToLogin}>
-                                    {t('login')}
-                                </Button>
-                            </div>
-                            {/* <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-4 cursor-pointer">
-                                <Button onClick={navToRegister}>
-                                    {t('register')}
-                                </Button>
-                            </div> */}
-                        </>
+                        <div className="inline-block border-gray-300 border-l-2 dark:border-gray-600 pl-4 cursor-pointer">
+                            <Button onClick={navToLogin}>{t('login')}</Button>
+                        </div>
                     )}
                     {isLoggedIn && (
                         <>
@@ -231,31 +203,16 @@ export default function Header() {
                             text="home"
                             link=""
                         />
-                        {/* <MenuItem
-                            handleClick={handleClick}
-                            text="about_us"
-                            link="about"
-                        /> */}
                         <MenuItem
                             handleClick={handleClick}
                             text="solutions"
                             link="solutions"
                         />
-                        {/* <MenuItem
-                            handleClick={handleClick}
-                            text="people"
-                            link="people"
-                        /> */}
                         <MenuItem
                             handleClick={handleClick}
                             text="gallery"
                             link="gallery"
                         />
-                        {/* <MenuItem
-                            handleClick={handleClick}
-                            text="clients"
-                            link="clients"
-                        /> */}
                         <MenuItem
                             handleClick={handleClick}
                             text="post_external"
@@ -327,14 +284,6 @@ export default function Header() {
                                 </DropdownMenu>
                             </div>
                         )}
-
-                        {/*user.isAdmin && (
-                            <MenuItem
-                                handleClick={handleClick}
-                                text="admin"
-                                link="dashboard"
-                            />
-                        )*/}
                     </ul>
                 </div>
 

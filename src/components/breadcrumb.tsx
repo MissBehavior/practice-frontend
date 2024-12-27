@@ -28,7 +28,6 @@ const Breadcrumb: FC<BreadcrumbProps> = ({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        // Handle the search logic here
         console.log('Search Query:', searchQuery)
         if (onSearch) {
             console.log('Search Query ONSEARCH TRUE:', searchQuery)

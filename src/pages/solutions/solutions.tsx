@@ -84,9 +84,9 @@ export default function Solutions() {
                                         <SolutionsEditDialog
                                             _id={data._id}
                                             cardImgUrl={data.cardImgUrl}
-                                            contentMainImgUrl={
-                                                data.contentMainImg
-                                            }
+                                            // contentMainImgUrl={
+                                            //     data.contentMainImg
+                                            // }
                                             titleCard={data.titleCard}
                                             titleCardLT={data.titleCardLT}
                                             contentCard={data.contentCard}

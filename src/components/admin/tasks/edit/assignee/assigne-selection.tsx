@@ -11,6 +11,8 @@ import {
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import i18n from '@/i18n/config'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
     task: Task
@@ -20,7 +22,7 @@ type Props = {
 const AssigneeSelection: React.FC<Props> = ({ task, taskId }) => {
     const { userToken } = useAuth()
     const api = useAxios()
-
+    const { t } = useTranslation()
     const [allUsers, setAllUsers] = useState<UserObjectPopulated[]>([])
     const [loadingUsers, setLoadingUsers] = useState<boolean>(false)
     const [errorUsers, setErrorUsers] = useState<string | null>(null)
@@ -137,7 +139,11 @@ const AssigneeSelection: React.FC<Props> = ({ task, taskId }) => {
 
             <div className="relative">
                 <Input
-                    placeholder="Search and select assignees..."
+                    placeholder={
+                        i18n.language === 'en'
+                            ? 'Search and select assignees'
+                            : 'Ieškokite ir pasirinkite perėmėjus'
+                    }
                     value={assigneeQuery}
                     onChange={(e) => setAssigneeQuery(e.target.value)}
                     onFocus={() => setIsAssigneeDropdownOpen(true)}
@@ -172,7 +178,7 @@ const AssigneeSelection: React.FC<Props> = ({ task, taskId }) => {
                                         </CommandGroup>
                                     ) : (
                                         <CommandEmpty>
-                                            No users found
+                                            {t('no_users_found')}
                                         </CommandEmpty>
                                     )}
                                 </CommandList>
@@ -189,10 +195,10 @@ const AssigneeSelection: React.FC<Props> = ({ task, taskId }) => {
                         onClick={handleSave}
                         className="bg-blue-500 text-white"
                     >
-                        Save
+                        {t('save')}
                     </Button>
                     <Button onClick={handleCancel} variant="ghost">
-                        Cancel
+                        {t('cancel')}
                     </Button>
                 </div>
             )}

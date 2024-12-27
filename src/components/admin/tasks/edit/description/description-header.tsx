@@ -2,6 +2,7 @@ import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import { Button } from '@/components/ui/button'
 import { Task } from '@/types'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
     description?: Task['description']
@@ -14,6 +15,7 @@ export const DescriptionHeader: React.FC<Props> = ({
     onAdd,
     onEdit,
 }) => {
+    const { t } = useTranslation()
     if (description) {
         return (
             <div className="prose max-w-none dark:prose-invert">
@@ -61,7 +63,7 @@ export const DescriptionHeader: React.FC<Props> = ({
                 </ReactMarkdown>
                 <div className="mt-2">
                     <Button variant="outline" size="sm" onClick={onEdit}>
-                        Edit Description
+                        {t('edit_description')}
                     </Button>
                 </div>
             </div>
@@ -70,7 +72,7 @@ export const DescriptionHeader: React.FC<Props> = ({
 
     return (
         <Button variant="link" onClick={onAdd}>
-            Add task description
+            {t('add_description')}
         </Button>
     )
 }

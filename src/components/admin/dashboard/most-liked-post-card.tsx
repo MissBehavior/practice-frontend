@@ -52,7 +52,7 @@ const MostLikedPostCard: React.FC = () => {
     const formattedDate = new Date(post.createdAt).toLocaleDateString()
 
     return (
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-5">
+        <div className="dark:bg-[#191919] bg-slate-200 rounded-lg shadow p-5">
             <Link
                 to={`/team-updates/${post._id}`}
                 className="hover:text-blue-500 cursor-pointer hover:filter hover:brightness-110"

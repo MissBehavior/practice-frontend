@@ -26,9 +26,15 @@ const KanbanPieChart: React.FC = () => {
                 console.error('Error fetching task stats:', error)
             })
     }
-
+    const stageTranslationMap: Record<string, string> = {
+        'In Progress': t('inProgress'),
+        Unassigned: t('unassigned'),
+        Backlog: t('backlog'),
+        DONE: t('done'),
+    }
     useEffect(() => {
         getStatisticsKanban()
+        console.log('Task stats:', data)
     }, [])
 
     const totalTasks = data.reduce((acc, curr) => acc + curr.count, 0)
@@ -42,10 +48,11 @@ const KanbanPieChart: React.FC = () => {
                     style={{ border: '1px solid #ddd' }}
                 >
                     <p className="label text-black dark:text-white">
-                        <strong>Stage:</strong> {payload[0].payload.stage}
+                        <strong>{t('stage')}:</strong>{' '}
+                        {payload[0].payload.stage}
                     </p>
                     <p className="intro text-black dark:text-white">
-                        <strong>Count:</strong> {value}
+                        <strong>{t('count')}:</strong> {value}
                     </p>
                 </div>
             )
@@ -125,7 +132,14 @@ const KanbanPieChart: React.FC = () => {
                                             }}
                                         ></span>
                                         <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-                                            <span>{stageData.stage}</span>
+                                            <span>
+                                                {' '}
+                                                {
+                                                    stageTranslationMap[
+                                                        stageData.stage
+                                                    ]
+                                                }
+                                            </span>
                                             <span>{percentage}%</span>
                                         </p>
                                     </div>

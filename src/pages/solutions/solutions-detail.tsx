@@ -4,15 +4,13 @@ import { SolutionsData } from '@/types'
 import axios from 'axios'
 import { useAuth, useAxios } from '@/services/auth-service'
 import { Button } from '@/components/ui/button'
-import { MdEdit } from 'react-icons/md'
-import { IoCloseSharp } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
 import { toast } from '@/components/ui/use-toast'
-import ReactMarkdown from 'react-markdown' // Import ReactMarkdown
+import ReactMarkdown from 'react-markdown'
 import DotLoader from 'react-spinners/DotLoader'
 import { useTheme } from '@/components/theme-provider'
 import Breadcrumb from '@/components/breadcrumb'
-import MDEditor from '@uiw/react-md-editor' // Import MDEditor
+import MDEditor from '@uiw/react-md-editor'
 import { Input } from '@/components/ui/input'
 import i18n from '@/i18n/config'
 
@@ -152,7 +150,8 @@ function SolutionsDetail() {
             <Breadcrumb title={t('Solutions')} parent={t('Solutions')} />
             <div className="py-10 bg-gray-100 dark:bg-gray-900 min-h-screen">
                 <div className="max-w-5xl mx-auto px-4">
-                    {user.isAdmin && (
+                    {/* TODO: UPDATE SOLUTION DETAIL REMOVED:*/}
+                    {/* {user.isAdmin && (
                         <div className="flex justify-end mb-4">
                             <Button
                                 variant="outline"
@@ -172,7 +171,7 @@ function SolutionsDetail() {
                                 )}
                             </Button>
                         </div>
-                    )}
+                    )} */}
                     {isEdit ? (
                         <form
                             onSubmit={handleSubmit}

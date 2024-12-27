@@ -5,6 +5,7 @@ import { FiPlusCircle } from 'react-icons/fi'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
     id: string
@@ -24,6 +25,8 @@ export const KanbanColumn = ({
     data,
     onAddClick,
 }: React.PropsWithChildren<Props>) => {
+    const { t } = useTranslation()
+
     const { isOver, setNodeRef, active } = useDroppable({
         id,
         data,
@@ -39,7 +42,7 @@ export const KanbanColumn = ({
                 <div className="flex justify-between items-center">
                     <div className="flex items-center">
                         <div className="uppercase text-xs font-bold mr-2">
-                            {title}
+                            {t(title)}
                         </div>
                         {!!count && <Badge className="">{count}</Badge>}
                     </div>

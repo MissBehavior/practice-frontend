@@ -21,7 +21,7 @@ interface SolutionsEditDialogProps {
     fetchData: () => void
     _id: string
     cardImgUrl: string
-    contentMainImgUrl: string
+    // contentMainImgUrl: string
     titleCard: string
     titleCardLT: string
     contentCard: string
@@ -33,7 +33,7 @@ interface SolutionsEditDialogProps {
 function SolutionsEditDialog({
     _id,
     cardImgUrl,
-    contentMainImgUrl,
+    // contentMainImgUrl,
     titleCard,
     titleCardLT,
     contentCard,
@@ -46,9 +46,9 @@ function SolutionsEditDialog({
     const api = useAxios()
     const [open, setOpen] = React.useState(false)
     const [image, setImage] = React.useState<File | null>(null)
-    const [contentMainImg, setContentMainImg] = React.useState<File | null>(
-        null
-    )
+    // const [contentMainImg, setContentMainImg] = React.useState<File | null>(
+    //     null
+    // )
     const [preview, setPreview] = React.useState<string>(cardImgUrl)
     const [contentCardEdit, setContentCardEdit] = React.useState(contentCard)
     const [contentCardLTEdit, setContentCardLTEdit] =
@@ -68,11 +68,11 @@ function SolutionsEditDialog({
             formData.append('cardImgUrl', cardImgUrl)
         }
 
-        if (contentMainImg) {
-            formData.append('contentMainImg', contentMainImg)
-        } else {
-            formData.append('contentMainImgUrl', contentMainImgUrl)
-        }
+        // if (contentMainImg) {
+        //     formData.append('contentMainImg', contentMainImg)
+        // } else {
+        //     formData.append('contentMainImgUrl', contentMainImgUrl)
+        // }
 
         formData.append('titleCard', titleCardEdit)
         formData.append('titleCardLT', titleCardLTEdit)
@@ -120,14 +120,14 @@ function SolutionsEditDialog({
         }
     }
 
-    const handleContentMainImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0]
-        if (file) {
-            setContentMainImg(file)
-        } else {
-            setContentMainImg(null)
-        }
-    }
+    // const handleContentMainImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     const file = e.target.files?.[0]
+    //     if (file) {
+    //         setContentMainImg(file)
+    //     } else {
+    //         setContentMainImg(null)
+    //     }
+    // }
 
     useEffect(() => {
         setTitleCardEdit(titleCard)
@@ -195,7 +195,7 @@ function SolutionsEditDialog({
                             >
                                 {t('contentMainImg')}
                             </Label>
-                            <div className="col-span-3">
+                            {/* <div className="col-span-3">
                                 <Input
                                     id="contentMainImg"
                                     type="file"
@@ -219,7 +219,7 @@ function SolutionsEditDialog({
                                         />
                                     )
                                 )}
-                            </div>
+                            </div> */}
                         </div>
 
                         {/* Title Card */}

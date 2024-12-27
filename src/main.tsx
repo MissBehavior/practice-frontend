@@ -29,6 +29,7 @@ import { TasksEditPage } from './components/admin/tasks/edit/task-edit-page.tsx'
 import PostDetail from './pages/posts-external/post-detail.tsx'
 import TeamUpdateDetail from './pages/team-updates/team-updates-detail.tsx'
 import ResetPassword from './pages/auth/reset-password.tsx'
+import { LanguageProvider } from './services/language-context.tsx'
 
 const router = createBrowserRouter([
     {
@@ -114,20 +115,6 @@ const router = createBrowserRouter([
                 path: '/reset-password',
                 element: <ResetPassword />,
             },
-            // {
-            //     path: '/admin',
-            //     element: <AdminDashboard />,
-            // },
-            // {
-            //     path: '/users',
-            //     element: <UsersTable />,
-            // },
-
-            // {
-            //     path: '/dashboard',
-            //     element: <AdminDashboard />,
-            // },
-            // TODO: TESTING ADMIN
             {
                 element: <AdminRoutes />,
                 children: [
@@ -155,11 +142,13 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-        <AuthProvider>
-            <NextTopLoader />
-            <RouterProvider router={router} />
-            <Toaster />
-        </AuthProvider>
-    </ThemeProvider>
+    <LanguageProvider>
+        <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+            <AuthProvider>
+                <NextTopLoader />
+                <RouterProvider router={router} />
+                <Toaster />
+            </AuthProvider>
+        </ThemeProvider>
+    </LanguageProvider>
 )

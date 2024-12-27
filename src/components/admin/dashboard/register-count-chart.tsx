@@ -18,6 +18,8 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
+import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 
 function RegisterCountChart({
     chartData,
@@ -28,6 +30,8 @@ function RegisterCountChart({
     theme: string
     fetchData: (year: string) => void
 }) {
+    const { t } = useTranslation()
+
     const getYearsArray = (): number[] => {
         const currentYear = new Date().getFullYear()
         const startYear = 2022
@@ -42,7 +46,7 @@ function RegisterCountChart({
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="dark:text-slate-200">
-                        Year: {2024}
+                        {t('year')}: {2024}
                         <FaChevronDown />
                     </Button>
                 </DropdownMenuTrigger>
@@ -93,6 +97,7 @@ function RegisterCountChart({
                             paddingTop: '20px',
                             paddingBottom: '40px',
                         }}
+                        content={() => <div>{t('registered')}</div>}
                     />
                     <Area
                         type="monotone"

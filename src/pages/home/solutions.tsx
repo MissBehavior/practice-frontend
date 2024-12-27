@@ -15,11 +15,9 @@ import { useTranslation } from 'react-i18next'
 import i18n from '@/i18n/config'
 
 export default function Solutions() {
-    const { user } = useAuth()
     const { t } = useTranslation()
     const [solutionData, setSolutionData] = useState<SolutionsData[]>([])
     const [loading, setLoading] = useState<boolean>(true)
-    const [hoveredItem, setHoveredItem] = useState<number | undefined>()
 
     const fetchData = async () => {
         setLoading(true)
@@ -36,9 +34,6 @@ export default function Solutions() {
     }
 
     useEffect(() => {
-        // setTimeout(() => {
-        //     fetchData()
-        // }, 10000)
         fetchData()
     }, [])
 
@@ -120,18 +115,15 @@ export default function Solutions() {
                             {solutionData.map((card, index) => (
                                 <SwiperSlide key={index}>
                                     <div className="relative group transition-transform duration-300 rounded-lg overflow-hidden shadow-lg bg-neutral-900">
-                                        {/* Image Container */}
                                         <div className="w-full h-96 relative bg-neutral-800 flex items-center justify-center">
                                             <img
                                                 src={card.cardImgUrl}
                                                 alt="Portfolio Image"
                                                 className="w-full h-full object-cover filter brightness-75 group-hover:scale-105 duration-300"
                                             />
-                                            {/* Gradients can be subtle or more pronounced depending on preference */}
                                             <div className="absolute inset-0 bg-gradient-to-b from-[#4d93c2] to-black opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-85"></div>
                                         </div>
 
-                                        {/* Text Content Overlay */}
                                         <div className="absolute bottom-0 left-0 w-full p-4 pb-8 z-10">
                                             <div className="text-white ">
                                                 <p className="text-sm mb-1 line-clamp-2">
@@ -153,7 +145,6 @@ export default function Solutions() {
                                             </div>
                                         </div>
 
-                                        {/* Link overlay for entire card */}
                                         <Link
                                             className="absolute inset-0"
                                             to={`/solutions/${card._id}`}

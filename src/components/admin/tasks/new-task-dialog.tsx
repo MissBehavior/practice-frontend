@@ -20,6 +20,8 @@ import {
     CommandList,
 } from '@/components/ui/command'
 import { useAuth, useAxios } from '@/services/auth-service'
+import { useTranslation } from 'react-i18next'
+import i18n from '@/i18n/config'
 
 interface NewTaskDialogProps {
     stageTitle: string
@@ -33,6 +35,7 @@ export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
 }) => {
     const { user, userToken } = useAuth()
     const api = useAxios()
+    const { t } = useTranslation()
 
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
@@ -115,7 +118,12 @@ export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
         <Dialog open onOpenChange={onClose}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Create a new task in {stageTitle}</DialogTitle>
+                    <DialogTitle>
+                        {i18n.language === 'en'
+                            ? 'Create a new task in '
+                            : 'Sukurti naują užduotį '}
+                        {t(stageTitle)}
+                    </DialogTitle>
                     <DialogClose />
                 </DialogHeader>
                 <form
@@ -124,7 +132,7 @@ export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
                 >
                     {/* Title */}
                     <div>
-                        <Label htmlFor="title">Title</Label>
+                        <Label htmlFor="title">{t('title')}</Label>
                         <Input
                             id="title"
                             value={title}
@@ -134,7 +142,7 @@ export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
                     </div>
                     {/* Description */}
                     <div>
-                        <Label htmlFor="description">Description</Label>
+                        <Label htmlFor="description">{t('description')}</Label>
                         <Input
                             id="description"
                             value={description}
@@ -143,7 +151,7 @@ export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
                     </div>
                     {/* Due Date */}
                     <div>
-                        <Label htmlFor="dueDate">Due Date</Label>
+                        <Label htmlFor="dueDate">{t('dueDate')}</Label>
                         <Input
                             type="date"
                             id="dueDate"
@@ -153,7 +161,9 @@ export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
                     </div>
                     {/* Tags */}
                     <div>
-                        <Label htmlFor="tags">Tags (comma separated)</Label>
+                        <Label htmlFor="tags">
+                            {t('tags')} ({t('comma_separated')})
+                        </Label>
                         <Input
                             id="tags"
                             value={tags}
@@ -163,7 +173,7 @@ export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
                     </div>
                     {/* Assignees */}
                     <div className="border-t pt-4">
-                        <Label>Assignees</Label>
+                        <Label>{t('assignees')}</Label>
                         {assignee.length > 0 && (
                             <div className="mb-2 flex flex-wrap gap-2">
                                 {assignee.map((user) => (
@@ -226,7 +236,7 @@ export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
                                                 </CommandGroup>
                                             ) : (
                                                 <CommandEmpty>
-                                                    No users found
+                                                    {t('no_users_found')}
                                                 </CommandEmpty>
                                             )}
                                         </CommandList>
@@ -241,9 +251,9 @@ export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
                     {/* Actions */}
                     <DialogFooter>
                         <Button type="button" variant="ghost" onClick={onClose}>
-                            Cancel
+                            {t('cancel')}
                         </Button>
-                        <Button type="submit">Create Task</Button>
+                        <Button type="submit">{t('create_task')}</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>

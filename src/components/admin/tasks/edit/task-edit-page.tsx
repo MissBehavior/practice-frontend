@@ -30,11 +30,13 @@ import { DescriptionHeader } from './description/description-header'
 import { DescriptionForm } from './description/description-form'
 import AssigneeSelection from './assignee/assigne-selection'
 import { Label } from '@/components/ui/label'
+import { useTranslation } from 'react-i18next'
 
 export const TasksEditPage: React.FC = () => {
     const { taskId } = useParams<{ taskId: string }>()
     const socket = useContext(SocketContext)
     const navigate = useNavigate()
+    const { t } = useTranslation()
 
     if (!taskId) {
         return <div>Task ID is missing</div>
@@ -126,14 +128,14 @@ export const TasksEditPage: React.FC = () => {
                     <DialogTitle>{task.title}</DialogTitle>
                 </DialogHeader>
                 <div className="p-4 border rounded-md">
-                    <Label>Title:</Label>
+                    <Label>{t('title')}:</Label>
                     <TitleForm
                         initialValues={{ title: task?.title || '' }}
                         taskId={taskId}
                     />
                 </div>
                 <div className="p-4 border rounded-md ">
-                    <Label>Description:</Label>
+                    <Label>{t('description')}:</Label>
                     {isEditingDescription ? (
                         <DescriptionForm
                             initialValues={{
@@ -154,7 +156,7 @@ export const TasksEditPage: React.FC = () => {
                     <AssigneeSelection task={task} taskId={taskId} />
                 </div>
                 <div className="p-4 border rounded-md ">
-                    <Label>Stage:</Label>
+                    <Label>{t('stage')}:</Label>
                     <StageForm task={task} taskId={taskId} />
                 </div>
                 <Accordion
@@ -168,7 +170,7 @@ export const TasksEditPage: React.FC = () => {
                             <span className="flex items-center justify-between w-full">
                                 <span className="flex items-center">
                                     <AiOutlineFieldTime className="mr-2" />
-                                    <span>Due date</span>
+                                    <span>{t('dueDate')}</span>
                                 </span>
                                 <DueDateHeader dueDate={task?.dueDate} />
                             </span>
@@ -187,7 +189,7 @@ export const TasksEditPage: React.FC = () => {
 
                 <div className="mt-4">
                     <Button variant="destructive" onClick={handleDelete}>
-                        Delete card
+                        {t('delete_card')}
                     </Button>
                 </div>
             </DialogContent>

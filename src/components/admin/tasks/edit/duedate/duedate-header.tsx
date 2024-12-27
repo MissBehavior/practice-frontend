@@ -3,12 +3,15 @@ import { format } from 'date-fns'
 import { Badge } from '@/components/ui/badge'
 import { Task } from '@/types'
 import { getDateColor } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
     dueDate?: Task['dueDate']
 }
 
 export const DueDateHeader = ({ dueDate }: Props) => {
+    const { t } = useTranslation()
+
     if (dueDate) {
         // Get the color status
         const colorStatus = getDateColor({ date: dueDate })
@@ -41,7 +44,7 @@ export const DueDateHeader = ({ dueDate }: Props) => {
 
     return (
         <span className="text-blue-500 hover:underline" onClick={() => {}}>
-            Add due date
+            {t('add_due_date')}
         </span>
     )
 }

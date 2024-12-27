@@ -81,22 +81,26 @@ function AdminDashboard() {
     return (
         <>
             {/* <div className="w-full p-6 h-2 bg-slate-500"> HEADER</div> */}
-            <div className="w-full lg:w-2/3 flex flex-col gap-8 p-4 mx-auto">
+            <div className="w-full lg:w-2/3 flex flex-col gap-8 p-4 mx-auto dark:bg-[#101010] bg-slate-300">
                 <div className="flex  gap-4 justify-between flex-wrap w-full">
                     <UserCard
                         count={userCount ? userCount : 0}
-                        date="Today"
-                        type="Users"
+                        date={t('today')}
+                        type={t('users')}
                     />
                     <UserCard
                         count={galleryCount ? galleryCount : 0}
-                        date="Today"
-                        type="Gallery"
+                        date={t('today')}
+                        type={t('gallery')}
                     />
-                    <UserCard count={15} date="Today" type="Clients" />
+                    <UserCard
+                        count={15}
+                        date={t('today')}
+                        type={t('clients')}
+                    />
                 </div>
                 <div className="flex  gap-4 justify-between flex-wrap w-full">
-                    <UserCard count={45} date="TODO" type="TeamUpdates" />
+                    <UserCard count={45} date="TODO" type={t('team_updates')} />
                     <UserCard
                         count={45}
                         date="TODO"

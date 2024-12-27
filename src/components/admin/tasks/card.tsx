@@ -29,8 +29,9 @@ import { Task, User } from '@/types'
 import { CustomAvatar } from './custom-avatar'
 import { SocketContext } from '@/SocketContext' // Adjust path as necessary
 import { useAxios } from '@/services/auth-service'
-import { t } from 'i18next'
 import { Label } from '@/components/ui/label'
+import i18n from '@/i18n/config'
+import { useTranslation } from 'react-i18next'
 
 type ProjectCardProps = {
     task: Task
@@ -39,6 +40,7 @@ type ProjectCardProps = {
 export const ProjectCard = ({ task }: ProjectCardProps) => {
     const navigate = useNavigate()
     const api = useAxios()
+    const { t } = useTranslation()
 
     const socket = useContext(SocketContext)
     const { _id, title, assignee, createdAt, tags, dueDate } = task
@@ -53,7 +55,7 @@ export const ProjectCard = ({ task }: ProjectCardProps) => {
     const dropdownItems = useMemo(() => {
         const items = [
             {
-                label: 'View card',
+                label: t('view_card'),
                 key: '1',
                 icon: <AiOutlineEye />,
                 onClick: () => {
@@ -62,7 +64,7 @@ export const ProjectCard = ({ task }: ProjectCardProps) => {
             },
             {
                 danger: true,
-                label: 'Delete card',
+                label: t('delete_card'),
                 key: '2',
                 icon: <AiOutlineDelete />,
                 onClick: () => {
@@ -72,7 +74,7 @@ export const ProjectCard = ({ task }: ProjectCardProps) => {
         ]
 
         return items
-    }, [navigate, _id, socket])
+    }, [navigate, _id, socket, t])
 
     const createDateOptions = useMemo(() => {
         if (!createdAt) return null
@@ -95,7 +97,7 @@ export const ProjectCard = ({ task }: ProjectCardProps) => {
         }
     }, [dueDate])
     return (
-        <Card className="p-4 bg-[#191919]">
+        <Card className="p-4 dark:bg-[#191919] bg-slate-200">
             <div className="flex justify-between items-start">
                 <CardTitle className="text-lg font-bold">{title}</CardTitle>
                 <DropdownMenu>
@@ -134,7 +136,7 @@ export const ProjectCard = ({ task }: ProjectCardProps) => {
                                 className="flex items-center gap-1 mt-2 w-1/2"
                             >
                                 <AiOutlineClockCircle className="w-4 h-4" />
-                                {t('createdOn')} {createDateOptions.text}
+                                {t('created')} {createDateOptions.text}
                             </Badge>
                         )}
                         {dueDateOptions && (
@@ -143,7 +145,7 @@ export const ProjectCard = ({ task }: ProjectCardProps) => {
                                 className="flex items-center gap-1 mt-2 w-1/2"
                             >
                                 <AiOutlineClockCircle className="w-4 h-4" />
-                                {t('duedateAt')} {dueDateOptions.text}
+                                {t('dueDate')} {dueDateOptions.text}
                             </Badge>
                         )}
                     </div>
