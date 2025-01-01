@@ -7,7 +7,8 @@ import { DataTableRowActions } from './data-table-row-actions'
 
 export const columns = (
     deleteUser: (id: string) => void,
-    editUser: (user: UserAdminData) => void
+    editUser: (user: UserAdminData) => void,
+    t: (key: string) => string
 ): ColumnDef<UserAdminData>[] => [
     {
         id: 'actions',
@@ -43,7 +44,7 @@ export const columns = (
                 }
             >
                 <ArrowUpDown className="ml-2 h-4 w-4" />
-                <span>Name</span>
+                <span>{t('name')}</span>
             </Button>
         ),
     },
@@ -57,7 +58,7 @@ export const columns = (
                 }
             >
                 <ArrowUpDown className="ml-2 h-4 w-4" />
-                <span>Email</span>
+                <span>{t('email')}</span>
             </Button>
         ),
     },
@@ -71,7 +72,7 @@ export const columns = (
                 }
             >
                 <ArrowUpDown className="ml-2 h-4 w-4" />
-                <span>Phone</span>
+                <span>{t('phone')}</span>
             </Button>
         ),
     },
@@ -85,7 +86,7 @@ export const columns = (
                 }
             >
                 <ArrowUpDown className="ml-2 h-4 w-4" />
-                <span>Languages</span>
+                <span>{t('languages')}</span>
             </Button>
         ),
         cell: ({ row }) => {
@@ -103,7 +104,7 @@ export const columns = (
                 }
             >
                 <ArrowUpDown className="ml-2 h-4 w-4" />
-                <span>Admin</span>
+                <span>{t('admin')}</span>
             </Button>
         ),
     },
@@ -117,7 +118,7 @@ export const columns = (
                 }
             >
                 <ArrowUpDown className="ml-2 h-4 w-4" />
-                <span>Employee</span>
+                <span>{t('employee')}</span>
             </Button>
         ),
     },

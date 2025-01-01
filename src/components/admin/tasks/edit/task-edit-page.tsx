@@ -31,6 +31,7 @@ import { DescriptionForm } from './description/description-form'
 import AssigneeSelection from './assignee/assigne-selection'
 import { Label } from '@/components/ui/label'
 import { useTranslation } from 'react-i18next'
+import { CreatedByForm } from './createdBy/createdBy-form'
 
 export const TasksEditPage: React.FC = () => {
     const { taskId } = useParams<{ taskId: string }>()
@@ -186,6 +187,10 @@ export const TasksEditPage: React.FC = () => {
                         </AccordionContent>
                     </AccordionItem>
                 </Accordion>
+                <div className="flex flex-row justify-between p-4 border rounded-md ">
+                    <Label>{t('createdBy')}:</Label>
+                    <CreatedByForm task={task} taskId={taskId} />
+                </div>
 
                 <div className="mt-4">
                     <Button variant="destructive" onClick={handleDelete}>

@@ -11,7 +11,7 @@ const mockdata = [
         text: 'I have been working at Winbas almost since the first steps of the company. I am inspired by working with people – the experience and knowledge I have gained gives me the opportunity to help younger colleagues who have just started taking their first steps in an international company. In addition, it is a great opportunity to get to know the Scandinavian culture.',
         roleLt: 'Grupės vadovas',
         textLt: 'Su „WinBAS“ esu beveik nuo pirmųjų įmonės žingsnių. Mane įkvepia darbas su žmonėmis – sukaupta patirtis ir žinios suteikia galimybę padėti jaunesniems kolegoms, kurie savo pirmuosius žingsnius tarptautinėje kompanijoje pradeda žengti tik dabar. Be to, tai puiki proga pažinti skandinavų kultūrą.',
-        imgUrl: '/people/Andrius-1.png',
+        imgUrl: 'https://picsum.photos/600/600',
     },
     {
         id: 2,
@@ -21,7 +21,7 @@ const mockdata = [
         roleLt: 'Sąmatininkas, CAD dizaineris',
         textLt: 'Niekur kitur neteko susidurti su tokiu geranoriškumu ir dėmesiu sprendžiant iškilusias problemas: tiek iš komandos narių, tiek iš vadovų. Tai mane motyvuoja atlikti savo darbą dar geriau. O komandiruotės, tobulinimosi kursai, įmonės šventės, staigmenos ir žmonių šypsenos verčia džiaugtis ir vertinti čia praleistą laiką.',
 
-        imgUrl: '/people/Marius-1.png',
+        imgUrl: 'https://picsum.photos/600/700',
     },
     {
         id: 3,
@@ -31,7 +31,7 @@ const mockdata = [
         roleLt: 'Sąmatininkas',
         textLt: 'Stiprios vertybės, kurioms atstovauja „WinBAS“ yra tai, kas daro mūsų biurą puikia darbo vieta. Čia dirba profesionalai, todėl jaučiuosi puikiai ir galiu pasitikėti žmonėmis, su kuriais dirbu kiekvieną dieną.',
 
-        imgUrl: '/people/povilas-1.png',
+        imgUrl: 'https://picsum.photos/700/600',
     },
     {
         id: 4,
@@ -40,7 +40,7 @@ const mockdata = [
         text: 'I enjoy working in the company where I can boldly express my opinion and implement new ideas. Working with a team here at WinBas is special in the way that each of us have the opportunity to share our experiences: we are being listened to; we can advise each other and solve problems together. Therefore, we strive for the best results and successfully cooperate and grow as a team.',
         roleLt: 'Srauto administratorė, marketingo specialistė',
         textLt: 'Džiaugiuosi dirbdama įmonėje, kurioje galiu drąsiai reikšti savo nuomonę ir įgyvendinti idėjas. Darbas su komanda ypatingas tuo, kad kiekvienas turime galimybę dalintis savo patirtimi, esame išklausyti, galime patarti, sprendžiame problemas bei siekiame geriausių rezultatų. Čia sėkmingai bendradarbiaujame ir tobulėjame kartu.',
-        imgUrl: '/people/IMG_9677-1.png',
+        imgUrl: 'https://picsum.photos/700/700',
     },
     {
         id: 5,
@@ -49,7 +49,7 @@ const mockdata = [
         text: 'The most motivating activity for me is the processes & their optimization. I enjoy that here I make a significant contribution to improving efficiency and helping the team to move forward.',
         roleLt: 'Vyresnysis sąmatininkas, konstruktorius',
         textLt: 'Mane labiausiai motyvuojanti veikla – procesai ir jų optimizavimas. Čia aš reikšmingai prisidedu prie efektyvumo tobulinimo ir padedu komandai žengti pirmyn.',
-        imgUrl: '/people/IMG_9748-1.png',
+        imgUrl: 'https://picsum.photos/500/500',
     },
 ]
 

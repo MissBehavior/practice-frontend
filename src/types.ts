@@ -131,7 +131,7 @@ export interface Task {
     stage: string
     createdAt: string
     updatedAt: string
-    createdBy: string
+    createdBy: UserObjectPopulated
 }
 
 export interface TaskToSend {

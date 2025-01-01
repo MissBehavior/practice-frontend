@@ -138,7 +138,7 @@ export default function GalleryDetail() {
                                                 alt={`Gallery Image ${
                                                     index + 1
                                                 }`}
-                                                className="w-full h-64 object-cover rounded-lg bg-white transform hover:scale-105 transition-transform duration-300"
+                                                className="w-full h-64 object-cover rounded-lg dark:bg-[#101010] bg-white transform hover:scale-105 transition-transform duration-300"
                                                 style={smallItemStyles}
                                             />
                                         </div>

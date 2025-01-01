@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { Button } from '@/components/ui/button'
 import { UserAdminData } from '@/types'
+import { useTranslation } from 'react-i18next'
 
 interface CreateUserDialogProps {
     isOpen: boolean
@@ -30,6 +31,7 @@ export function CreateUserDialog({
     const [telefon, setTelefon] = useState('')
     const [isAdmin, setIsAdmin] = useState(false)
     const [isEmployee, setIsEmployee] = useState(false)
+    const { t } = useTranslation()
 
     const handleSubmit = async () => {
         await onSubmit({ name, email, telefon, isAdmin, isEmployee })
@@ -41,14 +43,12 @@ export function CreateUserDialog({
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent className="max-w-md">
                 <DialogHeader>
-                    <DialogTitle>Create New User</DialogTitle>
-                    <DialogDescription>
-                        Fill in the fields to create a new user.
-                    </DialogDescription>
+                    <DialogTitle>{t('create_new_user')}</DialogTitle>
+                    <DialogDescription></DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4">
                     <div>
-                        <Label htmlFor="name">Name</Label>
+                        <Label htmlFor="name">{t('name')}</Label>
                         <Input
                             id="name"
                             value={name}
@@ -56,7 +56,7 @@ export function CreateUserDialog({
                         />
                     </div>
                     <div>
-                        <Label htmlFor="email">Email</Label>
+                        <Label htmlFor="email">{t('email')}</Label>
                         <Input
                             id="email"
                             value={email}
@@ -64,7 +64,7 @@ export function CreateUserDialog({
                         />
                     </div>
                     <div>
-                        <Label htmlFor="telefon">Phone</Label>
+                        <Label htmlFor="telefon">{t('phone')}</Label>
                         <Input
                             id="telefon"
                             value={telefon}
@@ -72,14 +72,14 @@ export function CreateUserDialog({
                         />
                     </div>
                     <div className="flex items-center gap-2">
-                        <Label htmlFor="isAdmin">Admin</Label>
+                        <Label htmlFor="isAdmin">{t('admin')}</Label>
                         <Switch
                             checked={isAdmin}
                             onCheckedChange={setIsAdmin}
                         />
                     </div>
                     <div className="flex items-center gap-2">
-                        <Label htmlFor="isEmployee">Employee</Label>
+                        <Label htmlFor="isEmployee">{t('employee')}</Label>
                         <Switch
                             checked={isEmployee}
                             onCheckedChange={setIsEmployee}
@@ -88,9 +88,9 @@ export function CreateUserDialog({
                 </div>
                 <DialogFooter>
                     <Button variant="ghost" onClick={onClose}>
-                        Cancel
+                        {t('cancel')}
                     </Button>
-                    <Button onClick={handleSubmit}>Create</Button>
+                    <Button onClick={handleSubmit}>{t('create')}</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

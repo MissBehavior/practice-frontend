@@ -1,6 +1,7 @@
 import { memo, useMemo, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
+    AiOutlineCalendar,
     AiOutlineClockCircle,
     AiOutlineDelete,
     AiOutlineEye,
@@ -97,7 +98,12 @@ export const ProjectCard = ({ task }: ProjectCardProps) => {
         }
     }, [dueDate])
     return (
-        <Card className="p-4 dark:bg-[#191919] bg-slate-200">
+        <Card
+            className="p-2 dark:bg-[#191919] bg-slate-200 h-64 hover:dark:bg-[#2b2a2a]"
+            onClick={() => {
+                navigate(`/kanban/${task._id}`)
+            }}
+        >
             <div className="flex justify-between items-start">
                 <CardTitle className="text-lg font-bold">{title}</CardTitle>
                 <DropdownMenu>
@@ -127,26 +133,20 @@ export const ProjectCard = ({ task }: ProjectCardProps) => {
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <CardContent>
+            <CardContent className="p-1">
                 <div className="flex items-center flex-wrap gap-2 mt-2 border-t">
                     <div className="w-full flex flex-col">
                         {createDateOptions && (
-                            <Badge
-                                variant="secondary"
-                                className="flex items-center gap-1 mt-2 w-1/2"
-                            >
-                                <AiOutlineClockCircle className="w-4 h-4" />
+                            <div className="flex gap-1 text-sm">
+                                <AiOutlineCalendar className="w-4 h-4" />
                                 {t('created')} {createDateOptions.text}
-                            </Badge>
+                            </div>
                         )}
                         {dueDateOptions && (
-                            <Badge
-                                variant={dueDateOptions.color}
-                                className="flex items-center gap-1 mt-2 w-1/2"
-                            >
+                            <div className="flex gap-1 text-sm">
                                 <AiOutlineClockCircle className="w-4 h-4" />
                                 {t('dueDate')} {dueDateOptions.text}
-                            </Badge>
+                            </div>
                         )}
                     </div>
                     {!!assignee?.length && (

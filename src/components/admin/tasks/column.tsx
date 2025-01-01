@@ -37,7 +37,7 @@ export const KanbanColumn = ({
     }
 
     return (
-        <div ref={setNodeRef} className="flex flex-col p-4 w-80">
+        <div ref={setNodeRef} className="flex flex-col p-1 w-80 flex-shrink-0">
             <div className="p-3">
                 <div className="flex justify-between items-center">
                     <div className="flex items-center">
@@ -57,11 +57,11 @@ export const KanbanColumn = ({
                 {description}
             </div>
             <div
-                className={`flex-1 overflow-y-auto border-2 border-dashed ${
+                className={`flex-1 mt-3 flex flex-col gap-2 border-2 border-dashed rounded-md ${
                     isOver ? 'border-gray-400' : 'border-transparent'
-                } rounded-md`}
+                }`}
             >
-                <div className="mt-3 flex flex-col gap-2">{children}</div>
+                {children}
             </div>
         </div>
     )

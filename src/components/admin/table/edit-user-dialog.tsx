@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { Button } from '@/components/ui/button'
 import { UserAdminData } from '@/types'
+import { useTranslation } from 'react-i18next'
 
 interface EditUserDialogProps {
     isOpen: boolean
@@ -32,6 +33,7 @@ export function EditUserDialog({
     const [telefon, setTelefon] = useState(userData?.telefon || '')
     const [isAdmin, setIsAdmin] = useState(userData?.isAdmin || false)
     const [isEmployee, setIsEmployee] = useState(userData?.isEmployee || false)
+    const { t } = useTranslation()
 
     React.useEffect(() => {
         // Whenever userData changes (opening the dialog), reset the form fields.
@@ -54,14 +56,12 @@ export function EditUserDialog({
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent className="max-w-md">
                 <DialogHeader>
-                    <DialogTitle>Edit User</DialogTitle>
-                    <DialogDescription>
-                        Update user details and save changes
-                    </DialogDescription>
+                    <DialogTitle>{t('edit_user')}</DialogTitle>
+                    <DialogDescription></DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4">
                     <div>
-                        <Label htmlFor="name">Name</Label>
+                        <Label htmlFor="name">{t('name')}</Label>
                         <Input
                             id="name"
                             value={name}
@@ -69,7 +69,7 @@ export function EditUserDialog({
                         />
                     </div>
                     <div>
-                        <Label htmlFor="email">Email</Label>
+                        <Label htmlFor="email">{t('email')}</Label>
                         <Input
                             id="email"
                             value={email}
@@ -77,7 +77,7 @@ export function EditUserDialog({
                         />
                     </div>
                     <div>
-                        <Label htmlFor="telefon">Phone</Label>
+                        <Label htmlFor="telefon">{t('phone')}</Label>
                         <Input
                             id="telefon"
                             value={telefon}
@@ -85,14 +85,14 @@ export function EditUserDialog({
                         />
                     </div>
                     <div className="flex items-center gap-2">
-                        <Label htmlFor="isAdmin">Admin</Label>
+                        <Label htmlFor="isAdmin">{t('admin')}</Label>
                         <Switch
                             checked={isAdmin}
                             onCheckedChange={setIsAdmin}
                         />
                     </div>
                     <div className="flex items-center gap-2">
-                        <Label htmlFor="isEmployee">Employee</Label>
+                        <Label htmlFor="isEmployee">{t('employee')}</Label>
                         <Switch
                             checked={isEmployee}
                             onCheckedChange={setIsEmployee}
@@ -101,9 +101,9 @@ export function EditUserDialog({
                 </div>
                 <DialogFooter>
                     <Button variant="ghost" onClick={onClose}>
-                        Cancel
+                        {t('cancel')}
                     </Button>
-                    <Button onClick={handleSubmit}>Save</Button>
+                    <Button onClick={handleSubmit}>{t('save')}</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

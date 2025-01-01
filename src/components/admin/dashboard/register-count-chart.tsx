@@ -46,7 +46,7 @@ function RegisterCountChart({
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="dark:text-slate-200">
-                        {t('year')}: {2024}
+                        {t('year')}: {new Date().getFullYear()}
                         <FaChevronDown />
                     </Button>
                 </DropdownMenuTrigger>

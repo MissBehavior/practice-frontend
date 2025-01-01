@@ -52,7 +52,9 @@ const ForgotPassword: React.FC<EmailSubmitProps> = ({ onEmailSubmit }) => {
                         console.log('Bad request.')
                     } else if (error.response.status === 404) {
                         console.log('Email not found.')
-                        setError('Failed to send email.(Security Error)')
+                        setError(
+                            'Failed to send email.(Security Error Account doesn"t exist)'
+                        )
                     } else if (error.response.status === 429) {
                         console.log('Too many requests.')
                         setError('Too many requests. Please try again later.')
@@ -81,8 +83,8 @@ const ForgotPassword: React.FC<EmailSubmitProps> = ({ onEmailSubmit }) => {
     useEffect(() => {}, [])
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
-            <div className="max-w-md w-full bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
+        <div className="flex items-center justify-center min-h-screen bg-slate-200 dark:bg-[#101010]">
+            <div className="max-w-md w-full bg-slate-300 dark:bg-[#191919] rounded-lg shadow-lg p-6">
                 <div className="text-center">
                     <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {i18n.language === 'en'
@@ -105,7 +107,7 @@ const ForgotPassword: React.FC<EmailSubmitProps> = ({ onEmailSubmit }) => {
                         <div className="mt-1">
                             <input
                                 {...register('email')}
-                                className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm border-gray-300 placeholder-gray-400 dark:bg-gray-800 dark:border-gray-600 dark:text-white focus:ring-indigo-500 focus:border-indigo-500"
+                                className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm border-gray-300 placeholder-gray-400 bg-slate-200 dark:bg-[#191919] dark:border-gray-600 dark:text-white focus:ring-indigo-500 focus:border-indigo-500"
                                 id="email"
                                 type="email"
                                 autoComplete="email"
@@ -124,7 +126,7 @@ const ForgotPassword: React.FC<EmailSubmitProps> = ({ onEmailSubmit }) => {
                         <Button
                             disabled={isSubmitting}
                             type="submit"
-                            className="inline-flex items-center border font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 px-4 py-2 text-base bg-black text-white hover:bg-gray-800 border-black focus:ring-black w-full justify-center"
+                            className="inline-flex items-center border font-medium rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 px-4 py-2 text-base bg-black text-white hover:bg-gray-800 border-black focus:ring-black w-full justify-center"
                         >
                             {t('send_email')}
                         </Button>

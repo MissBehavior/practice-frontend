@@ -27,6 +27,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '../../ui/button'
+import { useTranslation } from 'react-i18next'
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -49,6 +50,7 @@ export function DataTable<TData, TValue>({
         React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
+    const { t } = useTranslation()
 
     const table = useReactTable({
         data,
@@ -68,7 +70,7 @@ export function DataTable<TData, TValue>({
     return (
         <div className="rounded-md border dark:border-cyan-900">
             <div className="flex flex-row justify-center align-middle gap-3">
-                <div className="flex items-center py-2">
+                <div className="flex items-center">
                     <Input
                         placeholder="Filter emails..."
                         value={
@@ -87,7 +89,7 @@ export function DataTable<TData, TValue>({
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">
-                            Columns
+                            {t('columns')}
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">

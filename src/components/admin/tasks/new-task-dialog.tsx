@@ -179,7 +179,7 @@ export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
                                 {assignee.map((user) => (
                                     <span
                                         key={user._id}
-                                        className="flex items-center gap-1 bg-gray-200 rounded px-2 py-1 text-sm"
+                                        className="flex items-center gap-1 bg-slate-300 dark:bg-black rounded px-2 py-1 text-sm"
                                     >
                                         {user.name} ({user.email})
                                         <button

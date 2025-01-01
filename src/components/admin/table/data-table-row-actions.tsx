@@ -34,18 +34,24 @@ export function DataTableRowActions({
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[160px]">
-                <DropdownMenuItem onClick={() => editUser(row.original)}>
+                <DropdownMenuItem
+                    onClick={() => editUser(row.original)}
+                    className="cursor-pointer"
+                >
                     Edit
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                    <Button
+                <DropdownMenuItem
+                    onClick={() => deleteUser(row.original._id)}
+                    className="cursor-pointer"
+                >
+                    {/* <Button
                         className="capitalize bg-red-400 hover:bg-red-600"
-                        onClick={() => deleteUser(row.original._id)}
-                    >
-                        Delete
-                        <MdDeleteForever />
-                    </Button>
+                        
+                    > */}
+                    Delete
+                    <MdDeleteForever />
+                    {/* </Button> */}
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

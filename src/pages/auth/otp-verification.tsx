@@ -102,8 +102,8 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
-            <div className="max-w-md w-full bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
+        <div className="flex items-center justify-center min-h-screen bg-slate-200 dark:bg-[#101010]">
+            <div className="max-w-md w-full bg-slate-300 dark:bg-[#191919] rounded-lg shadow-lg p-6">
                 <div className="flex flex-1 flex-col justify-center space-y-5 max-w-md mx-auto mt-16">
                     <form onSubmit={handleSubmitOtp}>
                         <div className="flex flex-col space-y-2 text-center mb-4">
@@ -128,7 +128,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
                                         ? 'Enter Code'
                                         : 'Įveskite kodą'
                                 }
-                                className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal"
+                                className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal bg-slate-200 dark:bg-[#101010]"
                                 required
                             />
                             {error && <p className="text-red-500">{error}</p>}

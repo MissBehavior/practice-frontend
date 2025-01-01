@@ -73,11 +73,11 @@ export default function Solutions() {
                     {user.isAdmin && (
                         <SolutionsAddNewSolution fetchData={fetchData} />
                     )}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-8">
                         {data.map((data, i) => (
                             <div
                                 key={i}
-                                className="relative flex flex-col overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow bg-white"
+                                className="relative flex flex-col overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow dark:bg-[#101010] bg-slate-200"
                             >
                                 {user.isAdmin && (
                                     <div className="absolute flex flex-row z-10 gap-2 right-0">
@@ -109,17 +109,17 @@ export default function Solutions() {
                                     />
                                 </Link>
                                 <div className="p-6 flex flex-col justify-between flex-grow">
-                                    <h4 className="text-xl font-bold text-gray-800 mb-2">
+                                    <h4 className="text-xl font-bold dark:text-gray-300 text-gray-800 mb-2">
                                         <Link
                                             to={`/solutions/${data._id}`}
-                                            className="hover:text-gray-600"
+                                            className="hover:text-gray-500"
                                         >
                                             {i18n.language === 'en'
                                                 ? data.titleCard
                                                 : data.titleCardLT}
                                         </Link>
                                     </h4>
-                                    <div className="flex items-center text-gray-600 text-sm mb-2">
+                                    <div className="flex items-center dark:text-gray-300 text-gray-800 text-sm mb-2">
                                         <span>
                                             {i18n.language === 'en'
                                                 ? data.contentCard
@@ -127,7 +127,7 @@ export default function Solutions() {
                                         </span>
                                     </div>
                                     {/* Added Date Section */}
-                                    <div className="flex items-center text-gray-600 text-sm mb-2">
+                                    <div className="flex items-center dark:text-gray-300 text-gray-800 text-sm mb-2">
                                         <FaCalendarAlt className="mr-2" />
                                         <span>
                                             {new Date(

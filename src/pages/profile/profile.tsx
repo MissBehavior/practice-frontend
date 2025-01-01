@@ -227,8 +227,8 @@ function Profile() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-200 dark:bg-slate-600 p-8">
-            <div className="bg-white dark:bg-slate-800 rounded-lg shadow-xl pb-8">
+        <div className="min-h-screen bg-slate-300 dark:bg-[#101010] p-8">
+            <div className="bg-white dark:bg-[#191919] rounded-lg shadow-xl pb-8">
                 <div className="w-full h-[250px] rounded-tl-lg rounded-tr-lg bg-gradient-to-tr from-green-500 from-20% via-green-600 via-40% to-blue-600 dark:bg-gradient-to-tr dark:from-violet-900 dark:from-20% dark:via-cyan-700 dark:via-40% dark:to-pink-700"></div>
                 <div className="flex flex-col items-center -mt-20 profileIMG">
                     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -254,7 +254,7 @@ function Profile() {
                                         className="w-36 h-36 -left-1 bg-gray-300 rounded-full border-4 border-white dark:border-slate-500 p-2"
                                     />
                                 )}
-                                <div className=" relative top-[-20px] ml-auto p-1 bg-slate-600 rounded-full w-12 flex items-center align-middle self-center flex-col">
+                                <div className=" relative top-[-20px] ml-auto p-1 bg-slate-200 dark:bg-slate-600 rounded-full w-12 flex items-center align-middle self-center flex-col">
                                     <MdModeEdit />
                                 </div>
                             </div>
@@ -300,7 +300,7 @@ function Profile() {
             </div>
             <div className="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4 justify-center">
                 <div className="w-full flex flex-col 2xl:w-1/2 ">
-                    <div className="flex-1 bg-white rounded-lg shadow-xl p-8 dark:bg-slate-800 text-gray-500 dark:text-gray-300">
+                    <div className="flex-1 bg-white rounded-lg shadow-xl p-8 dark:bg-[#191919] text-gray-500 dark:text-gray-300">
                         <h4 className="text-xl text-gray-500 dark:text-gray-300 font-bold">
                             {t('profile_info')}
                         </h4>
@@ -318,7 +318,7 @@ function Profile() {
                                             e.target.value
                                         )
                                     }
-                                    className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-gray-200 dark:border-gray-600"
+                                    className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-200 dark:bg-[#191919] dark:text-gray-200 dark:border-gray-600"
                                     placeholder="Enter your full name"
                                 />
                             </li>
@@ -335,7 +335,7 @@ function Profile() {
                                             e.target.value
                                         )
                                     }
-                                    className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-gray-200 dark:border-gray-600"
+                                    className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-200 dark:bg-[#191919] dark:text-gray-200 dark:border-gray-600"
                                     placeholder="Enter your mobile number"
                                 />
                             </li>
@@ -354,7 +354,7 @@ function Profile() {
                                     type="email"
                                     placeholder="Enter your email"
                                     value={userProfile?.email || ''}
-                                    className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-gray-200 dark:border-gray-600"
+                                    className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-200 dark:bg-[#191919] dark:text-gray-200 dark:border-gray-600"
                                 />
                             </li>
                             <li className="flex border-b py-2">
@@ -365,12 +365,12 @@ function Profile() {
                                     isMulti
                                     options={languageOptions}
                                     value={selectedOptions}
-                                    className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-gray-200 dark:border-gray-600"
+                                    className="flex-1 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-200 dark:bg-[#101010] dark:text-gray-200 dark:border-gray-600"
                                     placeholder="Enter languages spoken"
                                     classNames={{
                                         control: ({ isFocused }) =>
                                             clsx(
-                                                'border rounded-md flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-gray-200 dark:border-gray-600',
+                                                'border rounded-md flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-[#191919] dark:text-gray-200 dark:border-gray-600',
                                                 isFocused
                                                     ? 'border-primary-500'
                                                     : 'border-gray-300'

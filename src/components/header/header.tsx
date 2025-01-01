@@ -69,7 +69,7 @@ export default function Header() {
                             onClick={() => setLanguage('en')}
                             className={
                                 i18n.language === 'en'
-                                    ? 'p-2 bg-slate-300 dark:bg-background rounded cursor-pointer dark:hover:bg-accent dark:hover:text-accent-foreground'
+                                    ? 'p-2 bg-slate-400 dark:bg-background rounded cursor-pointer dark:hover:bg-accent dark:hover:text-accent-foreground'
                                     : 'p-2 cursor-pointer'
                             }
                         >
@@ -80,7 +80,7 @@ export default function Header() {
                             onClick={() => setLanguage('lt')}
                             className={
                                 i18n.language === 'lt'
-                                    ? 'p-2 bg-slate-300 dark:bg-background rounded cursor-pointer hover:bg-accent hover:text-accent-foreground'
+                                    ? 'p-2 bg-slate-400 dark:bg-background rounded cursor-pointer hover:bg-accent hover:text-accent-foreground'
                                     : 'p-2 cursor-pointer'
                             }
                         >
@@ -128,21 +128,9 @@ export default function Header() {
                                         className="flex flex-col gap-2"
                                     >
                                         <Button onClick={handleClick}>
-                                            <NavLink
-                                                to={'/profile'}
-                                                className={({
-                                                    isActive,
-                                                    isPending,
-                                                }) =>
-                                                    isPending
-                                                        ? 'pending'
-                                                        : isActive
-                                                        ? 'hover:text-[#007bff] text-gray-300 dark:text-gray-700 hover:dark:text-[#007bff] p-2 font-bold text-[20px] block'
-                                                        : 'hover:text-[#007bff] text-gray-300 dark:text-gray-700 hover:dark:text-[#007bff] p-2 font-bold text-[20px] block'
-                                                }
-                                            >
+                                            <Link to={'/profile'}>
                                                 {t('profile')}
-                                            </NavLink>
+                                            </Link>
                                         </Button>
                                         <Button onClick={logoutFunc}>
                                             {t('logout')}
@@ -256,7 +244,7 @@ export default function Header() {
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent
                                         align="start"
-                                        className="flex flex-col gap-2 bg-white dark:bg-gray-800 p-2 rounded shadow-lg -mt-1"
+                                        className="flex flex-col gap-2 bg-slate-200 dark:bg-[#191919] p-2 rounded shadow-lg -mt-1"
                                     >
                                         <NavLink
                                             to="/dashboard"

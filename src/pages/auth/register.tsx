@@ -99,8 +99,8 @@ export default function Register() {
     }
     return (
         <>
-            <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
-                <div className="max-w-md w-full bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
+            <div className="flex items-center justify-center min-h-screen bg-slate-200 dark:bg-[#101010]">
+                <div className="max-w-md w-full bg-slate-300 dark:bg-[#191919] rounded-lg shadow-lg p-6">
                     {status === 'error' && (
                         <div
                             style={{
@@ -146,7 +146,7 @@ export default function Register() {
                             <div className="mt-1">
                                 <input
                                     {...register('name')}
-                                    className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm border-gray-300 placeholder-gray-400 dark:bg-gray-800 dark:border-gray-600 dark:text-white focus:ring-indigo-500 focus:border-indigo-500"
+                                    className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm border-gray-300 placeholder-gray-400 bg-slate-200 dark:bg-[#191919] dark:border-gray-600 dark:text-white focus:ring-indigo-500 focus:border-indigo-500"
                                     id="name"
                                     type="name"
                                     placeholder="Name"
@@ -171,7 +171,7 @@ export default function Register() {
                             <div className="mt-1">
                                 <input
                                     {...register('email')}
-                                    className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm border-gray-300 placeholder-gray-400 dark:bg-gray-800 dark:border-gray-600 dark:text-white focus:ring-indigo-500 focus:border-indigo-500"
+                                    className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm border-gray-300 placeholder-gray-400 bg-slate-200 dark:bg-[#191919] dark:border-gray-600 dark:text-white focus:ring-indigo-500 focus:border-indigo-500"
                                     id="email"
                                     type="email"
                                     autoComplete="email"
@@ -195,7 +195,7 @@ export default function Register() {
                             <div className="mt-1">
                                 <input
                                     {...register('password')}
-                                    className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm border-gray-300 placeholder-gray-400 dark:bg-gray-800 dark:border-gray-600 dark:text-white focus:ring-indigo-500 focus:border-indigo-500"
+                                    className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm border-gray-300 placeholder-gray-400 bg-slate-200 dark:bg-[#191919] dark:border-gray-600 dark:text-white focus:ring-indigo-500 focus:border-indigo-500"
                                     id="password"
                                     type="password"
                                     placeholder="••••••••"
