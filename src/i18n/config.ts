@@ -163,6 +163,8 @@ i18n.use(initReactI18next).init({
                 save: 'Save',
                 add_description: 'Add description',
                 edit_description: 'Edit description',
+                categories: 'Categories',
+                create: 'Create',
             },
         },
         // Lithuanian Language
@@ -311,6 +313,8 @@ i18n.use(initReactI18next).init({
                 save: 'Išsaugoti',
                 add_description: 'Pridėti aprašymą',
                 edit_description: 'Redaguoti aprašymą',
+                categories: 'Kategorijos',
+                create: 'Sukurti',
             },
         },
     },

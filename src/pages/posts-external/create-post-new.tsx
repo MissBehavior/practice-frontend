@@ -15,12 +15,13 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { useAuth } from '@/services/auth-service'
 import { Category } from '@/types'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 
 interface CreatePostNewProps {
     onPostCreated?: () => void
 }
 export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
+    const { t } = useTranslation()
     const [open, setOpen] = useState(false)
     const [categories, setCategories] = useState<Category[]>([])
     const [query, setQuery] = useState('')
@@ -229,7 +230,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
                 <form onSubmit={onSubmit} className="space-y-4">
                     {/* Title */}
                     <div>
-                        <Label htmlFor="title">Title</Label>
+                        <Label htmlFor="title">{t('titleEN')}</Label>
                         <Input
                             id="title"
                             type="text"
@@ -243,7 +244,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
                         )}
                     </div>
                     <div>
-                        <Label htmlFor="titleLT">TitleLT</Label>
+                        <Label htmlFor="titleLT">{t('titleLT')}</Label>
                         <Input
                             id="titleLT"
                             type="text"
@@ -259,7 +260,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
 
                     {/* Content */}
                     <div>
-                        <Label htmlFor="content">Content</Label>
+                        <Label htmlFor="content">{t('contentMainEN')}</Label>
                         <Textarea
                             id="content"
                             rows={5}
@@ -273,7 +274,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
                         )}
                     </div>
                     <div>
-                        <Label htmlFor="contentLT">ContentLT</Label>
+                        <Label htmlFor="contentLT">{t('contentMainLT')}</Label>
                         <Textarea
                             id="contentLT"
                             rows={5}
@@ -289,7 +290,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
 
                     {/* Image */}
                     <div>
-                        <Label htmlFor="image">Image</Label>
+                        <Label htmlFor="image">{t('image')}</Label>
                         <Input
                             id="image"
                             type="file"
@@ -312,7 +313,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
 
                     {/* Categories */}
                     <div>
-                        <Label>Categories</Label>
+                        <Label>{t('categories')}</Label>
                         {selectedCategories.length > 0 && (
                             <div className="mb-2 flex flex-wrap gap-2">
                                 {selectedCategories.map((cat) => (
@@ -361,7 +362,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
                                                                 )
                                                             }
                                                         >
-                                                            Create "
+                                                            {t('create')} "
                                                             {query.trim()}"
                                                         </CommandItem>
                                                     </CommandGroup>
@@ -390,14 +391,18 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
                                                 query.trim() === '' &&
                                                 categories.length > 0 && (
                                                     <CommandEmpty>
-                                                        No matching categories
+                                                        {t(
+                                                            'no_categories_found'
+                                                        )}
                                                     </CommandEmpty>
                                                 )}
 
                                             {categories.length === 0 &&
                                                 query.trim() === '' && (
                                                     <CommandEmpty>
-                                                        No categories found
+                                                        {t(
+                                                            'no_categories_found'
+                                                        )}
                                                     </CommandEmpty>
                                                 )}
                                         </CommandList>
@@ -420,10 +425,10 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
                             type="button"
                             onClick={() => setOpen(false)}
                         >
-                            Cancel
+                            {t('cancel')}
                         </Button>
                         <Button type="submit" disabled={loading}>
-                            {loading ? 'Creating...' : 'Create Post'}
+                            {t('submit')}
                         </Button>
                     </div>
                 </form>

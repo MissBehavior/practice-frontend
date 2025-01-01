@@ -99,7 +99,7 @@ function AdminDashboard() {
                         type={t('clients')}
                     />
                 </div>
-                <div className="flex  gap-4 justify-between flex-wrap w-full">
+                {/* <div className="flex  gap-4 justify-between flex-wrap w-full">
                     <UserCard count={45} date="TODO" type={t('team_updates')} />
                     <UserCard
                         count={45}
@@ -107,7 +107,7 @@ function AdminDashboard() {
                         type={t('tasksInKanban')}
                     />
                     <UserCard count={45} date="TODO" type={t('onGoingTasks')} />
-                </div>
+                </div> */}
                 <div className="flex flex-row gap-2 max-md:flex-col">
                     <MostLikedPostCard />
                     <MostCommentedPostCard />

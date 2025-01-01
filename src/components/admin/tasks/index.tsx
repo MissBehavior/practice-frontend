@@ -98,7 +98,7 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
 
     const handleUpdateRequest = async (task: Task) => {
         try {
-            await axios.put(`http://localhost:3000/tasks/${task._id}`, task)
+            await api.put(`http://localhost:3000/tasks/${task._id}`, task)
         } catch (error) {
             console.error('Error updating task:', error)
         }
