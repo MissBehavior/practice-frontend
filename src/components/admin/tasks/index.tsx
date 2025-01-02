@@ -182,8 +182,8 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
 }
 
 const PageSkeleton = () => {
-    const columnCount = 6
-    const itemCount = 4
+    const columnCount = 4
+    const itemCount = 3
 
     return (
         <KanbanBoardContainer>

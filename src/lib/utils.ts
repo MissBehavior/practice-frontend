@@ -33,6 +33,17 @@ export const getDateColor = (args: {
     console.log(args.defaultColor)
     return args.defaultColor ?? 'success'
 }
+export const getDateColorAsHex = (date: string) => {
+    const givenDate = dayjs(date)
+    const today = dayjs()
+    if (givenDate.isBefore(today)) {
+        return '#d6293e'
+    }
+    if (givenDate.isBefore(today.add(3, 'day'))) {
+        return '#f7c32e'
+    }
+    return '#0cbc87'
+}
 
 export const getRandomColorFromString = (
     text: string
