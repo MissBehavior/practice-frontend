@@ -9,7 +9,7 @@ import {
 } from 'react-icons/ai'
 import dayjs from 'dayjs'
 
-import { getDateColor } from '@/lib/utils'
+import { getDateColor, getDateColorAsHex } from '@/lib/utils'
 import { Card, CardContent, CardTitle } from '@/components/ui/card'
 import {
     DropdownMenu,
@@ -31,7 +31,6 @@ import { CustomAvatar } from './custom-avatar'
 import { SocketContext } from '@/SocketContext' // Adjust path as necessary
 import { useAxios } from '@/services/auth-service'
 import { Label } from '@/components/ui/label'
-import i18n from '@/i18n/config'
 import { useTranslation } from 'react-i18next'
 
 type ProjectCardProps = {
@@ -86,7 +85,7 @@ export const ProjectCard = ({ task }: ProjectCardProps) => {
 
         return {
             color: getDateColor({ date: createdAt }),
-            text: date.format('MMM D'),
+            text: date.format('MMM D, YYYY'),
         }
     }, [createdAt])
 
@@ -96,32 +95,38 @@ export const ProjectCard = ({ task }: ProjectCardProps) => {
         const date = dayjs(dueDate)
 
         return {
-            color: getDateColor({ date: dueDate }),
-            text: date.format('MMM D'),
+            color: getDateColorAsHex(dueDate),
+            text: date.format('MMM D, YYYY'),
         }
     }, [dueDate])
 
     return (
         <Card
-            className="p-2 dark:bg-[#191919] bg-slate-200 h-64 hover:dark:bg-[#2b2a2a] flex flex-col justify-between"
+            className="p-4 dark:bg-[#1e1e1e] bg-white h-80 hover:shadow-lg transition-shadow duration-300 rounded-lg cursor-pointer flex flex-col justify-between"
             onClick={() => {
                 navigate(`/kanban/${task._id}`)
             }}
         >
             <div>
                 <div className="flex justify-between items-start">
-                    <CardTitle className="text-lg font-bold">{title}</CardTitle>
+                    <CardTitle className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+                        {title}
+                    </CardTitle>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button
                                 variant="ghost"
-                                className="p-2"
+                                className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md"
                                 onClick={(e) => e.stopPropagation()}
+                                aria-label="Options"
                             >
-                                <AiOutlineMore className="w-5 h-5 rotate-90" />
+                                <AiOutlineMore className="w-5 h-5 text-gray-600 dark:text-gray-300" />
                             </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
+                        <DropdownMenuContent
+                            align="end"
+                            className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg"
+                        >
                             {dropdownItems.map((item) => (
                                 <DropdownMenuItem
                                     key={item.key}
@@ -129,9 +134,11 @@ export const ProjectCard = ({ task }: ProjectCardProps) => {
                                         e.stopPropagation()
                                         item.onClick()
                                     }}
-                                    className={
-                                        item.danger ? 'text-red-600' : ''
-                                    }
+                                    className={`flex items-center px-4 py-2 text-sm ${
+                                        item.danger
+                                            ? 'text-red-600 hover:bg-red-100 dark:hover:bg-red-700'
+                                            : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                                    }`}
                                 >
                                     {item.icon}
                                     <span className="ml-2">{item.label}</span>
@@ -140,83 +147,92 @@ export const ProjectCard = ({ task }: ProjectCardProps) => {
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
-                <CardContent className="p-1 flex flex-col flex-grow">
-                    <div className="flex items-center flex-wrap gap-2 pt-2 border-t">
-                        <div className="w-full flex flex-col">
-                            {createDateOptions && (
-                                <div className="flex gap-1 text-sm">
-                                    <AiOutlineCalendar className="w-4 h-4" />
-                                    {t('created')} {createDateOptions.text}
-                                </div>
-                            )}
+                <CardContent className="mt-4 flex flex-col space-y-3">
+                    <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300">
+                        <AiOutlineCalendar className="w-4 h-4" />
+                        <span>
+                            {t('created')}: {createDateOptions?.text}
+                        </span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-sm">
+                        <AiOutlineClockCircle
+                            className="w-4 h-4"
+                            style={{ color: dueDateOptions?.color }}
+                        />
+                        <span>
+                            {t('dueDate')}:{' '}
                             {dueDateOptions ? (
-                                <div className="flex gap-1 text-sm">
-                                    <AiOutlineClockCircle className="w-4 h-4" />
-                                    {t('dueDate')}{' '}
-                                    <div className="text-red-600 font-bold">
-                                        {dueDateOptions.text}
-                                    </div>
-                                </div>
+                                <span className="font-semibold">
+                                    {dueDateOptions.text}
+                                </span>
                             ) : (
-                                <div className="flex gap-1 text-sm">
-                                    <AiOutlineClockCircle className="w-4 h-4" />
-                                    {t('dueDate')}{' '}
-                                    <div className="text-red-600 font-bold">
-                                        {t('notSet')}
-                                    </div>
-                                </div>
+                                <span className="text-red-500">
+                                    {t('notSet')}
+                                </span>
                             )}
-                        </div>
-                        {/* Uncomment and adjust assignees if needed
-                        {!!assignee?.length && (
-                            <TooltipProvider>
-                                <div className="flex items-center flex-wrap gap-2 mt-2 w-full">
-                                    <Label>{t('assignees')}</Label>
+                        </span>
+                    </div>
+                    {/* Assignees Section */}
+                    {/* {!!assignee?.length && (
+                        <TooltipProvider>
+                            <div className="flex items-center space-x-2">
+                                <Label className="text-sm">
+                                    {t('assignees')}:
+                                </Label>
+                                <div className="flex -space-x-2">
                                     {assignee.map((user) => (
                                         <Tooltip key={user._id}>
                                             <TooltipTrigger asChild>
-                                                <div className="flex flex-row">
-                                                    <CustomAvatar
-                                                        name={user.name}
-                                                        src={user.profileImgUrl}
-                                                        size="small"
-                                                    />
-                                                </div>
+                                                <CustomAvatar
+                                                    name={user.name}
+                                                    src={user.profileImgUrl}
+                                                    size="small"
+                                                    className="border-2 border-white dark:border-gray-800"
+                                                />
                                             </TooltipTrigger>
                                             <TooltipContent>
-                                                <p>{user.email}</p>
+                                                <p className="text-sm">
+                                                    {user.email}
+                                                </p>
                                             </TooltipContent>
                                         </Tooltip>
                                     ))}
                                 </div>
-                            </TooltipProvider>
-                        )} 
-                        */}
-                        {tags && tags.length > 0 && (
-                            <div className="flex flex-wrap gap-1 border-t w-full pt-4">
-                                {tags.map((tag) => (
-                                    <Badge key={tag} variant="secondary">
-                                        {tag}
-                                    </Badge>
-                                ))}
                             </div>
-                        )}
-                    </div>
-                    {/* Spacer to push the createdBy section to the bottom */}
-                    <div className="flex-grow"></div>
+                        </TooltipProvider>
+                    )} */}
+                    {/* Tags Section */}
+                    {tags && tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 pt-1">
+                            {tags.map((tag) => (
+                                <Badge
+                                    key={tag}
+                                    variant="outline"
+                                    className="text-xs rounded-full border-gray-300 dark:border-gray-600"
+                                >
+                                    {tag}
+                                </Badge>
+                            ))}
+                        </div>
+                    )}
                 </CardContent>
             </div>
-            <div className="flex align-middle justify-center items-center gap-4 shadow-sm">
-                <Label>{t('createdBy')}:</Label>
+            {/* Created By Section */}
+            <div className="flex items-center space-x-3 mt-4">
+                <Label className="text-sm text-gray-600 dark:text-gray-300">
+                    {t('createdBy')}:
+                </Label>
                 <CustomAvatar
                     name={task.createdBy.name}
                     src={task.createdBy.profileImgUrl}
                     size="xsmall"
-                    className="h-8 w-8"
+                    className="h-4 w-4"
                 />
                 <div className="flex flex-col">
-                    <div>{task.createdBy.name}</div>
-                    <span className="text-blue-600 hover:text-blue-500 cursor-pointer">
+                    <span className="text-sm font-medium text-gray-800 dark:text-gray-100">
+                        {task.createdBy.name}
+                    </span>
+                    <span className="text-xs text-blue-500 dark:text-blue-400 hover:underline cursor-pointer">
                         {task.createdBy.email}
                     </span>
                 </div>
@@ -228,16 +244,20 @@ export const ProjectCard = ({ task }: ProjectCardProps) => {
 // Skeleton Component
 export const ProjectCardSkeleton = () => {
     return (
-        <Card className="p-4 flex flex-col justify-between h-64 dark:bg-[#191919] bg-slate-200">
+        <Card className="p-4 flex flex-col justify-between h-80 dark:bg-[#1e1e1e] bg-white rounded-lg shadow animate-pulse">
             <div>
-                <Skeleton className="h-6 w-48 mb-4" />
-                <Skeleton className="h-4 w-32 mb-2" />
-                <Skeleton className="h-8 w-8 rounded-full" />
+                <Skeleton className="h-6 w-48 mb-4 bg-gray-300 dark:bg-gray-700 rounded" />
+                <Skeleton className="h-4 w-32 mb-2 bg-gray-200 dark:bg-gray-600 rounded" />
+                <Skeleton className="h-8 w-8 rounded-full bg-gray-300 dark:bg-gray-700" />
+                <div className="mt-4">
+                    <Skeleton className="h-4 w-24 mb-2 bg-gray-200 dark:bg-gray-600 rounded" />
+                    <Skeleton className="h-4 w-16 bg-gray-300 dark:bg-gray-700 rounded" />
+                </div>
             </div>
-            <div className="flex items-center gap-4">
-                <Skeleton className="h-8 w-8 rounded-full" />
-                <Skeleton className="h-4 w-24" />
-                <Skeleton className="h-4 w-24" />
+            <div className="flex items-center space-x-4">
+                <Skeleton className="h-8 w-8 rounded-full bg-gray-300 dark:bg-gray-700" />
+                <Skeleton className="h-4 w-24 bg-gray-200 dark:bg-gray-600 rounded" />
+                <Skeleton className="h-4 w-24 bg-gray-200 dark:bg-gray-600 rounded" />
             </div>
         </Card>
     )
