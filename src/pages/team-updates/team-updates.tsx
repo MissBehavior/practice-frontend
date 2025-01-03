@@ -212,7 +212,7 @@ export default function TeamUpdates() {
                         {data.map((post, i) => (
                             <div
                                 key={i}
-                                className="relative flex flex-col overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow bg-white"
+                                className="relative flex flex-col overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow dark:bg-[#191919] bg-slate-400"
                             >
                                 {(user.isEmployee &&
                                     post.userName === user.name) ||
@@ -234,7 +234,7 @@ export default function TeamUpdates() {
                                 </Link>
                                 <div className="p-6 flex flex-col justify-between flex-grow">
                                     <p className="text-sm font-medium text-white mb-2 flex flex-wrap gap-2"></p>
-                                    <h4 className="text-xl font-bold text-gray-800 mb-2">
+                                    <h4 className="text-xl font-bold text-gray-800 dark:text-slate-100 mb-2">
                                         <Link
                                             to={`/team-updates/${post._id}`}
                                             className="hover:text-gray-600"
@@ -242,13 +242,13 @@ export default function TeamUpdates() {
                                             {post.title}
                                         </Link>
                                     </h4>
-                                    <div className="flex flex-col items-start text-gray-600 text-sm mb-2">
+                                    <div className="flex flex-col items-start text-gray-600 dark:text-slate-300 text-sm mb-2">
                                         <ReactMarkdown>
                                             {post.content}
                                         </ReactMarkdown>{' '}
                                         {/* Updated here */}
                                     </div>
-                                    <div className="flex items-center justify-between text-gray-600 text-sm mb-2">
+                                    <div className="flex items-center justify-between text-gray-600 dark:text-slate-300 text-sm mb-2">
                                         <div className="flex">
                                             <FaCalendarAlt className="mr-2" />
                                             <span>
@@ -288,7 +288,7 @@ export default function TeamUpdates() {
                                             onClick={() =>
                                                 likeUnlikeHandle(post._id)
                                             }
-                                            className="flex items-center text-gray-600 cursor-pointer hover:text-red-600"
+                                            className="flex items-center text-gray-600 dark:text-slate-300 cursor-pointer hover:text-red-600"
                                         >
                                             {post.likes.some(
                                                 (like) => like._id === user.id
@@ -300,7 +300,7 @@ export default function TeamUpdates() {
                                             {post.likes.length} {t('likes')}
                                         </div>
 
-                                        <div className="flex items-center text-gray-600">
+                                        <div className="flex items-center text-gray-600 dark:text-slate-300">
                                             <FaCommentDots className="mr-2" />
                                             {post.comments.length}{' '}
                                             {t('comments')}

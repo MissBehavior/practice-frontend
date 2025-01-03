@@ -68,7 +68,7 @@ export default function Solutions() {
     return (
         <>
             <Breadcrumb title={t('solutions')} parent={t('solutions')} />
-            <div className="pb-12 dark:bg-[#191919] bg-slate-300 min-h-svh">
+            <div className="pb-12 dark:bg-[#101010] bg-slate-300 min-h-svh">
                 <div className="max-w-7xl mx-auto px-4">
                     {user.isAdmin && (
                         <SolutionsAddNewSolution fetchData={fetchData} />
@@ -77,7 +77,7 @@ export default function Solutions() {
                         {data.map((data, i) => (
                             <div
                                 key={i}
-                                className="relative flex flex-col overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow dark:bg-[#101010] bg-slate-200"
+                                className="relative flex flex-col overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow dark:bg-[#191919] bg-slate-200"
                             >
                                 {user.isAdmin && (
                                     <div className="absolute flex flex-row z-10 gap-2 right-0">

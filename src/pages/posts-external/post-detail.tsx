@@ -68,7 +68,7 @@ const PostDetail: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center h-screen bg-[#191919]">
+            <div className="flex items-center justify-center h-screen dark:bg-[#101010] bg-slate-300">
                 <p className="text-gray-300 text-xl">{t('loading')}</p>
             </div>
         )
@@ -76,7 +76,7 @@ const PostDetail: React.FC = () => {
 
     if (error) {
         return (
-            <div className="flex flex-col items-center justify-center h-screen bg-[#191919]">
+            <div className="flex flex-col items-center justify-center h-screen dark:bg-[#101010] bg-slate-300">
                 <p className="text-red-500 text-xl mb-4">{error}</p>
                 <Button onClick={() => navigate(-1)}>
                     <FaArrowLeft className="mr-2" />
@@ -88,7 +88,7 @@ const PostDetail: React.FC = () => {
 
     if (!post) {
         return (
-            <div className="flex flex-col items-center justify-center h-screen bg-[#191919]">
+            <div className="flex flex-col items-center justify-center h-screen dark:bg-[#101010] bg-slate-300">
                 <p className="text-gray-300 text-xl">{t('post_not_found')}</p>
                 <Button onClick={() => navigate(-1)}>
                     <FaArrowLeft className="mr-2" />
@@ -103,7 +103,7 @@ const PostDetail: React.FC = () => {
     return (
         <>
             <Breadcrumb title={t('news')} parent={t('news')} />
-            <div className="py-10 bg-[#191919] min-h-screen">
+            <div className="py-10 dark:bg-[#101010] bg-slate-300 min-h-screen">
                 <div className="max-w-5xl mx-auto px-4 ">
                     <Link
                         to="/post-external"
@@ -112,7 +112,7 @@ const PostDetail: React.FC = () => {
                         <FaArrowLeft className="mr-2" />
                         {t('back_to_posts')}
                     </Link>
-                    <div className="bg-white rounded-lg shadow-lg overflow-hidden min-h-screen h-auto">
+                    <div className="dark:bg-[#191919] bg-slate-400 rounded-lg shadow-lg overflow-hidden min-h-screen h-auto">
                         <img
                             className="w-full h-96 object-cover"
                             src={post.postPicture}
@@ -161,12 +161,12 @@ const PostDetail: React.FC = () => {
                                     </TooltipProvider>
                                 )}
                             </div>
-                            <h1 className="text-3xl font-bold text-gray-800 mb-4">
+                            <h1 className="text-3xl font-bold text-gray-800 dark:text-slate-100 mb-4">
                                 {i18n.language === 'en'
                                     ? post.title
                                     : post.titleLT}
                             </h1>
-                            <div className="flex items-center text-gray-600 text-sm mb-4">
+                            <div className="flex items-center text-gray-600 dark:text-slate-300 text-sm mb-4">
                                 <FaCalendarAlt className="mr-2" />
                                 <span>
                                     {format(
@@ -180,7 +180,7 @@ const PostDetail: React.FC = () => {
                                     {t('by')} {post.userId.name}
                                 </span>
                             </div>
-                            <div className="prose prose-lg text-gray-800">
+                            <div className="prose prose-lg text-gray-800 dark:text-slate-100">
                                 {/* Render HTML content safely */}
                                 {i18n.language === 'en'
                                     ? post.content
@@ -191,14 +191,14 @@ const PostDetail: React.FC = () => {
                             aria-label="Related Articles"
                             className="mx-auto mt-10 max-w-screen-xl py-20"
                         >
-                            <h2 className="mb-8 text-center text-5xl font-bold text-gray-900">
+                            <h2 className="mb-8 text-center text-5xl font-bold text-gray-900 dark:text-slate-100">
                                 {t('morenews')}
                             </h2>
 
                             <div className="mx-auto grid max-w-screen-lg justify-center px-4 sm:grid-cols-2 sm:gap-6 sm:px-8 md:grid-cols-3">
                                 {randomPosts &&
                                     randomPosts.map((randomPost) => (
-                                        <article className="my-4 flex flex-col overflow-hidden rounded-lg border border-gray-300 bg-white text-gray-900 transition hover:translate-y-2 hover:shadow-lg">
+                                        <article className="my-4 flex flex-col overflow-hidden rounded-lg border border-gray-300 bg-slate-300 dark:bg-[#191919] text-gray-900 dark:text-slate-100 transition hover:translate-y-2 hover:shadow-lg">
                                             <Link
                                                 to={`/post-external/${randomPost._id}`}
                                             >

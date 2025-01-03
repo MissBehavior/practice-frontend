@@ -14,6 +14,7 @@ import {
     FaUser,
     FaCommentDots,
     FaTrash,
+    FaArrowLeft,
 } from 'react-icons/fa'
 import Breadcrumb from '@/components/breadcrumb'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -271,11 +272,18 @@ export default function TeamUpdatesDetail() {
     }
 
     return (
-        <div className="bg-[#101010] min-h-screen">
+        <div className="dark:bg-[#101010] bg-slate-300 min-h-screen">
             <Breadcrumb title={t('team_updates')} parent={t('team_updates')} />
 
             <div className="container mx-auto px-4 py-8">
-                <div className="max-w-4xl mx-auto bg-[#191919] shadow-2xl rounded-2xl overflow-hidden">
+                <Link
+                    to="/team-updates"
+                    className="flex items-center text-gray-300 hover:text-gray-500 mb-6"
+                >
+                    <FaArrowLeft className="mr-2" />
+                    {t('back_to_teamupdates')}
+                </Link>
+                <div className="max-w-4xl mx-auto dark:bg-[#191919] bg-slate-400 shadow-2xl rounded-2xl overflow-hidden">
                     <div className="relative">
                         <img
                             src={post.postPicture}
@@ -364,7 +372,7 @@ export default function TeamUpdatesDetail() {
                                                             e.target.value
                                                         )
                                                     }
-                                                    className="col-span-3 p-2 border rounded-lg bg-[#242e3d] text-white"
+                                                    className="col-span-3 p-2 border rounded-lg dark:bg-[#242e3d] bg-slate-300 dark:text-white text-black"
                                                     required
                                                 />
                                             </div>
@@ -417,7 +425,7 @@ export default function TeamUpdatesDetail() {
                     <div className="p-8">
                         <div className="flex items-center text-gray-600 text-sm mb-6">
                             <FaCalendarAlt className="mr-2 text-blue-400" />
-                            <span className="text-blue-200">
+                            <span className="dark:text-blue-200 text-gray-700">
                                 {new Date(post.createdAt).toLocaleDateString(
                                     undefined,
                                     {
@@ -429,7 +437,7 @@ export default function TeamUpdatesDetail() {
                             </span>
                             <span className="mx-2">•</span>
                             <FaUser className="mr-2 text-blue-400" />
-                            <span className="text-blue-200">
+                            <span className="dark:text-blue-200 text-gray-700">
                                 {t('by')} {post.userId.name}
                             </span>
                         </div>
@@ -474,16 +482,16 @@ export default function TeamUpdatesDetail() {
                             {post.comments.length === 0 && (
                                 <div className="text-center py-8 bg-gray-100 rounded-lg">
                                     <p className="text-gray-500 text-lg">
-                                        {t('no_comments_yet')}
+                                        {t('no_comments_yet')}😥
                                     </p>
                                 </div>
                             )}
 
-                            <div className="space-y-2">
+                            <div className="space-y-1">
                                 {post.comments.map((comment) => (
                                     <div
                                         key={comment._id}
-                                        className="bg-[#101010] p-3 rounded-xl relative"
+                                        className="dark:bg-[#101010] bg-slate-300 py-2 px-3 rounded-xl relative"
                                     >
                                         {comment.user._id === user.id && (
                                             <button
@@ -552,7 +560,7 @@ export default function TeamUpdatesDetail() {
                                     value={comment}
                                     onChange={(e) => setComment(e.target.value)}
                                     placeholder={t('write_a_comment')}
-                                    className="w-full p-4 border-2 border-[#242e3d] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-[#191919]"
+                                    className="w-full p-4 dark:border-[#242e3d]  rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-[#101010] bg-slate-300"
                                     rows={4}
                                 />
                                 <div className="flex justify-end mt-4">

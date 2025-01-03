@@ -171,6 +171,7 @@ i18n.use(initReactI18next).init({
                 edit_user: 'Edit user',
                 columns: 'Columns',
                 createdBy: 'Created by',
+                back_to_teamupdates: 'Back to team updates',
             },
         },
         // Lithuanian Language
@@ -327,6 +328,7 @@ i18n.use(initReactI18next).init({
                 edit_user: 'Redaguoti naudotoją',
                 columns: 'Stulpeliai',
                 createdBy: 'Sukūrė',
+                back_to_teamupdates: 'Atgal į komandos naujienas',
             },
         },
     },

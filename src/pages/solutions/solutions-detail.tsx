@@ -58,10 +58,10 @@ function SolutionsDetail() {
     return (
         <>
             <Breadcrumb title={t('Solutions')} parent={t('Solutions')} />
-            <div className="py-10 bg-slate-300 dark:bg-[#101010] min-h-screen">
+            <div className="py-10 bg-slate-300 dark:bg-[#191919] min-h-screen">
                 <div className="max-w-5xl mx-auto px-4">
                     {data && (
-                        <div className="bg-slate-200 dark:bg-[#191919] rounded-lg shadow-lg overflow-hidden">
+                        <div className="bg-slate-200 dark:bg-[#101010] rounded-lg shadow-lg overflow-hidden">
                             {/* Card Image */}
                             {data.cardImgUrl && (
                                 <img

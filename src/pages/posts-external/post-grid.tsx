@@ -26,13 +26,13 @@ const MAX_DISPLAY_CATEGORIES = 4
 const PostGrid: React.FC<PostGridProps> = React.memo(
     ({ data, totalPages, currentPage, onNextPage, onPrevPage, t }) => {
         return (
-            <div className="py-28  dark:bg-[#191919] bg-slate-400">
+            <div className="py-28  dark:bg-[#101010] bg-slate-300">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {data.map((post, i) => (
                             <div
                                 key={i}
-                                className="flex flex-col overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow bg-white"
+                                className="flex flex-col overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow bg-slate-400 dark:bg-[#191919]"
                             >
                                 <Link to={`/post-external/${post._id}`}>
                                     <img
@@ -91,7 +91,7 @@ const PostGrid: React.FC<PostGridProps> = React.memo(
                                             </TooltipProvider>
                                         )}
                                     </p>
-                                    <h4 className="text-xl font-bold text-gray-800 mb-2">
+                                    <h4 className="text-xl font-bold text-gray-800 dark:text-slate-300 mb-2">
                                         <Link
                                             to={`/post-external/${post._id}`}
                                             className="hover:text-gray-600"
@@ -102,7 +102,7 @@ const PostGrid: React.FC<PostGridProps> = React.memo(
                                         </Link>
                                     </h4>
                                     {/* Added Date Section */}
-                                    <div className="flex items-center text-gray-600 text-sm mb-2">
+                                    <div className="flex items-center text-gray-600 dark:text-slate-400 text-sm mb-2">
                                         <FaCalendarAlt className="mr-2" />
                                         <span>
                                             {new Date(
@@ -115,7 +115,7 @@ const PostGrid: React.FC<PostGridProps> = React.memo(
                                         </span>
                                     </div>
                                     {/* Added Author Section */}
-                                    <div className="flex items-center text-gray-600 text-sm mb-4">
+                                    <div className="flex items-center text-gray-600 dark:text-slate-400 text-sm mb-4">
                                         <FaUser className="mr-2" />
                                         <span>
                                             {t('by')} {post.userId.name}
