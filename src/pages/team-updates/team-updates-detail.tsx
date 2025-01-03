@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import axios from 'axios'
 import { useAuth, useAxios } from '@/services/auth-service'
 import ReactMarkdown from 'react-markdown'
 import { format } from 'date-fns'
@@ -82,7 +81,7 @@ export default function TeamUpdatesDetail() {
                 text: comment,
             }
 
-            const response = await axios.post(
+            const response = await api.post(
                 `http://localhost:3000/postinternal/comment/${post._id}`,
                 commentData,
                 {
@@ -113,7 +112,7 @@ export default function TeamUpdatesDetail() {
         if (!post) return
 
         try {
-            const response = await axios.delete(
+            const response = await api.delete(
                 `http://localhost:3000/postinternal/comment/${post._id}/${commentId}`,
                 {
                     headers: {
@@ -141,7 +140,7 @@ export default function TeamUpdatesDetail() {
         if (!post) return
 
         try {
-            const response = await axios.patch(
+            const response = await api.patch(
                 `http://localhost:3000/postinternal/${post._id}/comment/${commentId}/like/`,
                 { userId: user.id },
                 {
@@ -150,8 +149,7 @@ export default function TeamUpdatesDetail() {
                     },
                 }
             )
-            console.log('HANDLE LIKE COMMENT')
-            console.log(response.data)
+
             const updatedPost = response.data
             setPost((prevPost) =>
                 prevPost
@@ -172,7 +170,7 @@ export default function TeamUpdatesDetail() {
         if (!post) return
 
         try {
-            const response = await axios.patch(
+            const response = await api.patch(
                 `http://localhost:3000/postinternal/like/${post._id}`,
                 { userId: user.id },
                 {
@@ -182,7 +180,6 @@ export default function TeamUpdatesDetail() {
                 }
             )
 
-            console.log('HANDLE LIKE UNLIKE POST', response.data)
             const updatedPost = response.data
             setPost(updatedPost)
         } catch (error) {

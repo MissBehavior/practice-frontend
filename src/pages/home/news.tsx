@@ -15,7 +15,6 @@ interface PaginatedResponse {
     posts: PostData[]
 }
 function NewsHome() {
-    const { user } = useAuth()
     const [postData, setPostData] = useState<PostData[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const { t } = useTranslation()

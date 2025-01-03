@@ -36,7 +36,6 @@ export function EditUserDialog({
     const { t } = useTranslation()
 
     React.useEffect(() => {
-        // Whenever userData changes (opening the dialog), reset the form fields.
         if (userData) {
             setName(userData.name)
             setEmail(userData.email)

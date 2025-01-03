@@ -1,10 +1,8 @@
-// src/components/PostDetail.tsx
-
 import React, { useEffect, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { FaCalendarAlt, FaUser, FaArrowLeft } from 'react-icons/fa'
-import { PostData } from '@/types' // Ensure this type includes all necessary fields
-import { Button } from '../../components/ui/button' // Assuming you have a Button component
+import { PostData } from '@/types'
+import { Button } from '../../components/ui/button'
 import {
     Tooltip,
     TooltipContent,
@@ -198,7 +196,10 @@ const PostDetail: React.FC = () => {
                             <div className="mx-auto grid max-w-screen-lg justify-center px-4 sm:grid-cols-2 sm:gap-6 sm:px-8 md:grid-cols-3">
                                 {randomPosts &&
                                     randomPosts.map((randomPost) => (
-                                        <article className="my-4 flex flex-col overflow-hidden rounded-lg border border-gray-300 bg-slate-300 dark:bg-[#191919] text-gray-900 dark:text-slate-100 transition hover:translate-y-2 hover:shadow-lg">
+                                        <article
+                                            key={randomPost._id}
+                                            className="my-4 flex flex-col overflow-hidden rounded-lg border border-gray-300 bg-slate-300 dark:bg-[#191919] text-gray-900 dark:text-slate-100 transition hover:translate-y-2 hover:shadow-lg"
+                                        >
                                             <Link
                                                 to={`/post-external/${randomPost._id}`}
                                             >

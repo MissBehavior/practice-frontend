@@ -42,12 +42,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                     parsedToken.accessToken
                 )
                 if (dayjs.unix(decodedToken.exp).isBefore(dayjs())) {
-                    // Attempt to refresh the token
-                    // console.log('Token expired, attempting to refresh')
-                    // console.log(token)
-                    // console.log('----------------')
-                    // console.log('----------------')
-                    // console.log(parsedToken)
                     await refreshAccessToken(parsedToken)
                 } else {
                     setIsLoggedIn(true)
@@ -119,8 +113,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
     const setUserFunc = (token: any) => {
         const decodedToken = decodeToken(token)
-        console.log('decodedToken:', decodedToken)
-        console.log('token:', token)
+        // console.log('decodedToken:', decodedToken)
+        // console.log('token:', token)
         if (decodedToken) {
             const newUser = {
                 id: decodedToken.aud,

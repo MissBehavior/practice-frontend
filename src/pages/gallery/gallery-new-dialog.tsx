@@ -46,7 +46,6 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
         [galleryImages]
     )
     const handleSubmit = async (e: React.FormEvent) => {
-        console.log('SUBMIT CALLED AYY')
         e.preventDefault()
         if (!title || !cardImgUrl || !galleryImages) {
             toast({
@@ -72,7 +71,6 @@ function GalleryNewDialog({ fetchData }: GalleryNewDialogProps) {
                     Authorization: `Bearer ${userToken!.accessToken}`,
                 },
             })
-            console.log(response.data)
         } catch (error) {
             console.error('Error uploading gallery', error)
             toast({

@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react'
 import MDEditor from '@uiw/react-md-editor'
-import axios from 'axios'
 import { Button } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
 import { useTheme } from '@/components/theme-provider'

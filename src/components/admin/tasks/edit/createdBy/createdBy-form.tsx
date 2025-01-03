@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { AiOutlineFlag } from 'react-icons/ai'
 import { Task } from '@/types'
-import axios from 'axios'
-import Select from 'react-select'
 import { Skeleton } from '@/components/ui/skeleton'
-import clsx from 'clsx'
 import { CustomAvatar } from '../../custom-avatar'
 
 type Props = {
@@ -14,7 +10,6 @@ type Props = {
 }
 
 export const CreatedByForm = ({ isLoading, task, taskId }: Props) => {
-    console.log('task', task)
     useEffect(() => {}, [])
 
     if (isLoading) {

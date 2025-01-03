@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { AiOutlineFlag } from 'react-icons/ai'
 import { Task } from '@/types'
-import axios from 'axios'
 import Select from 'react-select'
 import { Skeleton } from '@/components/ui/skeleton'
 import clsx from 'clsx'
+import { useAxios } from '@/services/auth-service'
 
 type Props = {
     isLoading?: boolean
@@ -18,6 +18,7 @@ export const StageForm = ({ isLoading, task, taskId }: Props) => {
         value: string
         label: string
     } | null>(null)
+    const api = useAxios()
 
     const stagesArr = {
         data: [
@@ -48,7 +49,7 @@ export const StageForm = ({ isLoading, task, taskId }: Props) => {
         if (option) {
             setSelectedStage(option)
             try {
-                await axios.put(`http://localhost:3000/tasks/${taskId}`, {
+                await api.put(`http://localhost:3000/tasks/${taskId}`, {
                     stage: option.value,
                 })
             } catch (error) {

@@ -4,7 +4,6 @@ import { Skeleton } from '../../components/ui/skeleton'
 import { Button } from '../../components/ui/button'
 import { useAuth } from '@/services/auth-service'
 import { Category, PostData, PostsResponse } from '@/types'
-import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 import Breadcrumb from '../../components/breadcrumb'
 import LatestPost from './latest-port'
@@ -28,9 +27,6 @@ export default function PostExternal() {
 
     const handleNextPage = () => {
         setCurrentPage((prevPage) => prevPage + 1)
-    }
-    const formatDate = (date: string) => {
-        return format(new Date(date), 'dd-MM-yyyy')
     }
     const handlePrevPage = () => {
         setCurrentPage((prevPage) => prevPage - 1)
@@ -64,35 +60,18 @@ export default function PostExternal() {
                     params: { page, limit: 10 },
                 }
             )
-            console.log('response:', response)
-            console.log('-----------------')
-            console.log(data)
             setData(response.data.posts)
             setTotalPages(response.data.totalPages)
             setCurrentPage(response.data.currentPage)
             setLatestPost(response.data.latestPost)
             setCategories(response.data.categories)
             setLoading(false)
-            console.log('-----------------')
         } catch (error) {
             console.error('Error fetching data:', error)
             setLoading(false)
         }
     }
     useEffect(() => {
-        // const getLatestPost = async () => {
-        //     try {
-        //         const data = await fetchPosts(1, 1) // Fetch the first page with 1 post
-        //         setLatestPost(data.latestPost)
-        //         console.log('Latest post:', data.latestPost)
-        //     } catch (error) {
-        //         console.error('Error fetching latest post:', error)
-        //     }
-        // }
-        // getLatestPost()
-        // setTimeout(() => {
-        //     fetchData(currentPage)
-        // }, 100000)
         if (!selectedCategory) {
             fetchData(currentPage)
         } else {

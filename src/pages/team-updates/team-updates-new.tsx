@@ -38,17 +38,6 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
     const [loading, setLoading] = useState(false)
     const { theme } = useTheme()
 
-    const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log('Image selected')
-        console.log(e.target.files?.[0])
-        const file = e.target.files?.[0]
-        if (file) {
-            setImage(file)
-        } else {
-            setImage(null)
-        }
-    }
-
     const onDropMain = useCallback((acceptedFiles: File[]) => {
         if (acceptedFiles.length > 0) {
             setImage(acceptedFiles[0])
@@ -58,14 +47,6 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
-        console.log('HANDLE SUBMIT')
-        console.log(image)
-        console.log('--------------')
-        console.log(valueEn)
-        console.log(titlePost)
-        console.log(user.id)
-        console.log(user.name)
-
         if (!image || !valueEn || !titlePost) {
             toast({
                 variant: 'destructive',
@@ -76,13 +57,12 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
             return
         }
 
-        // Optionally sanitize Markdown to HTML if needed
         const cleanContent = DOMPurify.sanitize(valueEn)
 
         const formData = new FormData()
         formData.append('image', image)
         formData.append('title', titlePost)
-        formData.append('content', cleanContent) // If you store as Markdown, you might not need to sanitize
+        formData.append('content', cleanContent)
         formData.append('userId', user.id)
         formData.append('userName', user.name)
         try {
@@ -92,7 +72,6 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
                     Authorization: `Bearer ${userToken!.accessToken}`,
                 },
             })
-            console.log(response.data)
         } catch (error) {
             toast({
                 variant: 'destructive',
@@ -110,7 +89,7 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
             description: t('changesSaved'),
         })
         setLoading(false)
-        fetchData(currentPage, '') // Optionally reset query or keep it
+        fetchData(currentPage, '')
     }
 
     const { getRootProps: getMainRootProps, getInputProps: getMainInputProps } =
@@ -131,15 +110,11 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
     useEffect(() => {
         if (!open) {
             document.body.style.overflow = 'auto'
-            console.log('Body overflow reset to auto.')
         } else {
             document.body.style.overflow = 'hidden'
-            console.log('Body overflow set to hidden.')
         }
-
         return () => {
             document.body.style.overflow = 'auto'
-            console.log('Component unmounted. Body overflow reset to auto.')
         }
     }, [open])
     return (

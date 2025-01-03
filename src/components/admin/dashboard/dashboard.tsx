@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import { DataPoint } from '@/types'
 import UserCard from './users-card'
 import { useTheme } from '../../theme-provider'
@@ -8,6 +7,7 @@ import KanbanPieChart from './kanban-pie-chart'
 import MostLikedPostCard from './most-liked-post-card'
 import MostCommentedPostCard from './most-commented-post'
 import { useTranslation } from 'react-i18next'
+import { useAxios } from '@/services/auth-service'
 
 function AdminDashboard() {
     const [chartData, setChartData] = useState<DataPoint[]>([])
@@ -15,10 +15,11 @@ function AdminDashboard() {
     const [galleryCount, setGalleryCount] = useState<number>()
     const { theme } = useTheme()
     const { t } = useTranslation()
+    const api = useAxios()
 
     const fetchData = async (year: string) => {
         try {
-            const response = await axios.get(
+            const response = await api.get(
                 'http://localhost:3000/admin/users/year/' + year
             )
             const usersData = response.data
@@ -53,7 +54,7 @@ function AdminDashboard() {
 
     const fetchUserCount = async () => {
         try {
-            const response = await axios.get(
+            const response = await api.get(
                 'http://localhost:3000/admin/users/count/all/'
             )
             setUserCount(response.data.total)
@@ -63,7 +64,7 @@ function AdminDashboard() {
     }
     const fetchGalleryCount = async () => {
         try {
-            const response = await axios.get(
+            const response = await api.get(
                 'http://localhost:3000/admin/gallery/count/all/'
             )
             setGalleryCount(response.data.total)
@@ -80,7 +81,6 @@ function AdminDashboard() {
     }, [])
     return (
         <>
-            {/* <div className="w-full p-6 h-2 bg-slate-500"> HEADER</div> */}
             <div className="w-full lg:w-2/3 flex flex-col gap-8 p-4 mx-auto dark:bg-[#101010] bg-slate-300">
                 <div className="flex  gap-4 justify-between flex-wrap w-full">
                     <UserCard
@@ -99,15 +99,6 @@ function AdminDashboard() {
                         type={t('clients')}
                     />
                 </div>
-                {/* <div className="flex  gap-4 justify-between flex-wrap w-full">
-                    <UserCard count={45} date="TODO" type={t('team_updates')} />
-                    <UserCard
-                        count={45}
-                        date="TODO"
-                        type={t('tasksInKanban')}
-                    />
-                    <UserCard count={45} date="TODO" type={t('onGoingTasks')} />
-                </div> */}
                 <div className="flex flex-row gap-2 max-md:flex-col">
                     <MostLikedPostCard />
                     <MostCommentedPostCard />

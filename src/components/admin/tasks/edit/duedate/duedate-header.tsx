@@ -13,7 +13,6 @@ export const DueDateHeader = ({ dueDate }: Props) => {
     const { t } = useTranslation()
 
     if (dueDate) {
-        // Get the color status
         const colorStatus = getDateColor({ date: dueDate })
 
         // Map colorStatus to Badge variant

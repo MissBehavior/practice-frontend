@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import axios from 'axios'
 import { Button } from '@/components/ui/button'
 import {
     Command,
@@ -13,7 +12,7 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { useAuth } from '@/services/auth-service'
+import { useAuth, useAxios } from '@/services/auth-service'
 import { Category } from '@/types'
 import { useTranslation } from 'react-i18next'
 
@@ -26,7 +25,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
     const [categories, setCategories] = useState<Category[]>([])
     const [query, setQuery] = useState('')
     const [loading, setLoading] = useState(false)
-
+    const api = useAxios()
     const [title, setTitle] = useState('')
     const [titleLT, setTitleLT] = useState('')
     const [content, setContent] = useState('')
@@ -53,7 +52,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get<Category[]>(
+                const response = await api.get<Category[]>(
                     'http://localhost:3000/categories'
                 )
                 setCategories(response.data)
@@ -87,7 +86,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
 
     const handleCreateCategory = async (categoryName: string) => {
         try {
-            const response = await axios.post<Category>(
+            const response = await api.post<Category>(
                 'http://localhost:3000/categories',
                 { name: categoryName },
                 {
@@ -153,7 +152,7 @@ export default function CreatePostNew({ onPostCreated }: CreatePostNewProps) {
                 formData.append('image', image)
             }
 
-            const response = await axios.post(
+            const response = await api.post(
                 'http://localhost:3000/posts',
                 formData,
                 {

@@ -45,13 +45,8 @@ export function DataTableRowActions({
                     onClick={() => deleteUser(row.original._id)}
                     className="cursor-pointer"
                 >
-                    {/* <Button
-                        className="capitalize bg-red-400 hover:bg-red-600"
-                        
-                    > */}
                     Delete
                     <MdDeleteForever />
-                    {/* </Button> */}
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

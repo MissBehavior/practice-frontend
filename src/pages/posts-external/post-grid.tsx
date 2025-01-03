@@ -8,7 +8,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { FaCalendarAlt, FaUser } from 'react-icons/fa' // Import the calendar and user icons
+import { FaCalendarAlt, FaUser } from 'react-icons/fa'
 import Tag from './tag'
 import i18n from '@/i18n/config'
 

@@ -2,7 +2,6 @@ import * as React from 'react'
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { Input } from './ui/input'
-import { Button } from './admin/custom/button'
 import { Search } from 'lucide-react'
 import { HiMiniXMark } from 'react-icons/hi2'
 import i18n from '@/i18n/config'
@@ -28,7 +27,6 @@ const Breadcrumb: FC<BreadcrumbProps> = ({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        console.log('Search Query:', searchQuery)
         if (onSearch) {
             console.log('Search Query ONSEARCH TRUE:', searchQuery)
             onSearch(searchQuery)

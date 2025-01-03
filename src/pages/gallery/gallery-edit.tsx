@@ -135,7 +135,6 @@ function GalleryEditDialog({ gallery, fetchData }: GalleryEditDialogProps) {
                     },
                 }
             )
-            console.log(response.data)
         } catch (error) {
             console.error('Error updating gallery', error)
             toast({

@@ -6,7 +6,6 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import { useAuth } from '@/services/auth-service'
 import axios from 'axios'
 import { SolutionsData } from '@/types'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -23,8 +22,6 @@ export default function Solutions() {
         setLoading(true)
         try {
             const response = await axios.get('http://localhost:3000/solutions')
-            console.log('response:', response)
-            console.log('-----------------')
             setSolutionData(response.data.solutions)
             setLoading(false)
         } catch (error) {

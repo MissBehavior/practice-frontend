@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import { FaThumbsUp, FaCommentDots, FaUserCircle } from 'react-icons/fa'
 import { Link } from 'react-router-dom' // Using react-router-dom for navigation
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown from 'react-markdown'
+import { useAxios } from '@/services/auth-service'
 
 interface MostCommentedPost {
     _id: string
@@ -22,13 +22,13 @@ interface MostCommentedPost {
 const MostCommentedPostCard: React.FC = () => {
     const [post, setPost] = useState<MostCommentedPost | null>(null)
     const { t } = useTranslation()
+    const api = useAxios()
 
     const fetchMostCommentedPost = async () => {
         try {
-            const response = await axios.get(
+            const response = await api.get(
                 'http://localhost:3000/postinternal/post-stats/most-commented'
             )
-            console.log('Most commented post:', response.data)
             setPost(response.data)
         } catch (error) {
             console.error('Error fetching most commented post:', error)

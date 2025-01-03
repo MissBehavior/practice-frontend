@@ -3,9 +3,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { format } from 'date-fns'
 import { Task } from '@/types'
-import { SocketContext } from '@/SocketContext'
-import axios from 'axios'
 import { useTranslation } from 'react-i18next'
+import { useAxios } from '@/services/auth-service'
 
 type Props = {
     initialValues: {
@@ -16,7 +15,8 @@ type Props = {
 }
 export const DueDateForm = ({ initialValues, cancelForm, taskId }: Props) => {
     const { t } = useTranslation()
-    const socket = useContext(SocketContext)
+    const api = useAxios()
+
     const formattedDueDate = initialValues.dueDate
         ? format(new Date(initialValues.dueDate), "yyyy-MM-dd'T'HH:mm")
         : ''
@@ -25,7 +25,7 @@ export const DueDateForm = ({ initialValues, cancelForm, taskId }: Props) => {
     const handleSave = async () => {
         try {
             const isoDueDate = dueDate ? new Date(dueDate).toISOString() : null
-            await axios.put(`http://localhost:3000/tasks/${taskId}`, {
+            await api.put(`http://localhost:3000/tasks/${taskId}`, {
                 dueDate: isoDueDate,
             })
         } catch (error) {

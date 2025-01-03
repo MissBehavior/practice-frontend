@@ -10,7 +10,6 @@ function App() {
         <>
             <Header />
             <Outlet />
-            {/* <Footer /> */}
             <div className="backto-top">
                 <ScrollButton />
             </div>

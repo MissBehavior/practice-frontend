@@ -50,22 +50,9 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
         }
     }
 
-    // const handleContentMainImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     console.log('Content Main Image selected')
-    //     console.log(e.target.files?.[0])
-    //     const file = e.target.files?.[0]
-    //     if (file) {
-    //         setContentMainImg(file)
-    //     } else {
-    //         setContentMainImg(null)
-    //     }
-    // }
-
     const handleSubmit = async (e: React.FormEvent) => {
         setLoading(true)
         e.preventDefault()
-        console.log('HANDLE SUBMIT')
-        console.log(image)
 
         if (
             !image ||
@@ -93,7 +80,6 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
         formData.append('contentCardLT', contentCardLT)
         formData.append('contentMain', contentMain)
         formData.append('contentMainLT', contentMainLT)
-        // formData.append('contentMainImg', contentMainImg)
 
         try {
             const response = await api.post(
@@ -106,7 +92,6 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
                     },
                 }
             )
-            console.log(response.data)
         } catch (error) {
             console.error('Error uploading image:', error)
             toast({
@@ -129,15 +114,12 @@ function SolutionsAddNewSolution({ fetchData }: SolutionsAddNewSolutionProps) {
     useEffect(() => {
         if (!open) {
             document.body.style.overflow = 'auto'
-            console.log('Body overflow reset to auto.')
         } else {
             document.body.style.overflow = 'hidden'
-            console.log('Body overflow set to hidden.')
         }
 
         return () => {
             document.body.style.overflow = 'auto'
-            console.log('Component unmounted. Body overflow reset to auto.')
         }
     }, [open])
     return (

@@ -51,10 +51,6 @@ export const languages: Record<LanguageCode, Language> = {
     fj: { name: 'Fijian', nativeName: 'vosa Vakaviti' },
     fi: { name: 'Finnish', nativeName: 'suomi, suomen kieli' },
     fr: { name: 'French', nativeName: 'français, langue française' },
-    ff: {
-        name: 'Fula; Fulah; Pulaar; Pular',
-        nativeName: 'Fulfulde, Pulaar, Pular',
-    },
     gl: { name: 'Galician', nativeName: 'Galego' },
     ka: { name: 'Georgian', nativeName: 'ქართული' },
     de: { name: 'German', nativeName: 'Deutsch' },
@@ -70,10 +66,6 @@ export const languages: Record<LanguageCode, Language> = {
     hu: { name: 'Hungarian', nativeName: 'Magyar' },
     ia: { name: 'Interlingua', nativeName: 'Interlingua' },
     id: { name: 'Indonesian', nativeName: 'Bahasa Indonesia' },
-    ie: {
-        name: 'Interlingue',
-        nativeName: 'Originally called Occidental; then Interlingue after WWII',
-    },
     ga: { name: 'Irish', nativeName: 'Gaeilge' },
     ig: { name: 'Igbo', nativeName: 'Asụsụ Igbo' },
     ik: { name: 'Inupiaq', nativeName: 'Iñupiaq, Iñupiatun' },
@@ -83,10 +75,6 @@ export const languages: Record<LanguageCode, Language> = {
     iu: { name: 'Inuktitut', nativeName: 'ᐃᓄᒃᑎᑐᑦ' },
     ja: { name: 'Japanese', nativeName: '日本語 (にほんご／にっぽんご)' },
     jv: { name: 'Javanese', nativeName: 'basa Jawa' },
-    kl: {
-        name: 'Kalaallisut, Greenlandic',
-        nativeName: 'kalaallisut, kalaallit oqaasii',
-    },
     kn: { name: 'Kannada', nativeName: 'ಕನ್ನಡ' },
     kr: { name: 'Kanuri', nativeName: 'Kanuri' },
     ks: { name: 'Kashmiri', nativeName: 'कश्मीरी, كشميري‎' },
@@ -131,10 +119,6 @@ export const languages: Record<LanguageCode, Language> = {
     nr: { name: 'South Ndebele', nativeName: 'isiNdebele' },
     oc: { name: 'Occitan', nativeName: 'Occitan' },
     oj: { name: 'Ojibwe, Ojibwa', nativeName: 'ᐊᓂᔑᓈᐯᒧᐎᓐ' },
-    cu: {
-        name: 'Old Church Slavonic, Church Slavic, Church Slavonic, Old Bulgarian, Old Slavonic',
-        nativeName: 'ѩзыкъ словѣньскъ',
-    },
     om: { name: 'Oromo', nativeName: 'Afaan Oromoo' },
     or: { name: 'Oriya', nativeName: 'ଓଡ଼ିଆ' },
     os: { name: 'Ossetian, Ossetic', nativeName: 'ирон æвзаг' },

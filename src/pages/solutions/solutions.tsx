@@ -8,7 +8,7 @@ import SolutionsDelete from './solutions-delete-confirm'
 import SolutionsEditDialog from './solutions-edit-dialog'
 import { SolutionsData } from '@/types'
 import Breadcrumb from '@/components/breadcrumb'
-import { FaCalendarAlt, FaUser } from 'react-icons/fa'
+import { FaCalendarAlt } from 'react-icons/fa'
 import i18n from '@/i18n/config'
 import { useTranslation } from 'react-i18next'
 
@@ -17,17 +17,13 @@ export default function Solutions() {
     const { t } = useTranslation()
     const [data, setData] = useState<SolutionsData[]>([])
     const [loading, setLoading] = useState<boolean>(true)
-    const [hoveredItem, setHoveredItem] = useState<number | undefined>()
 
     const fetchData = async () => {
         setLoading(true)
         try {
             const response = await axios.get('http://localhost:3000/solutions')
-            console.log('response:', response)
-            console.log('-----------------')
             setData(response.data.solutions)
             setLoading(false)
-            console.log(data)
         } catch (error) {
             console.error('Error fetching data:', error)
             setLoading(false)
@@ -84,9 +80,6 @@ export default function Solutions() {
                                         <SolutionsEditDialog
                                             _id={data._id}
                                             cardImgUrl={data.cardImgUrl}
-                                            // contentMainImgUrl={
-                                            //     data.contentMainImg
-                                            // }
                                             titleCard={data.titleCard}
                                             titleCardLT={data.titleCardLT}
                                             contentCard={data.contentCard}

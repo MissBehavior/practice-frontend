@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo, useContext } from 'react'
-import axios from 'axios'
 import { DragEndEvent } from '@dnd-kit/core'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { SocketContext } from '@/SocketContext'
@@ -17,8 +16,7 @@ export interface Stage {
     title: string
 }
 
-export const TasksListPage = ({ children }: React.PropsWithChildren) => {
-    const navigate = useNavigate()
+export const TasksListPage = () => {
     const api = useAxios()
 
     const socket = useContext(SocketContext)
@@ -36,7 +34,6 @@ export const TasksListPage = ({ children }: React.PropsWithChildren) => {
                 const [tasksResponse] = await Promise.all([
                     api.get('http://localhost:3000/tasks'),
                 ])
-                console.log('tasksResponse', tasksResponse)
                 setTasks(tasksResponse.data)
                 const stages = {
                     data: [

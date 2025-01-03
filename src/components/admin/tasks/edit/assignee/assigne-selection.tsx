@@ -102,7 +102,6 @@ const AssigneeSelection: React.FC<Props> = ({ task, taskId }) => {
                 `http://localhost:3000/tasks/${taskId}`,
                 updatedTaskData
             )
-            console.log('Task updated:', response.data)
             setHasChanges(false)
         } catch (error) {
             console.error('Error updating assignees:', error)

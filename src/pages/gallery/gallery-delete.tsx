@@ -24,8 +24,6 @@ function GalleryDelete({ fetchData, index }: GalleryDeleteProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        console.log('HANDLE SUBMIT')
-        console.log(index)
         try {
             const response = await api.delete('/gallery/' + index, {
                 headers: {

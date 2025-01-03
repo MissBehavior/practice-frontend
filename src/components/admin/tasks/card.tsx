@@ -19,16 +19,9 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from '@/components/ui/tooltip'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Task, User } from '@/types'
 import { CustomAvatar } from './custom-avatar'
-import { SocketContext } from '@/SocketContext' // Adjust path as necessary
 import { useAxios } from '@/services/auth-service'
 import { Label } from '@/components/ui/label'
 import { useTranslation } from 'react-i18next'
@@ -42,13 +35,11 @@ export const ProjectCard = ({ task }: ProjectCardProps) => {
     const api = useAxios()
     const { t } = useTranslation()
 
-    const socket = useContext(SocketContext)
     const { _id, title, assignee, createdAt, tags, dueDate } = task
 
     const handleDelete = async () => {
         try {
             await api.delete(`/tasks/${_id}`)
-            // Optionally, emit a socket event or update state here
         } catch (error) {
             console.error('Error deleting task:', error)
         }
@@ -80,9 +71,7 @@ export const ProjectCard = ({ task }: ProjectCardProps) => {
 
     const createDateOptions = useMemo(() => {
         if (!createdAt) return null
-
         const date = dayjs(createdAt)
-
         return {
             color: getDateColor({ date: createdAt }),
             text: date.format('MMM D, YYYY'),
@@ -204,9 +193,9 @@ export const ProjectCard = ({ task }: ProjectCardProps) => {
                     {/* Tags Section */}
                     {tags && tags.length > 0 && (
                         <div className="flex flex-wrap gap-1 pt-1">
-                            {tags.map((tag) => (
+                            {tags.map((tag, i) => (
                                 <Badge
-                                    key={tag}
+                                    key={tag + i}
                                     variant="outline"
                                     className="text-xs rounded-full border-gray-300 dark:border-gray-600"
                                 >

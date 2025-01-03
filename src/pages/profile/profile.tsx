@@ -111,8 +111,6 @@ function Profile() {
                     Authorization: `Bearer ${userToken!.accessToken}`,
                 },
             })
-            console.log('User updated:', response.data)
-            console.log('Updated user:', updatedUser)
             setUserProfile(updatedUser)
             setIsDirty(false)
         } catch (error) {
@@ -207,7 +205,6 @@ function Profile() {
                     },
                 }
             )
-            console.log(response)
             const updatedUser = {
                 ...user,
                 profileImgUrl: '',

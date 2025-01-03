@@ -21,7 +21,6 @@ interface SolutionsEditDialogProps {
     fetchData: () => void
     _id: string
     cardImgUrl: string
-    // contentMainImgUrl: string
     titleCard: string
     titleCardLT: string
     contentCard: string
@@ -33,7 +32,6 @@ interface SolutionsEditDialogProps {
 function SolutionsEditDialog({
     _id,
     cardImgUrl,
-    // contentMainImgUrl,
     titleCard,
     titleCardLT,
     contentCard,
@@ -46,9 +44,7 @@ function SolutionsEditDialog({
     const api = useAxios()
     const [open, setOpen] = React.useState(false)
     const [image, setImage] = React.useState<File | null>(null)
-    // const [contentMainImg, setContentMainImg] = React.useState<File | null>(
-    //     null
-    // )
+
     const [preview, setPreview] = React.useState<string>(cardImgUrl)
     const [contentCardEdit, setContentCardEdit] = React.useState(contentCard)
     const [contentCardLTEdit, setContentCardLTEdit] =
@@ -67,13 +63,6 @@ function SolutionsEditDialog({
         } else {
             formData.append('cardImgUrl', cardImgUrl)
         }
-
-        // if (contentMainImg) {
-        //     formData.append('contentMainImg', contentMainImg)
-        // } else {
-        //     formData.append('contentMainImgUrl', contentMainImgUrl)
-        // }
-
         formData.append('titleCard', titleCardEdit)
         formData.append('titleCardLT', titleCardLTEdit)
         formData.append('contentCard', contentCardEdit)
@@ -88,7 +77,6 @@ function SolutionsEditDialog({
                     Authorization: `Bearer ${userToken!.accessToken}`,
                 },
             })
-            console.log('Update successful:', response.data)
             toast({
                 variant: 'success',
                 title: t('success'),
@@ -103,7 +91,6 @@ function SolutionsEditDialog({
             })
             return
         }
-        console.log('Closing dialog...')
 
         setOpen(false)
         fetchData()
@@ -120,15 +107,6 @@ function SolutionsEditDialog({
         }
     }
 
-    // const handleContentMainImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     const file = e.target.files?.[0]
-    //     if (file) {
-    //         setContentMainImg(file)
-    //     } else {
-    //         setContentMainImg(null)
-    //     }
-    // }
-
     useEffect(() => {
         setTitleCardEdit(titleCard)
         setTitleCardLTEdit(titleCardLT)
@@ -140,15 +118,12 @@ function SolutionsEditDialog({
     useEffect(() => {
         if (!open) {
             document.body.style.overflow = 'auto'
-            console.log('Body overflow reset to auto.')
         } else {
             document.body.style.overflow = 'hidden'
-            console.log('Body overflow set to hidden.')
         }
 
         return () => {
             document.body.style.overflow = 'auto'
-            console.log('Component unmounted. Body overflow reset to auto.')
         }
     }, [open])
     return (

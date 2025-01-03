@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { Button } from '../../components/ui/button'
 import { useTranslation } from 'react-i18next'
 import { toast } from '../../components/ui/use-toast'
 import axios from 'axios'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { AuthToken, TSignInSchema, signInSchema } from '@/types'
+import { TSignInSchema, signInSchema } from '@/types'
 import { useAuth } from '@/services/auth-service'
 import i18n from '@/i18n/config'
 
@@ -14,11 +14,7 @@ export default function Login() {
     const { loginFunc, isLoggedIn, setUserFunc } = useAuth()
 
     const navigate = useNavigate()
-    // const [name = '', setName] = React.useState<string>()
-    // const [email = '', setEmail] = React.useState<string>()
-    // const [password = '', setPassword] = React.useState<string>()
     const [status, setStatus] = React.useState<string>('idle')
-    const [userToken, setUserToken] = React.useState<AuthToken>()
     const [error, setError] = React.useState<string>()
     const { t } = useTranslation()
 
@@ -32,14 +28,11 @@ export default function Login() {
     })
 
     const loginRequest = async (email: string, password: string) => {
-        console.log('---- logging in Request -----')
         let res = await axios.post(
             'http://localhost:3000/auth/login/',
             { email: email, password: password },
             { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
         )
-        console.log('--------response at LoginPage--------')
-        console.log(res.data)
         return res.data
     }
 
@@ -48,7 +41,6 @@ export default function Login() {
     }
 
     if (status === 'success') {
-        console.log('-------success data---------')
         toast({
             variant: 'success',
             title: 'Login Success',
@@ -58,9 +50,6 @@ export default function Login() {
     }
 
     const onSubmitE = async (data: TSignInSchema) => {
-        // ...
-        console.log('submitting login----------------------------')
-        console.log(data)
         try {
             let userToken = await loginRequest(data.email, data.password)
             loginFunc(userToken)

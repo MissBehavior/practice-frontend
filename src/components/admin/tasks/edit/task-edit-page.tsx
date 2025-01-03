@@ -1,13 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
-import {
-    AiOutlineAlignLeft,
-    AiOutlineFieldTime,
-    AiOutlineUsergroupAdd,
-} from 'react-icons/ai'
+import { AiOutlineFieldTime } from 'react-icons/ai'
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog'
@@ -25,19 +20,20 @@ import {
 } from '@/components/ui/accordion'
 import { DueDateHeader } from './duedate/duedate-header'
 import { useNavigate, useParams } from 'react-router-dom'
-import axios from 'axios'
 import { DescriptionHeader } from './description/description-header'
 import { DescriptionForm } from './description/description-form'
 import AssigneeSelection from './assignee/assigne-selection'
 import { Label } from '@/components/ui/label'
 import { useTranslation } from 'react-i18next'
 import { CreatedByForm } from './createdBy/createdBy-form'
+import { useAxios } from '@/services/auth-service'
 
 export const TasksEditPage: React.FC = () => {
     const { taskId } = useParams<{ taskId: string }>()
     const socket = useContext(SocketContext)
     const navigate = useNavigate()
     const { t } = useTranslation()
+    const api = useAxios()
 
     if (!taskId) {
         return <div>Task ID is missing</div>
@@ -57,7 +53,7 @@ export const TasksEditPage: React.FC = () => {
         const fetchTask = async () => {
             setIsLoading(true)
             try {
-                const response = await axios.get(
+                const response = await api.get(
                     `http://localhost:3000/tasks/${taskId}`
                 )
                 setTask(response.data)

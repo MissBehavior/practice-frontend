@@ -25,15 +25,12 @@ function SolutionsDelete({ fetchData, index }: SolutionsDeleteProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        console.log('HANDLE SUBMIT')
-        console.log(index)
         try {
             const response = await api.delete('/solutions/' + index, {
                 headers: {
                     Authorization: `Bearer ${userToken!.accessToken}`,
                 },
             })
-            console.log(response.data)
         } catch (error) {
             console.error('Error deleting :', error)
             toast({

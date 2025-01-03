@@ -1,4 +1,3 @@
-// components/LatestPost.tsx
 import React from 'react'
 import { PostData } from '@/types'
 import { getRandomColorFromString } from '../../lib/utils'

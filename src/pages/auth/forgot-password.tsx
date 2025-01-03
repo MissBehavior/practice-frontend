@@ -28,20 +28,16 @@ const ForgotPassword: React.FC<EmailSubmitProps> = ({ onEmailSubmit }) => {
 
     const onSubmitE = async (data: TForgotPasswordSchema) => {
         if (email) {
-            console.log('---- if Email in Request -----')
             try {
                 const response = await axios.post(
                     'http://localhost:3000/auth/forgot-password/',
                     { email: email },
                     { headers: { 'Content-Type': 'application/json' } }
                 )
-                console.log('--------response at ForgotPassword--------')
-                console.log(response)
 
                 if (response.status === 200) {
                     onEmailSubmit(email)
                 } else {
-                    console.log('Failed to send email.')
                     console.log(response)
                     setError('Failed to send email.')
                 }

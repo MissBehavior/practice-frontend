@@ -18,7 +18,6 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { t } from 'i18next'
 import { useTranslation } from 'react-i18next'
 
 function RegisterCountChart({

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import { PieChart, Pie, Cell, Tooltip } from 'recharts'
 import { AiOutlineFileSearch } from 'react-icons/ai' // Import an icon from react-icons
 import { useTranslation } from 'react-i18next'
+import { useAxios } from '@/services/auth-service'
 
 interface TaskStageStat {
     stage: string
@@ -14,12 +14,12 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
 const KanbanPieChart: React.FC = () => {
     const [data, setData] = useState<TaskStageStat[]>([])
     const { t } = useTranslation()
+    const api = useAxios()
+
     const getStatisticsKanban = async () => {
-        await axios
+        await api
             .get('http://localhost:3000/tasks/tasks/stats')
             .then((response) => {
-                console.log('Task stats-----------')
-                console.log('Task stats:', response.data)
                 setData(response.data)
             })
             .catch((error) => {
@@ -34,7 +34,6 @@ const KanbanPieChart: React.FC = () => {
     }
     useEffect(() => {
         getStatisticsKanban()
-        console.log('Task stats:', data)
     }, [])
 
     const totalTasks = data.reduce((acc, curr) => acc + curr.count, 0)

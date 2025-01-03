@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { DataTable } from './data-table'
 import { columns } from './columns'
-import axios from 'axios'
 import { UserAdminData } from '@/types'
 import { useAuth, useAxios } from '@/services/auth-service'
 import { Button } from '@/components/ui/button'
@@ -23,11 +22,7 @@ function UsersTable() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(
-                'http://localhost:3000/admin/users'
-            )
-            console.log('#################')
-            console.log(response)
+            const response = await api.get('http://localhost:3000/admin/users')
             setUsers(response.data.allUsers)
         } catch (error) {
             console.error('Error fetching data:', error)
@@ -111,7 +106,6 @@ function UsersTable() {
                 },
             })
 
-            // Add the new user to the state
             setUsers((prevUsers) => [...prevUsers, response.data])
             setIsCreateDialogOpen(false)
             toast({

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import {
     Dialog,
     DialogContent,
@@ -58,7 +57,6 @@ export const NewTaskDialog: React.FC<NewTaskDialogProps> = ({
                         Authorization: `Bearer ${userToken!.accessToken}`,
                     },
                 })
-                console.log('response NEW TASK', response)
                 setAllUsers(response.data)
             } catch (error) {
                 console.error('Error fetching users:', error)

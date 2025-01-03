@@ -36,14 +36,11 @@ export default function Register() {
         email: string,
         password: string
     ) => {
-        console.log('---- register in Request -----')
         let res = await axios.post(
             'http://localhost:3000/auth/register/',
             { name: name, email: email, password: password },
             { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
         )
-        console.log('--------response at Register Page--------')
-        console.log(res.data)
         return res.data
     }
 
@@ -52,8 +49,6 @@ export default function Register() {
     }
 
     if (status === 'success') {
-        console.log('-------success data---------')
-        console.log(userToken)
         localStorage.setItem('user', JSON.stringify(userToken))
         toast({
             variant: 'default',
@@ -64,8 +59,6 @@ export default function Register() {
     }
 
     const onSubmit = async (data: TSignUpSchema) => {
-        console.log(data)
-        console.log('submitting ----------------------------')
         try {
             let userToken = await registerRequest(
                 data.name,

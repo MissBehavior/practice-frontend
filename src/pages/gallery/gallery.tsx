@@ -20,11 +20,8 @@ export default function Gallery() {
         setLoading(true)
         try {
             const response = await axios.get('http://localhost:3000/gallery')
-            console.log('response:', response)
-            console.log('-----------------')
             setData(response.data.gallery)
             setLoading(false)
-            console.log(data)
         } catch (error) {
             console.error('Error fetching data:', error)
             setLoading(false)

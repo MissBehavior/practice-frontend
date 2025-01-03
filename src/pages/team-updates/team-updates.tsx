@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import { useAuth, useAxios } from '@/services/auth-service'
 import ReactMarkdown from 'react-markdown' // Updated import
 import { PostData, PostDataInternal } from '@/types'
-import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 import TeamUpdateNew from './team-updates-new'
 import TeamUpdateDelete from './team-updates-delete'
@@ -38,51 +36,15 @@ export default function TeamUpdates() {
     const { t } = useTranslation()
     const [searchQuery, setSearchQuery] = useState<string>('') // state for search
 
-    const [comment, setComment] = useState('')
-
     const handleNextPage = () => {
         setCurrentPage((prevPage) => prevPage + 1)
     }
     const handlePrevPage = () => {
         setCurrentPage((prevPage) => prevPage - 1)
     }
-    const formatDate = (date: string) => {
-        return format(new Date(date), 'dd-MM-yyyy')
-    }
-    const handlePostComment = async (postId: string) => {
-        try {
-            const response = await axios.post(
-                'http://localhost:3000/postinternal/comment/' + postId,
-                { userId: user.id, text: comment },
-                {
-                    headers: {
-                        Authorization: `Bearer ${userToken!.accessToken}`,
-                    },
-                }
-            )
-            const updatedPost = response.data
-            console.log('updatedPost:', updatedPost)
-            setData((prevData) =>
-                prevData.map((post) =>
-                    post._id === postId
-                        ? { ...post, comments: updatedPost.comments }
-                        : post
-                )
-            )
-            setComment('')
-        } catch (error) {
-            console.error('Error posting comment:', error)
-            toast({
-                variant: 'destructive',
-                title: t('error'),
-                description: t('error'),
-            })
-            console.error('Error deleting :', error)
-        }
-    }
     const likeUnlikeHandle = async (postId: string) => {
         try {
-            const response = await axios.patch(
+            const response = await api.patch(
                 'http://localhost:3000/postinternal/like/' + postId,
                 { userId: user.id },
                 {
@@ -91,7 +53,6 @@ export default function TeamUpdates() {
                     },
                 }
             )
-            console.log('likeunlike handleresponse:', response)
             const updatedPost = response.data.likes
             setData((prevData) =>
                 prevData.map((post) =>
@@ -124,8 +85,6 @@ export default function TeamUpdates() {
                     params,
                 }
             )
-            console.log('response:', response)
-            console.log('-----------------')
             const sortedPosts = response.data.posts.sort(
                 (a, b) =>
                     new Date(b.createdAt).getTime() -
@@ -152,7 +111,7 @@ export default function TeamUpdates() {
         fetchData(currentPage, searchQuery)
         // }, 10000)
         // fetchData(currentPage)
-    }, [currentPage, searchQuery]) // Added searchQuery as a dependency
+    }, [currentPage, searchQuery])
 
     const handleSearch = (q: string) => {
         setSearchQuery(q)

@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Task } from '@/types'
 import { SocketContext } from '@/SocketContext'
-import axios from 'axios'
+import { useAxios } from '@/services/auth-service'
 
 type Props = {
     initialValues: {
@@ -17,7 +17,7 @@ export const TitleForm = ({ initialValues, isLoading, taskId }: Props) => {
     const socket = useContext(SocketContext)
     const [title, setTitle] = useState(initialValues.title || '')
     const [isSubmitting, setIsSubmitting] = useState(false)
-
+    const api = useAxios()
     useEffect(() => {
         setTitle(initialValues.title || '')
     }, [initialValues.title])
@@ -30,7 +30,7 @@ export const TitleForm = ({ initialValues, isLoading, taskId }: Props) => {
         if (!isSubmitting) {
             setIsSubmitting(true)
             try {
-                await axios.put(`http://localhost:3000/tasks/${taskId}`, {
+                await api.put(`http://localhost:3000/tasks/${taskId}`, {
                     title,
                 })
                 setIsSubmitting(false)
