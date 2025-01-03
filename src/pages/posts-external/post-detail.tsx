@@ -87,7 +87,9 @@ const PostDetail: React.FC = () => {
     if (!post) {
         return (
             <div className="flex flex-col items-center justify-center h-screen dark:bg-[#101010] bg-slate-300">
-                <p className="text-gray-300 text-xl">{t('post_not_found')}</p>
+                <p className="dark:text-gray-300 text-[#101010] text-xl">
+                    {t('post_not_found')}
+                </p>
                 <Button onClick={() => navigate(-1)}>
                     <FaArrowLeft className="mr-2" />
                     {t('go_back')}
@@ -101,16 +103,16 @@ const PostDetail: React.FC = () => {
     return (
         <>
             <Breadcrumb title={t('news')} parent={t('news')} />
-            <div className="py-10 dark:bg-[#101010] bg-slate-300 min-h-screen">
+            <div className="py-10 dark:bg-[#101010] bg-[#f2f2f2] min-h-screen">
                 <div className="max-w-5xl mx-auto px-4 ">
                     <Link
                         to="/post-external"
-                        className="flex items-center text-gray-300 hover:text-gray-500 mb-6"
+                        className="flex items-center dark:text-gray-300 text-[#2A2A2A] hover:text-gray-500 mb-6"
                     >
                         <FaArrowLeft className="mr-2" />
                         {t('back_to_posts')}
                     </Link>
-                    <div className="dark:bg-[#191919] bg-slate-400 rounded-lg shadow-lg overflow-hidden min-h-screen h-auto">
+                    <div className="dark:bg-[#191919] bg-[#ffffff] rounded-lg shadow-lg overflow-hidden min-h-screen h-auto">
                         <img
                             className="w-full h-96 object-cover"
                             src={post.postPicture}
@@ -198,7 +200,7 @@ const PostDetail: React.FC = () => {
                                     randomPosts.map((randomPost) => (
                                         <article
                                             key={randomPost._id}
-                                            className="my-4 flex flex-col overflow-hidden rounded-lg border border-gray-300 bg-slate-300 dark:bg-[#191919] text-gray-900 dark:text-slate-100 transition hover:translate-y-2 hover:shadow-lg"
+                                            className="my-4 flex flex-col overflow-hidden rounded-lg border border-gray-300 bg-[#f2f2f2] dark:bg-[#191919] text-gray-900 dark:text-slate-100 transition hover:translate-y-2 hover:shadow-lg"
                                         >
                                             <Link
                                                 to={`/post-external/${randomPost._id}`}

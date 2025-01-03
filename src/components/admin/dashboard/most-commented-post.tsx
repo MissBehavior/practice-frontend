@@ -41,7 +41,7 @@ const MostCommentedPostCard: React.FC = () => {
 
     if (!post) {
         return (
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-5 text-center">
+            <div className="bg-[#f2f2f2] dark:bg-gray-800 rounded-lg shadow p-5 text-center">
                 <p className="text-gray-500 dark:text-gray-400">
                     {t('noDataAvailable')}
                 </p>
@@ -52,7 +52,7 @@ const MostCommentedPostCard: React.FC = () => {
     const formattedDate = new Date(post.createdAt).toLocaleDateString()
 
     return (
-        <div className="dark:bg-[#191919] bg-slate-200 rounded-lg shadow p-5">
+        <div className="dark:bg-[#191919] bg-[#f2f2f2] rounded-lg shadow p-5">
             <Link
                 to={`/team-updates/${post._id}`}
                 className="hover:text-blue-500 cursor-pointer hover:filter hover:brightness-110"

@@ -15,7 +15,7 @@ export default function LatestPost({ latestPost }: LatestPostProps) {
     if (!latestPost) return <div>Loading...</div>
 
     return (
-        <article className="mx-2 my-10 max-w-screen-lg rounded-md text-gray-700 shadow-md md:mx-auto dark:bg-[#191919] bg-slate-400">
+        <article className="mx-2 my-10 max-w-screen-lg rounded-md text-gray-700 shadow-md md:mx-auto dark:bg-[#191919] bg-[#ffffff]">
             <div className="flex flex-col md:flex-row">
                 <div className="p-5 md:w-4/6 md:p-8">
                     <div className="flex flex-wrap gap-2">

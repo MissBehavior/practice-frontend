@@ -52,13 +52,13 @@ export default function Header() {
         setAdminMenuOpen(false)
     }, [location])
     return (
-        <header className="shadow-md bg-slate-300 dark:bg-[#191919] font-sans tracking-wide relative z-50">
+        <header className="shadow-md bg-[#F2F2F2] dark:bg-[#191919] font-sans tracking-wide relative z-50">
             <section className="flex items-center lg:justify-center flex-wrap gap-5 relative py-3 px-4 border-gray-200 border-b dark:border-gray-700 lg:min-h-[80px] max-lg:min-h-[60px]">
                 <Link to="/">
                     <img
                         src={companyLogo}
                         alt="logo"
-                        className="md:w-[170px] w-36 p-3 bg-white rounded-lg select-none"
+                        className="md:w-[170px] w-36 p-3 bg-[#F2F2F2] rounded-lg select-none"
                         draggable="false"
                     />
                 </Link>
@@ -69,8 +69,8 @@ export default function Header() {
                             onClick={() => setLanguage('en')}
                             className={
                                 i18n.language === 'en'
-                                    ? 'p-2 bg-slate-400 dark:bg-background rounded cursor-pointer dark:hover:bg-accent dark:hover:text-accent-foreground'
-                                    : 'p-2 cursor-pointer'
+                                    ? 'p-2 bg-slate-400 dark:bg-background rounded cursor-pointer dark:hover:bg-accent hover:bg-slate-300 dark:hover:text-accent-foreground'
+                                    : 'p-2 cursor-pointer hover:bg-slate-300'
                             }
                         >
                             EN
@@ -80,8 +80,8 @@ export default function Header() {
                             onClick={() => setLanguage('lt')}
                             className={
                                 i18n.language === 'lt'
-                                    ? 'p-2 bg-slate-400 dark:bg-background rounded cursor-pointer hover:bg-accent hover:text-accent-foreground'
-                                    : 'p-2 cursor-pointer'
+                                    ? 'p-2 bg-slate-400 dark:bg-background rounded cursor-pointer dark:hover:bg-accent hover:bg-slate-300 hover:text-accent-foreground'
+                                    : 'p-2 cursor-pointer hover:bg-slate-300'
                             }
                         >
                             LT
@@ -127,12 +127,18 @@ export default function Header() {
                                         align="center"
                                         className="flex flex-col gap-2"
                                     >
-                                        <Button onClick={handleClick}>
+                                        <Button
+                                            onClick={handleClick}
+                                            variant={'outline'}
+                                        >
                                             <Link to={'/profile'}>
                                                 {t('profile')}
                                             </Link>
                                         </Button>
-                                        <Button onClick={logoutFunc}>
+                                        <Button
+                                            onClick={logoutFunc}
+                                            variant={'outline'}
+                                        >
                                             {t('logout')}
                                         </Button>
                                     </DropdownMenuContent>
@@ -235,7 +241,7 @@ export default function Header() {
                                     <DropdownMenuTrigger asChild>
                                         <button
                                             className={
-                                                'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block w-full text-left flex items-center justify-between'
+                                                'hover:text-[#007bff] text-[#2A2A2A] dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block w-full text-left flex items-center justify-between'
                                             }
                                         >
                                             <span>{t('admin')}</span>
@@ -244,15 +250,15 @@ export default function Header() {
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent
                                         align="start"
-                                        className="flex flex-col gap-2 bg-slate-200 dark:bg-[#191919] p-2 rounded shadow-lg -mt-1"
+                                        className="flex flex-col gap-2 bg-[#f2f2f2] dark:bg-[#191919] p-2 rounded shadow-lg -mt-1"
                                     >
                                         <NavLink
                                             to="/dashboard"
                                             onClick={handleClick}
                                             className={({ isActive }) =>
                                                 isActive
-                                                    ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
-                                                    : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
+                                                    ? 'hover:text-[#007bff] text-[#3441ff] dark:text-gray-300  hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
+                                                    : 'hover:text-[#007bff] text-[#2A2A2A] dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
                                             }
                                         >
                                             {t('dashboard')}
@@ -262,8 +268,8 @@ export default function Header() {
                                             onClick={handleClick}
                                             className={({ isActive }) =>
                                                 isActive
-                                                    ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
-                                                    : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
+                                                    ? 'hover:text-[#007bff] text-[#3441ff] dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
+                                                    : 'hover:text-[#007bff] text-[#2A2A2A] dark:text-gray-300 hover:dark:text-[#007bff] p-2 font-bold text-[16px] block'
                                             }
                                         >
                                             {t('users')}

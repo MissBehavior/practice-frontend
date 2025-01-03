@@ -36,7 +36,7 @@ export default function Gallery() {
     }, [])
     if (loading) {
         return (
-            <div className="dark:bg-[#101010] bg-slate-300 min-h-screen">
+            <div className="dark:bg-[#101010] bg-[#f2f2f2] min-h-screen">
                 <Breadcrumb title={t('gallery')} parent={t('gallery')} />
 
                 <section className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -54,7 +54,7 @@ export default function Gallery() {
     }
 
     return (
-        <div className="min-h-svh dark:bg-[#101010] bg-slate-400">
+        <div className="min-h-svh dark:bg-[#101010] bg-[#f2f2f2]">
             <Breadcrumb title={t('gallery')} parent={t('gallery')} />
             <section id="portfolio" className="text-center py-12 ">
                 <div className="container mx-auto px-4">

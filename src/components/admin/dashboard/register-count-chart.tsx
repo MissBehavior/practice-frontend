@@ -41,7 +41,7 @@ function RegisterCountChart({
         )
     }
     return (
-        <div className="dark:bg-[#191919] bg-slate-200 rounded-lg p-4 h-96">
+        <div className="dark:bg-[#191919] bg-[#f2f2f2] rounded-lg p-4 h-96">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="dark:text-slate-200">

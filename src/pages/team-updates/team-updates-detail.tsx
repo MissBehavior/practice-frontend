@@ -269,18 +269,18 @@ export default function TeamUpdatesDetail() {
     }
 
     return (
-        <div className="dark:bg-[#101010] bg-slate-300 min-h-screen">
+        <div className="dark:bg-[#101010] bg-[#F2F2F2] min-h-screen">
             <Breadcrumb title={t('team_updates')} parent={t('team_updates')} />
 
             <div className="container mx-auto px-4 py-8">
                 <Link
                     to="/team-updates"
-                    className="flex items-center text-gray-300 hover:text-gray-500 mb-6"
+                    className="flex items-center dark:text-gray-300 text-[#2A2A2A] hover:text-gray-500 mb-6"
                 >
                     <FaArrowLeft className="mr-2" />
                     {t('back_to_teamupdates')}
                 </Link>
-                <div className="max-w-4xl mx-auto dark:bg-[#191919] bg-slate-400 shadow-2xl rounded-2xl overflow-hidden">
+                <div className="max-w-4xl mx-auto dark:bg-[#191919] bg-[#FFFFFF] shadow-2xl rounded-2xl overflow-hidden">
                     <div className="relative">
                         <img
                             src={post.postPicture}

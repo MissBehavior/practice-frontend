@@ -17,14 +17,23 @@ type SocialLink = {
 }
 
 const socialLinks: SocialLink[] = [
-    { icon: <CiMail />, link: 'mailto:info@winbas.eu' },
-    { icon: <AiOutlineLinkedin />, link: 'https://www.linkedin.com/' },
-    { icon: <AiOutlineFacebook />, link: 'https://www.instagram.com/' },
+    {
+        icon: <CiMail className="text-black dark:text-white" />,
+        link: 'mailto:info@winbas.eu',
+    },
+    {
+        icon: <AiOutlineLinkedin className="text-black dark:text-white" />,
+        link: 'https://www.linkedin.com/',
+    },
+    {
+        icon: <AiOutlineFacebook className="text-black dark:text-white" />,
+        link: 'https://www.instagram.com/',
+    },
 ]
 
 const Footer: React.FC = () => {
     return (
-        <div className="pt-8 pb-8 dark:bg-[#191919] bg-slate-500">
+        <div className="pt-8 pb-8 dark:bg-[#191919] bg-[#e4e4e4]">
             <div className="container mx-auto px-4">
                 <div className="flex flex-wrap items-center justify-between">
                     {/* Logo */}
@@ -34,7 +43,7 @@ const Footer: React.FC = () => {
                                 <img
                                     src={logo}
                                     alt="Logo"
-                                    className="h-24 bg-slate-200 p-2 rounded"
+                                    className="h-24 bg-[#e4e4e4] p-2 rounded"
                                 />
                             </a>
                         </div>

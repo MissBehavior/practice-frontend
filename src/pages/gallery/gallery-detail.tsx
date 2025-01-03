@@ -86,11 +86,11 @@ export default function GalleryDetail() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-300 dark:bg-[#101010]">
+        <div className="min-h-screen bg-[#F2F2F2] dark:bg-[#101010]">
             <Breadcrumb title={gallery.title} parent={'Gallery'} />
             <Link
                 to="/gallery"
-                className="flex items-center text-gray-300 hover:text-gray-500 mb-6"
+                className="flex items-center dark:text-gray-300 text-[#2A2A2A] hover:text-gray-500 mb-6"
             >
                 <FaArrowLeft className="mr-2" />
                 {t('back_to_gallery')}

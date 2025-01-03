@@ -118,7 +118,7 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
         }
     }, [open])
     return (
-        <div className="min-h-32 dark:bg-[#101010] bg-slate-300 flex justify-center items-center select-none">
+        <div className="min-h-32 dark:bg-[#101010] bg-[#F2F2F2] flex justify-center items-center select-none">
             <div className="">
                 <Dialog
                     open={open}
@@ -131,14 +131,14 @@ function TeamUpdateNew({ fetchData, currentPage }: TeamUpdateNewProps) {
                     }}
                 >
                     <DialogTrigger asChild>
-                        <div className="p-6 bg-white dark:bg-slate-400 rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center cursor-pointer">
+                        <div className="p-6 bg-[#FFFFFF] dark:bg-slate-400 rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-300 text-center items-center justify-center cursor-pointer">
                             {t('addNewPost')}
                             <h1 className="text-2xl font-bold text-gray-700 flex center justify-center">
                                 <IoMdAddCircleOutline />
                             </h1>
                         </div>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[800px] mt-16 mb-12 min-h-48 bg-[#101010]">
+                    <DialogContent className="sm:max-w-[800px] mt-16 mb-12 min-h-48 dark:bg-[#101010] bg-[#ffffff]">
                         <DialogHeader>
                             <DialogTitle> {t('newPost')}</DialogTitle>
                             <DialogDescription></DialogDescription>

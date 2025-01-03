@@ -224,8 +224,8 @@ function Profile() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-300 dark:bg-[#101010] p-8">
-            <div className="bg-white dark:bg-[#191919] rounded-lg shadow-xl pb-8">
+        <div className="min-h-screen bg-[#f2f2f2] dark:bg-[#101010] p-8">
+            <div className="bg-[#ffffff] dark:bg-[#191919] rounded-lg shadow-xl pb-8">
                 <div className="w-full h-[250px] rounded-tl-lg rounded-tr-lg bg-gradient-to-tr from-green-500 from-20% via-green-600 via-40% to-blue-600 dark:bg-gradient-to-tr dark:from-violet-900 dark:from-20% dark:via-cyan-700 dark:via-40% dark:to-pink-700"></div>
                 <div className="flex flex-col items-center -mt-20 profileIMG">
                     <DropdownMenu open={open} onOpenChange={setOpen}>

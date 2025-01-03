@@ -80,7 +80,7 @@ export default function PostExternal() {
     }, [currentPage, selectedCategory])
     if (loading) {
         return (
-            <div className="dark:bg-[#101010] bg-slate-300 min-h-screen">
+            <div className="dark:bg-[#101010] bg-[#F2F2F2] min-h-screen">
                 <Breadcrumb title={t('news')} parent={t('news')} />
                 {user.isAdmin && (
                     <div className="flex justify-end p-4">
@@ -94,7 +94,7 @@ export default function PostExternal() {
                     {Array.from({ length: 6 }).map((_, index) => (
                         <div
                             key={index}
-                            className="flex flex-col overflow-hidden rounded-lg shadow dark:bg-gray-800 bg-slate-400 p-4"
+                            className="flex flex-col overflow-hidden rounded-lg shadow dark:bg-gray-800 bg-[#ffffff] p-4"
                         >
                             <Skeleton className="h-48 w-full mb-4 rounded" />
                             <Skeleton className="h-6 w-3/4 mb-2 rounded" />
@@ -145,7 +145,7 @@ export default function PostExternal() {
     }
 
     return (
-        <div className="dark:bg-[#101010] bg-slate-300">
+        <div className="dark:bg-[#101010] bg-[#f2f2f2]">
             <Breadcrumb title={t('news')} parent={t('news')} />
             <LatestPost latestPost={latestPost} />
             {user.isAdmin && (

@@ -62,7 +62,7 @@ function GalleryDelete({ fetchData, index }: GalleryDeleteProps) {
                             onClick={() => {
                                 setOpen(false)
                             }}
-                            type="submit"
+                            type="button"
                         >
                             {t('cancel')}
                         </Button>

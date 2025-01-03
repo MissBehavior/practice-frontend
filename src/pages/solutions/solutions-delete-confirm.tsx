@@ -66,7 +66,7 @@ function SolutionsDelete({ fetchData, index }: SolutionsDeleteProps) {
                             onClick={() => {
                                 setOpen(false)
                             }}
-                            type="submit"
+                            type="button"
                         >
                             {t('cancel')}
                         </Button>

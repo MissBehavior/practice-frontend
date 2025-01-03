@@ -12,27 +12,27 @@ import NewsHome from './news'
 export default function Home() {
     return (
         <>
-            <div className="dark:bg-[#191919] bg-slate-300">
+            <div className="dark:bg-[#191919] bg-[#f2f2f2]">
                 <SliderOne />
             </div>
-            <div className="dark:bg-[#101010] bg-slate-300">
+            <div className="dark:bg-[#101010] bg-[#f2f2f2]">
                 <About />
             </div>
             <div
-                className="pt-32 pb-32 dark:bg-[#191919] bg-slate-500"
+                className="pt-32 pb-32 dark:bg-[#191919] bg-[#ffffff]"
                 id="servicesid"
             >
                 <div className="container">
                     <Service />
                 </div>
             </div>
-            <div className="py-28 dark:bg-[#101010] bg-slate-300">
+            <div className="py-28 dark:bg-[#101010] bg-[#f2f2f2]">
                 <div className="mb-14">
                     <Solutions />
                 </div>
             </div>
 
-            <div className="pt-32 pb-32 dark:bg-[#191919] bg-slate-500">
+            <div className="pt-32 pb-32 dark:bg-[#191919] bg-[#ffffff]">
                 <div className="container mx-auto">
                     <div className="flex justify-center mb-8">
                         <div className="w-full text-center">
@@ -46,17 +46,17 @@ export default function Home() {
                     <FunFacts />
                 </div>
             </div>
-            <div className="pt-28 pb-28 dark:bg-[#101010] bg-slate-300">
+            <div className="pt-28 pb-28 dark:bg-[#101010] bg-[#f2f2f2]">
                 <div className="container mx-auto">
                     <Team />
                 </div>
             </div>
 
-            <div className="pb-28 dark:bg-[#191919] bg-slate-500">
+            <div className="pb-28 dark:bg-[#191919] bg-[#ffffff]">
                 <NewsHome />
             </div>
 
-            <div className="pb-28 dark:bg-[#101010] bg-slate-300">
+            <div className="pb-28 dark:bg-[#101010] bg-[#f2f2f2]">
                 <div className="container mx-auto">
                     <Clients />
                 </div>

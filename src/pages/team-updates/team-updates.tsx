@@ -165,13 +165,13 @@ export default function TeamUpdates() {
                     currentPage={currentPage}
                 />
             )}
-            <div className="py-28 dark:bg-[#101010] bg-slate-300">
+            <div className="py-28 dark:bg-[#101010] bg-[#F2F2F2]">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {data.map((post, i) => (
                             <div
                                 key={i}
-                                className="relative flex flex-col overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow dark:bg-[#191919] bg-slate-400"
+                                className="relative flex flex-col overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow dark:bg-[#191919] bg-[#FFFFFF]"
                             >
                                 {(user.isEmployee &&
                                     post.userName === user.name) ||

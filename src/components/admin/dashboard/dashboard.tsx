@@ -81,7 +81,7 @@ function AdminDashboard() {
     }, [])
     return (
         <>
-            <div className="w-full lg:w-2/3 flex flex-col gap-8 p-4 mx-auto dark:bg-[#101010] bg-slate-300">
+            <div className="w-full lg:w-2/3 flex flex-col gap-8 p-4 mx-auto dark:bg-[#101010] bg-[#ffffff]">
                 <div className="flex  gap-4 justify-between flex-wrap w-full">
                     <UserCard
                         count={userCount ? userCount : 0}

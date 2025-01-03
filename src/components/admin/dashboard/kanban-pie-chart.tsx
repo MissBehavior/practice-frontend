@@ -43,7 +43,7 @@ const KanbanPieChart: React.FC = () => {
             const { value } = payload[0]
             return (
                 <div
-                    className="custom-tooltip bg-white dark:bg-gray-800 p-2 rounded shadow"
+                    className="custom-tooltip bg-[#f2f2f2] dark:bg-gray-800 p-2 rounded shadow"
                     style={{ border: '1px solid #ddd' }}
                 >
                     <p className="label text-black dark:text-white">
@@ -60,7 +60,7 @@ const KanbanPieChart: React.FC = () => {
     }
 
     return (
-        <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke dark:bg-[#191919] bg-slate-200 px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark xl:col-span-5">
+        <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke dark:bg-[#191919] bg-[#f2f2f2] px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark xl:col-span-5">
             <div className="mb-3 justify-between gap-4 sm:flex">
                 <div>
                     <h5 className="text-xl font-semibold text-black dark:text-white">

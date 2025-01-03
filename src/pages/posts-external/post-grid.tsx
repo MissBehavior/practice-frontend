@@ -26,13 +26,13 @@ const MAX_DISPLAY_CATEGORIES = 4
 const PostGrid: React.FC<PostGridProps> = React.memo(
     ({ data, totalPages, currentPage, onNextPage, onPrevPage, t }) => {
         return (
-            <div className="py-28  dark:bg-[#101010] bg-slate-300">
+            <div className="py-28  dark:bg-[#101010] bg-[#f2f2f2]">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {data.map((post, i) => (
                             <div
                                 key={i}
-                                className="flex flex-col overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow bg-slate-400 dark:bg-[#191919]"
+                                className="flex flex-col overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow bg-[#ffffff] dark:bg-[#191919]"
                             >
                                 <Link to={`/post-external/${post._id}`}>
                                     <img

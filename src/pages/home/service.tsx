@@ -60,18 +60,18 @@ const Service: React.FC = () => {
             <div className="flex flex-wrap">
                 <div className="w-full lg:w-1/3">
                     <div className="mt-8 lg:mt-0">
-                        <h2 className="text-3xl font-bold text-white">
+                        <h2 className="text-3xl font-bold dark:text-white text-[#2A2A2A]">
                             {i18n.language === 'en' ? title : titleLT}
                         </h2>
-                        <p className="mt-4 text-gray-400">
+                        <p className="mt-4 dark:text-gray-400 text-[#2A2A2A]">
                             {i18n.language === 'en'
                                 ? description
                                 : descriptionLT}
                         </p>
-                        <h2 className="mt-8 text-3xl font-bold text-white">
+                        <h2 className="mt-8 text-3xl font-bold dark:text-white text-[#2A2A2A]">
                             {i18n.language === 'en' ? title2 : title2LT}
                         </h2>
-                        <p className="mt-4 text-gray-400">
+                        <p className="mt-4 dark:text-gray-400 text-[#2A2A2A]">
                             {i18n.language === 'en'
                                 ? description2
                                 : description2LT}
@@ -91,15 +91,15 @@ const Service: React.FC = () => {
                         {ServiceList.map((val, i) => (
                             <div className="w-full sm:w-1/2 p-4" key={i}>
                                 <Link to="/solutions">
-                                    <div className="flex items-start  hover:bg-gray-700 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg rounded-lg p-4">
+                                    <div className="flex items-start  dark:hover:bg-gray-700 hover:bg-slate-300 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg rounded-lg p-4">
                                         <div className="mr-4">{val.icon}</div>
                                         <div>
-                                            <h3 className="text-xl font-semibold text-white">
+                                            <h3 className="text-xl font-semibold dark:text-white text-[#2A2A2A]">
                                                 {i18n.language === 'en'
                                                     ? val.title
                                                     : val.titleLT}
                                             </h3>
-                                            <p className="mt-2 text-gray-400">
+                                            <p className="mt-2 dark:text-gray-400 text-[#2A2A2A]">
                                                 {i18n.language === 'en'
                                                     ? val.description
                                                     : val.descriptionLT}

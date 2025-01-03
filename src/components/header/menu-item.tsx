@@ -17,8 +17,8 @@ export const MenuItem = ({ link, text, handleClick }: MenuItemProps) => {
                     isPending
                         ? 'pending'
                         : isActive
-                        ? 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
-                        : 'hover:text-[#007bff] text-gray-500 dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
+                        ? 'hover:text-[#007bff] text-[#3441ff] dark:text-gray-300 hover:dark:text-[#007bff] dark:bg-background p-3 font-bold text-[20px] block'
+                        : 'hover:text-[#007bff] text-[#2A2A2A] dark:text-gray-300 hover:dark:text-[#007bff] p-3 font-bold text-[20px] block'
                 }
             >
                 {t(text)}
